@@ -189,7 +189,12 @@ This file records settled choices and the rationale behind them. New decisions s
 **Implications:** The first migration must include the documented `CHECK` constraints. Current-version family membership, default-variant version membership, Want removal on ownership, and Would Repurchase requiring Tried remain cross-record or behavioral domain/application invariants.
 
 ### 2026-09-11 — Costmetic is the temporary working name
-**Status:** Experimental
+**Status:** Superseded
 **Decision:** Use `Costmetic` as the temporary development/internal working name. The name combines `cost + cosmetic` and reflects the product's beauty price-comparison focus.
 **Why:** A concise working label helps internal communication while final naming is still being evaluated.
 **Implications:** Do not treat this as final brand approval or rename generic technical identifiers. Revisit after domain, trademark, UI, and user-feedback review.
+### 2026-09-12 — Otoku is the current working name
+**Status:** Accepted
+**Decision:** Use `Otoku` as the current development/internal working name, replacing Costmetic. The name comes from the Japanese concept of good value or a good deal.
+**Why:** It better reflects the product's value-oriented shopping-intelligence focus while connecting to an initial core beauty market.
+**Implications:** This remains a working name, not final brand approval. Keep package names, database identifiers, environment variables, migration history, and other generic technical identifiers unchanged so a future rename remains inexpensive.

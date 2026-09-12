@@ -2,12 +2,12 @@
 
 ## Current working name
 
-- **Name:** `Costmetic`
-- **Meaning:** `cost + cosmetic`
+- **Name:** `Otoku`
+- **Meaning:** Japanese concept of good value / a good deal
 - **Status:** Temporary development/internal working name; not final.
 
-`Costmetic` reflects the product's focus on beauty/skincare price comparison and better purchasing options.
+`Otoku` reflects the product's focus on beauty/skincare price comparison and better purchasing options.
 
 ## Open concern
 
-The name may visually resemble a typo of “cosmetic.” Final naming remains open pending domain, trademark, UI, and user-feedback review.
+Final naming remains open pending domain, trademark, UI, and user-feedback review.

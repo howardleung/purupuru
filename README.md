@@ -1,8 +1,8 @@
-# Costmetic (working name) — Repository Context
+# Otoku (working name) — Repository Context
 
 This repository is for a web-first global skincare discovery, collection, and shopping-intelligence product.
 
-`Costmetic` is the current temporary development/internal working name: `cost + cosmetic`. It is not a final branding decision; keep technical identifiers generic so a future rename remains inexpensive.
+`Otoku` is the current temporary development/internal working name, from the Japanese concept of good value or a good deal. It is not a final branding decision; keep technical identifiers generic so a future rename remains inexpensive.
 
 ## Start here
 
@@ -96,7 +96,7 @@ The first implementation should optimize for clarity and correctness, not maximu
 
 ## Local development
 
-1. Copy `.env.example` to both `apps/web/.env.local` and `packages/database/.env`, then set the Clerk and Neon values when available.
+1. Copy `.env.example` to `apps/web/.env.local` and `packages/database/.env`, then set the real values when available. The web environment needs the Clerk keys and both database URLs because signed-in server actions resolve the local user profile; the database package environment supplies Prisma CLI commands.
 2. Install dependencies with `pnpm install`.
 3. Generate Prisma Client with `pnpm db:generate`.
 4. Start the web app with `pnpm dev`.

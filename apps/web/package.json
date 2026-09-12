@@ -10,6 +10,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@beauty-platform/database": "workspace:*",
     "@clerk/nextjs": "^6.31.8",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

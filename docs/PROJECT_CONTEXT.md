@@ -4,7 +4,7 @@
 
 This is a consumer beauty discovery, collection, and shopping-intelligence platform. The initial focus is skincare, beginning with Korean and Japanese skincare and selective French/European support. Canada is the initial home market.
 
-The current development/internal working name is `Costmetic` (`cost + cosmetic`), reflecting the product's price-comparison and purchasing-intelligence focus. It is temporary only; final branding remains open pending domain, trademark, UI, and user-feedback review.
+The current development/internal working name is `Otoku`, from the Japanese concept of good value or a good deal. It is temporary only; final branding remains open pending domain, trademark, UI, and user-feedback review.
 
 The product emerged from a real shopping workflow problem: international beauty research is fragmented across Reddit, YouTube, TikTok, Google, @cosme, Olive Young, Amazon, Canadian specialty retailers, international retailers, currency conversion, notes, and travel shopping lists.
 

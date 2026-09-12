@@ -236,6 +236,8 @@ Do not attach a rating from one formulation to a different ProductVersion.
 ### User
 The Prisma `User` model is the Clerk-backed profile record. It stores a unique `clerkUserId`, not authentication credentials.
 
+The web application resolves the active Clerk session to this profile through server-only helpers. Ordinary public browsing does not create a profile; a signed-in action may lazily upsert one using the Clerk external user ID. Passwords, sessions, and other Clerk credentials are never stored in PostgreSQL.
+
 Likely fields:
 - userId
 - displayName

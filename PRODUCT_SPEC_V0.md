@@ -6,7 +6,7 @@
 
 A global beauty discovery, collection, and shopping-intelligence platform that helps users understand what products are genuinely popular in different beauty markets, compare trusted buying options, and organize the products they own, want, tried, finished, and plan to purchase.
 
-The temporary development/internal working name is `Costmetic` (`cost + cosmetic`). This is not a final naming or branding decision.
+The current development/internal working name is `Otoku`, from the Japanese concept of good value or a good deal. This is not a final naming or branding decision.
 
 The initial focus is skincare, with particular emphasis on Korean, Japanese, and selected European skincare markets.
 
