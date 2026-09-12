@@ -1,0 +1,457 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum ProductVersionStatus {
+  CURRENT
+  PREVIOUS
+  DISCONTINUED
+  UNKNOWN
+}
+
+enum AvailabilityState {
+  IN_STOCK
+  LOW_STOCK
+  OUT_OF_STOCK
+  PREORDER
+  UNKNOWN
+}
+
+enum ShippingState {
+  FREE
+  FIXED
+  CALCULATED
+  UNKNOWN
+  NOT_APPLICABLE
+  PICKUP_ONLY
+}
+
+enum OfferItemType {
+  SAME_PRODUCT
+  OTHER_PRODUCT
+  MINI
+  GIFT_ACCESSORY
+}
+
+enum BenchmarkPriceType {
+  MSRP
+  RETAIL_PRICE
+  REFERENCE_PRICE
+}
+
+enum PriceObservationVerificationType {
+  RETAILER_SOURCE
+  RECEIPT_VERIFIED
+  COMMUNITY_REPORTED
+  OTHER
+}
+
+enum CollectionTagKind {
+  HOLY_GRAIL
+  WOULD_REPURCHASE
+}
+
+enum PurchaseSource {
+  MANUAL
+  SHOPPING_LIST
+  RECEIPT
+}
+
+enum SkinType {
+  DRY
+  OILY
+  COMBINATION
+  NORMAL
+  SENSITIVE
+  NOT_SURE
+}
+
+model User {
+  id                 String    @id @default(cuid())
+  clerkUserId        String    @unique
+  displayName        String?
+  skinType           SkinType?
+  skinTypeVisibility String    @default("PRIVATE")
+  beautyInterests    String[]
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  collectionEntries CollectionEntry[]
+  purchases         PurchaseInstance[]
+  ratings           UserRating[]
+  shoppingLists     ShoppingList[]
+}
+
+model CanonicalCategory {
+  id               String   @id @default(cuid())
+  slug             String   @unique
+  displayName      String
+  department       String   @default("SKINCARE")
+  parentCategoryId String?
+  sortOrder        Int      @default(0)
+  isActive         Boolean  @default(true)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  parentCategory         CanonicalCategory?      @relation("CategoryHierarchy", fields: [parentCategoryId], references: [id])
+  childCategories        CanonicalCategory[]     @relation("CategoryHierarchy")
+  productFamilies        ProductFamily[]
+  sourceCategoryMappings SourceCategoryMapping[]
+
+  @@index([parentCategoryId, sortOrder])
+}
+
+model SourceCategoryMapping {
+  id                  String   @id @default(cuid())
+  sourceKey           String
+  sourceCategoryPath  String
+  retailerId          String?
+  canonicalCategoryId String
+  confidence          Int?
+  isVerified          Boolean  @default(false)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  retailer          Retailer?         @relation(fields: [retailerId], references: [id])
+  canonicalCategory CanonicalCategory @relation(fields: [canonicalCategoryId], references: [id])
+
+  @@unique([sourceKey, sourceCategoryPath])
+  @@index([retailerId])
+  @@index([canonicalCategoryId])
+}
+
+model Brand {
+  id           String   @id @default(cuid())
+  name         String   @unique
+  slug         String   @unique
+  originMarket String?
+  logoUrl      String?
+  aliases      String[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  productFamilies ProductFamily[]
+}
+
+model ProductFamily {
+  id                         String   @id @default(cuid())
+  brandId                    String
+  primaryCanonicalCategoryId String
+  canonicalName              String
+  slug                       String   @unique
+  originMarket               String?
+  commonEnglishAliases       String[]
+  currentVersionId           String?  @unique
+  createdAt                  DateTime @default(now())
+  updatedAt                  DateTime @updatedAt
+
+  brand                    Brand             @relation(fields: [brandId], references: [id])
+  primaryCanonicalCategory CanonicalCategory @relation(fields: [primaryCanonicalCategoryId], references: [id])
+  versions                 ProductVersion[]  @relation("ProductFamilyVersions")
+  currentVersion           ProductVersion?   @relation("CurrentProductFamilyVersion", fields: [currentVersionId], references: [id])
+
+  @@index([brandId])
+  @@index([primaryCanonicalCategoryId])
+}
+
+model ProductVersion {
+  id                      String               @id @default(cuid())
+  productFamilyId         String
+  versionName             String
+  versionCode             String?
+  releaseDate             DateTime?
+  status                  ProductVersionStatus @default(UNKNOWN)
+  manufacturerVersionCode String?
+  formulationFingerprint  String?
+  packagingDescription    String?
+  defaultVariantId        String?              @unique
+  createdAt               DateTime             @default(now())
+  updatedAt               DateTime             @updatedAt
+
+  productFamily     ProductFamily     @relation("ProductFamilyVersions", fields: [productFamilyId], references: [id])
+  currentForFamily  ProductFamily?    @relation("CurrentProductFamilyVersion")
+  defaultVariant    ProductVariant?   @relation("ProductVersionDefaultVariant", fields: [defaultVariantId], references: [id])
+  variants          ProductVariant[]  @relation("ProductVersionVariants")
+  collectionEntries CollectionEntry[]
+  externalSignals   ExternalSignal[]
+  ratings           UserRating[]
+
+  @@unique([productFamilyId, versionName])
+  @@index([productFamilyId, status])
+  @@index([manufacturerVersionCode])
+}
+
+model ProductVariant {
+  id                 String   @id @default(cuid())
+  productVersionId   String
+  normalizedQuantity Decimal  @db.Decimal(12, 3)
+  normalizedUnit     String
+  displaySize        String
+  gtin               String?  @unique
+  manufacturerSku    String?
+  isActive           Boolean  @default(true)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  productVersion            ProductVersion     @relation("ProductVersionVariants", fields: [productVersionId], references: [id])
+  defaultForVersion         ProductVersion?    @relation("ProductVersionDefaultVariant")
+  offers                    Offer[]
+  benchmarkPrices           BenchmarkPrice[]
+  priceObservations         PriceObservation[]
+  includedInOfferItems      OfferItem[]        @relation("OfferItemRelatedVariant")
+  collectionEntrySelections CollectionEntry[]  @relation("CollectionEntrySelectedVariant")
+  ratingContexts            UserRating[]       @relation("UserRatingContextualVariant")
+  purchaseInstances         PurchaseInstance[]
+  shoppingListItems         ShoppingListItem[]
+
+  @@unique([productVersionId, normalizedQuantity, normalizedUnit])
+  @@index([manufacturerSku])
+}
+
+model Retailer {
+  id                 String   @id @default(cuid())
+  sourceKey          String   @unique
+  name               String   @unique
+  country            String?
+  websiteUrl         String?
+  isAffiliatePartner Boolean  @default(false)
+  reliabilityNote    String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  offers                 Offer[]
+  sourceCategoryMappings SourceCategoryMapping[]
+  priceObservations      PriceObservation[]
+  purchases              PurchaseInstance[]
+}
+
+model Offer {
+  id                 String            @id @default(cuid())
+  retailerId         String
+  productVariantId   String
+  retailerListingId  String?
+  listingUrl         String
+  productPrice       Decimal           @db.Decimal(14, 4)
+  nativeCurrency     String            @db.Char(3)
+  cadConvertedPrice  Decimal?          @db.Decimal(14, 4)
+  cadFxTimestamp     DateTime?
+  availabilityState  AvailabilityState @default(UNKNOWN)
+  shippingState      ShippingState?
+  shippingAmount     Decimal?          @db.Decimal(14, 4)
+  shippingCurrency   String?           @db.Char(3)
+  deliveryMethod     String?
+  deliveryEstimate   String?
+  shippingConditions String?
+  observedAt         DateTime          @default(now())
+  lastVerifiedAt     DateTime          @default(now())
+  isActive           Boolean           @default(true)
+  primaryQuantity    Int               @default(1)
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+
+  retailer       Retailer       @relation(fields: [retailerId], references: [id])
+  productVariant ProductVariant @relation(fields: [productVariantId], references: [id])
+  items          OfferItem[]
+
+  @@unique([retailerId, listingUrl])
+  @@index([productVariantId, availabilityState])
+  @@index([retailerId, retailerListingId])
+}
+
+model OfferItem {
+  id                      String        @id @default(cuid())
+  offerId                 String
+  relatedProductVariantId String?
+  label                   String
+  quantity                Int           @default(1)
+  itemType                OfferItemType
+  isPromotional           Boolean       @default(false)
+  createdAt               DateTime      @default(now())
+  updatedAt               DateTime      @updatedAt
+
+  offer                 Offer           @relation(fields: [offerId], references: [id])
+  relatedProductVariant ProductVariant? @relation("OfferItemRelatedVariant", fields: [relatedProductVariantId], references: [id])
+
+  @@index([offerId])
+  @@index([relatedProductVariantId])
+}
+
+model PriceObservation {
+  id               String                           @id @default(cuid())
+  productVariantId String
+  retailerId       String?
+  retailerName     String?
+  location         String?
+  amount           Decimal                          @db.Decimal(14, 4)
+  nativeCurrency   String                           @db.Char(3)
+  observedAt       DateTime
+  verificationType PriceObservationVerificationType
+  sourceUrl        String?
+  proofUrl         String?
+  createdAt        DateTime                         @default(now())
+
+  productVariant ProductVariant @relation(fields: [productVariantId], references: [id])
+  retailer       Retailer?      @relation(fields: [retailerId], references: [id])
+
+  @@index([productVariantId, observedAt])
+  @@index([retailerId])
+}
+
+model BenchmarkPrice {
+  id                 String             @id @default(cuid())
+  productVariantId   String
+  market             String
+  type               BenchmarkPriceType
+  amount             Decimal            @db.Decimal(14, 4)
+  nativeCurrency     String             @db.Char(3)
+  cadConvertedAmount Decimal?           @db.Decimal(14, 4)
+  cadFxTimestamp     DateTime?
+  sourceKey          String
+  sourceDisplayName  String
+  sourceUrl          String?
+  observedAt         DateTime?
+  verifiedAt         DateTime
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+
+  productVariant ProductVariant @relation(fields: [productVariantId], references: [id])
+
+  @@index([productVariantId, market, type, verifiedAt])
+}
+
+model ExternalSignal {
+  id                String    @id @default(cuid())
+  productVersionId  String
+  sourceKey         String
+  sourceDisplayName String
+  sourceUrl         String
+  rating            Decimal?  @db.Decimal(6, 2)
+  ratingScale       Decimal?  @db.Decimal(6, 2)
+  reviewCount       Int?
+  rankingLabel      String?
+  observedAt        DateTime?
+  verifiedAt        DateTime
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  productVersion ProductVersion @relation(fields: [productVersionId], references: [id])
+
+  @@unique([productVersionId, sourceKey, verifiedAt])
+  @@index([productVersionId])
+}
+
+model CollectionEntry {
+  id                String   @id @default(cuid())
+  userId            String
+  productVersionId  String
+  selectedVariantId String?
+  wants             Boolean  @default(false)
+  tried             Boolean  @default(false)
+  notes             String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  user            User            @relation(fields: [userId], references: [id])
+  productVersion  ProductVersion  @relation(fields: [productVersionId], references: [id])
+  selectedVariant ProductVariant? @relation("CollectionEntrySelectedVariant", fields: [selectedVariantId], references: [id])
+  tags            CollectionTag[]
+
+  @@unique([userId, productVersionId])
+  @@index([userId, wants])
+  @@index([userId, tried])
+  @@index([selectedVariantId])
+}
+
+model CollectionTag {
+  id                String            @id @default(cuid())
+  collectionEntryId String
+  kind              CollectionTagKind
+  createdAt         DateTime          @default(now())
+
+  collectionEntry CollectionEntry @relation(fields: [collectionEntryId], references: [id])
+
+  @@unique([collectionEntryId, kind])
+}
+
+model UserRating {
+  id                  String   @id @default(cuid())
+  userId              String
+  productVersionId    String
+  contextualVariantId String?
+  /// Integer half-star value: 2 = 1.0 stars through 10 = 5.0 stars.
+  ratingHalfSteps     Int
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  user              User            @relation(fields: [userId], references: [id])
+  productVersion    ProductVersion  @relation(fields: [productVersionId], references: [id])
+  contextualVariant ProductVariant? @relation("UserRatingContextualVariant", fields: [contextualVariantId], references: [id])
+
+  @@unique([userId, productVersionId])
+  @@index([contextualVariantId])
+}
+
+model PurchaseInstance {
+  id                 String         @id @default(cuid())
+  userId             String
+  productVariantId   String
+  shoppingListItemId String?
+  retailerId         String?
+  customRetailer     String?
+  quantity           Int            @default(1)
+  purchaseDate       DateTime?
+  location           String?
+  amountPaid         Decimal?       @db.Decimal(14, 4)
+  currency           String?        @db.Char(3)
+  openedAt           DateTime?
+  finishedAt         DateTime?
+  source             PurchaseSource @default(MANUAL)
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+
+  user             User              @relation(fields: [userId], references: [id])
+  productVariant   ProductVariant    @relation(fields: [productVariantId], references: [id])
+  retailer         Retailer?         @relation(fields: [retailerId], references: [id])
+  shoppingListItem ShoppingListItem? @relation(fields: [shoppingListItemId], references: [id])
+
+  @@index([userId, productVariantId])
+  @@index([shoppingListItemId])
+}
+
+model ShoppingList {
+  id           String   @id @default(cuid())
+  userId       String
+  name         String
+  targetMarket String
+  visibility   String   @default("PRIVATE")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user  User               @relation(fields: [userId], references: [id])
+  items ShoppingListItem[]
+
+  @@index([userId, updatedAt])
+}
+
+model ShoppingListItem {
+  id                String   @id @default(cuid())
+  shoppingListId    String
+  productVariantId  String
+  quantity          Int      @default(1)
+  purchasedQuantity Int      @default(0)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  shoppingList      ShoppingList       @relation(fields: [shoppingListId], references: [id])
+  productVariant    ProductVariant     @relation(fields: [productVariantId], references: [id])
+  purchaseInstances PurchaseInstance[]
+
+  @@unique([shoppingListId, productVariantId])
+  @@index([productVariantId])
+}

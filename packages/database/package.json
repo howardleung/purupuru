@@ -1,0 +1,20 @@
+{
+  "name": "@beauty-platform/database",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "prisma:format": "prisma format",
+    "prisma:validate": "prisma validate",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.19.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "prisma": "^6.19.1",
+    "typescript": "^5.7.2"
+  }
+}

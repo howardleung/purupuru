@@ -1,0 +1,3 @@
+[mcp_servers.Neon]
+type = "http"
+url = "https://mcp.neon.tech/mcp?readonly=true&category=projects&category=branches&category=schema&category=querying&category=docs&projectId=broad-star-60850139"
