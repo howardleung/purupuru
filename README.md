@@ -99,10 +99,21 @@ The first implementation should optimize for clarity and correctness, not maximu
 1. Copy `.env.example` to `apps/web/.env.local` and `packages/database/.env`, then set the real values when available. The web environment needs the Clerk keys and both database URLs because signed-in server actions resolve the local user profile; the database package environment supplies Prisma CLI commands.
 2. Install dependencies with `pnpm install`.
 3. Generate Prisma Client with `pnpm db:generate`.
-4. Start the web app with `pnpm dev`.
+4. Seed the curated catalogue with `pnpm db:seed`.
+5. Start the web app with `pnpm dev`.
+
+Catalogue routes:
+
+- `/` — product/brand search and canonical category filtering
+- `/categories/[slug]` — canonical category browse
+- `/products/[slug]` — version-aware product detail and market offers
+- `/shopping-lists` — private authenticated list creation and overview
+- `/shopping-lists/[id]` — exact-variant quantities, purchase progress, and target-market estimates
 
 Useful checks:
 
 - `pnpm lint`
 - `pnpm typecheck`
+- `pnpm test`
+- `pnpm db:validate`
 - `pnpm build`

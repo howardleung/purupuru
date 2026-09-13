@@ -77,7 +77,7 @@ All information remains in a continuous page rather than requiring market tabs.
 For Canadian MVP:
 
 #### Buy in Canada
-Contains any tracked retailer from which the selected variant can be purchased for delivery/pickup in Canada, regardless of retailer's home country.
+Contains any tracked offer whose `availableMarkets` explicitly includes Canada, regardless of the retailer's home or storefront country. This field describes a known customer/delivery market for that offer, not retailer identity; unknown market coverage is not inferred.
 
 Columns may include:
 - Retailer
@@ -123,7 +123,7 @@ Initial auth methods: Google + email magic link.
 Primary action defaults to Want.
 
 On click:
-1. Add selected variant to Want immediately.
+1. Add the selected ProductVersion to Want immediately, retaining the selected variant only as interaction context.
 2. Show a small non-blocking confirmation/action menu.
 3. Menu may offer Owned, Tried, Add to Shopping List, etc.
 
@@ -133,10 +133,10 @@ On click:
 - Do not ask whether to keep Want; Want is first-time wishlist intent.
 
 ### Owned action
-If selected variant already has active/recorded ownership:
+If the selected version already has active/recorded ownership through any of its variants:
 - Show Owned state.
 - Do not silently create a second purchase.
-- Expose `Add another purchase` explicitly.
+- Expose `Add another purchase` explicitly; after confirmation, it creates one purchase for the currently selected variant.
 
 ### Optional purchase details
 After Owned:
@@ -159,7 +159,7 @@ Intended for a Tried product. If not Tried, ask whether to mark Tried + Would Re
 
 1. User rates a ProductVersion from product page or later collection UI using a 1–5 star scale in 0.5-star increments.
 2. Rating applies to ProductVersion, not a specific bottle/purchase.
-3. If not marked Tried, prompt to mark Tried while rating.
+3. If not marked Tried, prompt to mark Tried while rating; only the explicit combined confirmation applies both changes.
 4. Rating is private by default in MVP.
 
 ## 8. Add to shopping list
@@ -183,27 +183,27 @@ MVP lists are private.
 Each item shows:
 - selected product/variant
 - quantity selector
-- applicable destination benchmark
-- applicable Canada comparison where available
+- eligible destination-market offers, with the lowest raw product-price offer selected initially
+- applicable target-market benchmark
 - potential difference/savings where valid
 - purchased quantity/state
 
 ### Savings math
 - multiply prices by requested quantity
 - compare exact version/variant only
-- require both destination benchmark and Canadian tracked offer
+- require both a selected eligible target-market offer and a trustworthy benchmark for the same market and exact variant
 - exclude missing products entirely
 - disclose number of unique excluded products near estimate
-- materially incomplete coverage → label `Partial estimate`
+- any excluded product → label Partial estimate
 
 Example:
 
-> Estimated difference: CA$87
+> Estimated savings: CA$87
 > 3 products excluded because no verified Korea benchmark price is available.
 
 ### Mark purchased
 1. User marks quantity purchased.
-2. Create/link PurchaseInstance(s) for that quantity.
+2. Create a linked PurchaseInstance whose quantity is only the newly purchased delta.
 3. Update Purchased state.
 4. Offer optional Add purchase details.
 

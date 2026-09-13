@@ -117,11 +117,14 @@ Only known variants for the selected ProductVersion appear in the UI.
 
 ### Retailer
 - id
+- sourceKey
 - name
-- country/market
+- storefront country/market
 - website
 - affiliate/partner metadata
 - reliability/source status
+
+A `Retailer` represents a distinct retailer storefront or market-facing store identity, not only a parent company. Storefronts with materially different catalogue, inventory, pricing, or native currency remain separate records—for example, `Amazon.ca` and `Amazon.jp`. International retailers such as Stylevana or YesStyle can retain their own storefront identity while their individual offers separately record Canada as a served customer/delivery market.
 
 ### Offer
 A retailer's purchasable listing mapped to one ProductVariant.
@@ -133,6 +136,7 @@ Likely fields:
 - retailerListingId/url
 - productPrice
 - nativeCurrency
+- availableMarkets (explicit ISO market codes served by this offer)
 - cadConvertedPrice nullable
 - cadFxTimestamp nullable
 - availabilityState
@@ -146,6 +150,8 @@ Likely fields:
 - primaryQuantity default 1
 
 Default UI ordering uses product price only, ascending, among comparable CAD-converted offers. Shipping does not change default order.
+
+Offer purchasing-market eligibility also belongs to the individual offer. `availableMarkets` contains the ISO customer/delivery markets that the specific offer is known to serve and drives market sections such as `Buy in Canada`. It does not describe the retailer's home or storefront country, and retailer country must not be used as a proxy for where a listing can be purchased. An empty array means no served market is currently verified; it does not mean worldwide availability. A normalized offer-market relation can replace this array later if each market needs attributes such as market-specific availability, shipping, thresholds, or verification metadata.
 
 Shipping/delivery data belongs to the individual offer, not the retailer. It is optional because marketplace seller, fulfillment method, Prime eligibility, threshold conditions, and destination may materially change the information. Preserve richer per-offer shipping/delivery data for later UI use, but only surface it in MVP when sufficiently reliable.
 
@@ -192,7 +198,7 @@ Conceptual fields:
 - type: MSRP | RETAIL_PRICE | REFERENCE_PRICE
 - amount
 - nativeCurrency
-- cadConvertedAmount nullable
+- cadConvertedAmount nullable (reserved for an explicitly captured conversion snapshot; curated benchmark seed data leaves this unset)
 - sourceId/sourceUrl
 - observed/verified date
 - confidence/status
@@ -202,6 +208,9 @@ Rules:
 - Retail Price for authoritative official/local retail pricing.
 - Reference Price for a trusted stable benchmark when the first two are unavailable.
 - Missing benchmark means no savings estimate for that product.
+- Native benchmark amount/currency remains the source of truth. The MVP product page calculates approximate CAD display values at request time through the reusable currency-conversion layer and does not create a second benchmark record.
+- The current converter uses the latest available Bank of Canada daily rate, caches it for 24 hours, and exposes its source/date. If no rate is available, keep showing the native benchmark without a CAD estimate.
+- No persistent exchange-rate entity is required for this MVP display. Revisit persistence only when historical/reproducible calculations or ingestion snapshots require it.
 
 ### PriceObservation
 Future/user/retailer observation record, separate from stable benchmark.
@@ -260,7 +269,7 @@ Conceptually supports:
 
 `Want` is first-time wishlist intent. Ownership is derived/supported through PurchaseInstances.
 
-Implementation clarification: a `CollectionEntry` is unique per user and `ProductVersion`, with an optional selected `ProductVariant` as UI context. This prevents duplicate relationship state while keeping ratings at version level and purchases at variant level.
+Implementation clarification: a `CollectionEntry` is unique per user and `ProductVersion`, with an optional selected `ProductVariant` as UI context. This prevents duplicate relationship state while keeping ratings at version level and purchases at variant level. `Owned` is derived for the version when the user has at least one `PurchaseInstance` whose variant belongs to that version; each purchase still records its exact variant. The first Owned action is idempotent, while the explicit Add another purchase action creates one additional instance for the currently selected variant.
 
 ### CollectionTag
 Initial product/user relationship tags:
@@ -286,7 +295,7 @@ Possible fields:
 - finishedDate nullable
 - source: MANUAL | SHOPPING_LIST | RECEIPT (future)
 
-Multiple purchases of the same variant are supported.
+Multiple purchases of the same variant are supported. Compound relationship mutations—such as Owned removing Want while creating a purchase, or confirmed Tried plus rating/tag changes—must execute transactionally. The implementation uses serializable Prisma transactions with bounded retry for write conflicts.
 
 ### UserRating
 - userId
@@ -338,11 +347,13 @@ ALTER TABLE "PurchaseInstance"
 
 Savings calculations:
 - use quantity
-- require destination benchmark and tracked Canadian comparison for the exact version/variant
-- exclude products missing either side
+- compare a selected eligible offer for the list target market with the strongest trustworthy benchmark for that same market and exact version/variant
+- default the temporary view selection to the lowest eligible raw product-price offer; do not persist an offer on ShoppingListItem
+- exclude products missing an eligible offer, trustworthy benchmark, or required common-currency conversion
 - never treat missing price as zero
-- disclose excluded unique product count
-- label materially incomplete calculations as `Partial estimate`
+- disclose excluded unique product count and reason
+- label incomplete calculations as Partial estimate
+- preserve native offer and benchmark currencies; approximate CAD totals reuse the Bank of Canada conversion layer
 
 ## Optional post-MVP user-created collections/lists
 

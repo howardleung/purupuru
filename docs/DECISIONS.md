@@ -51,7 +51,7 @@ This file records settled choices and the rationale behind them. New decisions s
 **Implications:** Recent observed prices can appear separately.
 
 ### 2026-08 — Savings exclude missing data
-**Status:** Accepted
+**Status:** Superseded
 **Decision:** A product without both a verified destination benchmark and an exact Canadian comparison is excluded from savings calculations.
 **Why:** Missing price is not zero.
 **Implications:** Shopping-list totals disclose excluded unique product count and may be labeled Partial estimate.
@@ -198,3 +198,39 @@ This file records settled choices and the rationale behind them. New decisions s
 **Decision:** Use `Otoku` as the current development/internal working name, replacing Costmetic. The name comes from the Japanese concept of good value or a good deal.
 **Why:** It better reflects the product's value-oriented shopping-intelligence focus while connecting to an initial core beauty market.
 **Implications:** This remains a working name, not final brand approval. Keep package names, database identifiers, environment variables, migration history, and other generic technical identifiers unchanged so a future rename remains inexpensive.
+
+### 2026-09-12 — Offer purchasing markets are explicit per listing
+**Status:** Accepted
+**Decision:** Store the markets served by an offer as explicit ISO market codes on that offer. Use these codes, not the retailer's home country, to populate `Buy in Canada` and destination-market sections.
+**Why:** A retailer can operate internationally or expose market-specific storefronts, while two listings from the same retailer may serve different destinations.
+**Implications:** The read-only catalogue adds `Offer.availableMarkets`. Empty means market availability is not verified, not global availability. Market membership remains separate from shipping cost and does not change raw product-price ordering.
+
+### 2026-09-12 — Retailer storefront identity is separate from offer delivery markets
+**Status:** Accepted
+**Decision:** Treat market-facing storefronts with materially different pricing, currency, catalogue, or inventory as distinct `Retailer` records, such as `Amazon.ca` and `Amazon.jp`. Treat `Offer.availableMarkets` as the customer/delivery markets that an individual offer is known to serve, not as the retailer's home or storefront country.
+**Why:** A storefront's identity and commercial catalogue are stable retailer metadata, while delivery eligibility belongs to a specific listing and can include markets outside the retailer's country, as with Stylevana or YesStyle serving Canada.
+**Implications:** Do not infer offer placement from retailer country. An empty `availableMarkets` array means unverified market coverage, not worldwide coverage. The MVP keeps the array representation; a normalized offer-market model is deferred until market-specific availability, shipping, threshold, or verification attributes are required.
+
+### 2026-09-12 — Benchmark CAD estimates use cached runtime exchange rates
+**Status:** Accepted
+**Decision:** Keep benchmark prices in their native currencies and calculate approximate CAD display values through a reusable server-side conversion layer. For MVP, use the latest available Bank of Canada daily exchange rate, cache responses for 24 hours, and show the rate source and date. Do not create a persistent exchange-rate model yet.
+**Why:** CAD conversions are convenience estimates that can become stale independently of benchmark data. Runtime conversion avoids hardcoded seed values and duplicate benchmark records while keeping the native source value authoritative.
+**Implications:** Non-CAD benchmarks display as native value followed by an approximate `CA$` value when a rate is available. A failed or unsupported conversion never hides the native benchmark. The conversion math is shared for later offer and shopping-list use. Existing nullable conversion snapshot fields remain optional and are not populated by the curated benchmark seed.
+
+### 2026-09-12 — Authenticated collection mutations are version-scoped and transactional
+**Status:** Accepted
+**Decision:** Persist Want, Tried, Holy Grail, Would Repurchase, and personal rating per user and `ProductVersion`; retain the selected variant only as context and for variant-specific `PurchaseInstance` creation. Derive version-level Owned from the existence of a purchase for any variant in that version.
+**Why:** Relationship state and ratings describe a formulation/version, while acquisitions must retain exact size/variant history. Compound invariants must remain correct under retries and concurrent requests.
+**Implications:** The first Owned action transactionally removes Want and creates exactly one purchase. Repeating Owned is idempotent and exposes a separately confirmed Add another purchase action. Would Repurchase and rating require either existing Tried state or an explicit combined confirmation. Mutations use serializable Prisma transactions with bounded conflict retry, and Holy Grail is never cleared by lifecycle changes. Earlier wording that implied version relationship flags were variant-scoped is superseded by this clarification.
+
+### 2026-09-12 — Shopping-list savings compare target-market offers with target-market benchmarks
+**Status:** Accepted
+**Decision:** Shopping-list destination cost and savings use an eligible offer whose availableMarkets contains the list target market and the strongest trustworthy benchmark for that same market and exact variant. The UI defaults to the lowest eligible raw product-price offer and lets the user choose another eligible offer, but that choice is temporary view state rather than a persisted retailer commitment.
+**Why:** A shopping list represents exact-variant purchase intent while current retailer offers can change. Comparing a visible selected offer with an honestly labeled local benchmark makes the estimate inspectable without freezing stale offer data.
+**Implications:** This supersedes the earlier Canada-offer comparison formula. Multiply both sides by requested quantity; preserve native currencies; use the reusable Bank of Canada layer for approximate CAD totals; exclude any product missing an offer, benchmark, or necessary conversion; disclose included/excluded product counts and reasons; label every incomplete result Partial estimate. Shipping, affiliate data, and bundle value never affect selection or savings.
+
+### 2026-09-12 — Shopping-list purchase progress records acquisition deltas
+**Status:** Accepted
+**Decision:** purchasedQuantity is an absolute, monotonic count for the list item. Increasing it creates one linked PurchaseInstance whose quantity equals only the newly purchased delta; repeating the same target value creates no additional purchase.
+**Why:** Absolute updates are retry-safe, and the existing PurchaseInstance.quantity field represents a specific acquired quantity without generating one database row per identical unit.
+**Implications:** Decreasing purchased quantity is not part of this MVP flow. Planned quantity cannot be reduced below purchased quantity. Recording a list purchase also clears Want for the corresponding version in the same transaction.

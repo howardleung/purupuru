@@ -21,7 +21,7 @@ Exit criteria:
 
 ## Phase 1 — Foundation / first vertical slice
 
-Status: started. The monorepo, web application shell, shared package boundaries, environment template, and Prisma foundation are scaffolded; product-domain features remain unimplemented.
+Status: implementation foundation complete. The monorepo, database schema and migrations, Neon connection, Clerk foundation, and shared package boundaries are operational. The first read-only catalogue slice is implemented as the opening Phase 2 increment; personal actions listed below remain unimplemented.
 
 Build infrastructure and one strong end-to-end functional product page, not the whole platform.
 
@@ -51,6 +51,8 @@ Deliver:
 - tests for version isolation and offer sorting
 
 ## Phase 2 — MVP catalogue and personal collection
+
+Status: started. The catalogue slice includes two curated product families, canonical category browse, product/brand search, version and size selection, benchmark and external-signal display, and offer sections backed by PostgreSQL. Authenticated version-level Want, Tried, Owned/purchase, Holy Grail, Would Repurchase, private half-step rating actions, and private target-market shopping lists are now implemented. Shopping lists include exact-variant quantities, partial purchase recording, eligible offer selection, runtime CAD conversion, and partial-estimate coverage disclosure. Broader collection views, purchase-detail editing, and catalogue expansion remain outstanding.
 
 Deliver:
 - ~100 curated skincare products

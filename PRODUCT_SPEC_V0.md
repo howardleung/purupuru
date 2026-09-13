@@ -574,7 +574,7 @@ Autocomplete may show a matching brand result followed by matching products. For
 
 Local-language names, deeper origin filtering, and version-specific search are post-MVP considerations.
 
-MVP browse/discovery includes canonical category navigation and simple category-filtered browse views, alongside curated/editorial sections and simple platform-derived sections such as Most Wanted and Newly Added. Category browse pages and product pages show compact, clickable breadcrumbs derived from the canonical category path (for example, `Skincare > Toners > Toner`) for orientation and back-navigation. Breadcrumb labels and routes use canonical taxonomy data, never retailer-specific categories, and should remain compatible with SEO-friendly web routes. It may include Best savings vs Canada where the required comparison data exists.
+MVP browse/discovery includes canonical category navigation and simple category-filtered browse views, alongside curated/editorial sections and simple platform-derived sections such as Most Wanted and Newly Added. Category browse pages and product pages show compact, clickable breadcrumbs derived from the canonical category path (for example, `Skincare > Toners > Toner`) for orientation and back-navigation. Breadcrumb labels and routes use canonical taxonomy data, never retailer-specific categories, and should remain compatible with SEO-friendly web routes. It may include destination-market shopping-list price estimates where the required comparison data exists.
 
 Do not claim local Trending rankings until a legitimate repeatable data source exists. No giant filter builder yet.
 
@@ -584,7 +584,7 @@ Autocomplete should surface matching brands and products as the user types. For 
 
 Collection states are not all mutually exclusive. A product can be Owned and Tried at the same time. `Holy Grail` and `Would Repurchase` should be modeled as tags/endorsements rather than mutually exclusive lifecycle states.
 
-`Want` represents wishlist intent for a product/variant the user has not yet purchased. When a Wanted product is added to Owned or purchased, remove Want automatically for that product/variant. Repeat-purchase intent should be represented through `Would Repurchase` and/or by adding the product to a shopping list rather than keeping it in Want. Finished refers to a purchase instance, not the abstract product.
+`Want` represents first-time wishlist intent for a `ProductVersion` the user has not yet purchased. The selected variant may be retained as interaction context, but relationship state is version-scoped. When a Wanted version is added to Owned or purchased, remove Want automatically for that version. Repeat-purchase intent should be represented through `Would Repurchase` and/or by adding the product to a shopping list rather than keeping it in Want. Finished refers to a purchase instance, not the abstract product.
 
 The MVP distinguishes `CollectionEntry` from `PurchaseInstance`. One user might have bought the same toner three times.
 
@@ -602,13 +602,13 @@ The platform should distinguish three benchmark price concepts and use the stron
 2. `Retail Price`: an official retail price where supported by an official source, or a trusted major local retail price when a meaningful manufacturer MSRP is not available.
 3. `Reference Price`: a stable, trusted local-market benchmark used when neither an official MSRP nor an official/trusted Retail Price is available cleanly.
 
-All benchmark prices should retain their native currency, source, market, and last-verified date. The product page should show the benchmark price prominently and, where conversion is available, also show its CAD equivalent.
+All benchmark prices should retain their native currency, source, market, and last-verified date. The product page should show the native benchmark prominently and show every available non-CAD conversion inline as an approximate CAD convenience value. The CAD estimate is calculated through the reusable server-side currency-conversion layer using a dated Bank of Canada daily rate; it is not a second benchmark price and is not hardcoded into product or benchmark seed data. If a rate is unavailable, continue showing the native benchmark normally.
 
 Recent observed prices should be shown separately from the benchmark price rather than constantly replacing it.
 
-“Best savings vs Canada” compares the destination benchmark price against the lowest currently tracked Canadian offer for the exact version and variant. The benchmark may be MSRP, Retail Price, or Reference Price according to the hierarchy above.
+Shopping-list estimated savings compares the user-selected eligible destination-market offer price against the strongest trustworthy benchmark for that same target market, exact version, and exact variant. The initial selection is the lowest eligible raw product-price offer; the user may choose another eligible offer for comparison. Offer selection is temporary view state rather than a frozen retailer choice on the list item. The benchmark may be MSRP, Retail Price, or Reference Price according to the hierarchy above.
 
-If no sufficiently verified destination benchmark price exists, do not calculate savings for that product. If no Canadian tracked offer exists, do not calculate savings for that product. Missing prices must never be treated as zero or silently substituted with unrelated offers.
+If no sufficiently verified target-market benchmark price or eligible target-market offer exists, do not calculate savings for that product. If either side cannot be converted for the common CAD estimate, exclude it from the numeric savings total while continuing to show any trustworthy native-currency price. Missing prices must never be treated as zero or silently substituted with unrelated offers.
 
 ### Offer Ranking
 
@@ -711,7 +711,7 @@ CAD is the MVP user's display currency. Preserve the retailer's native currency 
 - `Tried` may be set independently of `Owned`; a user may have sampled or previously used a product without having a recorded purchase.
 - Lifecycle changes must not silently remove `Holy Grail`.
 
-`Want` is first-time wishlist intent. Adding or moving an exact product variant to `Owned` automatically removes `Want` for that variant. Repurchase intent should be represented through `Would Repurchase` and/or a shopping-list quantity, not by keeping the item in `Want`.
+`Want` is first-time wishlist intent. Adding the selected `ProductVersion` to `Owned` automatically removes `Want` for that version. The resulting `PurchaseInstance` records the exact variant selected at purchase time. Repurchase intent should be represented through `Would Repurchase` and/or a shopping-list quantity, not by keeping the item in `Want`.
 
 ### Product-Page Version and Variant Defaults
 
@@ -733,9 +733,9 @@ Shopping lists have a target market/destination in MVP. Items can be marked purc
 
 Each `ShoppingListItem` supports a `quantity >= 1`. Users may intentionally plan to buy multiple units of the same exact variant. Adding the same exact variant to the same list again should increase its quantity or expose a quantity selector rather than reject it as a duplicate.
 
-Shopping-list benchmark totals and savings calculations must multiply valid benchmark and comparison prices by quantity. If a product lacks either a sufficiently verified destination benchmark price or a tracked Canadian comparison price, exclude that product entirely from the savings calculation rather than treating the missing value as zero.
+Shopping-list destination totals and savings calculations multiply valid selected-offer and benchmark prices by quantity. Savings compare the selected eligible offer for the list target market with the strongest trustworthy benchmark for that same market and exact variant. If a product lacks either side, exclude that product entirely from the savings calculation rather than treating the missing value as zero.
 
-The UI must disclose missing coverage near the estimate, for example: `2 products excluded because no verified Korea benchmark price is available.` If missing coverage is substantial, label the result as a `Partial estimate` rather than presenting it with false precision. Coverage messaging should refer primarily to unique products rather than unit count.
+The UI must disclose missing coverage near the estimate, for example: `2 products excluded because no verified Korea benchmark price is available.` If any products are excluded, label the result as a Partial estimate rather than presenting it with false precision. Coverage messaging should refer primarily to unique products rather than unit count.
 
 Marking a shopping-list item purchased should create or link a `PurchaseInstance` for the purchased quantity, with purchase metadata optional. The interaction may offer a lightweight follow-up to add purchase details but should not block completion.
 
@@ -871,7 +871,7 @@ Version selection should normally use compact pill/button controls when the numb
 
 External ratings should be shown as polished compact source signals, using the source/platform logo where permitted alongside its rating and relevant review count or ranking. They should not require separate full-size cards for every source.
 
-Price comparison should be visible in one continuous view rather than hidden behind market tabs. For the Canadian MVP, all tracked retailers from which the selected variant can be purchased for delivery to Canada should appear together under `Buy in Canada`, regardless of the retailer's country. Separate local-market sections such as `Buy in Japan` or `Buy in Korea` are used for locally relevant offers and travel-planning context.
+Price comparison should be visible in one continuous view rather than hidden behind market tabs. For the Canadian MVP, all tracked offers known to serve Canada should appear together under `Buy in Canada`, regardless of the retailer's home or storefront country. `Offer.availableMarkets` represents known customer/delivery markets for the specific offer; it is not the retailer's country. Retailer storefronts with materially different catalogue, inventory, pricing, or currency—such as `Amazon.ca` and `Amazon.jp`—remain distinct retailer records. Separate local-market sections such as `Buy in Japan` or `Buy in Korea` are used for locally relevant offers and travel-planning context. A normalized offer-market availability model is deferred until market-specific attributes such as shipping or availability justify it.
 
 The product's strongest available local benchmark—official `MSRP`, official or trusted local `Retail Price`, or trusted `Reference Price`—should appear prominently in the main product details rather than being buried as merely another retailer row. Show its native currency, CAD conversion when available, source, and last-verified date. This benchmark is a core shopping-intelligence feature because it gives users context for what the product is normally intended to cost in its local market.
 
@@ -879,7 +879,7 @@ Offer tables should expose useful facts without trying to make the entire purcha
 
 Bundle offers remain in the normal offer list rather than a separate bundle section. Each offer may include factual `Extras` such as `Includes 15 g mini + pouch`. Extras do not affect default offer ordering.
 
-Where a valid destination benchmark and Canadian comparison exist, the UI may show the difference/savings. Shopping-list estimates must disclose any products excluded because required benchmark/comparison data is missing.
+Where a valid target-market offer and benchmark exist for the exact variant, the shopping-list UI may show the difference/savings. Shopping-list estimates must disclose any products excluded because required offer, benchmark, or conversion data is missing.
 
 ### Profile Showcase Foundation
 
