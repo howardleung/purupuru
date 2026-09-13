@@ -825,6 +825,8 @@ User-created groupings such as “Winter Routine,” “Japan Haul,” “Favour
 
 MVP collection-state views such as Want, Owned, Tried, and Finished may still use a shelf-like visual treatment, but they are system-defined states rather than user-created shelves.
 
+The private MVP `My Collection` page presents one item per `ProductVersion`, combining Want, Tried, derived Owned state, Holy Grail, Would Repurchase, the private personal rating, and purchase summary without duplicating a product for each tag. Users can compose state filters and sort by recent activity, rating, or deterministic brand/product order. The page links back to the applicable product version and selected/default variant. Public collection sharing remains post-MVP.
+
 The schema should support future public visibility, descriptions/comments, and profile showcasing even if those social features are not all exposed in the MVP.
 
 ### Collection Interaction and Drag-and-Drop

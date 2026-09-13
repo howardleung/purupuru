@@ -1,0 +1,122 @@
+import "server-only";
+
+import { prisma, type Prisma } from "@beauty-platform/database";
+import {
+  normalizeCollectionItems,
+  type CollectionContribution,
+  type CollectionVersionBase,
+  type MyCollectionItem,
+} from "@beauty-platform/domain/my-collection";
+
+const versionContext = {
+  productFamily: {
+    include: {
+      brand: true,
+      primaryCanonicalCategory: true,
+    },
+  },
+  defaultVariant: true,
+  variants: {
+    where: { isActive: true },
+    orderBy: [{ normalizedQuantity: "asc" }, { normalizedUnit: "asc" }],
+    take: 1,
+  },
+} satisfies Prisma.ProductVersionInclude;
+
+type VersionContext = Prisma.ProductVersionGetPayload<{ include: typeof versionContext }>;
+
+function variantContext(variant: { id: string; displaySize: string } | null | undefined) {
+  return variant ? { id: variant.id, label: variant.displaySize } : null;
+}
+
+function versionBase(version: VersionContext): CollectionVersionBase {
+  const family = version.productFamily;
+  const fallbackVariant = version.defaultVariant ?? version.variants[0] ?? null;
+
+  return {
+    productVersionId: version.id,
+    productFamilyId: family.id,
+    productSlug: family.slug,
+    productName: family.canonicalName,
+    brandName: family.brand.name,
+    versionName: version.versionName,
+    categoryName: family.primaryCanonicalCategory.displayName,
+    defaultVariantId: fallbackVariant?.id ?? null,
+    defaultVariantLabel: fallbackVariant?.displaySize ?? null,
+  };
+}
+
+export async function getMyCollectionForUser(userId: string): Promise<MyCollectionItem[]> {
+  const [entries, ratings, purchases] = await Promise.all([
+    prisma.collectionEntry.findMany({
+      where: { userId },
+      include: {
+        tags: true,
+        selectedVariant: true,
+        productVersion: { include: versionContext },
+      },
+    }),
+    prisma.userRating.findMany({
+      where: { userId },
+      include: {
+        contextualVariant: true,
+        productVersion: { include: versionContext },
+      },
+    }),
+    prisma.purchaseInstance.findMany({
+      where: { userId },
+      include: {
+        retailer: true,
+        productVariant: {
+          include: {
+            productVersion: { include: versionContext },
+          },
+        },
+      },
+    }),
+  ]);
+
+  const contributions: CollectionContribution[] = [
+    ...entries.map(
+      (entry): CollectionContribution => ({
+        kind: "RELATIONSHIP",
+        base: versionBase(entry.productVersion),
+        wants: entry.wants,
+        tried: entry.tried,
+        tagKinds: entry.tags.map((tag) => tag.kind),
+        selectedVariant: variantContext(entry.selectedVariant),
+        updatedAt: entry.updatedAt.toISOString(),
+      }),
+    ),
+    ...ratings.map(
+      (rating): CollectionContribution => ({
+        kind: "RATING",
+        base: versionBase(rating.productVersion),
+        ratingHalfSteps: rating.ratingHalfSteps,
+        contextualVariant: variantContext(rating.contextualVariant),
+        updatedAt: rating.updatedAt.toISOString(),
+      }),
+    ),
+    ...purchases.map(
+      (purchase): CollectionContribution => ({
+        kind: "PURCHASE",
+        base: versionBase(purchase.productVariant.productVersion),
+        purchase: {
+          id: purchase.id,
+          quantity: purchase.quantity,
+          purchaseDate: purchase.purchaseDate?.toISOString() ?? null,
+          createdAt: purchase.createdAt.toISOString(),
+          updatedAt: purchase.updatedAt.toISOString(),
+          source: purchase.source,
+          retailerName: purchase.retailer?.name ?? purchase.customRetailer ?? null,
+          variant: {
+            id: purchase.productVariant.id,
+            label: purchase.productVariant.displaySize,
+          },
+        },
+      }),
+    ),
+  ];
+
+  return normalizeCollectionItems(contributions);
+}

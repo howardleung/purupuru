@@ -18,6 +18,13 @@ export function SiteHeader() {
             <Link className="text-sm text-slate-600 hover:text-slate-950" href="/shopping-lists">
               Shopping lists
             </Link>
+            {isClerkConfigured ? (
+              <SignedIn>
+                <Link className="text-sm text-slate-600 hover:text-slate-950" href="/collection">
+                  My Collection
+                </Link>
+              </SignedIn>
+            ) : null}
           </nav>
         </div>
 

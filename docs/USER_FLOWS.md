@@ -211,20 +211,30 @@ Future receipt import can automate this flow but is not MVP.
 
 ## 10. Collection page
 
-MVP system views may include:
-- Want
-- Owned
-- Tried
-- Finished purchase history
+`/collection` is private to the signed-in user. Anonymous visitors see a sign-in prompt rather than private data or a misleading empty collection.
 
-Tags/filters may include:
+The page returns one normalized card per `ProductVersion`, even when the version has multiple relationship tags or purchases. Each card may show:
+- brand, ProductFamily name, and version
+- selected variant or deterministic default size when available
+- Want, Tried, derived Owned, Holy Grail, and Would Repurchase indicators
+- the private version-level personal rating
+- purchase-record count, acquired quantity, and useful latest-purchase context
+- a direct link to the matching product version and variant
+
+System filters are:
+- All
+- Want
+- Tried
+- Owned
 - Holy Grail
 - Would Repurchase
 
-User-created thematic collections are separate objects.
+Multiple selected filters compose with AND semantics. Sorting supports Recently updated, Rating high to low, and deterministic brand/product alphabetical order. The entire-page empty state links to catalogue browsing; a filter with no matches explains that state and offers to clear filters.
+
+Owned remains derived from `PurchaseInstance` records and viewing this page never creates or duplicates a purchase. Finished remains purchase-instance history rather than a version-level relationship filter in this first collection view. User-created thematic collections and public sharing are separate post-MVP objects.
 
 ### Drag/drop
-Where supported:
+Where supported later:
 - Want → Owned triggers the same domain action as Owned button.
 - Product → thematic collection adds membership only when optional/post-MVP thematic collections are in scope.
 - Product → Holy Grail adds tag only.

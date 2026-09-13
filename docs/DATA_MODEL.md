@@ -270,6 +270,7 @@ Conceptually supports:
 `Want` is first-time wishlist intent. Ownership is derived/supported through PurchaseInstances.
 
 Implementation clarification: a `CollectionEntry` is unique per user and `ProductVersion`, with an optional selected `ProductVariant` as UI context. This prevents duplicate relationship state while keeping ratings at version level and purchases at variant level. `Owned` is derived for the version when the user has at least one `PurchaseInstance` whose variant belongs to that version; each purchase still records its exact variant. The first Owned action is idempotent, while the explicit Add another purchase action creates one additional instance for the currently selected variant.
+The private My Collection read model is assembled from three fixed, user-scoped query sets: `CollectionEntry` plus tags, `UserRating`, and `PurchaseInstance`. The presentation layer unions those records by `ProductVersion`, yielding one normalized item per user/version with relationship flags, rating, selected/default variant context, purchase count, acquired quantity, and latest purchase context. This avoids tag-driven duplicate cards and N+1 queries without adding a persistent aggregate table.
 
 ### CollectionTag
 Initial product/user relationship tags:

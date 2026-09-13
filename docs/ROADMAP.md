@@ -52,7 +52,7 @@ Deliver:
 
 ## Phase 2 — MVP catalogue and personal collection
 
-Status: started. The catalogue slice includes two curated product families, canonical category browse, product/brand search, version and size selection, benchmark and external-signal display, and offer sections backed by PostgreSQL. Authenticated version-level Want, Tried, Owned/purchase, Holy Grail, Would Repurchase, private half-step rating actions, and private target-market shopping lists are now implemented. Shopping lists include exact-variant quantities, partial purchase recording, eligible offer selection, runtime CAD conversion, and partial-estimate coverage disclosure. Broader collection views, purchase-detail editing, and catalogue expansion remain outstanding.
+Status: started. The catalogue slice includes two curated product families, canonical category browse, product/brand search, version and size selection, benchmark and external-signal display, and offer sections backed by PostgreSQL. Authenticated version-level Want, Tried, Owned/purchase, Holy Grail, Would Repurchase, private half-step rating actions, private target-market shopping lists, and the private version-normalized My Collection browse view are now implemented. Shopping lists include exact-variant quantities, partial purchase recording, eligible offer selection, runtime CAD conversion, and partial-estimate coverage disclosure. Purchase-detail editing, onboarding, collection statistics, and catalogue expansion remain outstanding.
 
 Deliver:
 - ~100 curated skincare products

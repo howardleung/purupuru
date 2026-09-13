@@ -234,3 +234,8 @@ This file records settled choices and the rationale behind them. New decisions s
 **Decision:** purchasedQuantity is an absolute, monotonic count for the list item. Increasing it creates one linked PurchaseInstance whose quantity equals only the newly purchased delta; repeating the same target value creates no additional purchase.
 **Why:** Absolute updates are retry-safe, and the existing PurchaseInstance.quantity field represents a specific acquired quantity without generating one database row per identical unit.
 **Implications:** Decreasing purchased quantity is not part of this MVP flow. Planned quantity cannot be reduced below purchased quantity. Recording a list purchase also clears Want for the corresponding version in the same transaction.
+### 2026-09-13 — My Collection is a version-normalized private read model
+**Status:** Accepted
+**Decision:** Build the private My Collection view by merging user-scoped `CollectionEntry`/tag, `UserRating`, and `PurchaseInstance` records into one presentation item per `ProductVersion`. State filters compose with AND semantics; recent, rating, and alphabetical sorts use deterministic tie-breaking.
+**Why:** Relationship state and ratings are version-scoped while ownership remains exact-variant purchase history. A read model presents that split coherently without duplicate cards, N+1 lookups, or a new persisted aggregate.
+**Implications:** The route requires authentication and never creates ownership while reading. Rating-only or purchase-only history still appears, Owned is derived from purchases, selected collection context is preferred for product links with rating, purchase, and default variant fallbacks, and public collection sharing remains deferred.
