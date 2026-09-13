@@ -6,8 +6,9 @@ These flows describe intended product behavior. Exact visual design is not fixed
 
 1. User lands on the responsive website without an account.
 2. They can browse/search products by canonical category, prices, benchmark pricing, external signals, and curated discovery sections.
-3. Clicking a product card navigates to its ProductFamily page.
+3. Clicking a product card navigates to its ProductFamily page with the displayed current version and default variant preserved.
 4. No authentication is required until the user attempts a personal action.
+5. When signed in, the same catalogue may add compact private state for the current version; anonymous cards remain catalogue-only.
 
 ## 2. Browse by category
 
@@ -44,6 +45,8 @@ A brand result can lead to a minimal brand page listing supported products, even
 ## 4. Product page
 
 ### Above the fold
+
+The product page groups version-level collection actions and exact-variant shopping-list planning into one clear Save and plan area. A successful list addition provides a direct link to the updated private list.
 Present, in a calm hierarchy:
 - compact, clickable breadcrumbs from the primary canonical category path, for example `Skincare > Toners > Toner`
 - product image
@@ -91,6 +94,16 @@ Shipping/delivery may appear as optional supporting information only when suffic
 Show local-market offers/reference context useful for travel planning.
 
 Bundles remain normal offer rows. Example Extras: `15 g mini + pouch`.
+
+### Price history
+For the selected ProductVersion and exact ProductVariant:
+1. Show only dated PriceObservation records that match a currently tracked offer's retailer and listing/source URL.
+2. Keep each retailer/listing in its own series; never blend retailers, versions, sizes, or bundle listings.
+3. Show the current tracked offer price separately with its last-verified date.
+4. Show historical observations chronologically in native currency with their observation date and evidence label.
+5. Do not infer an observation from the current offer price.
+6. If one observation exists, label the series as sparse. If none exist, explain that more observations may appear as Otoku continues tracking.
+7. Do not show historical CAD estimates until Otoku can use an exchange rate appropriate to each observation date.
 
 ### Empty/stale states
 - No Canadian offer → `No Canadian buying options currently tracked.`

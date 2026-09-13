@@ -9,6 +9,7 @@ import {
   updateShoppingListItemQuantity,
 } from "../app/shopping-lists/actions";
 import { marketName } from "../lib/markets";
+import { productSelectionHref } from "../lib/product-links";
 import type {
   PreparedShoppingList,
   PreparedShoppingListItem,
@@ -118,8 +119,11 @@ export function ShoppingListDetails({ list }: { list: PreparedShoppingList }) {
 
   return (
     <div className="grid gap-6">
-      <section className="rounded-xl border border-slate-200 p-5">
-        <p className="text-sm text-slate-500">Target market · {marketName(list.targetMarket)}</p>
+      <section className="rounded-xl border border-slate-200 p-4 sm:p-5">
+        <Link className="text-sm font-medium text-slate-600 underline underline-offset-4" href="/shopping-lists">
+          ← All shopping lists
+        </Link>
+        <p className="mt-4 text-sm text-slate-500">Target market · {marketName(list.targetMarket)}</p>
         <h1 className="mt-1 text-3xl font-semibold tracking-tight">{list.name}</h1>
         <p className="mt-2 text-sm text-slate-600">
           Prices use offers explicitly recorded as serving {marketName(list.targetMarket)}.
@@ -145,7 +149,7 @@ export function ShoppingListDetails({ list }: { list: PreparedShoppingList }) {
               const quantityTarget = quantityTargets[item.id] ?? item.quantity;
               const purchaseTarget = purchaseTargets[item.id] ?? item.purchasedQuantity;
               return (
-                <article className="rounded-xl border border-slate-200 p-5" key={item.id}>
+                <article className="rounded-xl border border-slate-200 p-4 sm:p-5" key={item.id}>
                   <div className="flex flex-wrap items-start justify-between gap-4">
                     <div>
                       <p className="text-sm font-medium uppercase tracking-wide text-slate-500">
@@ -154,7 +158,11 @@ export function ShoppingListDetails({ list }: { list: PreparedShoppingList }) {
                       <h2 className="mt-1 text-lg font-semibold">
                         <Link
                           className="underline decoration-slate-300 underline-offset-2"
-                          href={`/products/${item.productSlug}?version=${item.productVersionId}&variant=${item.productVariantId}`}
+                          href={productSelectionHref({
+                            productSlug: item.productSlug,
+                            versionKey: item.productVersionId,
+                            variantId: item.productVariantId,
+                          })}
                         >
                           {item.productName}
                         </Link>
@@ -173,7 +181,7 @@ export function ShoppingListDetails({ list }: { list: PreparedShoppingList }) {
                       Destination offer
                       {item.offers.length > 0 ? (
                         <select
-                          className="rounded-md border border-slate-300 bg-white px-3 py-2 font-normal"
+                          className="min-w-0 w-full rounded-md border border-slate-300 bg-white px-3 py-2 font-normal"
                           onChange={(event) =>
                             setSelectedOfferIds((current) => ({
                               ...current,
@@ -249,7 +257,7 @@ export function ShoppingListDetails({ list }: { list: PreparedShoppingList }) {
                     <div className="grid gap-3">
                       <label className="grid gap-1 text-sm font-medium text-slate-700">
                         Planned quantity
-                        <div className="flex gap-2">
+                        <div className="grid grid-cols-[minmax(0,1fr)_auto] gap-2">
                           <input
                             className="min-w-0 flex-1 rounded-md border border-slate-300 px-3 py-2 font-normal"
                             min={Math.max(1, item.purchasedQuantity)}
@@ -298,7 +306,7 @@ export function ShoppingListDetails({ list }: { list: PreparedShoppingList }) {
 
                       <label className="grid gap-1 text-sm font-medium text-slate-700">
                         Mark purchased
-                        <div className="flex gap-2">
+                        <div className="grid grid-cols-[minmax(0,1fr)_auto] gap-2">
                           <input
                             className="min-w-0 flex-1 rounded-md border border-slate-300 px-3 py-2 font-normal"
                             max={item.quantity}
@@ -354,7 +362,7 @@ export function ShoppingListDetails({ list }: { list: PreparedShoppingList }) {
             })}
           </section>
 
-          <section className="rounded-xl border border-slate-900 bg-slate-950 p-6 text-white">
+          <section className="rounded-xl border border-slate-900 bg-slate-950 p-4 text-white sm:p-6">
             <p className="text-sm text-slate-300">Estimated destination cost</p>
             <div className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-xl font-semibold">
               {nativeTotals.length > 0

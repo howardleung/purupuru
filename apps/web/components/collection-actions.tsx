@@ -6,6 +6,7 @@ import type {
   CollectionMutationIntent,
   CollectionRelationshipState,
 } from "@beauty-platform/domain/collection";
+import Link from "next/link";
 import { useCallback, useEffect, useRef, useState, useTransition } from "react";
 
 import { updateProductCollection } from "../app/products/[slug]/collection-actions";
@@ -80,7 +81,7 @@ function confirmationRequest(
 
 function actionClass(active: boolean) {
   return (
-    "rounded-md border px-3 py-2 text-sm font-medium transition " +
+    "w-full rounded-md border px-3 py-2 text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto " +
     (active
       ? "border-slate-900 bg-slate-900 text-white"
       : "border-slate-300 bg-white text-slate-700 hover:border-slate-500")
@@ -144,9 +145,7 @@ export function CollectionActions({
               confirmLabel: "Confirm",
             },
           );
-          return;
         }
-
       });
     },
     [openSignIn, productSlug, productVariantId, productVersionId, state, variantLabel],
@@ -196,75 +195,89 @@ export function CollectionActions({
   const disabled = !isLoaded || isPending;
 
   return (
-    <section className="rounded-xl border border-slate-200 bg-slate-50 p-4" aria-labelledby="collection-actions-title">
-      <div>
-        <h2 className="text-sm font-semibold" id="collection-actions-title">Your collection</h2>
-        <p className="mt-1 text-xs text-slate-500">
-          {stateLabels.length > 0 ? stateLabels.join(" · ") : "No personal state saved for this version."}
-        </p>
+    <div aria-labelledby="collection-actions-title">
+      <div className="flex flex-wrap items-start justify-between gap-2">
+        <div>
+          <h3 className="text-sm font-semibold" id="collection-actions-title">Your collection</h3>
+          <p className="mt-1 text-xs text-slate-500">
+            {stateLabels.length > 0 ? stateLabels.join(" · ") : "No personal state saved for this version."}
+          </p>
+        </div>
+        {isSignedIn ? (
+          <Link className="text-xs font-medium text-slate-600 underline underline-offset-4" href="/collection">
+            Open My Collection
+          </Link>
+        ) : null}
       </div>
 
-      <div className="mt-4 flex flex-wrap gap-2">
-        <button
-          className={actionClass(state.wants)}
-          disabled={disabled || state.wants || state.purchaseCount > 0}
-          onClick={() => request({ type: "ADD_WANT" })}
-          title={state.purchaseCount > 0 ? "Want is for products not yet owned." : undefined}
-          type="button"
-        >
-          {state.wants ? "Wanted" : "Want"}
-        </button>
-        <button
-          className={actionClass(state.tried)}
-          disabled={disabled || state.tried}
-          onClick={() => request({ type: "ADD_TRIED" })}
-          type="button"
-        >
-          {state.tried ? "Tried" : "Mark Tried"}
-        </button>
-        {state.purchaseCount === 0 ? (
+      <div className="mt-4">
+        <p className="text-xs font-medium uppercase tracking-wide text-slate-500">Relationship</p>
+        <div className="mt-2 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
           <button
-            className={actionClass(false)}
-            disabled={disabled}
-            onClick={() => request({ type: "ADD_OWNED" })}
+            className={actionClass(state.wants)}
+            disabled={disabled || state.wants || state.purchaseCount > 0}
+            onClick={() => request({ type: "ADD_WANT" })}
+            title={state.purchaseCount > 0 ? "Want is for products not yet owned." : undefined}
             type="button"
           >
-            Mark Owned
+            {state.wants ? "Wanted" : "Want"}
           </button>
-        ) : (
-          <>
-            <button className={actionClass(true)} disabled type="button">
-              Owned
-            </button>
+          <button
+            className={actionClass(state.tried)}
+            disabled={disabled || state.tried}
+            onClick={() => request({ type: "ADD_TRIED" })}
+            type="button"
+          >
+            {state.tried ? "Tried" : "Mark Tried"}
+          </button>
+          {state.purchaseCount === 0 ? (
             <button
               className={actionClass(false)}
               disabled={disabled}
-              onClick={() => request({ type: "ADD_ANOTHER_PURCHASE" })}
+              onClick={() => request({ type: "ADD_OWNED" })}
               type="button"
             >
-              Add another purchase
+              Mark Owned
             </button>
-          </>
-        )}
-        <button
-          className={actionClass(state.holyGrail)}
-          disabled={disabled || state.holyGrail}
-          onClick={() => request({ type: "ADD_HOLY_GRAIL" })}
-          type="button"
-        >
-          {state.holyGrail ? "Holy Grail" : "Mark Holy Grail"}
-        </button>
-        <button
-          className={actionClass(state.wouldRepurchase)}
-          disabled={disabled || state.wouldRepurchase}
-          onClick={() => request({ type: "ADD_WOULD_REPURCHASE" })}
-          type="button"
-        >
-          {state.wouldRepurchase ? "Would Repurchase" : "Mark Would Repurchase"}
-        </button>
+          ) : (
+            <>
+              <button className={actionClass(true)} disabled type="button">Owned</button>
+              <button
+                className={actionClass(false)}
+                disabled={disabled}
+                onClick={() => request({ type: "ADD_ANOTHER_PURCHASE" })}
+                type="button"
+              >
+                Add another purchase
+              </button>
+            </>
+          )}
+        </div>
       </div>
 
-      <label className="mt-4 grid max-w-56 gap-1 text-sm font-medium text-slate-700">
+      <div className="mt-4">
+        <p className="text-xs font-medium uppercase tracking-wide text-slate-500">Tags</p>
+        <div className="mt-2 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
+          <button
+            className={actionClass(state.holyGrail)}
+            disabled={disabled || state.holyGrail}
+            onClick={() => request({ type: "ADD_HOLY_GRAIL" })}
+            type="button"
+          >
+            {state.holyGrail ? "Holy Grail" : "Mark Holy Grail"}
+          </button>
+          <button
+            className={actionClass(state.wouldRepurchase)}
+            disabled={disabled || state.wouldRepurchase}
+            onClick={() => request({ type: "ADD_WOULD_REPURCHASE" })}
+            type="button"
+          >
+            {state.wouldRepurchase ? "Would Repurchase" : "Mark Would Repurchase"}
+          </button>
+        </div>
+      </div>
+
+      <label className="mt-4 grid w-full gap-1 text-sm font-medium text-slate-700 sm:max-w-56">
         Personal rating
         <select
           className="rounded-md border border-slate-300 bg-white px-3 py-2 font-normal"
@@ -293,7 +306,7 @@ export function CollectionActions({
       {confirmation ? (
         <div className="mt-4 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-950">
           <p>{confirmation.message}</p>
-          <div className="mt-3 flex gap-2">
+          <div className="mt-3 flex flex-wrap gap-2">
             <button
               className="rounded-md bg-amber-950 px-3 py-2 text-xs font-medium text-white"
               disabled={isPending}
@@ -317,6 +330,6 @@ export function CollectionActions({
       <p aria-live="polite" className="mt-3 min-h-5 text-sm text-slate-600">
         {isPending ? "Saving…" : message}
       </p>
-    </section>
+    </div>
   );
 }

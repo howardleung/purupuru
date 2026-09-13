@@ -14,7 +14,7 @@ export const metadata: Metadata = { title: "Shopping lists" };
 export default async function ShoppingListsPage() {
   if (!isClerkConfigured) {
     return (
-      <main className="mx-auto max-w-5xl px-6 py-10">
+      <main className="mx-auto max-w-5xl px-4 py-8 sm:px-6 sm:py-10">
         <section className="rounded-xl border border-slate-200 bg-slate-50 p-6">
           <h1 className="text-2xl font-semibold">Shopping lists</h1>
           <p className="mt-2 text-sm text-slate-600">
@@ -28,7 +28,7 @@ export default async function ShoppingListsPage() {
   const user = await getOrCreateCurrentUser();
   if (!user) {
     return (
-      <main className="mx-auto max-w-5xl px-6 py-10">
+      <main className="mx-auto max-w-5xl px-4 py-8 sm:px-6 sm:py-10">
         <ShoppingListSignIn />
       </main>
     );
@@ -37,7 +37,7 @@ export default async function ShoppingListsPage() {
   const lists = await getShoppingListsForUser(user.id);
 
   return (
-    <main className="mx-auto max-w-5xl px-6 py-10">
+    <main className="mx-auto max-w-5xl px-4 py-8 sm:px-6 sm:py-10">
       <h1 className="text-3xl font-semibold tracking-tight">Shopping lists</h1>
       <p className="mt-2 text-sm text-slate-600">
         Private plans for exact product sizes and the markets where you intend to shop.

@@ -16,7 +16,7 @@ export const metadata: Metadata = { title: "Shopping list" };
 export default async function ShoppingListPage({ params }: PageProps) {
   if (!isClerkConfigured) {
     return (
-      <main className="mx-auto max-w-5xl px-6 py-10">
+      <main className="mx-auto max-w-5xl px-4 py-8 sm:px-6 sm:py-10">
         <p className="rounded-xl border border-slate-200 p-6 text-sm text-slate-600">
           Authentication must be configured before private shopping lists are available.
         </p>
@@ -27,7 +27,7 @@ export default async function ShoppingListPage({ params }: PageProps) {
   const user = await getOrCreateCurrentUser();
   if (!user) {
     return (
-      <main className="mx-auto max-w-5xl px-6 py-10">
+      <main className="mx-auto max-w-5xl px-4 py-8 sm:px-6 sm:py-10">
         <ShoppingListSignIn />
       </main>
     );
@@ -38,7 +38,7 @@ export default async function ShoppingListPage({ params }: PageProps) {
   if (!list) notFound();
 
   return (
-    <main className="mx-auto max-w-5xl px-6 py-10">
+    <main className="mx-auto max-w-5xl px-4 py-8 sm:px-6 sm:py-10">
       <ShoppingListDetails list={list} />
     </main>
   );

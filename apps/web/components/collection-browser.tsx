@@ -10,6 +10,8 @@ import {
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
+import { productSelectionHref } from "../lib/product-links";
+
 const filters: { value: CollectionFilter; label: string }[] = [
   { value: "WANT", label: "Want" },
   { value: "TRIED", label: "Tried" },
@@ -58,8 +60,8 @@ export function CollectionBrowser({ items }: { items: MyCollectionItem[] }) {
 
   return (
     <>
-      <section className="mt-8 rounded-xl border border-slate-200 p-4">
-        <div className="flex flex-wrap items-end justify-between gap-4">
+      <section className="mt-8 rounded-xl border border-slate-200 p-4 sm:p-5">
+        <div className="flex flex-col items-stretch justify-between gap-4 sm:flex-row sm:items-end">
           <div>
             <p className="text-sm font-medium text-slate-700">Filter your collection</p>
             <div aria-label="Collection filters" className="mt-3 flex flex-wrap gap-2">
@@ -99,10 +101,10 @@ export function CollectionBrowser({ items }: { items: MyCollectionItem[] }) {
             ) : null}
           </div>
 
-          <label className="grid gap-1 text-sm font-medium text-slate-700">
+          <label className="grid w-full gap-1 text-sm font-medium text-slate-700 sm:w-auto">
             Sort by
             <select
-              className="rounded-md border border-slate-300 bg-white px-3 py-2 font-normal"
+              className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 font-normal sm:w-auto"
               onChange={(event) => setSort(event.target.value as CollectionSort)}
               value={sort}
             >
@@ -122,12 +124,14 @@ export function CollectionBrowser({ items }: { items: MyCollectionItem[] }) {
         <section className="mt-3 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {visibleItems.map((item) => {
             const labels = stateLabels(item);
-            const href = `/products/${item.productSlug}?version=${item.productVersionId}${
-              item.selectedVariantId ? `&variant=${item.selectedVariantId}` : ""
-            }`;
+            const href = productSelectionHref({
+              productSlug: item.productSlug,
+              versionKey: item.productVersionId,
+              variantId: item.selectedVariantId,
+            });
 
             return (
-              <article className="flex flex-col rounded-xl border border-slate-200 p-5" key={item.productVersionId}>
+              <article className="flex flex-col rounded-xl border border-slate-200 p-4 sm:p-5" key={item.productVersionId}>
                 <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
                   {item.brandName}
                 </p>

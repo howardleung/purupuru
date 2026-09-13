@@ -3,6 +3,9 @@ import { notFound } from "next/navigation";
 
 import { CatalogueBrowser } from "../../../components/catalogue-browser";
 import { getCatalogue } from "../../../lib/catalogue";
+import { isClerkConfigured } from "../../../lib/clerk-config";
+import { getCurrentUser } from "../../../lib/current-user";
+import { getMyCollectionForUser } from "../../../lib/my-collection";
 
 export const dynamic = "force-dynamic";
 
@@ -19,15 +22,27 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function CategoryPage({ params, searchParams }: PageProps) {
   const [{ slug }, queryParams] = await Promise.all([params, searchParams]);
-  const catalogue = await getCatalogue({ categorySlug: slug, query: queryParams.q });
+  const [catalogue, currentUser] = await Promise.all([
+    getCatalogue({ categorySlug: slug, query: queryParams.q }),
+    isClerkConfigured ? getCurrentUser() : Promise.resolve(null),
+  ]);
 
   if (!catalogue.selectedCategory) notFound();
+
+  const personalItems = currentUser
+    ? await getMyCollectionForUser(currentUser.id, {
+        productVersionIds: catalogue.products.flatMap((product) =>
+          product.currentVersion ? [product.currentVersion.id] : [],
+        ),
+      })
+    : [];
 
   return (
     <CatalogueBrowser
       breadcrumbs={catalogue.breadcrumbs}
       categories={catalogue.categories}
       description={`Products classified under the canonical ${catalogue.selectedCategory.displayName} category.`}
+      personalItems={personalItems}
       products={catalogue.products}
       query={catalogue.query}
       selectedCategorySlug={catalogue.selectedCategory.slug}

@@ -9,10 +9,16 @@ const querySource = readFileSync(
 
 test("My Collection uses a fixed parallel query set with strict user scoping", () => {
   assert.match(querySource, /Promise\.all\(\[/);
-  assert.equal(querySource.match(/where:\s*\{\s*userId\s*\}/g)?.length, 3);
+  assert.equal(querySource.match(/where:\s*\{\s*userId,/g)?.length, 3);
   assert.match(querySource, /collectionEntry\.findMany/);
   assert.match(querySource, /userRating\.findMany/);
   assert.match(querySource, /purchaseInstance\.findMany/);
+});
+
+test("catalogue personalization can scope all sources to selected ProductVersions", () => {
+  assert.match(querySource, /options: \{ productVersionIds\?: readonly string\[\] \}/);
+  assert.match(querySource, /productVersionId: \{ in: productVersionIds \}/);
+  assert.match(querySource, /productVariant: \{ productVersionId: \{ in: productVersionIds \} \}/);
 });
 
 test("My Collection normalizes all sources by ProductVersion", () => {

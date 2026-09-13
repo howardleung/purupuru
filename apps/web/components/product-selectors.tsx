@@ -1,6 +1,8 @@
 import { chooseVariantForVersion, type VariantIdentity } from "@beauty-platform/domain";
 import Link from "next/link";
 
+import { productSelectionHref } from "../lib/product-links";
+
 type VariantOption = VariantIdentity & { displaySize: string };
 type VersionOption = {
   id: string;
@@ -11,11 +13,6 @@ type VersionOption = {
   variants: VariantOption[];
 };
 
-function productHref(slug: string, version: VersionOption, variantId: string | null) {
-  const params = new URLSearchParams({ version: version.versionCode ?? version.id });
-  if (variantId) params.set("variant", variantId);
-  return `/products/${slug}?${params.toString()}`;
-}
 
 export function ProductSelectors({
   productSlug,
@@ -49,7 +46,11 @@ export function ProductSelectors({
                     ? "border-slate-900 bg-slate-900 text-white"
                     : "border-slate-300 text-slate-700 hover:border-slate-500")
                 }
-                href={productHref(productSlug, version, target?.id ?? null)}
+                href={productSelectionHref({
+                  productSlug,
+                  versionKey: version.versionCode ?? version.id,
+                  variantId: target?.id,
+                })}
                 key={version.id}
               >
                 {version.versionName}
@@ -74,7 +75,11 @@ export function ProductSelectors({
                     ? "border-slate-900 bg-slate-900 text-white"
                     : "border-slate-300 text-slate-700 hover:border-slate-500")
                 }
-                href={productHref(productSlug, selectedVersion, variant.id)}
+                href={productSelectionHref({
+                  productSlug,
+                  versionKey: selectedVersion.versionCode ?? selectedVersion.id,
+                  variantId: variant.id,
+                })}
                 key={variant.id}
               >
                 {variant.displaySize}

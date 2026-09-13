@@ -550,6 +550,82 @@ async function main() {
     primaryQuantity: 1,
   });
 
+  const demoPriceHistory = [
+    {
+      productVariantId: dokdo200.id,
+      retailerId: well.id,
+      retailerName: well.name,
+      amount: 21.99,
+      nativeCurrency: "CAD",
+      observedAt: new Date("2026-07-15T00:00:00.000Z"),
+      verificationType: "OTHER",
+      sourceUrl: "https://well.ca/products/round-lab-1025-dokdo-toner_327666.html",
+    },
+    {
+      productVariantId: dokdo200.id,
+      retailerId: well.id,
+      retailerName: well.name,
+      amount: 19.99,
+      nativeCurrency: "CAD",
+      observedAt: new Date("2026-08-15T00:00:00.000Z"),
+      verificationType: "OTHER",
+      sourceUrl: "https://well.ca/products/round-lab-1025-dokdo-toner_327666.html",
+    },
+    {
+      productVariantId: dokdo200.id,
+      retailerId: well.id,
+      retailerName: well.name,
+      amount: 17.99,
+      nativeCurrency: "CAD",
+      observedAt: new Date("2026-09-11T00:00:00.000Z"),
+      verificationType: "OTHER",
+      sourceUrl: "https://well.ca/products/round-lab-1025-dokdo-toner_327666.html",
+    },
+    {
+      productVariantId: dokdo200.id,
+      retailerId: shoppers.id,
+      retailerName: shoppers.name,
+      amount: 22.99,
+      nativeCurrency: "CAD",
+      observedAt: new Date("2026-07-20T00:00:00.000Z"),
+      verificationType: "OTHER",
+      sourceUrl: "https://www.shoppersdrugmart.ca/round-lab-1025-dokdo-toner/p/BB_8809657114731?variantCode=8809657114731",
+    },
+    {
+      productVariantId: dokdo200.id,
+      retailerId: shoppers.id,
+      retailerName: shoppers.name,
+      amount: 20,
+      nativeCurrency: "CAD",
+      observedAt: new Date("2026-09-11T00:00:00.000Z"),
+      verificationType: "OTHER",
+      sourceUrl: "https://www.shoppersdrugmart.ca/round-lab-1025-dokdo-toner/p/BB_8809657114731?variantCode=8809657114731",
+    },
+    {
+      productVariantId: anessaNb90.id,
+      retailerId: shiseidoJapan.id,
+      retailerName: shiseidoJapan.name,
+      amount: 2508,
+      nativeCurrency: "JPY",
+      observedAt: new Date("2026-09-11T00:00:00.000Z"),
+      verificationType: "OTHER",
+      sourceUrl: "https://www.shiseido.co.jp/sw/products/auth/SWFG070410.seam?online_shohin_ctlg_kbn=2&shohin_pl_c_cd=H91002",
+    },
+  ];
+
+  await prisma.priceObservation.deleteMany({
+    where: {
+      OR: demoPriceHistory.map((observation) => ({
+        productVariantId: observation.productVariantId,
+        retailerId: observation.retailerId,
+        sourceUrl: observation.sourceUrl,
+        observedAt: observation.observedAt,
+        verificationType: observation.verificationType,
+      })),
+    },
+  });
+  await prisma.priceObservation.createMany({ data: demoPriceHistory });
+
   await prisma.benchmarkPrice.deleteMany({
     where: {
       productVariantId: { in: [dokdo200.id, dokdo500.id, anessaNb40.id, anessaNb90.id] },
@@ -661,7 +737,7 @@ async function main() {
 
   await prisma.offerItem.deleteMany({ where: { offerId: dokdoWellOffer.id } });
 
-  console.log("Seeded canonical taxonomy, 2 brands, 2 product families, 3 versions, and 5 variants.");
+  console.log("Seeded canonical taxonomy, 2 brands, 2 product families, 3 versions, 5 variants, and demo price observations.");
 }
 
 main()

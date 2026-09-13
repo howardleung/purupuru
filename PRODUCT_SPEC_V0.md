@@ -323,6 +323,7 @@ Each supported product should ideally contain:
 - availability state
 - bundle information
 - last-verified timestamps
+- variant-specific retailer price history with current prices kept distinct from recorded observations
 
 ### Collection Features
 
@@ -569,6 +570,7 @@ MVP should support:
 - canonical category
 
 Search results should represent products/product families rather than individual versions or variants. Version and variant selection belongs on the product page.
+For signed-in users, catalogue cards may add compact personal-state context for the family’s current `ProductVersion`, including Want, Tried, derived Owned, Holy Grail, Would Repurchase, and the private rating. This enrichment must reuse the normalized collection model, avoid per-card queries, remain absent for anonymous users, and label its current-version scope. Catalogue links should preserve the displayed current version and default variant so the product page opens in the expected context.
 
 Autocomplete may show a matching brand result followed by matching products. For product matches, simple MVP ordering may use available popularity signals where trustworthy, otherwise alphabetical order.
 

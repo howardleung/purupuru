@@ -239,3 +239,15 @@ This file records settled choices and the rationale behind them. New decisions s
 **Decision:** Build the private My Collection view by merging user-scoped `CollectionEntry`/tag, `UserRating`, and `PurchaseInstance` records into one presentation item per `ProductVersion`. State filters compose with AND semantics; recent, rating, and alphabetical sorts use deterministic tie-breaking.
 **Why:** Relationship state and ratings are version-scoped while ownership remains exact-variant purchase history. A read model presents that split coherently without duplicate cards, N+1 lookups, or a new persisted aggregate.
 **Implications:** The route requires authentication and never creates ownership while reading. Rating-only or purchase-only history still appears, Owned is derived from purchases, selected collection context is preferred for product links with rating, purchase, and default variant fallbacks, and public collection sharing remains deferred.
+
+### 2026-09-13 — Catalogue personalization is optional current-version enrichment
+**Status:** Accepted
+**Decision:** Keep the catalogue’s public product-family query independent of personal state, then optionally enrich visible current versions for a signed-in local user through the existing normalized collection read model. Use one shared product-selection URL helper across catalogue, product selectors, My Collection, and shopping lists.
+**Why:** Signed-in context makes discovery more useful, but it must not slow or gate anonymous browsing, duplicate collection rules in cards, introduce per-product queries, or lose exact version/variant context between screens.
+**Implications:** Personal indicators on catalogue cards are explicitly current-version scoped and absent anonymously. The enrichment filters the fixed collection query set to visible version IDs, and every known product return path carries version and variant parameters. No schema or persistence behavior changes.
+
+### 2026-09-13 — Price history uses exact tracked-offer observations
+**Status:** Accepted
+**Decision:** Build the first price-history view from native-currency PriceObservation records for the selected exact variant. Keep retailer/listing series independent by matching observation variant, retailer, and source URL to the tracked offer; display the current offer separately and never synthesize it into history.
+**Why:** Sparse curated observations can provide useful context only when Otoku preserves exact product and retailer identity and clearly avoids claiming complete market history.
+**Implications:** The existing model is sufficient for this foundation without migration. Historical CAD conversion is omitted until dated Bank of Canada rates or intentional conversion snapshots are supported. Initial seed values are labeled demo observations with verification type OTHER; scheduled collection, alerts, lowest-ever claims, and deal scoring remain deferred.

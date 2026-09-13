@@ -18,6 +18,10 @@ const productDetailsInclude = {
           benchmarkPrices: {
             orderBy: { verifiedAt: "desc" },
           },
+          priceObservations: {
+            orderBy: [{ observedAt: "asc" }, { id: "asc" }],
+            include: { retailer: true },
+          },
           offers: {
             where: { isActive: true },
             include: {

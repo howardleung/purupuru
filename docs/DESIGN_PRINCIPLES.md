@@ -110,7 +110,15 @@ Ask optionally:
 
 Both can be skipped and edited later. Skin type is not a diagnosis and should not trigger medical recommendations.
 
-## 11. Missing data should degrade gracefully
+## 11. Preserve continuity through the core journey
+
+Primary navigation keeps Browse, My Collection, Shopping Lists, and authentication understandable at desktop and mobile widths. Private destinations may remain visible to anonymous users as long as opening them produces a clear sign-in state rather than private or misleading empty data.
+
+Links between catalogue cards, product pages, My Collection, and shopping-list items should preserve the intended `ProductVersion` and exact `ProductVariant` whenever that context is known. Catalogue personalization is optional current-version enrichment and must never make anonymous discovery depend on personal data.
+
+Responsive behavior should favor reflow over compression: action controls may stack, filter chips may scroll or wrap, and dense offer tables should become readable mobile cards rather than forcing page-level horizontal overflow.
+
+## 12. Missing data should degrade gracefully
 
 No Canadian offers: say so.
 No benchmark: omit savings and explain missing coverage.
@@ -118,7 +126,7 @@ No external signal: omit the signal area rather than rendering an empty card.
 No CAD conversion: show native currency.
 Stale data: keep it when useful, but make age visible.
 
-## 12. Visual character
+## 13. Visual character
 
 The target feeling is premium, calm, modern, and beauty-aware—not a discount marketplace.
 

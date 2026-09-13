@@ -107,7 +107,7 @@ Catalogue routes:
 - `/` — product/brand search and canonical category filtering
 - `/categories/[slug]` — canonical category browse
 - `/products/[slug]` — version-aware product detail and market offers
-- /collection — private version-normalized personal collection with state filters and sorting
+- `/collection` — private version-normalized personal collection with state filters and sorting
 - `/shopping-lists` — private authenticated list creation and overview
 - `/shopping-lists/[id]` — exact-variant quantities, purchase progress, and target-market estimates
 

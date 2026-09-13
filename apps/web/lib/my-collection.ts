@@ -46,10 +46,25 @@ function versionBase(version: VersionContext): CollectionVersionBase {
   };
 }
 
-export async function getMyCollectionForUser(userId: string): Promise<MyCollectionItem[]> {
+export async function getMyCollectionForUser(
+  userId: string,
+  options: { productVersionIds?: readonly string[] } = {},
+): Promise<MyCollectionItem[]> {
+  const productVersionIds = options.productVersionIds
+    ? [...new Set(options.productVersionIds)]
+    : null;
+  if (productVersionIds?.length === 0) return [];
+
+  const versionWhere = productVersionIds
+    ? { productVersionId: { in: productVersionIds } }
+    : {};
+  const purchaseVersionWhere = productVersionIds
+    ? { productVariant: { productVersionId: { in: productVersionIds } } }
+    : {};
+
   const [entries, ratings, purchases] = await Promise.all([
     prisma.collectionEntry.findMany({
-      where: { userId },
+      where: { userId, ...versionWhere },
       include: {
         tags: true,
         selectedVariant: true,
@@ -57,14 +72,14 @@ export async function getMyCollectionForUser(userId: string): Promise<MyCollecti
       },
     }),
     prisma.userRating.findMany({
-      where: { userId },
+      where: { userId, ...versionWhere },
       include: {
         contextualVariant: true,
         productVersion: { include: versionContext },
       },
     }),
     prisma.purchaseInstance.findMany({
-      where: { userId },
+      where: { userId, ...purchaseVersionWhere },
       include: {
         retailer: true,
         productVariant: {

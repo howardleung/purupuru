@@ -3,6 +3,7 @@ import {
   compareOffersByProductPrice,
 } from "@beauty-platform/domain";
 import { createEmptyCollectionState } from "@beauty-platform/domain/collection";
+import { buildPriceHistorySeries } from "@beauty-platform/domain/price-history";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -10,6 +11,7 @@ import { Breadcrumbs } from "../../../components/breadcrumbs";
 import { CollectionActions } from "../../../components/collection-actions";
 import { AddToShoppingList } from "../../../components/add-to-shopping-list";
 import { OfferSection, type OfferView } from "../../../components/offer-section";
+import { PriceHistorySection } from "../../../components/price-history-section";
 import { ProductSelectors } from "../../../components/product-selectors";
 import { getProductFamilyDetails } from "../../../lib/catalogue";
 import { isClerkConfigured } from "../../../lib/clerk-config";
@@ -156,13 +158,37 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
       : Promise.resolve(createEmptyCollectionState()),
     currentUser ? getShoppingListsForUser(currentUser.id) : Promise.resolve([]),
   ]);
+  const priceHistorySeries = buildPriceHistorySeries({
+    selectedVariantId: selectedVariantRecord.id,
+    offers: selectedVariantRecord.offers.map((offer) => ({
+      id: offer.id,
+      productVariantId: selectedVariantRecord.id,
+      retailerId: offer.retailerId,
+      retailerName: offer.retailer.name,
+      listingUrl: offer.listingUrl,
+      amount: Number(offer.productPrice),
+      nativeCurrency: offer.nativeCurrency,
+      lastVerifiedAt: offer.lastVerifiedAt,
+    })),
+    observations: selectedVariantRecord.priceObservations.map((observation) => ({
+      id: observation.id,
+      productVariantId: observation.productVariantId,
+      retailerId: observation.retailerId,
+      retailerName: observation.retailer?.name ?? observation.retailerName,
+      sourceUrl: observation.sourceUrl,
+      amount: Number(observation.amount),
+      nativeCurrency: observation.nativeCurrency,
+      observedAt: observation.observedAt,
+      verificationType: observation.verificationType,
+    })),
+  });
 
   return (
-    <main className="mx-auto max-w-6xl px-6 py-10">
+    <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-10">
       <Breadcrumbs items={breadcrumbs} />
 
       <div className="mt-6 grid gap-8 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
-        <div className="flex min-h-72 items-center justify-center rounded-2xl bg-slate-100 text-7xl font-semibold text-slate-300">
+        <div className="flex min-h-56 items-center justify-center rounded-2xl sm:min-h-72 bg-slate-100 text-7xl font-semibold text-slate-300">
           {family.brand.name.slice(0, 1)}
         </div>
         <div>
@@ -186,34 +212,39 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
               versions={versionOptions}
             />
           </div>
-          <div className="mt-8">
-            {isClerkConfigured ? (
-              <CollectionActions
-                initialState={initialCollectionState}
-                productSlug={family.slug}
-                productVariantId={selectedVariantRecord.id}
-                productVersionId={selectedVersionRecord.id}
-                variantLabel={selectedVariantRecord.displaySize}
-              />
-            ) : (
-              <section className="rounded-xl border border-slate-200 bg-slate-50 p-4">
-                <h2 className="text-sm font-semibold">Your collection</h2>
-                <p className="mt-1 text-xs text-slate-500">
-                  Authentication must be configured before personal actions are available.
-                </p>
-              </section>
-            )}
-          </div>
-          {isClerkConfigured ? (
-            <div className="mt-4">
-              <AddToShoppingList
-                lists={shoppingLists}
-                productSlug={family.slug}
-                productVariantId={selectedVariantRecord.id}
-                variantLabel={selectedVariantRecord.displaySize}
-              />
+          <section className="mt-8 rounded-xl border border-slate-200 bg-slate-50 p-4 sm:p-5" aria-labelledby="save-and-plan-title">
+            <div>
+              <h2 className="text-lg font-semibold" id="save-and-plan-title">Save and plan</h2>
+              <p className="mt-1 text-sm text-slate-600">
+                Personal actions apply to {selectedVersionRecord.versionName}; shopping lists keep the exact {selectedVariantRecord.displaySize} size.
+              </p>
             </div>
-          ) : null}
+            {isClerkConfigured ? (
+              <>
+                <div className="mt-5">
+                  <CollectionActions
+                    initialState={initialCollectionState}
+                    productSlug={family.slug}
+                    productVariantId={selectedVariantRecord.id}
+                    productVersionId={selectedVersionRecord.id}
+                    variantLabel={selectedVariantRecord.displaySize}
+                  />
+                </div>
+                <div className="mt-5 border-t border-slate-200 pt-5">
+                  <AddToShoppingList
+                    lists={shoppingLists}
+                    productSlug={family.slug}
+                    productVariantId={selectedVariantRecord.id}
+                    variantLabel={selectedVariantRecord.displaySize}
+                  />
+                </div>
+              </>
+            ) : (
+              <p className="mt-4 text-sm text-slate-600">
+                Authentication must be configured before personal actions are available.
+              </p>
+            )}
+          </section>
         </div>
       </div>
 
@@ -247,6 +278,10 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
                         {benchmarkConversions.get(benchmark.id)!.sourceName} daily rate
                       </a>{" "}
                       · rate updated {formatRateDate(benchmarkConversions.get(benchmark.id)!.rateDate)}
+                    </p>
+                  ) : benchmark.nativeCurrency !== "CAD" ? (
+                    <p className="mt-1 text-xs text-slate-500">
+                      Approx. CAD conversion is currently unavailable; native price remains authoritative.
                     </p>
                   ) : null}
                   <p className="mt-1 text-xs text-slate-500">
@@ -297,8 +332,14 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
         </section>
       </div>
 
+      <PriceHistorySection
+        productContext={selectedVersionRecord.versionName + " · " + selectedVariantRecord.displaySize}
+        series={priceHistorySeries}
+      />
+
       <OfferSection
         description="Offers explicitly recorded as serving Canada. Prices are sorted by product price, before shipping."
+        emptyMessage="No Canadian buying options are currently tracked for this version and size."
         offers={canadianOffers}
         title="Buy in Canada"
       />
@@ -306,6 +347,7 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
       {destinationMarket && destinationMarket !== "CA" ? (
         <OfferSection
           description={`Offers for the product’s origin market. Native ${destinationOffers[0]?.nativeCurrency ?? "currency"} prices are shown first; no conversion is inferred when exchange-rate data is missing.`}
+          emptyMessage={`No currently verified ${marketNames[destinationMarket] ?? destinationMarket} offers are tracked for this version and size.`}
           offers={destinationOffers}
           title={`Buy in ${marketNames[destinationMarket] ?? destinationMarket}`}
         />

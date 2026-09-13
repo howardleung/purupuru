@@ -213,15 +213,23 @@ Rules:
 - No persistent exchange-rate entity is required for this MVP display. Revisit persistence only when historical/reproducible calculations or ingestion snapshots require it.
 
 ### PriceObservation
-Future/user/retailer observation record, separate from stable benchmark.
+A dated native-currency price observation, separate from both the current Offer.productPrice and stable benchmark pricing.
 
-Possible fields:
+Implemented fields:
 - productVariantId
-- retailer/location
-- amount/currency
+- retailerId nullable plus retailerName/location fallback context
+- amount and nativeCurrency
 - observedAt
 - verificationType: RETAILER_SOURCE | RECEIPT_VERIFIED | COMMUNITY_REPORTED | OTHER
-- proof metadata
+- sourceUrl/proofUrl metadata
+
+The first product-page history foundation is exact-variant and tracked-offer scoped. Because the current schema does not have an offerId foreign key, a tracked observation belongs to an offer series only when its productVariantId, retailerId, and sourceUrl match that offer's variant, retailer, and listing URL. Unmatched observations are not merged into another series. ProductVersion isolation follows from the observation's required ProductVariant relation.
+
+The current offer price is displayed separately and is never synthesized into history. An observation appears only when a record exists for its actual timestamp. Each retailer/listing series stays independently identifiable, chronological, and native-currency authoritative.
+
+Historical CAD conversion is intentionally omitted for now. The reusable Bank of Canada converter currently provides the latest daily rate; applying it to older observations would falsely imply an observation-date conversion. Add dated-rate lookup or stored conversion snapshots only when reproducible historical conversion is implemented.
+
+The curated seed's initial history values are explicitly demo observations (OTHER), not verified real-world archives. Future ingestion may use RETAILER_SOURCE only when the dated value and source are genuinely verified.
 
 ## External reputation signals
 
