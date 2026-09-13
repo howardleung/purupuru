@@ -13,6 +13,9 @@ importers:
       '@beauty-platform/database':
         specifier: workspace:*
         version: link:../../packages/database
+      '@beauty-platform/domain':
+        specifier: workspace:*
+        version: link:../../packages/domain
       '@clerk/nextjs':
         specifier: ^6.31.8
         version: 6.39.6(next@15.5.25(@types/node@22.20.2)(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)

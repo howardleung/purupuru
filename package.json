@@ -7,10 +7,12 @@
     "dev": "pnpm --filter @beauty-platform/web dev",
     "build": "pnpm --filter @beauty-platform/web build",
     "lint": "pnpm --filter @beauty-platform/web lint",
+    "test": "node --experimental-strip-types --test tests/domain/*.test.mts",
     "typecheck": "pnpm --filter @beauty-platform/web typecheck && pnpm --filter @beauty-platform/database typecheck && pnpm --filter @beauty-platform/domain typecheck && pnpm --filter @beauty-platform/ui typecheck",
     "db:format": "pnpm --filter @beauty-platform/database prisma:format",
     "db:validate": "pnpm --filter @beauty-platform/database prisma:validate",
     "db:generate": "pnpm --filter @beauty-platform/database prisma:generate",
+    "db:seed": "pnpm --filter @beauty-platform/database prisma:seed",
     "db:migrate": "pnpm --filter @beauty-platform/database prisma:migrate"
   }
 }

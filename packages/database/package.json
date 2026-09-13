@@ -9,6 +9,7 @@
     "prisma:format": "prisma format",
     "prisma:validate": "prisma validate",
     "prisma:generate": "prisma generate",
+    "prisma:seed": "node prisma/seed.mjs",
     "prisma:migrate": "prisma migrate dev",
     "typecheck": "tsc --noEmit"
   },

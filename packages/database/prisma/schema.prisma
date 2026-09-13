@@ -239,6 +239,7 @@ model Offer {
   listingUrl         String
   productPrice       Decimal           @db.Decimal(14, 4)
   nativeCurrency     String            @db.Char(3)
+  availableMarkets   String[]          @default([])
   cadConvertedPrice  Decimal?          @db.Decimal(14, 4)
   cadFxTimestamp     DateTime?
   availabilityState  AvailabilityState @default(UNKNOWN)
