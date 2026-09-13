@@ -184,3 +184,15 @@ test("product query loads variant observations and product page builds selected 
   assert.match(productPage, /selectedVariantRecord\.priceObservations/);
   assert.match(productPage, /buildPriceHistorySeries/);
 });
+test("offer-linked observations survive listing URL changes while legacy null links still work", () => {
+  const series = buildPriceHistorySeries({
+    selectedVariantId: "version-a-200ml",
+    offers: [{ ...offers[0], listingUrl: "https://example.test/well/new-url" }],
+    observations: [
+      { ...observations[0], id: "direct", offerId: "offer-well", sourceUrl: "https://example.test/well/old-url" },
+      { ...observations[1], id: "legacy", offerId: null, sourceUrl: "https://example.test/well/new-url" },
+    ],
+  });
+
+  assert.deepEqual(series[0]?.observations.map((observation) => observation.id), ["legacy", "direct"]);
+});

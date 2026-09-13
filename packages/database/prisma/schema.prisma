@@ -256,11 +256,13 @@ model Offer {
   createdAt          DateTime          @default(now())
   updatedAt          DateTime          @updatedAt
 
-  retailer       Retailer       @relation(fields: [retailerId], references: [id])
-  productVariant ProductVariant @relation(fields: [productVariantId], references: [id])
-  items          OfferItem[]
+  retailer          Retailer           @relation(fields: [retailerId], references: [id])
+  productVariant    ProductVariant     @relation(fields: [productVariantId], references: [id])
+  items             OfferItem[]
+  priceObservations PriceObservation[]
 
   @@unique([retailerId, listingUrl])
+  @@unique([retailerId, retailerListingId])
   @@index([productVariantId, availabilityState])
   @@index([retailerId, retailerListingId])
 }
@@ -285,6 +287,7 @@ model OfferItem {
 
 model PriceObservation {
   id               String                           @id @default(cuid())
+  offerId          String?
   productVariantId String
   retailerId       String?
   retailerName     String?
@@ -299,7 +302,9 @@ model PriceObservation {
 
   productVariant ProductVariant @relation(fields: [productVariantId], references: [id])
   retailer       Retailer?      @relation(fields: [retailerId], references: [id])
+  offer          Offer?         @relation(fields: [offerId], references: [id], onDelete: SetNull)
 
+  @@unique([offerId, observedAt])
   @@index([productVariantId, observedAt])
   @@index([retailerId])
 }

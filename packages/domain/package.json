@@ -12,6 +12,7 @@
   "exports": {
     ".": "./src/index.ts",
     "./collection": "./src/collection.ts",
+    "./ingestion": "./src/ingestion.ts",
     "./my-collection": "./src/my-collection.ts",
     "./price-history": "./src/price-history.ts",
     "./shopping-list": "./src/shopping-list.ts"

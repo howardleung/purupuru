@@ -1,0 +1,27 @@
+{
+  "adapter": "well",
+  "store": {
+    "sourceKey": "retailer:well-ca",
+    "listingId": "327666",
+    "url": "https://well.ca/products/round-lab-1025-dokdo-toner_327666.html"
+  },
+  "product": {
+    "title": "1025 Dokdo Toner",
+    "brand": "Round Lab",
+    "gtin": "8809657114731",
+    "manufacturerSku": null,
+    "versionCode": "current",
+    "releaseDate": null,
+    "formulaFingerprint": null,
+    "packaging": "Clear bottle with blue 1025 Dokdo label.",
+    "size": { "label": "200 mL", "quantity": 200, "unit": "ml" }
+  },
+  "commerce": {
+    "price": { "amount": 17.99, "currency": "CAD" },
+    "availability": "IN_STOCK",
+    "deliveryMarkets": ["CA"],
+    "shipping": null,
+    "bundleItems": []
+  },
+  "capturedAt": "2026-09-12T00:00:00.000Z"
+}

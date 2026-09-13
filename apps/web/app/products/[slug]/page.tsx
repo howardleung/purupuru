@@ -172,6 +172,7 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
     })),
     observations: selectedVariantRecord.priceObservations.map((observation) => ({
       id: observation.id,
+      offerId: observation.offerId,
       productVariantId: observation.productVariantId,
       retailerId: observation.retailerId,
       retailerName: observation.retailer?.name ?? observation.retailerName,

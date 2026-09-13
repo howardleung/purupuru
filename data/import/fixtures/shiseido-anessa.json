@@ -1,0 +1,23 @@
+{
+  "adapter": "shiseido",
+  "source_key": "retailer:shiseido-beauty-key-jp",
+  "item_code": "H91002",
+  "canonical_url": "https://www.shiseido.co.jp/sw/products/auth/SWFG070410.seam?online_shohin_ctlg_kbn=2&shohin_pl_c_cd=H91002",
+  "name": "Perfect UV Skincare Gel",
+  "maker": "ANESSA",
+  "barcode": "4909978228545",
+  "sku": "H91002",
+  "edition": {
+    "code": "NB",
+    "released": "2026-02-21",
+    "formula": null,
+    "package_note": "2026 gold-tube formulation."
+  },
+  "net_content": { "text": "90 g", "value": 90, "uom": "g" },
+  "yen_price": 2508,
+  "stock": "IN_STOCK",
+  "serves": ["JP"],
+  "delivery": null,
+  "included_items": null,
+  "observed_at": "2026-09-12T00:00:00.000Z"
+}

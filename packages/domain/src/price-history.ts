@@ -11,6 +11,7 @@ export type CurrentTrackedOffer = {
 
 export type HistoricalPriceObservation = {
   id: string;
+  offerId?: string | null;
   productVariantId: string;
   retailerId: string | null;
   retailerName: string | null;
@@ -51,10 +52,9 @@ function isoString(value: Date | string) {
 /**
  * Builds independently identifiable history for one exact variant.
  *
- * The current schema has no direct PriceObservation -> Offer relation, so a
- * tracked-offer observation must match the offer's variant, retailer, and
- * canonical listing/source URL. Unmatched observations are intentionally not
- * folded into another retailer's line.
+ * Ingestion-owned observations use their direct offer relation. Legacy/manual
+ * observations with no offerId retain the conservative variant + retailer +
+ * canonical source-URL fallback and are never folded into another offer line.
  */
 export function buildPriceHistorySeries({
   selectedVariantId,
@@ -72,8 +72,10 @@ export function buildPriceHistorySeries({
         .filter(
           (observation) =>
             observation.productVariantId === selectedVariantId &&
-            observation.retailerId === offer.retailerId &&
-            observation.sourceUrl === offer.listingUrl,
+            (observation.offerId != null
+              ? observation.offerId === offer.id
+              : observation.retailerId === offer.retailerId &&
+                observation.sourceUrl === offer.listingUrl),
         )
         .sort(
           (left, right) =>

@@ -1,0 +1,14 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "allowImportingTsExtensions": true,
+    "baseUrl": "..",
+    "paths": {
+      "@beauty-platform/database": ["packages/database/src/index.ts"],
+      "@beauty-platform/domain/*": ["packages/domain/src/*"]
+    },
+    "types": ["node"],
+    "typeRoots": ["../packages/database/node_modules/@types"]
+  },
+  "include": ["import/**/*.ts", "verify/**/*.ts"]
+}

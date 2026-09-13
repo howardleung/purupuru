@@ -129,6 +129,8 @@ A `Retailer` represents a distinct retailer storefront or market-facing store id
 ### Offer
 A retailer's purchasable listing mapped to one ProductVariant.
 
+For ingestion, a non-null retailer listing ID is stable within its retailer/storefront: `(retailerId, retailerListingId)` is unique. If the source supplies no external ID, `(retailerId, listingUrl)` remains the fallback identity and the matched exact ProductVariant must agree. A changed URL on a stable external ID updates the existing offer instead of creating a duplicate. Amazon.ca/Amazon.jp-style storefronts remain separate Retailer records.
+
 Likely fields:
 - id
 - retailerId
@@ -216,6 +218,7 @@ Rules:
 A dated native-currency price observation, separate from both the current Offer.productPrice and stable benchmark pricing.
 
 Implemented fields:
+- offerId nullable (direct exact-offer link for ingestion-owned observations; legacy/manual rows may remain null)
 - productVariantId
 - retailerId nullable plus retailerName/location fallback context
 - amount and nativeCurrency
@@ -223,13 +226,13 @@ Implemented fields:
 - verificationType: RETAILER_SOURCE | RECEIPT_VERIFIED | COMMUNITY_REPORTED | OTHER
 - sourceUrl/proofUrl metadata
 
-The first product-page history foundation is exact-variant and tracked-offer scoped. Because the current schema does not have an offerId foreign key, a tracked observation belongs to an offer series only when its productVariantId, retailerId, and sourceUrl match that offer's variant, retailer, and listing URL. Unmatched observations are not merged into another series. ProductVersion isolation follows from the observation's required ProductVariant relation.
+The product-page history foundation is exact-variant and tracked-offer scoped. Ingestion-owned observations use the direct nullable `offerId` relation; `(offerId, observedAt)` is unique so identical source reruns do not duplicate a sample. Legacy/manual null-linked observations remain valid and use the conservative productVariantId + retailerId + sourceUrl fallback. Unmatched observations are not merged into another series. ProductVersion isolation follows from the observation's required ProductVariant relation.
 
 The current offer price is displayed separately and is never synthesized into history. An observation appears only when a record exists for its actual timestamp. Each retailer/listing series stays independently identifiable, chronological, and native-currency authoritative.
 
 Historical CAD conversion is intentionally omitted for now. The reusable Bank of Canada converter currently provides the latest daily rate; applying it to older observations would falsely imply an observation-date conversion. Add dated-rate lookup or stored conversion snapshots only when reproducible historical conversion is implemented.
 
-The curated seed's initial history values are explicitly demo observations (OTHER), not verified real-world archives. Future ingestion may use RETAILER_SOURCE only when the dated value and source are genuinely verified.
+The curated seed's initial history values are explicitly demo observations (OTHER), not verified real-world archives. Ingestion uses RETAILER_SOURCE only when the dated value and source are genuinely verified. Current Offer state stays distinct from historical observations: a new real source timestamp creates one observation, an identical rerun is unchanged, and an existing timestamp with conflicting price data is rejected before writes.
 
 ## External reputation signals
 

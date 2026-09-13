@@ -93,13 +93,22 @@ async function upsertRetailer(data) {
 }
 
 async function upsertOffer(retailerId, productVariantId, data) {
+  const where = data.retailerListingId
+    ? {
+        retailerId_retailerListingId: {
+          retailerId,
+          retailerListingId: data.retailerListingId,
+        },
+      }
+    : {
+        retailerId_listingUrl: {
+          retailerId,
+          listingUrl: data.listingUrl,
+        },
+      };
+
   return prisma.offer.upsert({
-    where: {
-      retailerId_listingUrl: {
-        retailerId,
-        listingUrl: data.listingUrl,
-      },
-    },
+    where,
     update: {
       productVariantId,
       ...data,
@@ -420,7 +429,7 @@ async function main() {
     primaryQuantity: 1,
   });
 
-  await upsertOffer(shoppers.id, dokdo200.id, {
+  const dokdoShoppersOffer = await upsertOffer(shoppers.id, dokdo200.id, {
     retailerListingId: "8809657114731",
     listingUrl: "https://www.shoppersdrugmart.ca/round-lab-1025-dokdo-toner/p/BB_8809657114731?variantCode=8809657114731",
     productPrice: 20,
@@ -532,7 +541,7 @@ async function main() {
     primaryQuantity: 1,
   });
 
-  await upsertOffer(shiseidoJapan.id, anessaNb90.id, {
+  const anessaShiseidoOffer = await upsertOffer(shiseidoJapan.id, anessaNb90.id, {
     retailerListingId: "H91002",
     listingUrl: "https://www.shiseido.co.jp/sw/products/auth/SWFG070410.seam?online_shohin_ctlg_kbn=2&shohin_pl_c_cd=H91002",
     productPrice: 2508,
@@ -552,6 +561,7 @@ async function main() {
 
   const demoPriceHistory = [
     {
+      offerId: dokdoWellOffer.id,
       productVariantId: dokdo200.id,
       retailerId: well.id,
       retailerName: well.name,
@@ -562,6 +572,7 @@ async function main() {
       sourceUrl: "https://well.ca/products/round-lab-1025-dokdo-toner_327666.html",
     },
     {
+      offerId: dokdoWellOffer.id,
       productVariantId: dokdo200.id,
       retailerId: well.id,
       retailerName: well.name,
@@ -572,6 +583,7 @@ async function main() {
       sourceUrl: "https://well.ca/products/round-lab-1025-dokdo-toner_327666.html",
     },
     {
+      offerId: dokdoWellOffer.id,
       productVariantId: dokdo200.id,
       retailerId: well.id,
       retailerName: well.name,
@@ -582,6 +594,7 @@ async function main() {
       sourceUrl: "https://well.ca/products/round-lab-1025-dokdo-toner_327666.html",
     },
     {
+      offerId: dokdoShoppersOffer.id,
       productVariantId: dokdo200.id,
       retailerId: shoppers.id,
       retailerName: shoppers.name,
@@ -592,6 +605,7 @@ async function main() {
       sourceUrl: "https://www.shoppersdrugmart.ca/round-lab-1025-dokdo-toner/p/BB_8809657114731?variantCode=8809657114731",
     },
     {
+      offerId: dokdoShoppersOffer.id,
       productVariantId: dokdo200.id,
       retailerId: shoppers.id,
       retailerName: shoppers.name,
@@ -602,6 +616,7 @@ async function main() {
       sourceUrl: "https://www.shoppersdrugmart.ca/round-lab-1025-dokdo-toner/p/BB_8809657114731?variantCode=8809657114731",
     },
     {
+      offerId: anessaShiseidoOffer.id,
       productVariantId: anessaNb90.id,
       retailerId: shiseidoJapan.id,
       retailerName: shiseidoJapan.name,

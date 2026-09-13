@@ -247,7 +247,13 @@ This file records settled choices and the rationale behind them. New decisions s
 **Implications:** Personal indicators on catalogue cards are explicitly current-version scoped and absent anonymously. The enrichment filters the fixed collection query set to visible version IDs, and every known product return path carries version and variant parameters. No schema or persistence behavior changes.
 
 ### 2026-09-13 — Price history uses exact tracked-offer observations
-**Status:** Accepted
+**Status:** Superseded
 **Decision:** Build the first price-history view from native-currency PriceObservation records for the selected exact variant. Keep retailer/listing series independent by matching observation variant, retailer, and source URL to the tracked offer; display the current offer separately and never synthesize it into history.
 **Why:** Sparse curated observations can provide useful context only when Otoku preserves exact product and retailer identity and clearly avoids claiming complete market history.
 **Implications:** The existing model is sufficient for this foundation without migration. Historical CAD conversion is omitted until dated Bank of Canada rates or intentional conversion snapshots are supported. Initial seed values are labeled demo observations with verification type OTHER; scheduled collection, alerts, lowest-ever claims, and deal scoring remain deferred.
+
+### 2026-09-13 — Ingestion uses conservative canonical matching and stable offer-linked observations
+**Status:** Accepted
+**Decision:** Normalize source records through explicit retailer adapters, match only an existing exact ProductVariant using high-confidence identity/version/size evidence, and never auto-create catalogue identities from retailer text. Identify an offer by retailer storefront plus external listing ID when available, with retailer + exact variant + stable URL as the fallback. Link ingestion-created PriceObservations directly to the offer and deduplicate them by offer/source timestamp.
+**Why:** Retailer strings and URLs change, while product versions and sizes must never be mixed. Stable source identity plus exact canonical matching makes reruns safe without overstating matching confidence or erasing native historical evidence.
+**Implications:** PriceObservation.offerId is nullable for backward compatibility and deletes use SET NULL. Legacy null-linked observations retain the conservative variant + retailer + source-URL read fallback. A new real timestamp appends one native-currency observation; an identical rerun is unchanged; conflicting data at the same timestamp is rejected before writes. Developer execute mode uses per-record serializable transactions, dry-run makes no writes, and automated fetching/scheduling remains deferred. This supersedes the prior conclusion that URL matching alone was sufficient for the next ingestion stage.

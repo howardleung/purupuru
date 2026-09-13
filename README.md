@@ -20,6 +20,7 @@ For humans and agents:
 - `docs/DECISIONS.md` — accepted decisions and rationale; append when decisions change.
 - `docs/DESIGN_PRINCIPLES.md` — UX philosophy and interaction constraints.
 - `docs/DATA_MODEL.md` — canonical domain entities and invariants.
+- `docs/INGESTION.md` — developer retailer/source ingestion contract, safety rules, and commands.
 - `docs/USER_FLOWS.md` — current user-facing flows.
 - `docs/ROADMAP.md` — sequencing of MVP and future work.
 
@@ -57,6 +58,7 @@ This stack prioritizes fast MVP development, strong TypeScript support, SEO and 
 │  ├─ DECISIONS.md
 │  ├─ DESIGN_PRINCIPLES.md
 │  ├─ DATA_MODEL.md
+│  ├─ INGESTION.md
 │  ├─ USER_FLOWS.md
 │  └─ ROADMAP.md
 ├─ tests/
@@ -117,4 +119,6 @@ Useful checks:
 - `pnpm typecheck`
 - `pnpm test`
 - `pnpm db:validate`
+- `pnpm ingest --fixture all --dry-run` — inspect fixture matches and planned writes without mutation
+- `pnpm ingest:verify` — run rollback-only database idempotency checks
 - `pnpm build`

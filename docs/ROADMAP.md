@@ -52,7 +52,7 @@ Deliver:
 
 ## Phase 2 — MVP catalogue and personal collection
 
-Status: started. The catalogue slice includes two curated product families, canonical category browse, product/brand search, version and size selection, benchmark and external-signal display, and offer sections backed by PostgreSQL. Authenticated version-level Want, Tried, Owned/purchase, Holy Grail, Would Repurchase, private half-step rating actions, private target-market shopping lists, and the private version-normalized My Collection browse view are now implemented. A first integration pass now connects navigation, current-version catalogue state, version/variant-preserving links, product save/list actions, responsive offer presentation, and shared loading/error states. Shopping lists include exact-variant quantities, partial purchase recording, eligible offer selection, runtime CAD conversion, and partial-estimate coverage disclosure. A small, explicitly demo-labeled, exact-variant retailer price-history foundation is also implemented using existing PriceObservation records; automated collection and alerts remain deferred. Purchase-detail editing, onboarding, collection statistics, and catalogue expansion remain outstanding.
+Status: started. The catalogue slice includes two curated product families, canonical category browse, product/brand search, version and size selection, benchmark and external-signal display, and offer sections backed by PostgreSQL. Authenticated version-level Want, Tried, Owned/purchase, Holy Grail, Would Repurchase, private half-step rating actions, private target-market shopping lists, and the private version-normalized My Collection browse view are now implemented. A first integration pass now connects navigation, current-version catalogue state, version/variant-preserving links, product save/list actions, responsive offer presentation, and shared loading/error states. Shopping lists include exact-variant quantities, partial purchase recording, eligible offer selection, runtime CAD conversion, and partial-estimate coverage disclosure. A small, explicitly demo-labeled, exact-variant retailer price-history foundation is also implemented. A developer-operated ingestion foundation now normalizes two local source fixtures, conservatively matches existing exact variants, idempotently upserts offers, and appends offer-linked native-currency observations with dry-run and rollback verification; automated collection and alerts remain deferred. Purchase-detail editing, onboarding, collection statistics, and catalogue expansion remain outstanding.
 
 Deliver:
 - ~100 curated skincare products
@@ -128,6 +128,7 @@ Potential:
 - additional international affiliate feeds
 - Amazon authorized product APIs once eligible
 - retailer partnerships/direct feeds
+- production source adapters/authorized feeds and scheduled ingestion
 - expanded and automated historical observed prices
 - price alerts
 - richer shipping information
