@@ -105,16 +105,21 @@ export function CollectionActions({
   const [isPending, startTransition] = useTransition();
   const scopeKey = `${productVersionId}:${productVariantId}`;
   const previousScope = useRef(scopeKey);
+  const initialStateRef = useRef(initialState);
 
   useEffect(() => {
-    setState(initialState);
+    initialStateRef.current = initialState;
+  }, [initialState]);
+
+  useEffect(() => {
     if (previousScope.current !== scopeKey) {
+      setState(initialStateRef.current);
       setMessage(null);
       setConfirmation(null);
       setPendingAfterAuth(null);
       previousScope.current = scopeKey;
     }
-  }, [scopeKey, initialState]);
+  }, [scopeKey]);
 
   const execute = useCallback(
     (intent: CollectionMutationIntent) => {
@@ -215,21 +220,24 @@ export function CollectionActions({
         <p className="text-xs font-medium uppercase tracking-wide text-slate-500">Relationship</p>
         <div className="mt-2 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
           <button
+            aria-pressed={state.wants}
             className={actionClass(state.wants)}
-            disabled={disabled || state.wants || state.purchaseCount > 0}
-            onClick={() => request({ type: "ADD_WANT" })}
+            disabled={disabled || (!state.wants && state.purchaseCount > 0)}
+            onClick={() => request({ type: state.wants ? "REMOVE_WANT" : "ADD_WANT" })}
             title={state.purchaseCount > 0 ? "Want is for products not yet owned." : undefined}
             type="button"
           >
-            {state.wants ? "Wanted" : "Want"}
+            {state.wants ? "Remove Want" : "Want"}
           </button>
           <button
+            aria-pressed={state.tried}
             className={actionClass(state.tried)}
-            disabled={disabled || state.tried}
-            onClick={() => request({ type: "ADD_TRIED" })}
+            disabled={disabled}
+            onClick={() => request({ type: state.tried ? "REMOVE_TRIED" : "ADD_TRIED" })}
+            title={state.tried ? "Removing Tried also clears Would Repurchase and your rating." : undefined}
             type="button"
           >
-            {state.tried ? "Tried" : "Mark Tried"}
+            {state.tried ? "Remove Tried" : "Mark Tried"}
           </button>
           {state.purchaseCount === 0 ? (
             <button
@@ -242,7 +250,16 @@ export function CollectionActions({
             </button>
           ) : (
             <>
-              <button className={actionClass(true)} disabled type="button">Owned</button>
+              <button
+                aria-pressed={true}
+                className={actionClass(true)}
+                disabled={disabled}
+                onClick={() => request({ type: "REMOVE_OWNED" })}
+                title="Removes one standalone manual purchase. Shopping-list purchases remain part of your history."
+                type="button"
+              >
+                Remove ownership
+              </button>
               <button
                 className={actionClass(false)}
                 disabled={disabled}
@@ -260,20 +277,22 @@ export function CollectionActions({
         <p className="text-xs font-medium uppercase tracking-wide text-slate-500">Tags</p>
         <div className="mt-2 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
           <button
+            aria-pressed={state.holyGrail}
             className={actionClass(state.holyGrail)}
-            disabled={disabled || state.holyGrail}
-            onClick={() => request({ type: "ADD_HOLY_GRAIL" })}
+            disabled={disabled}
+            onClick={() => request({ type: state.holyGrail ? "REMOVE_HOLY_GRAIL" : "ADD_HOLY_GRAIL" })}
             type="button"
           >
-            {state.holyGrail ? "Holy Grail" : "Mark Holy Grail"}
+            {state.holyGrail ? "Remove Holy Grail" : "Mark Holy Grail"}
           </button>
           <button
+            aria-pressed={state.wouldRepurchase}
             className={actionClass(state.wouldRepurchase)}
-            disabled={disabled || state.wouldRepurchase}
-            onClick={() => request({ type: "ADD_WOULD_REPURCHASE" })}
+            disabled={disabled}
+            onClick={() => request({ type: state.wouldRepurchase ? "REMOVE_WOULD_REPURCHASE" : "ADD_WOULD_REPURCHASE" })}
             type="button"
           >
-            {state.wouldRepurchase ? "Would Repurchase" : "Mark Would Repurchase"}
+            {state.wouldRepurchase ? "Remove Would Repurchase" : "Mark Would Repurchase"}
           </button>
         </div>
       </div>

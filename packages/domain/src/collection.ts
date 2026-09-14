@@ -9,11 +9,16 @@ export type CollectionRelationshipState = {
 
 export type CollectionMutationIntent =
   | { type: "ADD_WANT" }
+  | { type: "REMOVE_WANT" }
   | { type: "ADD_TRIED" }
+  | { type: "REMOVE_TRIED" }
   | { type: "ADD_HOLY_GRAIL" }
+  | { type: "REMOVE_HOLY_GRAIL" }
   | { type: "ADD_WOULD_REPURCHASE"; confirmedTried?: boolean }
+  | { type: "REMOVE_WOULD_REPURCHASE" }
   | { type: "SET_RATING"; ratingHalfSteps: number; confirmedTried?: boolean }
   | { type: "ADD_OWNED" }
+  | { type: "REMOVE_OWNED" }
   | { type: "ADD_ANOTHER_PURCHASE"; confirmed?: boolean };
 
 export type CollectionConfirmation =
@@ -24,7 +29,7 @@ export type CollectionConfirmation =
 export type CollectionMutationPlan = {
   status: "APPLIED" | "CONFIRMATION_REQUIRED" | "ALREADY_OWNED" | "INVALID";
   state: CollectionRelationshipState;
-  purchaseDelta: 0 | 1;
+  purchaseDelta: -1 | 0 | 1;
   message: string;
   confirmation?: CollectionConfirmation;
 };
@@ -47,7 +52,7 @@ export function isValidRatingHalfSteps(value: number): boolean {
 function applied(
   state: CollectionRelationshipState,
   message: string,
-  purchaseDelta: 0 | 1 = 0,
+  purchaseDelta: -1 | 0 | 1 = 0,
 ): CollectionMutationPlan {
   return { status: "APPLIED", state, purchaseDelta, message };
 }
@@ -76,15 +81,32 @@ export function planCollectionMutation(
       state.wants = true;
       return applied(state, "Marked Want.");
 
+    case "REMOVE_WANT":
+      if (!state.wants) return applied(state, "Want was not selected.");
+      state.wants = false;
+      return applied(state, "Removed Want.");
+
     case "ADD_TRIED":
       if (state.tried) return applied(state, "Already marked Tried.");
       state.tried = true;
       return applied(state, "Marked Tried.");
 
+    case "REMOVE_TRIED":
+      if (!state.tried) return applied(state, "Tried was not selected.");
+      state.tried = false;
+      state.wouldRepurchase = false;
+      state.ratingHalfSteps = null;
+      return applied(state, "Removed Tried and cleared dependent personal feedback.");
+
     case "ADD_HOLY_GRAIL":
       if (state.holyGrail) return applied(state, "Already marked Holy Grail.");
       state.holyGrail = true;
       return applied(state, "Marked Holy Grail.");
+
+    case "REMOVE_HOLY_GRAIL":
+      if (!state.holyGrail) return applied(state, "Holy Grail was not selected.");
+      state.holyGrail = false;
+      return applied(state, "Removed Holy Grail.");
 
     case "ADD_WOULD_REPURCHASE":
       if (state.wouldRepurchase) return applied(state, "Already marked Would Repurchase.");
@@ -99,6 +121,11 @@ export function planCollectionMutation(
       state.tried = true;
       state.wouldRepurchase = true;
       return applied(state, "Marked Tried and Would Repurchase.");
+
+    case "REMOVE_WOULD_REPURCHASE":
+      if (!state.wouldRepurchase) return applied(state, "Would Repurchase was not selected.");
+      state.wouldRepurchase = false;
+      return applied(state, "Removed Would Repurchase.");
 
     case "SET_RATING":
       if (!isValidRatingHalfSteps(intent.ratingHalfSteps)) {
@@ -127,6 +154,13 @@ export function planCollectionMutation(
       state.wants = false;
       state.purchaseCount += 1;
       return applied(state, "Marked Owned and added a purchase.", 1);
+
+    case "REMOVE_OWNED":
+      if (state.purchaseCount === 0) {
+        return unchanged("INVALID", state, "There is no ownership record to remove.");
+      }
+      state.purchaseCount -= 1;
+      return applied(state, "Removed one ownership record.", -1);
 
     case "ADD_ANOTHER_PURCHASE":
       if (state.purchaseCount === 0) {

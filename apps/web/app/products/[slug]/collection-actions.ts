@@ -21,9 +21,14 @@ function isMutationIntent(value: unknown): value is CollectionMutationIntent {
   const intent = value as Record<string, unknown>;
   switch (intent.type) {
     case "ADD_WANT":
+    case "REMOVE_WANT":
     case "ADD_TRIED":
+    case "REMOVE_TRIED":
     case "ADD_HOLY_GRAIL":
+    case "REMOVE_HOLY_GRAIL":
     case "ADD_OWNED":
+    case "REMOVE_OWNED":
+    case "REMOVE_WOULD_REPURCHASE":
       return true;
     case "ADD_WOULD_REPURCHASE":
       return intent.confirmedTried === undefined || typeof intent.confirmedTried === "boolean";
@@ -98,6 +103,29 @@ export async function updateProductCollection(
         input.productVersionId,
         tx,
       );
+
+      const removablePurchase =
+        input.intent.type === "REMOVE_OWNED"
+          ? await tx.purchaseInstance.findFirst({
+              where: {
+                userId: user.id,
+                source: "MANUAL",
+                shoppingListItemId: null,
+                productVariant: { productVersionId: input.productVersionId },
+              },
+              orderBy: [{ createdAt: "desc" }, { id: "desc" }],
+              select: { id: true },
+            })
+          : null;
+
+      if (input.intent.type === "REMOVE_OWNED" && !removablePurchase) {
+        return {
+          status: "INVALID",
+          message: "This ownership comes from a shopping-list purchase and is kept as purchase history.",
+          state: current,
+        } satisfies ProductCollectionActionResult;
+      }
+
       const plan = planCollectionMutation(current, input.intent);
 
       if (plan.status === "CONFIRMATION_REQUIRED") {
@@ -160,6 +188,10 @@ export async function updateProductCollection(
             kind: "HOLY_GRAIL",
           },
         });
+      } else {
+        await tx.collectionTag.deleteMany({
+          where: { collectionEntryId: entry.id, kind: "HOLY_GRAIL" },
+        });
       }
 
       if (plan.state.wouldRepurchase) {
@@ -175,6 +207,10 @@ export async function updateProductCollection(
             collectionEntryId: entry.id,
             kind: "WOULD_REPURCHASE",
           },
+        });
+      } else {
+        await tx.collectionTag.deleteMany({
+          where: { collectionEntryId: entry.id, kind: "WOULD_REPURCHASE" },
         });
       }
 
@@ -197,6 +233,13 @@ export async function updateProductCollection(
             ratingHalfSteps: plan.state.ratingHalfSteps,
           },
         });
+      } else if (plan.state.ratingHalfSteps === null) {
+        await tx.userRating.deleteMany({
+          where: {
+            userId: user.id,
+            productVersionId: input.productVersionId,
+          },
+        });
       }
 
       if (plan.purchaseDelta === 1) {
@@ -208,9 +251,23 @@ export async function updateProductCollection(
             source: "MANUAL",
           },
         });
+      } else if (plan.purchaseDelta === -1 && removablePurchase) {
+        await tx.purchaseInstance.delete({ where: { id: removablePurchase.id } });
       }
 
       const state = await getPersistedCollectionState(user.id, input.productVersionId, tx);
+      if (
+        !state.wants &&
+        !state.tried &&
+        !state.holyGrail &&
+        !state.wouldRepurchase &&
+        state.ratingHalfSteps === null &&
+        state.purchaseCount === 0
+      ) {
+        await tx.collectionEntry.deleteMany({
+          where: { userId: user.id, productVersionId: input.productVersionId },
+        });
+      }
       return {
         status: "SUCCESS",
         message: plan.message,
@@ -220,6 +277,7 @@ export async function updateProductCollection(
 
     if (result.status === "SUCCESS") {
       revalidatePath(`/products/${input.productSlug}`);
+      revalidatePath("/collection");
     }
 
     return result;

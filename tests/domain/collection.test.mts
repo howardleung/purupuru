@@ -24,6 +24,43 @@ test("Tried can exist without ownership", () => {
   assert.equal(result.state.purchaseCount, 0);
 });
 
+test("relationship flags and tags can be removed without affecting unrelated state", () => {
+  const current = {
+    ...createEmptyCollectionState(),
+    wants: true,
+    tried: true,
+    holyGrail: true,
+    wouldRepurchase: true,
+    ratingHalfSteps: 8,
+  };
+
+  const withoutWant = planCollectionMutation(current, { type: "REMOVE_WANT" });
+  const withoutTag = planCollectionMutation(withoutWant.state, { type: "REMOVE_HOLY_GRAIL" });
+  const withoutRepurchase = planCollectionMutation(withoutTag.state, {
+    type: "REMOVE_WOULD_REPURCHASE",
+  });
+
+  assert.equal(withoutWant.state.wants, false);
+  assert.equal(withoutTag.state.holyGrail, false);
+  assert.equal(withoutRepurchase.state.wouldRepurchase, false);
+  assert.equal(withoutRepurchase.state.tried, true);
+  assert.equal(withoutRepurchase.state.ratingHalfSteps, 8);
+});
+
+test("removing Tried clears feedback that requires Tried", () => {
+  const current = {
+    ...createEmptyCollectionState(),
+    tried: true,
+    wouldRepurchase: true,
+    ratingHalfSteps: 8,
+  };
+  const result = planCollectionMutation(current, { type: "REMOVE_TRIED" });
+
+  assert.equal(result.state.tried, false);
+  assert.equal(result.state.wouldRepurchase, false);
+  assert.equal(result.state.ratingHalfSteps, null);
+});
+
 test("Holy Grail works without Tried or Owned and survives ownership changes", () => {
   const holyGrail = planCollectionMutation(createEmptyCollectionState(), {
     type: "ADD_HOLY_GRAIL",
@@ -87,6 +124,15 @@ test("adding Owned when already owned is idempotent", () => {
 
   assert.equal(result.status, "ALREADY_OWNED");
   assert.equal(result.purchaseDelta, 0);
+  assert.equal(result.state.purchaseCount, 1);
+});
+
+test("removing Owned removes one ownership record at a time", () => {
+  const current = { ...createEmptyCollectionState(), purchaseCount: 2 };
+  const result = planCollectionMutation(current, { type: "REMOVE_OWNED" });
+
+  assert.equal(result.status, "APPLIED");
+  assert.equal(result.purchaseDelta, -1);
   assert.equal(result.state.purchaseCount, 1);
 });
 

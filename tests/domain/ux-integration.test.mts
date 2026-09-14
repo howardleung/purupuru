@@ -87,6 +87,19 @@ test("product menu and product-page hierarchy follow the structural UX contract"
   assert.ok(productPage.indexOf('title="Buy in Canada"') < productPage.indexOf("<PriceHistorySection"));
 });
 
+test("collection controls retain successful state for the selected product context and expose remove actions", () => {
+  const collectionActions = readFileSync(
+    new URL("../../apps/web/components/collection-actions.tsx", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(collectionActions, /if \(previousScope\.current !== scopeKey\)/);
+  assert.match(collectionActions, /setState\(initialStateRef\.current\)/);
+  assert.match(collectionActions, /REMOVE_WOULD_REPURCHASE/);
+  assert.match(collectionActions, /Remove Would Repurchase/);
+  assert.match(collectionActions, /aria-pressed=\{state\.wouldRepurchase\}/);
+});
+
 test("product imagery has an intentional runtime fallback", () => {
   assert.match(productImage, /onError=\{\(\) => setFailed\(true\)\}/);
   assert.match(productImage, /Image coming soon/);
