@@ -51,7 +51,7 @@ export function PriceHistorySection({
               retailerSeries.observations[retailerSeries.observations.length - 1];
 
             return (
-              <article className="rounded-xl border border-slate-200 p-4 sm:p-5" key={retailerSeries.offerId}>
+              <article className="min-w-0 rounded-xl border border-slate-200 p-4 sm:p-5" key={retailerSeries.offerId}>
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                   <div>
                     <h3 className="font-semibold">

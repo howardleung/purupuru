@@ -11,6 +11,9 @@ const collectionCard = readFileSync(new URL("../../apps/web/components/collectio
 const shoppingList = readFileSync(new URL("../../apps/web/components/shopping-list-details.tsx", import.meta.url), "utf8");
 const productSelectors = readFileSync(new URL("../../apps/web/components/product-selectors.tsx", import.meta.url), "utf8");
 const primaryNav = readFileSync(new URL("../../apps/web/components/primary-nav.tsx", import.meta.url), "utf8");
+const globalSearch = readFileSync(new URL("../../apps/web/components/global-search.tsx", import.meta.url), "utf8");
+const megaMenu = readFileSync(new URL("../../apps/web/components/product-mega-menu.tsx", import.meta.url), "utf8");
+const productPage = readFileSync(new URL("../../apps/web/app/products/[slug]/page.tsx", import.meta.url), "utf8");
 const productImage = readFileSync(new URL("../../apps/web/components/product-image.tsx", import.meta.url), "utf8");
 const privacyPage = readFileSync(new URL("../../apps/web/app/privacy/page.tsx", import.meta.url), "utf8");
 const termsPage = readFileSync(new URL("../../apps/web/app/terms/page.tsx", import.meta.url), "utf8");
@@ -45,7 +48,8 @@ test("catalogue personalization is optional and limited to visible current versi
 
 test("public homepage is database-backed and does not require authentication", () => {
   assert.match(homePage, /await getCatalogue\(\)/);
-  assert.match(homePage, /action="\/catalogue"/);
+  assert.match(homePage, /<GlobalSearch/);
+  assert.match(globalSearch, /action="\/catalogue"/);
   assert.doesNotMatch(homePage, /getCurrentUser|getOrCreateCurrentUser/);
 });
 
@@ -53,7 +57,7 @@ test("primary navigation exposes public and private destinations with active sta
   for (const [href, label] of [
     ["/", "Home"],
     ["/catalogue", "Browse"],
-    ["/categories", "Categories"],
+    ["/brands", "Brands"],
     ["/collection", "My Collection"],
     ["/shopping-lists", "Shopping Lists"],
     ["/about", "About"],
@@ -62,6 +66,25 @@ test("primary navigation exposes public and private destinations with active sta
   }
   assert.match(primaryNav, /usePathname/);
   assert.match(primaryNav, /aria-current=\{active \? "page"/);
+});
+
+test("global search is grouped, debounced, cancellable, and keyboard-operable", () => {
+  assert.match(globalSearch, /role="combobox"/);
+  assert.match(globalSearch, /Products/);
+  assert.match(globalSearch, /Brands/);
+  assert.match(globalSearch, /Categories/);
+  assert.match(globalSearch, /AbortController/);
+  assert.match(globalSearch, /220/);
+  assert.match(globalSearch, /ArrowDown/);
+  assert.match(globalSearch, /View all results/);
+});
+
+test("product menu and product-page hierarchy follow the structural UX contract", () => {
+  assert.match(megaMenu, /\/api\/categories/);
+  assert.match(megaMenu, /aria-expanded=\{isOpen\}/);
+  assert.match(megaMenu, /featuredSlugs/);
+  assert.match(productPage, /<PersonalActionsModal/);
+  assert.ok(productPage.indexOf('title="Buy in Canada"') < productPage.indexOf("<PriceHistorySection"));
 });
 
 test("product imagery has an intentional runtime fallback", () => {

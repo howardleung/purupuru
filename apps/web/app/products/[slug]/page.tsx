@@ -9,9 +9,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { Breadcrumbs } from "../../../components/breadcrumbs";
-import { CollectionActions } from "../../../components/collection-actions";
-import { AddToShoppingList } from "../../../components/add-to-shopping-list";
 import { OfferSection, type OfferView } from "../../../components/offer-section";
+import { PersonalActionsModal } from "../../../components/personal-actions-modal";
 import { PriceHistorySection } from "../../../components/price-history-section";
 import { ProductImage } from "../../../components/product-image";
 import { ProductSelectors } from "../../../components/product-selectors";
@@ -177,6 +176,9 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
     ).then((entries) => new Map(entries)),
     isClerkConfigured ? getCurrentUser() : Promise.resolve(null),
   ]);
+  const primaryBenchmark = ["MSRP", "RETAIL_PRICE", "REFERENCE_PRICE"]
+    .flatMap((type) => selectedVariantRecord.benchmarkPrices.filter((benchmark) => benchmark.type === type))
+    .at(0) ?? null;
   const [initialCollectionState, shoppingLists] = await Promise.all([
     currentUser
       ? getPersistedCollectionState(currentUser.id, selectedVersionRecord.id)
@@ -250,6 +252,16 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
               {selectedVersionRecord.packagingDescription}
             </p>
           ) : null}
+          <section className="mt-6 rounded-xl border border-slate-200 bg-slate-50 p-4" aria-labelledby="primary-benchmark-title">
+            <p className="text-xs font-medium uppercase tracking-wide text-slate-500" id="primary-benchmark-title">Strongest verified benchmark</p>
+            {primaryBenchmark ? (
+              <>
+                <p className="mt-2 text-sm text-slate-600">{benchmarkLabels[primaryBenchmark.type]} · {marketNames[primaryBenchmark.market] ?? primaryBenchmark.market}</p>
+                <p className="mt-1 text-2xl font-semibold">{formatNativeMoney(Number(primaryBenchmark.amount), primaryBenchmark.nativeCurrency)}{benchmarkConversions.get(primaryBenchmark.id) ? <span className="ml-2 text-sm font-medium text-slate-500">Approx. {formatCad(benchmarkConversions.get(primaryBenchmark.id)!.amountCad)}</span> : null}</p>
+                <p className="mt-1 text-xs text-slate-500">Source: {primaryBenchmark.sourceDisplayName}</p>
+              </>
+            ) : <p className="mt-2 text-sm text-slate-600">No verified benchmark is available for this formulation and size.</p>}
+          </section>
           <div className="mt-8">
             <ProductSelectors
               productSlug={family.slug}
@@ -258,40 +270,45 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
               versions={versionOptions}
             />
           </div>
-          <section className="mt-8 rounded-xl border border-slate-200 bg-slate-50 p-4 sm:p-5" aria-labelledby="save-and-plan-title">
-            <div>
-              <h2 className="text-lg font-semibold" id="save-and-plan-title">Save and plan</h2>
-              <p className="mt-1 text-sm text-slate-600">
-                Personal actions apply to {selectedVersionRecord.versionName}; shopping lists keep the exact {selectedVariantRecord.displaySize} size.
-              </p>
-            </div>
+          <div className="mt-8 hidden items-center gap-3 border-t border-slate-200 pt-6 md:flex">
             {isClerkConfigured ? (
-              <>
-                <div className="mt-5">
-                  <CollectionActions
-                    initialState={initialCollectionState}
-                    productSlug={family.slug}
-                    productVariantId={selectedVariantRecord.id}
-                    productVersionId={selectedVersionRecord.id}
-                    variantLabel={selectedVariantRecord.displaySize}
-                  />
-                </div>
-                <div className="mt-5 border-t border-slate-200 pt-5">
-                  <AddToShoppingList
-                    lists={shoppingLists}
-                    productSlug={family.slug}
-                    productVariantId={selectedVariantRecord.id}
-                    variantLabel={selectedVariantRecord.displaySize}
-                  />
-                </div>
-              </>
+              <PersonalActionsModal
+                initialState={initialCollectionState}
+                lists={shoppingLists}
+                productSlug={family.slug}
+                productVariantId={selectedVariantRecord.id}
+                productVersionId={selectedVersionRecord.id}
+                variantLabel={selectedVariantRecord.displaySize}
+              />
             ) : (
-              <p className="mt-4 text-sm text-slate-600">
-                Authentication must be configured before personal actions are available.
-              </p>
+              <span className="grid h-12 w-12 place-items-center rounded-full bg-slate-100 text-slate-400">+</span>
             )}
-          </section>
+            <div><p className="text-sm font-semibold">Save or plan</p><p className="text-xs text-slate-500">Collection, rating, purchase, and shopping-list actions</p></div>
+          </div>
         </div>
+      </div>
+
+      <OfferSection
+        description="Offers explicitly recorded as serving Canada. Prices are sorted by product price, before shipping."
+        emptyMessage="No Canadian buying options are currently tracked for this version and size."
+        offers={canadianOffers}
+        title="Buy in Canada"
+      />
+
+      <div className="mt-6 flex items-center gap-3 rounded-xl border border-slate-200 p-4 md:hidden">
+        {isClerkConfigured ? (
+          <PersonalActionsModal
+            initialState={initialCollectionState}
+            lists={shoppingLists}
+            productSlug={family.slug}
+            productVariantId={selectedVariantRecord.id}
+            productVersionId={selectedVersionRecord.id}
+            variantLabel={selectedVariantRecord.displaySize}
+          />
+        ) : (
+          <span className="grid h-12 w-12 place-items-center rounded-full bg-slate-100 text-slate-400">+</span>
+        )}
+        <div><p className="text-sm font-semibold">Save or plan</p><p className="text-xs text-slate-500">Collection, rating, purchase, and shopping-list actions</p></div>
       </div>
 
       <div className="mt-12 grid gap-6 md:grid-cols-2">
@@ -381,13 +398,6 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
       <PriceHistorySection
         productContext={selectedVersionRecord.versionName + " · " + selectedVariantRecord.displaySize}
         series={priceHistorySeries}
-      />
-
-      <OfferSection
-        description="Offers explicitly recorded as serving Canada. Prices are sorted by product price, before shipping."
-        emptyMessage="No Canadian buying options are currently tracked for this version and size."
-        offers={canadianOffers}
-        title="Buy in Canada"
       />
 
       {destinationMarket && destinationMarket !== "CA" ? (

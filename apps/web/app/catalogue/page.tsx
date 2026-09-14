@@ -17,12 +17,28 @@ export const metadata: Metadata = {
   },
 };
 
-type SearchParams = Promise<{ q?: string; category?: string }>;
+type SearchParams = Promise<{
+  q?: string;
+  category?: string;
+  brand?: string;
+  minPrice?: string;
+  maxPrice?: string;
+  tracked?: string;
+  sort?: string;
+}>;
 
 export default async function CataloguePage({ searchParams }: { searchParams: SearchParams }) {
   const params = await searchParams;
   const [catalogue, currentUser] = await Promise.all([
-    getCatalogue({ query: params.q, categorySlug: params.category }),
+    getCatalogue({
+      query: params.q,
+      categorySlug: params.category,
+      brandSlug: params.brand,
+      minimumCad: params.minPrice?.trim() ? Number(params.minPrice) : undefined,
+      maximumCad: params.maxPrice?.trim() ? Number(params.maxPrice) : undefined,
+      trackedOnly: params.tracked === "1",
+      sort: params.sort,
+    }),
     isClerkConfigured ? getCurrentUser() : Promise.resolve(null),
   ]);
   const personalItems = currentUser
@@ -36,12 +52,12 @@ export default async function CataloguePage({ searchParams }: { searchParams: Se
   return (
     <CatalogueBrowser
       breadcrumbs={catalogue.breadcrumbs}
+      brands={catalogue.brands}
       categories={catalogue.categories}
       description="Browse a curated, version-aware skincare catalogue with verified price context and source signals."
       personalItems={personalItems}
       products={catalogue.products}
-      query={catalogue.query}
-      selectedCategorySlug={catalogue.selectedCategory?.slug}
+      filters={catalogue.filters}
       title={catalogue.selectedCategory?.displayName ?? "Browse skincare"}
     />
   );

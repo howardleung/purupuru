@@ -2,6 +2,15 @@ import "server-only";
 
 import { prisma } from "@beauty-platform/database";
 import type { Prisma } from "@beauty-platform/database";
+import {
+  filterCataloguePrice,
+  selectLowestMarketOffer,
+  sortCatalogueItems,
+  type CatalogueSort,
+} from "@beauty-platform/domain/catalogue";
+import { selectPrimaryProductImage } from "@beauty-platform/domain/product-images";
+
+import type { CatalogueFilters, CatalogueProduct } from "./catalogue-contract";
 
 const productDetailsInclude = {
   brand: true,
@@ -53,6 +62,10 @@ export async function getCategories() {
   });
 }
 
+export async function getBrands() {
+  return prisma.brand.findMany({ orderBy: { name: "asc" }, select: { id: true, name: true, slug: true, originMarket: true } });
+}
+
 export function getCategoryPath(categories: readonly CategoryRecord[], categoryId: string) {
   const byId = new Map(categories.map((category) => [category.id, category]));
   const path: CategoryRecord[] = [];
@@ -83,9 +96,30 @@ function getCategoryAndDescendantIds(categories: readonly CategoryRecord[], cate
   return [...ids];
 }
 
-export async function getCatalogue(options: { query?: string; categorySlug?: string } = {}) {
+function finiteNonNegative(value: number | undefined) {
+  return value !== undefined && Number.isFinite(value) && value >= 0 ? value : null;
+}
+
+function isCatalogueSort(value: string | undefined): value is CatalogueSort {
+  return ["PRICE_ASC", "PRICE_DESC", "PRODUCT_ASC", "PRODUCT_DESC", "BRAND_ASC", "BRAND_DESC"].includes(value ?? "");
+}
+
+export async function getCatalogue(options: {
+  query?: string;
+  categorySlug?: string;
+  brandSlug?: string;
+  minimumCad?: number;
+  maximumCad?: number;
+  trackedOnly?: boolean;
+  sort?: string;
+} = {}) {
   const query = options.query?.trim() ?? "";
   const categories = await getCategories();
+  const aliasProductIds = query
+    ? (await prisma.productFamily.findMany({ select: { id: true, commonEnglishAliases: true } }))
+        .filter((product) => product.commonEnglishAliases.some((alias) => alias.toLocaleLowerCase().includes(query.toLocaleLowerCase())))
+        .map((product) => product.id)
+    : [];
   const selectedCategory = options.categorySlug
     ? categories.find((category) => category.slug === options.categorySlug) ?? null
     : null;
@@ -93,15 +127,18 @@ export async function getCatalogue(options: { query?: string; categorySlug?: str
     ? getCategoryAndDescendantIds(categories, selectedCategory.id)
     : undefined;
 
-  const products = await prisma.productFamily.findMany({
+  const [productRecords, brands] = await Promise.all([prisma.productFamily.findMany({
     where: {
       AND: [
         categoryIds ? { primaryCanonicalCategoryId: { in: categoryIds } } : {},
+        options.brandSlug ? { brand: { slug: options.brandSlug } } : {},
         query
           ? {
               OR: [
                 { canonicalName: { contains: query, mode: "insensitive" } },
                 { brand: { name: { contains: query, mode: "insensitive" } } },
+                { id: { in: aliasProductIds } },
+                { primaryCanonicalCategory: { displayName: { contains: query, mode: "insensitive" } } },
               ],
             }
           : {},
@@ -117,24 +154,116 @@ export async function getCatalogue(options: { query?: string; categorySlug?: str
           },
           defaultVariant: {
             include: {
-              benchmarkPrices: {
-                orderBy: { verifiedAt: "desc" },
-              },
+              offers: { where: { isActive: true, availableMarkets: { has: "CA" } } },
+              benchmarkPrices: { orderBy: { verifiedAt: "desc" } },
             },
           },
         },
       },
     },
     orderBy: [{ canonicalName: "asc" }],
+  }), getBrands()]);
+
+  const products: CatalogueProduct[] = productRecords.map((product) => {
+    const version = product.currentVersion;
+    const variant = version?.defaultVariant ?? null;
+    const lowestOffer = variant
+      ? selectLowestMarketOffer(
+          variant.offers.map((offer) => ({
+            productPrice: Number(offer.productPrice),
+            nativeCurrency: offer.nativeCurrency,
+            cadConvertedPrice: offer.cadConvertedPrice === null ? null : Number(offer.cadConvertedPrice),
+            availableMarkets: offer.availableMarkets,
+          })),
+          "CA",
+        )
+      : null;
+    return {
+      id: product.id,
+      slug: product.slug,
+      canonicalName: product.canonicalName,
+      originMarket: product.originMarket,
+      brand: { name: product.brand.name, slug: product.brand.slug },
+      primaryCanonicalCategory: {
+        id: product.primaryCanonicalCategory.id,
+        displayName: product.primaryCanonicalCategory.displayName,
+        slug: product.primaryCanonicalCategory.slug,
+      },
+      currentVersion: version
+        ? {
+            id: version.id,
+            versionCode: version.versionCode,
+            versionName: version.versionName,
+            image: selectPrimaryProductImage(version.images, version.id, variant?.id ?? null),
+            defaultVariant: variant ? { id: variant.id, displaySize: variant.displaySize } : null,
+            benchmarks: (variant?.benchmarkPrices ?? []).map((benchmark) => ({
+              id: benchmark.id,
+              type: benchmark.type,
+              market: benchmark.market,
+              nativeAmount: Number(benchmark.amount),
+              nativeCurrency: benchmark.nativeCurrency,
+              sourceDisplayName: benchmark.sourceDisplayName,
+              sourceUrl: benchmark.sourceUrl,
+              verifiedAt: benchmark.verifiedAt.toISOString(),
+            })),
+            lowestCanadianPrice: lowestOffer
+              ? {
+                  nativeAmount: lowestOffer.productPrice,
+                  nativeCurrency: lowestOffer.nativeCurrency,
+                  amountCad: lowestOffer.nativeCurrency === "CAD" ? lowestOffer.productPrice : lowestOffer.cadConvertedPrice,
+                }
+              : null,
+          }
+        : null,
+    };
   });
+
+  const minimumCad = finiteNonNegative(options.minimumCad);
+  const maximumCad = finiteNonNegative(options.maximumCad);
+  const sort: CatalogueSort = isCatalogueSort(options.sort) ? options.sort : "PRICE_ASC";
+  const productsById = new Map(products.map((product) => [product.id, product]));
+  const visibleProducts = sortCatalogueItems(
+    filterCataloguePrice(
+      products.map((product) => ({
+        ...product,
+        productName: product.canonicalName,
+        brandName: product.brand.name,
+        lowestPriceCad: product.currentVersion?.lowestCanadianPrice?.amountCad ?? null,
+      })),
+      minimumCad,
+      maximumCad,
+      Boolean(options.trackedOnly),
+    ),
+    sort,
+  ).map((product) => productsById.get(product.id)!);
+
+  const filters: CatalogueFilters = {
+    query,
+    categorySlug: selectedCategory?.slug ?? options.categorySlug ?? "",
+    brandSlug: options.brandSlug ?? "",
+    minimumCad,
+    maximumCad,
+    trackedOnly: Boolean(options.trackedOnly),
+    sort,
+  };
 
   return {
     categories,
-    products,
+    brands,
+    products: visibleProducts,
     selectedCategory,
     breadcrumbs: selectedCategory ? getCategoryPath(categories, selectedCategory.id) : [],
     query,
+    filters,
   };
+}
+
+export async function getComparisonProducts(productIds: readonly string[]) {
+  const uniqueIds = [...new Set(productIds)].slice(0, 4);
+  if (uniqueIds.length === 0) return [];
+  const catalogue = await getCatalogue();
+  const byId = new Map(catalogue.products.map((product) => [product.id, product]));
+  return uniqueIds.flatMap((id) => (byId.has(id) ? [byId.get(id)!] : []));
 }
 
 export async function getProductFamilyDetails(slug: string) {

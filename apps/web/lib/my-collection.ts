@@ -7,6 +7,7 @@ import {
   type CollectionVersionBase,
   type MyCollectionItem,
 } from "@beauty-platform/domain/my-collection";
+import { selectPrimaryProductImage } from "@beauty-platform/domain/product-images";
 
 const versionContext = {
   productFamily: {
@@ -20,6 +21,9 @@ const versionContext = {
     where: { isActive: true },
     orderBy: [{ normalizedQuantity: "asc" }, { normalizedUnit: "asc" }],
     take: 1,
+  },
+  images: {
+    orderBy: [{ isPrimary: "desc" }, { sortOrder: "asc" }, { id: "asc" }],
   },
 } satisfies Prisma.ProductVersionInclude;
 
@@ -133,5 +137,20 @@ export async function getMyCollectionForUser(
     ),
   ];
 
-  return normalizeCollectionItems(contributions);
+  const versions = [
+    ...entries.map((entry) => entry.productVersion),
+    ...ratings.map((rating) => rating.productVersion),
+    ...purchases.map((purchase) => purchase.productVariant.productVersion),
+  ];
+  const versionById = new Map(versions.map((version) => [version.id, version]));
+
+  return normalizeCollectionItems(contributions).map((item) => {
+    const version = versionById.get(item.productVersionId);
+    return {
+      ...item,
+      image: version
+        ? selectPrimaryProductImage(version.images, version.id, item.selectedVariantId)
+        : null,
+    };
+  });
 }

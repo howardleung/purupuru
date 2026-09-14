@@ -8,6 +8,7 @@ import {
   type ShoppingListBenchmark,
   type ShoppingListOffer,
 } from "@beauty-platform/domain/shopping-list";
+import { selectPrimaryProductImage } from "@beauty-platform/domain/product-images";
 
 import { convertToCad } from "./currency-conversion";
 
@@ -45,6 +46,15 @@ export type PreparedShoppingListItem = {
   productSlug: string;
   productName: string;
   brandName: string;
+  image: {
+    id: string;
+    productVersionId: string;
+    productVariantId: string | null;
+    url: string;
+    altText: string;
+    isPrimary: boolean;
+    sortOrder: number;
+  } | null;
   offers: PreparedShoppingListOffer[];
   benchmark: PreparedShoppingListBenchmark | null;
 };
@@ -104,6 +114,7 @@ export async function getShoppingListForUser(
               },
               productVersion: {
                 include: {
+                  images: { orderBy: [{ isPrimary: "desc" }, { sortOrder: "asc" }, { id: "asc" }] },
                   productFamily: { include: { brand: true } },
                 },
               },
@@ -201,6 +212,7 @@ export async function getShoppingListForUser(
         productSlug: family.slug,
         productName: family.canonicalName,
         brandName: family.brand.name,
+        image: selectPrimaryProductImage(version.images, version.id, variant.id),
         offers,
         benchmark,
       };

@@ -11,7 +11,7 @@ export const dynamic = "force-dynamic";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ q?: string }>;
+  searchParams: Promise<{ q?: string; brand?: string; minPrice?: string; maxPrice?: string; tracked?: string; sort?: string }>;
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -35,7 +35,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function CategoryPage({ params, searchParams }: PageProps) {
   const [{ slug }, queryParams] = await Promise.all([params, searchParams]);
   const [catalogue, currentUser] = await Promise.all([
-    getCatalogue({ categorySlug: slug, query: queryParams.q }),
+    getCatalogue({
+      categorySlug: slug,
+      query: queryParams.q,
+      brandSlug: queryParams.brand,
+      minimumCad: queryParams.minPrice?.trim() ? Number(queryParams.minPrice) : undefined,
+      maximumCad: queryParams.maxPrice?.trim() ? Number(queryParams.maxPrice) : undefined,
+      trackedOnly: queryParams.tracked === "1",
+      sort: queryParams.sort,
+    }),
     isClerkConfigured ? getCurrentUser() : Promise.resolve(null),
   ]);
 
@@ -52,12 +60,12 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
   return (
     <CatalogueBrowser
       breadcrumbs={catalogue.breadcrumbs}
+      brands={catalogue.brands}
       categories={catalogue.categories}
       description={`Products classified under the canonical ${catalogue.selectedCategory.displayName} category.`}
       personalItems={personalItems}
       products={catalogue.products}
-      query={catalogue.query}
-      selectedCategorySlug={catalogue.selectedCategory.slug}
+      filters={catalogue.filters}
       title={catalogue.selectedCategory.displayName}
     />
   );

@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 export const navigationItems = [
   { href: "/", label: "Home" },
   { href: "/catalogue", label: "Browse" },
-  { href: "/categories", label: "Categories" },
+  { href: "/brands", label: "Brands" },
   { href: "/collection", label: "My Collection" },
   { href: "/shopping-lists", label: "Shopping Lists" },
   { href: "/about", label: "About" },
@@ -17,13 +17,13 @@ function isActive(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-export function PrimaryNav() {
+export function PrimaryNav({ mobile = false }: { mobile?: boolean }) {
   const pathname = usePathname();
 
   return (
     <nav
       aria-label="Primary"
-      className="order-3 flex w-full gap-1 overflow-x-auto border-t border-slate-100 pt-3 sm:order-none sm:w-auto sm:gap-1 sm:border-0 sm:pt-0"
+      className={mobile ? "grid gap-1" : "flex items-center justify-center gap-1"}
     >
       {navigationItems.map((item) => {
         const active = isActive(pathname, item.href);

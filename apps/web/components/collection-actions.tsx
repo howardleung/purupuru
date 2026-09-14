@@ -14,6 +14,7 @@ import type {
   ProductCollectionActionInput,
   ProductCollectionActionResult,
 } from "../lib/collection-contract";
+import { HalfStarRating } from "./half-star-rating";
 
 type ConfirmationRequest = {
   intent: CollectionMutationIntent;
@@ -277,25 +278,13 @@ export function CollectionActions({
         </div>
       </div>
 
-      <label className="mt-4 grid w-full gap-1 text-sm font-medium text-slate-700 sm:max-w-56">
-        Personal rating
-        <select
-          className="rounded-md border border-slate-300 bg-white px-3 py-2 font-normal"
+      <div className="mt-5">
+        <HalfStarRating
           disabled={disabled}
-          onChange={(event) => {
-            const ratingHalfSteps = Number(event.target.value);
-            if (ratingHalfSteps) request({ type: "SET_RATING", ratingHalfSteps });
-          }}
-          value={state.ratingHalfSteps ?? ""}
-        >
-          <option value="">Not rated</option>
-          {Array.from({ length: 9 }, (_, index) => index + 2).map((halfSteps) => (
-            <option key={halfSteps} value={halfSteps}>
-              {(halfSteps / 2).toFixed(1)} stars
-            </option>
-          ))}
-        </select>
-      </label>
+          onCommit={(ratingHalfSteps) => request({ type: "SET_RATING", ratingHalfSteps })}
+          value={state.ratingHalfSteps}
+        />
+      </div>
 
       {!isSignedIn ? (
         <p className="mt-3 text-xs text-slate-500">

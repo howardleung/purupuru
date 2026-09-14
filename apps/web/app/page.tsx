@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { ProductCard } from "../components/product-card";
+import { GlobalSearch } from "../components/global-search";
+import { catalogueProductHref, ProductCard } from "../components/product-card";
+import { ProductImage } from "../components/product-image";
 import { getCatalogue } from "../lib/catalogue";
 
 export const dynamic = "force-dynamic";
@@ -40,19 +42,7 @@ export default async function HomePage() {
               Otoku helps you check exact versions and sizes, trustworthy local benchmarks,
               and tracked buying options before you buy skincare at home or while travelling.
             </p>
-            <form action="/catalogue" className="mt-8 flex max-w-2xl flex-col gap-3 sm:flex-row" method="get">
-              <label className="sr-only" htmlFor="home-search">Search by product or brand</label>
-              <input
-                className="min-w-0 flex-1 rounded-lg border border-slate-300 bg-white px-4 py-3 outline-none focus:border-slate-600"
-                id="home-search"
-                name="q"
-                placeholder="Search Round Lab, ANESSA…"
-                type="search"
-              />
-              <button className="rounded-lg bg-slate-950 px-5 py-3 font-medium text-white" type="submit">
-                Search skincare
-              </button>
-            </form>
+            <div className="mt-8"><GlobalSearch id="home-search" prominent /></div>
             <div className="mt-4 flex flex-wrap gap-4 text-sm">
               <Link className="font-medium underline decoration-slate-300 underline-offset-4" href="/catalogue">
                 Browse all skincare
@@ -63,22 +53,15 @@ export default async function HomePage() {
             </div>
           </div>
 
-          <aside className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <p className="text-sm font-semibold">What Otoku keeps straight</p>
-            <dl className="mt-5 space-y-5">
-              <div>
-                <dt className="font-medium">Exact product identity</dt>
-                <dd className="mt-1 text-sm leading-6 text-slate-600">Versions, formulations, and sizes stay separate.</dd>
-              </div>
-              <div>
-                <dt className="font-medium">Honest price context</dt>
-                <dd className="mt-1 text-sm leading-6 text-slate-600">Native-market benchmarks stay primary; CAD conversions are approximate.</dd>
-              </div>
-              <div>
-                <dt className="font-medium">Your private planning</dt>
-                <dd className="mt-1 text-sm leading-6 text-slate-600">Browse freely, then sign in only when you want to save, rate, or plan a list.</dd>
-              </div>
-            </dl>
+          <aside className="grid grid-cols-2 gap-3" aria-label="Featured catalogue products">
+            {featuredProducts.map((product, index) => (
+              <Link className={`overflow-hidden rounded-2xl border border-slate-200 bg-white p-2 shadow-sm ${index === 0 ? "translate-y-5" : ""}`} href={catalogueProductHref(product)} key={product.id}>
+                <div className="aspect-square overflow-hidden rounded-xl bg-slate-50">
+                  <ProductImage className="h-full rounded-xl" image={product.currentVersion?.image ?? null} priority={index === 0} productName={product.canonicalName} sizes="240px" />
+                </div>
+                <span className="block p-2"><span className="block text-[0.65rem] font-medium uppercase tracking-wide text-slate-500">{product.brand.name}</span><span className="mt-1 block text-sm font-semibold leading-tight">{product.canonicalName}</span></span>
+              </Link>
+            ))}
           </aside>
         </div>
       </section>

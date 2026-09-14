@@ -57,6 +57,15 @@ export type CollectionContribution =
     };
 
 export type MyCollectionItem = CollectionVersionBase & {
+  image?: {
+    id: string;
+    productVersionId: string;
+    productVariantId: string | null;
+    url: string;
+    altText: string;
+    isPrimary: boolean;
+    sortOrder: number;
+  } | null;
   selectedVariantId: string | null;
   selectedVariantLabel: string | null;
   wants: boolean;

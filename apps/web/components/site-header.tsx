@@ -1,20 +1,21 @@
-import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
+import { Menu } from "lucide-react";
 import Link from "next/link";
 
 import { isClerkConfigured } from "../lib/clerk-config";
+import { GlobalSearch } from "./global-search";
 import { PrimaryNav } from "./primary-nav";
+import { ProductMegaMenu } from "./product-mega-menu";
 
 export function SiteHeader() {
   return (
-    <header className="border-b border-slate-200 bg-white">
-      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-4 gap-y-3 px-4 py-3 sm:flex-nowrap sm:px-6 sm:py-4">
-        <Link className="text-xl font-semibold tracking-tight" href="/">
+    <header className="relative z-30 border-b border-slate-200 bg-white">
+      <div className="mx-auto grid max-w-6xl grid-cols-[1fr_auto] items-center gap-3 px-4 py-3 md:grid-cols-[minmax(16rem,1fr)_auto_minmax(16rem,1fr)] md:px-6 md:py-4">
+        <div className="hidden max-w-sm md:block"><GlobalSearch /></div>
+        <Link className="text-xl font-semibold tracking-tight md:text-2xl" href="/">
           Otoku
         </Link>
-
-        <PrimaryNav />
-
-        <div className="ml-auto flex shrink-0 items-center">
+        <div className="ml-auto flex shrink-0 items-center justify-end gap-1">
           {isClerkConfigured ? (
             <>
               <SignedOut>
@@ -24,11 +25,6 @@ export function SiteHeader() {
                       Sign in
                     </button>
                   </SignInButton>
-                  <SignUpButton mode="modal">
-                    <button className="hidden rounded-md bg-slate-900 px-3 py-2 text-sm font-medium text-white sm:block" type="button">
-                      Create account
-                    </button>
-                  </SignUpButton>
                 </div>
               </SignedOut>
               <SignedIn>
@@ -36,8 +32,24 @@ export function SiteHeader() {
               </SignedIn>
             </>
           ) : (
-            <span className="text-xs text-slate-500">Personal features unavailable</span>
+            <span className="hidden text-xs text-slate-500 sm:inline">Personal features unavailable</span>
           )}
+          <details className="relative md:hidden">
+            <summary aria-label="Open navigation" className="grid h-10 w-10 cursor-pointer list-none place-items-center rounded-full hover:bg-slate-100">
+              <Menu aria-hidden className="h-5 w-5" />
+            </summary>
+            <div className="absolute right-0 top-12 z-50 w-[min(22rem,calc(100vw-2rem))] rounded-2xl border border-slate-200 bg-white p-3 shadow-xl">
+              <ProductMegaMenu mobile />
+              <PrimaryNav mobile />
+            </div>
+          </details>
+        </div>
+        <div className="col-span-2 md:hidden"><GlobalSearch id="mobile-global-search" /></div>
+      </div>
+      <div className="relative hidden border-t border-slate-100 md:block">
+        <div className="mx-auto flex max-w-6xl items-center justify-center gap-1 px-6 py-1.5">
+          <ProductMegaMenu />
+          <PrimaryNav />
         </div>
       </div>
     </header>
