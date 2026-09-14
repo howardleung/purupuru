@@ -325,6 +325,15 @@ Each supported product should ideally contain:
 - last-verified timestamps
 - variant-specific retailer price history with current prices kept distinct from recorded observations
 
+### Public Site Structure
+
+The MVP public entry point explains Otoku’s consumer value before authentication and provides prominent product/brand search, canonical category browse, and curated product links backed by PostgreSQL. Primary destinations are Home, Browse, Categories, My Collection, Shopping Lists, and About. Anonymous users can complete discovery and comparison flows; sign-in is introduced only for private save, rating, purchase, and list behavior.
+
+Public About, Contact, Privacy, Terms, and Affiliate Disclosure pages provide early trust structure. Draft legal copy must be visibly marked for professional review, a real contact channel is required before launch, and the product must not imply partnerships that do not exist.
+
+### Product Images
+
+Product images must come from manually curated local assets or approved brand/retailer sources with recorded provenance and descriptive alt text. Images belong to a ProductVersion and may optionally target an exact ProductVariant. Exact-variant imagery wins; a version-wide image may safely cover sizes within that version, but another version or variant’s packaging must never be borrowed. Missing or failed images use an intentional fallback. The model supports ordered future galleries without requiring gallery UI in this milestone.
 ### Collection Features
 
 Users can classify products using states such as:

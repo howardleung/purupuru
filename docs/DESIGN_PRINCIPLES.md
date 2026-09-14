@@ -142,3 +142,15 @@ Prefer:
 - logos for external rating signals where permitted
 
 Avoid clutter, aggressive sale language, excessive gamification, and feed-like noise.
+
+## 14. Public orientation before authentication
+
+The homepage should explain the consumer value before presenting account actions: identify the exact product, compare trustworthy market context, then save or plan privately when useful. Search and canonical category browse are prominent and database-backed. Anonymous visitors can move through Home → Browse/Category → Product → Compare without Clerk becoming a dependency.
+
+Primary navigation uses consumer labels—Home, Browse, Categories, My Collection, Shopping Lists, and About—and stays understandable at narrow widths. Private destinations may remain visible when their pages provide a clear sign-in prompt.
+
+## 15. Product imagery must preserve identity and trust
+
+Use high-quality curated imagery when its version/variant identity and source are known. Exact-variant imagery takes precedence; a version-wide asset is acceptable only when it safely represents all shown sizes for that formulation. Never borrow another version’s packaging to fill a gap.
+
+Every image needs useful alt text and provenance. A missing or failed asset renders a quiet, intentional fallback. Remote hosts should be narrowly approved, presentation should remain modular for a future gallery, and public-launch image rights/hosting must be reviewed.

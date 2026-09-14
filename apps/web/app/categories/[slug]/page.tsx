@@ -17,7 +17,19 @@ type PageProps = {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const catalogue = await getCatalogue({ categorySlug: slug });
-  return { title: catalogue.selectedCategory?.displayName ?? "Category" };
+  const title = catalogue.selectedCategory?.displayName ?? "Category";
+  const description = catalogue.selectedCategory
+    ? `Browse version-aware ${catalogue.selectedCategory.displayName.toLowerCase()} products and trusted price context on Otoku.`
+    : "Browse Otoku’s canonical skincare categories.";
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title: `${title} skincare · Otoku`,
+      description,
+    },
+  };
 }
 
 export default async function CategoryPage({ params, searchParams }: PageProps) {

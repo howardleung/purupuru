@@ -57,7 +57,7 @@ export function CatalogueBrowser({
         <p className="mt-3 text-slate-600">{description}</p>
       </div>
 
-      <form action="/" className="mt-8 grid gap-3 rounded-xl border border-slate-200 bg-slate-50 p-4 sm:grid-cols-[1fr_15rem_auto]" method="get">
+      <form action="/catalogue" className="mt-8 grid gap-3 rounded-xl border border-slate-200 bg-slate-50 p-4 sm:grid-cols-[1fr_15rem_auto]" method="get">
         <label className="grid gap-1 text-sm font-medium text-slate-700">
           Search products
           <input
@@ -130,7 +130,7 @@ export function CatalogueBrowser({
       ) : (
         <div className="mt-4 rounded-xl border border-dashed border-slate-300 p-8 text-center text-slate-600">
           <p>No catalogue products match this search and category.</p>
-          <Link className="mt-4 inline-block text-sm font-medium text-slate-900 underline" href="/">
+          <Link className="mt-4 inline-block text-sm font-medium text-slate-900 underline" href="/catalogue">
             Clear filters and browse all skincare
           </Link>
         </div>

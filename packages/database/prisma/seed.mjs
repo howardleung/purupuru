@@ -84,6 +84,22 @@ async function upsertVariant(productVersionId, data) {
   });
 }
 
+async function upsertProductImage(productVersionId, data) {
+  return prisma.productImage.upsert({
+    where: {
+      productVersionId_url: {
+        productVersionId,
+        url: data.url,
+      },
+    },
+    update: data,
+    create: {
+      productVersionId,
+      ...data,
+    },
+  });
+}
+
 async function upsertRetailer(data) {
   return prisma.retailer.upsert({
     where: { sourceKey: data.sourceKey },
@@ -329,6 +345,36 @@ async function main() {
     data: { currentVersionId: anessaNb.id },
   });
 
+  await upsertProductImage(dokdoVersion.id, {
+    productVariantId: null,
+    url: "https://roundlab.com/cdn/shop/files/1025-dokdo-toner-round-lab-3.jpg?v=1774657694&width=1946",
+    altText: "Round Lab 1025 Dokdo Toner bottle on a light blue background",
+    sourceType: "BRAND_APPROVED",
+    sourceName: "Round Lab official product page",
+    sourcePageUrl: "https://roundlab.com/products/1025-dokdo-toner",
+    isPrimary: true,
+    sortOrder: 0,
+  });
+  await upsertProductImage(anessaNb.id, {
+    productVariantId: anessaNb90.id,
+    url: "https://www.shiseido.co.jp/anessa/products/suncare/common/img/new/cv-modal/moisture-gel_90.png",
+    altText: "ANESSA Perfect UV Skincare Gel NB 90 gram gold tube",
+    sourceType: "BRAND_APPROVED",
+    sourceName: "ANESSA / Shiseido official product page",
+    sourcePageUrl: "https://www.shiseido.co.jp/anessa/products/suncare/daily-uv-gel-moisture/",
+    isPrimary: true,
+    sortOrder: 0,
+  });
+  await upsertProductImage(anessaNb.id, {
+    productVariantId: anessaNb40.id,
+    url: "https://www.shiseido.co.jp/anessa/products/suncare/common/img/new/cv-modal/moisture-gel_40.png",
+    altText: "ANESSA Perfect UV Skincare Gel NB 40 gram gold tube",
+    sourceType: "BRAND_APPROVED",
+    sourceName: "ANESSA / Shiseido official product page",
+    sourcePageUrl: "https://www.shiseido.co.jp/anessa/products/suncare/daily-uv-gel-moisture/",
+    isPrimary: true,
+    sortOrder: 0,
+  });
   const well = await upsertRetailer({
     sourceKey: "retailer:well-ca",
     name: "Well.ca",
@@ -752,7 +798,7 @@ async function main() {
 
   await prisma.offerItem.deleteMany({ where: { offerId: dokdoWellOffer.id } });
 
-  console.log("Seeded canonical taxonomy, 2 brands, 2 product families, 3 versions, 5 variants, and demo price observations.");
+  console.log("Seeded canonical taxonomy, 2 brands, 2 product families, 3 versions, 5 variants, curated product images, and demo price observations.");
 }
 
 main()

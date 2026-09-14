@@ -50,7 +50,7 @@ export default async function CollectionPage() {
           <p className="mt-2 text-sm text-slate-600">
             Browse the catalogue and mark a product Want, Tried, Owned, Holy Grail, or rate it.
           </p>
-          <Link className="mt-4 inline-block text-sm font-medium underline" href="/">
+          <Link className="mt-4 inline-block text-sm font-medium underline" href="/catalogue">
             Browse catalogue
           </Link>
         </section>

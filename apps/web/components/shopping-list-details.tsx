@@ -137,7 +137,7 @@ export function ShoppingListDetails({ list }: { list: PreparedShoppingList }) {
           <p className="mt-2 text-sm text-slate-600">
             Choose an exact size from a product page, then add it here.
           </p>
-          <Link className="mt-4 inline-block text-sm font-medium underline" href="/">
+          <Link className="mt-4 inline-block text-sm font-medium underline" href="/catalogue">
             Browse catalogue
           </Link>
         </section>

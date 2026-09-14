@@ -9,6 +9,9 @@ const productDetailsInclude = {
   versions: {
     orderBy: [{ releaseDate: "desc" }, { createdAt: "desc" }],
     include: {
+      images: {
+        orderBy: [{ isPrimary: "desc" }, { sortOrder: "asc" }, { id: "asc" }],
+      },
       externalSignals: {
         orderBy: { verifiedAt: "desc" },
       },
@@ -109,6 +112,9 @@ export async function getCatalogue(options: { query?: string; categorySlug?: str
       primaryCanonicalCategory: true,
       currentVersion: {
         include: {
+          images: {
+            orderBy: [{ isPrimary: "desc" }, { sortOrder: "asc" }, { id: "asc" }],
+          },
           defaultVariant: {
             include: {
               benchmarkPrices: {

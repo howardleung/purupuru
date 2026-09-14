@@ -113,6 +113,20 @@ Likely fields:
 
 Only known variants for the selected ProductVersion appear in the UI.
 
+### ProductImage
+Stores curated presentation imagery without weakening catalogue identity.
+
+Implemented fields:
+- productVersionId (required)
+- productVariantId nullable (only when the asset depicts one exact size/packaging)
+- url and descriptive altText
+- sourceType: LOCAL_CURATED | BRAND_APPROVED | RETAILER_APPROVED
+- sourceName and sourcePageUrl provenance
+- isPrimary and sortOrder for a future ordered gallery
+
+Image selection is explicitly version-scoped. An exact selected-variant image takes precedence; a version-wide image is the only safe fallback. An image tied to another version or variant must never be shown simply because it belongs to the same ProductFamily. Missing or failed imagery renders an intentional fallback rather than guessed packaging.
+
+`BRAND_APPROVED` and `RETAILER_APPROVED` mean the source was deliberately allowlisted for curated ingestion; they do not claim that reuse rights have completed legal clearance. Remote assets are limited to manually approved brand/retailer hosts and documented in the curated seed provenance. Image permissions, hotlinking policy, and production asset hosting require review before public launch.
 ## Retail and price model
 
 ### Retailer

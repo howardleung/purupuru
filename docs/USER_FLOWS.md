@@ -2,6 +2,14 @@
 
 These flows describe intended product behavior. Exact visual design is not fixed until prototypes are reviewed.
 
+## 0. Public homepage → browse
+
+1. An anonymous visitor lands on `/` and sees Otoku’s value proposition, prominent product/brand search, canonical category entry points, and curated products loaded from PostgreSQL.
+2. Search submits to `/catalogue`; category links use stable `/categories/[slug]` routes.
+3. The visitor can continue Home → Browse/Search → Product → Compare without signing in.
+4. About and footer trust pages explain source limitations, changing prices/availability, approximate currency conversion, and the affiliate-ordering commitment.
+5. Authentication is introduced only when the visitor chooses a private action or private destination.
+
 ## 1. Anonymous browse → product page
 
 1. User lands on the responsive website without an account.
@@ -43,6 +51,14 @@ As the user types:
 A brand result can lead to a minimal brand page listing supported products, even if richer brand functionality is post-MVP.
 
 ## 4. Product page
+
+### Product imagery
+
+1. Select images only from the chosen ProductVersion.
+2. Prefer an image explicitly attached to the selected ProductVariant.
+3. Otherwise use a version-wide image; never borrow another size-specific or version-specific image.
+4. Show an intentional fallback if no safe image is available or the approved remote asset fails.
+5. Keep source attribution available and alt text descriptive.
 
 ### Above the fold
 
@@ -295,3 +311,11 @@ MVP profile/account may expose to the owner:
 - settings/privacy
 
 Future public profile/showcase slots are schema-ready but not required for MVP UI.
+
+## 14. Destination shopping continuity
+
+1. User opens a product and chooses an exact version and size.
+2. The product page shows that exact selection’s destination-market benchmark, offers, and native currency first.
+3. User adds the exact variant to a shopping list whose target market matches the trip.
+4. The list calculates quantity-aware destination cost and savings only where a trustworthy exact-variant benchmark and eligible market offer exist.
+5. Links from the list return to the same product version and variant; approximate CAD remains secondary and excluded products stay explicit.

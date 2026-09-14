@@ -72,6 +72,12 @@ enum SkinType {
   NOT_SURE
 }
 
+enum ProductImageSourceType {
+  LOCAL_CURATED
+  BRAND_APPROVED
+  RETAILER_APPROVED
+}
+
 model User {
   id                 String    @id @default(cuid())
   clerkUserId        String    @unique
@@ -181,6 +187,7 @@ model ProductVersion {
   collectionEntries CollectionEntry[]
   externalSignals   ExternalSignal[]
   ratings           UserRating[]
+  images            ProductImage[]
 
   @@unique([productFamilyId, versionName])
   @@index([productFamilyId, status])
@@ -209,9 +216,32 @@ model ProductVariant {
   ratingContexts            UserRating[]       @relation("UserRatingContextualVariant")
   purchaseInstances         PurchaseInstance[]
   shoppingListItems         ShoppingListItem[]
+  images                    ProductImage[]
 
   @@unique([productVersionId, normalizedQuantity, normalizedUnit])
   @@index([manufacturerSku])
+}
+
+model ProductImage {
+  id               String                 @id @default(cuid())
+  productVersionId String
+  productVariantId String?
+  url              String
+  altText          String
+  sourceType       ProductImageSourceType
+  sourceName       String
+  sourcePageUrl    String?
+  isPrimary        Boolean                @default(false)
+  sortOrder        Int                    @default(0)
+  createdAt        DateTime               @default(now())
+  updatedAt        DateTime               @updatedAt
+
+  productVersion ProductVersion  @relation(fields: [productVersionId], references: [id], onDelete: Cascade)
+  productVariant ProductVariant? @relation(fields: [productVariantId], references: [id], onDelete: Cascade)
+
+  @@unique([productVersionId, url])
+  @@index([productVersionId, isPrimary, sortOrder])
+  @@index([productVariantId])
 }
 
 model Retailer {

@@ -1,7 +1,9 @@
 import type { MyCollectionItem } from "@beauty-platform/domain/my-collection";
+import { selectPrimaryProductImage } from "@beauty-platform/domain/product-images";
 import Link from "next/link";
 
 import { productSelectionHref } from "../lib/product-links";
+import { ProductImage } from "./product-image";
 
 type ProductCardProps = {
   product: {
@@ -15,6 +17,15 @@ type ProductCardProps = {
       id: string;
       versionCode: string | null;
       versionName: string;
+      images: Array<{
+        id: string;
+        productVersionId: string;
+        productVariantId: string | null;
+        url: string;
+        altText: string;
+        isPrimary: boolean;
+        sortOrder: number;
+      }>;
       defaultVariant: {
         id: string;
         displaySize: string;
@@ -38,13 +49,16 @@ const benchmarkLabels: Record<string, string> = {
 function formatAmount(amount: string, currency: string) {
   const value = Number(amount);
   const digits = currency === "CAD" ? 2 : 0;
-  const formatted = new Intl.NumberFormat("en-CA", {
-    style: "currency",
-    currency,
-    minimumFractionDigits: digits,
-    maximumFractionDigits: digits,
-  }).format(value);
-  return formatted + " " + currency;
+  return (
+    new Intl.NumberFormat("en-CA", {
+      style: "currency",
+      currency,
+      minimumFractionDigits: digits,
+      maximumFractionDigits: digits,
+    }).format(value) +
+    " " +
+    currency
+  );
 }
 
 function personalLabels(state: MyCollectionItem) {
@@ -58,12 +72,16 @@ function personalLabels(state: MyCollectionItem) {
 }
 
 export function ProductCard({ product, personalState = null }: ProductCardProps) {
+  const defaultVariantId = product.currentVersion?.defaultVariant?.id ?? null;
+  const image = product.currentVersion
+    ? selectPrimaryProductImage(product.currentVersion.images, product.currentVersion.id, defaultVariantId)
+    : null;
   const benchmark = product.currentVersion?.defaultVariant?.benchmarkPrices[0];
   const href = product.currentVersion
     ? productSelectionHref({
         productSlug: product.slug,
         versionKey: product.currentVersion.versionCode ?? product.currentVersion.id,
-        variantId: product.currentVersion.defaultVariant?.id,
+        variantId: defaultVariantId ?? undefined,
       })
     : `/products/${encodeURIComponent(product.slug)}`;
   const labels = personalState ? personalLabels(personalState) : [];
@@ -72,10 +90,16 @@ export function ProductCard({ product, personalState = null }: ProductCardProps)
     <article className="flex h-full flex-col rounded-xl border border-slate-200 bg-white p-4 sm:p-5">
       <Link
         aria-label={`View ${product.brand.name} ${product.canonicalName}`}
-        className="mb-5 flex h-32 items-center justify-center rounded-lg bg-slate-100 text-4xl font-semibold text-slate-300 sm:h-36"
+        className="mb-5 block"
         href={href}
       >
-        {product.brand.name.slice(0, 1)}
+        <ProductImage
+          className="h-44 sm:h-52"
+          image={image}
+          key={image?.url ?? "image-fallback"}
+          productName={`${product.brand.name} ${product.canonicalName}`}
+          sizes="(max-width: 640px) calc(100vw - 4rem), 34rem"
+        />
       </Link>
       <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
         {product.brand.name}
@@ -120,7 +144,10 @@ export function ProductCard({ product, personalState = null }: ProductCardProps)
         </div>
       ) : null}
 
-      <Link className="mt-auto pt-5 text-sm font-medium underline decoration-slate-300 underline-offset-4" href={href}>
+      <Link
+        className="mt-auto pt-5 text-sm font-medium underline decoration-slate-300 underline-offset-4"
+        href={href}
+      >
         View product
       </Link>
     </article>

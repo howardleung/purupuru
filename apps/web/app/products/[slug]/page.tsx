@@ -4,6 +4,7 @@ import {
 } from "@beauty-platform/domain";
 import { createEmptyCollectionState } from "@beauty-platform/domain/collection";
 import { buildPriceHistorySeries } from "@beauty-platform/domain/price-history";
+import { selectPrimaryProductImage } from "@beauty-platform/domain/product-images";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -12,6 +13,7 @@ import { CollectionActions } from "../../../components/collection-actions";
 import { AddToShoppingList } from "../../../components/add-to-shopping-list";
 import { OfferSection, type OfferView } from "../../../components/offer-section";
 import { PriceHistorySection } from "../../../components/price-history-section";
+import { ProductImage } from "../../../components/product-image";
 import { ProductSelectors } from "../../../components/product-selectors";
 import { getProductFamilyDetails } from "../../../lib/catalogue";
 import { isClerkConfigured } from "../../../lib/clerk-config";
@@ -67,7 +69,25 @@ function formatRateDate(value: string) {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const { family } = await getProductFamilyDetails(slug);
-  return { title: family ? `${family.brand.name} ${family.canonicalName}` : "Product" };
+  if (!family) return { title: "Product" };
+
+  const version =
+    family.versions.find((item) => item.id === family.currentVersionId) ?? family.versions[0];
+  const image = version
+    ? selectPrimaryProductImage(version.images, version.id, version.defaultVariantId)
+    : null;
+  const title = `${family.brand.name} ${family.canonicalName}`;
+  const description = `Compare verified benchmarks, tracked offers, and exact sizes for ${title}.`;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title: `${title} · Otoku`,
+      description,
+      images: image ? [{ url: image.url, alt: image.altText }] : undefined,
+    },
+  };
 }
 
 export default async function ProductPage({ params, searchParams }: PageProps) {
@@ -112,6 +132,11 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
 
   if (!selectedVariantRecord) notFound();
 
+  const selectedImage = selectPrimaryProductImage(
+    selectedVersionRecord.images,
+    selectedVersionRecord.id,
+    selectedVariantRecord.id,
+  );
   const selectedVariant = selectedVersion.variants.find(
     (variant) => variant.id === selectedVariantRecord.id,
   )!;
@@ -189,9 +214,29 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
       <Breadcrumbs items={breadcrumbs} />
 
       <div className="mt-6 grid gap-8 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
-        <div className="flex min-h-56 items-center justify-center rounded-2xl sm:min-h-72 bg-slate-100 text-7xl font-semibold text-slate-300">
-          {family.brand.name.slice(0, 1)}
-        </div>
+        <figure>
+          <ProductImage
+            className="min-h-72 md:min-h-[28rem]"
+            image={selectedImage}
+            key={selectedImage?.url ?? "image-fallback"}
+            priority
+            productName={`${family.brand.name} ${family.canonicalName} ${selectedVariantRecord.displaySize}`}
+            sizes="(max-width: 768px) calc(100vw - 2rem), 42vw"
+          />
+          {selectedImage?.sourcePageUrl ? (
+            <figcaption className="mt-2 text-xs text-slate-500">
+              Image: {" "}
+              <a
+                className="underline decoration-slate-300 underline-offset-2"
+                href={selectedImage.sourcePageUrl}
+                rel="noreferrer"
+                target="_blank"
+              >
+                {selectedImage.sourceName}
+              </a>
+            </figcaption>
+          ) : null}
+        </figure>
         <div>
           <p className="text-sm font-medium uppercase tracking-wide text-slate-500">
             {family.brand.name}
