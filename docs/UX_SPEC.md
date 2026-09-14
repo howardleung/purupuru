@@ -528,13 +528,14 @@ An explicit expansion may show:
 - benchmark type, amount, source, and coverage;
 - estimated savings;
 - selected retailer/offer;
-- purchase details;
+- personal purchase details only after a separate explicit Collection action;
 - honest exclusion reason.
 
 ### Offers and retailer filter
 
-- Default to cheapest relevant tracked offer whose `availableMarkets` includes the target market.
-- Allow the user to override the viewed retailer/offer.
+- Use the strongest verified target-market benchmark as the stable planned amount.
+- Default the Canadian comparison to the cheapest relevant tracked offer whose `availableMarkets` includes Canada, and allow the user to override it.
+- Keep target-market retailer offers as secondary availability intelligence.
 - Do not permanently group or bind the entire list by retailer.
 - Support a retailer/store filter answering `Which items can I buy here?`
 - Filtering does not imply retailer ownership or exclusivity.
@@ -543,15 +544,16 @@ Whether an override persists is open; the current model intentionally stores no 
 
 ### Purchase progress
 
-- Check off part/all of requested quantity.
+- Purchased is a reversible full-item checkbox: unchecked means none of the current quantity is checked off; checked means all of it is checked off.
+- Changing quantity while checked keeps the full current quantity checked.
 - Purchased items remain visible but de-emphasized.
 - Long lists may use a collapsible Purchased section.
-- Increasing purchased quantity creates only the documented PurchaseInstance delta.
-- Requested quantity cannot fall below purchased quantity.
+- Checklist state may drive list progress and already-saved estimates, but it does not imply personal ownership.
+- Checking or unchecking does not create or delete `PurchaseInstance`, change Collection state, or remove Want. A separate explicit Owned or `Add to My Collection` action applies those personal Collection rules.
 
 ### Actual price and savings
 
-Long-term actual savings uses the real paid price where known. `PurchaseInstance.amountPaid` and `currency` already provide a domain location for manual actual price, but the editing flow and whether amount is per-unit or transaction-total must be settled before implementation.
+Long-term actual savings for an explicitly recorded personal purchase uses the real paid price where known. `PurchaseInstance.amountPaid` and `currency` provide a domain location for that personal history, but the editing flow and whether amount is per-unit or transaction-total must be settled before implementation. Shopping-list completion alone must not create that history.
 
 Until actual price is reliable, use documented estimated-savings logic. Receipt OCR remains future scope.
 
@@ -571,6 +573,7 @@ Rows stack cleanly; check/quantity controls remain tappable; summaries remain re
 | Native currency is authoritative | Native first; CAD is approximate convenience context. |
 | Benchmark types differ | Preserve MSRP, Retail Price, and Reference Price labels, precedence, and evidence. |
 | Missing stays missing | Invent no zeroes, conversions, ratings, ingredients, popularity, savings, deals, or availability. |
+| Shopping-list Purchased is not Owned | Use reversible checklist state for “Did this get bought?”; require a separate explicit Collection action for personal ownership and `PurchaseInstance` history. |
 | Popularity requires evidence | Trending/Popular labels require attributable market signals. |
 | Deals require evidence | Demo/incomplete history supports no deal or lowest-ever claim. |
 | Affiliate economics are excluded | Commission never affects rank, prominence, or recommendation. |

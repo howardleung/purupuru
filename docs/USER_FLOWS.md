@@ -212,15 +212,16 @@ MVP lists are private.
 Each item shows:
 - selected product/variant
 - quantity selector
-- eligible destination-market offers, with the lowest raw product-price offer selected initially
-- applicable target-market benchmark
+- strongest verified target-market planning benchmark, when available
+- eligible Canadian comparison offers, with the lowest raw product-price offer selected initially
+- target-market retailer availability in progressive detail
 - potential difference/savings where valid
-- purchased quantity/state
+- reversible Purchased checkbox state
 
 ### Savings math
 - multiply prices by requested quantity
 - compare exact version/variant only
-- require both a selected eligible target-market offer and a trustworthy benchmark for the same market and exact variant
+- require both a trustworthy target-market benchmark and a selected eligible Canadian comparison offer for the exact variant
 - exclude missing products entirely
 - disclose number of unique excluded products near estimate
 - any excluded product → label Partial estimate
@@ -231,12 +232,14 @@ Example:
 > 3 products excluded because no verified Korea benchmark price is available.
 
 ### Mark purchased
-1. User marks quantity purchased.
-2. Create a linked PurchaseInstance whose quantity is only the newly purchased delta.
-3. Update Purchased state.
-4. Offer optional Add purchase details.
+1. User checks Purchased to record that the full current quantity was bought for this list; internally `purchasedQuantity = quantity`.
+2. User may uncheck it later; internally `purchasedQuantity = 0`. Rechecking is safe, and quantity changes while checked keep the full current quantity purchased.
+3. Update shopping-list progress and eligible already-saved estimates from this checklist state.
+4. Do not create or delete a `PurchaseInstance`, derive Owned, change Collection state, or remove Want from the checkbox alone. The purchase may be a gift or for someone else.
 
-Future receipt import can automate this flow but is not MVP.
+If the user separately chooses Owned or a current/future `Add to My Collection` action, apply the normal personal Collection flow: create the appropriate `PurchaseInstance`, derive Owned, and remove Want according to existing Collection semantics. That explicit action—not list completion—is the boundary into personal history.
+
+Future receipt import may update list completion, but any personal Collection or purchase-history import must preserve this explicit boundary; receipt import is not MVP.
 
 ## 10. Collection page
 
@@ -317,5 +320,5 @@ Future public profile/showcase slots are schema-ready but not required for MVP U
 1. User opens a product and chooses an exact version and size.
 2. The product page shows that exact selection’s destination-market benchmark, offers, and native currency first.
 3. User adds the exact variant to a shopping list whose target market matches the trip.
-4. The list calculates quantity-aware destination cost and savings only where a trustworthy exact-variant benchmark and eligible market offer exist.
+4. The list calculates quantity-aware planned spend and savings only where a trustworthy target-market exact-variant benchmark and eligible Canadian comparison offer exist.
 5. Links from the list return to the same product version and variant; approximate CAD remains secondary and excluded products stay explicit.

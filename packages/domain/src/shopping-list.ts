@@ -24,19 +24,22 @@ export type ShoppingListEstimateItem = {
   itemId: string;
   productLabel: string;
   quantity: number;
-  offer: ShoppingListOffer | null;
+  purchased: boolean;
   benchmark: ShoppingListBenchmark | null;
+  localOffer: ShoppingListOffer | null;
 };
 
 export type ShoppingListEstimateExclusion = {
   itemId: string;
   productLabel: string;
-  reason: "NO_DESTINATION_OFFER" | "NO_VERIFIED_BENCHMARK" | "CAD_CONVERSION_UNAVAILABLE";
+  reason: "NO_VERIFIED_BENCHMARK" | "NO_LOCAL_OFFER" | "CAD_CONVERSION_UNAVAILABLE";
 };
 
 export type ShoppingListEstimate = {
-  destinationTotalCad: number | null;
+  plannedTotalCad: number | null;
+  localTotalCad: number | null;
   savingsCad: number | null;
+  alreadySavedCad: number | null;
   includedProductCount: number;
   excludedProductCount: number;
   isPartial: boolean;
@@ -49,6 +52,12 @@ function roundCurrency(value: number) {
 
 export function validateRequestedQuantity(quantity: number): boolean {
   return Number.isInteger(quantity) && quantity >= 1;
+}
+
+export function parseRequestedQuantity(value: string): number | null {
+  if (!/^\d+$/.test(value)) return null;
+  const quantity = Number(value);
+  return Number.isSafeInteger(quantity) && validateRequestedQuantity(quantity) ? quantity : null;
 }
 
 export function nextQuantityAfterAdd(currentQuantity: number, addedQuantity: number): number | null {
@@ -68,20 +77,27 @@ export function validateQuantityUpdate(quantity: number, purchasedQuantity: numb
   );
 }
 
-export function purchaseDelta(
-  quantity: number,
+export function checklistPurchasedQuantity(quantity: number, purchased: boolean): number | null {
+  if (!validateRequestedQuantity(quantity)) return null;
+  return purchased ? quantity : 0;
+}
+
+export function quantityStateAfterChange(
+  currentQuantity: number,
   currentPurchasedQuantity: number,
-  nextPurchasedQuantity: number,
-): number | null {
+  nextQuantity: number,
+): { quantity: number; purchasedQuantity: number } | null {
   if (
-    !validateQuantityUpdate(quantity, currentPurchasedQuantity) ||
-    !validateQuantityUpdate(quantity, nextPurchasedQuantity) ||
-    nextPurchasedQuantity < currentPurchasedQuantity
+    !validateQuantityUpdate(currentQuantity, currentPurchasedQuantity) ||
+    !validateRequestedQuantity(nextQuantity)
   ) {
     return null;
   }
 
-  return nextPurchasedQuantity - currentPurchasedQuantity;
+  return {
+    quantity: nextQuantity,
+    purchasedQuantity: currentPurchasedQuantity === currentQuantity ? nextQuantity : 0,
+  };
 }
 
 export function selectStrongestBenchmark<T extends ShoppingListBenchmark>(
@@ -117,25 +133,24 @@ export function compareDestinationOffers(a: ShoppingListOffer, b: ShoppingListOf
 export function calculateShoppingListEstimate(
   items: readonly ShoppingListEstimateItem[],
 ): ShoppingListEstimate {
-  let destinationTotalCad = 0;
-  let destinationTotalCoverage = 0;
+  let plannedTotalCad = 0;
+  let plannedTotalCoverage = 0;
+  let localTotalCad = 0;
+  let localTotalCoverage = 0;
   let savingsCad = 0;
+  let alreadySavedCad = 0;
+  let alreadySavedCoverage = 0;
   let includedProductCount = 0;
   const exclusions: ShoppingListEstimateExclusion[] = [];
 
   for (const item of items) {
-    if (item.offer && item.offer.amountCad !== null) {
-      destinationTotalCad += item.offer.amountCad * item.quantity;
-      destinationTotalCoverage += 1;
+    if (item.benchmark && item.benchmark.amountCad !== null) {
+      plannedTotalCad += item.benchmark.amountCad * item.quantity;
+      plannedTotalCoverage += 1;
     }
-
-    if (!item.offer) {
-      exclusions.push({
-        itemId: item.itemId,
-        productLabel: item.productLabel,
-        reason: "NO_DESTINATION_OFFER",
-      });
-      continue;
+    if (item.localOffer && item.localOffer.amountCad !== null) {
+      localTotalCad += item.localOffer.amountCad * item.quantity;
+      localTotalCoverage += 1;
     }
 
     if (!item.benchmark) {
@@ -147,7 +162,16 @@ export function calculateShoppingListEstimate(
       continue;
     }
 
-    if (item.offer.amountCad === null || item.benchmark.amountCad === null) {
+    if (!item.localOffer) {
+      exclusions.push({
+        itemId: item.itemId,
+        productLabel: item.productLabel,
+        reason: "NO_LOCAL_OFFER",
+      });
+      continue;
+    }
+
+    if (item.benchmark.amountCad === null || item.localOffer.amountCad === null) {
       exclusions.push({
         itemId: item.itemId,
         productLabel: item.productLabel,
@@ -156,16 +180,26 @@ export function calculateShoppingListEstimate(
       continue;
     }
 
-    savingsCad += (item.benchmark.amountCad - item.offer.amountCad) * item.quantity;
+    const itemSavings = (item.localOffer.amountCad - item.benchmark.amountCad) * item.quantity;
+    savingsCad += itemSavings;
+    if (item.purchased) {
+      alreadySavedCad += itemSavings;
+      alreadySavedCoverage += 1;
+    }
     includedProductCount += 1;
   }
 
   return {
-    destinationTotalCad:
-      destinationTotalCoverage === items.length && items.length > 0
-        ? roundCurrency(destinationTotalCad)
+    plannedTotalCad:
+      plannedTotalCoverage === items.length && items.length > 0
+        ? roundCurrency(plannedTotalCad)
+        : null,
+    localTotalCad:
+      localTotalCoverage === items.length && items.length > 0
+        ? roundCurrency(localTotalCad)
         : null,
     savingsCad: includedProductCount > 0 ? roundCurrency(savingsCad) : null,
+    alreadySavedCad: alreadySavedCoverage > 0 ? roundCurrency(alreadySavedCad) : null,
     includedProductCount,
     excludedProductCount: exclusions.length,
     isPartial: exclusions.length > 0,

@@ -34,5 +34,10 @@ export type UpdateShoppingListItemInput = {
 export type MarkShoppingListItemPurchasedInput = {
   shoppingListId: string;
   shoppingListItemId: string;
-  purchasedQuantity: number;
+  purchased: boolean;
+};
+
+export type RemoveShoppingListItemInput = {
+  shoppingListId: string;
+  shoppingListItemId: string;
 };

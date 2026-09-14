@@ -3,10 +3,12 @@ import test from "node:test";
 
 import {
   calculateShoppingListEstimate,
+  checklistPurchasedQuantity,
   compareDestinationOffers,
   isOfferEligibleForMarket,
   nextQuantityAfterAdd,
-  purchaseDelta,
+  parseRequestedQuantity,
+  quantityStateAfterChange,
   selectStrongestBenchmark,
   validateQuantityUpdate,
   validateRequestedQuantity,
@@ -23,17 +25,33 @@ test("requested quantity cannot drop below one", () => {
   assert.equal(validateRequestedQuantity(1.5), false);
 });
 
+test("direct quantity entry accepts only positive decimal integers", () => {
+  assert.equal(parseRequestedQuantity("12"), 12);
+  assert.equal(parseRequestedQuantity("1"), 1);
+  assert.equal(parseRequestedQuantity(""), null);
+  assert.equal(parseRequestedQuantity("0"), null);
+  assert.equal(parseRequestedQuantity("-2"), null);
+  assert.equal(parseRequestedQuantity("1.5"), null);
+  assert.equal(parseRequestedQuantity("1e2"), null);
+});
+
 test("purchased quantity stays within total quantity", () => {
   assert.equal(validateQuantityUpdate(3, 2), true);
   assert.equal(validateQuantityUpdate(3, 4), false);
   assert.equal(validateQuantityUpdate(3, -1), false);
 });
 
-test("partial purchase returns only the newly purchased quantity", () => {
-  assert.equal(purchaseDelta(5, 1, 3), 2);
-  assert.equal(purchaseDelta(5, 3, 3), 0);
-  assert.equal(purchaseDelta(5, 3, 2), null);
-  assert.equal(purchaseDelta(5, 3, 6), null);
+test("the reversible checklist maps unchecked to zero and checked to the full quantity", () => {
+  assert.equal(checklistPurchasedQuantity(3, false), 0);
+  assert.equal(checklistPurchasedQuantity(3, true), 3);
+  assert.equal(checklistPurchasedQuantity(0, true), null);
+});
+
+test("quantity changes preserve a fully purchased checklist state", () => {
+  assert.deepEqual(quantityStateAfterChange(2, 2, 3), { quantity: 3, purchasedQuantity: 3 });
+  assert.deepEqual(quantityStateAfterChange(3, 3, 1), { quantity: 1, purchasedQuantity: 1 });
+  assert.deepEqual(quantityStateAfterChange(2, 0, 3), { quantity: 3, purchasedQuantity: 0 });
+  assert.equal(quantityStateAfterChange(2, 2, 0), null);
 });
 
 test("benchmark selection preserves MSRP, Retail Price, Reference Price precedence", () => {
@@ -113,80 +131,90 @@ test("destination offer ordering uses product price and never shipping", () => {
   ]);
 });
 
-test("savings are quantity-aware and missing benchmarks are excluded, never zero", () => {
+test("savings compare selected local retailers with target-market benchmarks and remain quantity-aware", () => {
   const estimate = calculateShoppingListEstimate([
     {
       itemId: "covered",
       productLabel: "Covered product",
       quantity: 3,
-      offer: {
-        id: "offer",
-        nativeAmount: 10,
-        nativeCurrency: "CAD",
-        amountCad: 10,
-        availableMarkets: ["CA"],
-        availabilityState: "IN_STOCK",
-      },
+      purchased: true,
       benchmark: {
         id: "benchmark",
         type: "RETAIL_PRICE",
+        nativeAmount: 10,
+        nativeCurrency: "CAD",
+        amountCad: 10,
+        verifiedAt: "2026-09-12",
+      },
+      localOffer: {
+        id: "local-offer",
         nativeAmount: 15,
         nativeCurrency: "CAD",
         amountCad: 15,
-        verifiedAt: "2026-09-12",
+        availableMarkets: ["CA"],
+        availabilityState: "IN_STOCK",
       },
     },
     {
       itemId: "missing",
       productLabel: "Missing product",
       quantity: 2,
-      offer: {
-        id: "offer-2",
+      purchased: false,
+      benchmark: {
+        id: "benchmark-2",
+        type: "MSRP",
         nativeAmount: 7,
         nativeCurrency: "CAD",
         amountCad: 7,
-        availableMarkets: ["CA"],
-        availabilityState: "IN_STOCK",
+        verifiedAt: "2026-09-12",
       },
-      benchmark: null,
+      localOffer: null,
     },
   ]);
 
-  assert.equal(estimate.destinationTotalCad, 44);
+  assert.equal(estimate.plannedTotalCad, 44);
+  assert.equal(estimate.localTotalCad, null);
   assert.equal(estimate.savingsCad, 15);
+  assert.equal(estimate.alreadySavedCad, 15);
   assert.equal(estimate.includedProductCount, 1);
   assert.equal(estimate.excludedProductCount, 1);
   assert.equal(estimate.isPartial, true);
-  assert.equal(estimate.exclusions[0]?.reason, "NO_VERIFIED_BENCHMARK");
+  assert.equal(estimate.exclusions[0]?.reason, "NO_LOCAL_OFFER");
 });
 
-test("a zero savings estimate means an eligible offer matches its target-market benchmark", () => {
-  const estimate = calculateShoppingListEstimate([
-    {
-      itemId: "matching-price",
-      productLabel: "Matching price product",
-      quantity: 1,
-      offer: {
-        id: "offer",
-        nativeAmount: 20,
-        nativeCurrency: "CAD",
-        amountCad: 20,
-        availableMarkets: ["CA"],
-        availabilityState: "IN_STOCK",
-      },
-      benchmark: {
-        id: "benchmark",
-        type: "RETAIL_PRICE",
-        nativeAmount: 20,
-        nativeCurrency: "CAD",
-        amountCad: 20,
-        verifiedAt: "2026-09-12",
-      },
+test("checking, unchecking, and quantity changes update already-saved totals", () => {
+  const item = {
+    itemId: "comparison",
+    productLabel: "Comparison product",
+    benchmark: {
+      id: "benchmark",
+      type: "RETAIL_PRICE" as const,
+      nativeAmount: 10,
+      nativeCurrency: "CAD",
+      amountCad: 10,
+      verifiedAt: "2026-09-12",
     },
-  ]);
+    localOffer: {
+      id: "local-offer",
+      nativeAmount: 15,
+      nativeCurrency: "CAD",
+      amountCad: 15,
+      availableMarkets: ["CA"],
+      availabilityState: "IN_STOCK",
+    },
+  };
+  const estimate = calculateShoppingListEstimate([{ ...item, quantity: 2, purchased: false }]);
+  const checked = calculateShoppingListEstimate([{ ...item, quantity: 2, purchased: true }]);
+  const checkedAfterIncrease = calculateShoppingListEstimate([{ ...item, quantity: 3, purchased: true }]);
+  const uncheckedAgain = calculateShoppingListEstimate([{ ...item, quantity: 3, purchased: false }]);
 
-  assert.equal(estimate.destinationTotalCad, 20);
-  assert.equal(estimate.savingsCad, 0);
+  assert.equal(estimate.plannedTotalCad, 20);
+  assert.equal(estimate.localTotalCad, 30);
+  assert.equal(estimate.savingsCad, 10);
+  assert.equal(estimate.alreadySavedCad, null);
+  assert.equal(checked.alreadySavedCad, 10);
+  assert.equal(checkedAfterIncrease.alreadySavedCad, 15);
+  assert.equal(uncheckedAgain.alreadySavedCad, null);
   assert.equal(estimate.includedProductCount, 1);
   assert.equal(estimate.isPartial, false);
 });
@@ -197,27 +225,50 @@ test("an unavailable CAD conversion excludes the item instead of inventing a val
       itemId: "no-rate",
       productLabel: "Native-only product",
       quantity: 1,
-      offer: {
-        id: "offer",
-        nativeAmount: 20,
-        nativeCurrency: "XYZ",
-        amountCad: null,
-        availableMarkets: ["JP"],
-        availabilityState: "IN_STOCK",
-      },
+      purchased: true,
       benchmark: {
         id: "benchmark",
         type: "REFERENCE_PRICE",
-        nativeAmount: 25,
+        nativeAmount: 20,
         nativeCurrency: "XYZ",
         amountCad: null,
         verifiedAt: "2026-09-12",
       },
+      localOffer: {
+        id: "local-offer",
+        nativeAmount: 25,
+        nativeCurrency: "XYZ",
+        amountCad: null,
+        availableMarkets: ["CA"],
+        availabilityState: "IN_STOCK",
+      },
     },
   ]);
 
-  assert.equal(estimate.destinationTotalCad, null);
+  assert.equal(estimate.plannedTotalCad, null);
   assert.equal(estimate.savingsCad, null);
   assert.equal(estimate.includedProductCount, 0);
   assert.equal(estimate.isPartial, true);
+});
+
+test("a missing benchmark stays missing and is excluded honestly", () => {
+  const estimate = calculateShoppingListEstimate([{
+    itemId: "missing-benchmark",
+    productLabel: "Unknown benchmark product",
+    quantity: 1,
+    purchased: false,
+    benchmark: null,
+    localOffer: {
+      id: "local-offer",
+      nativeAmount: 25,
+      nativeCurrency: "CAD",
+      amountCad: 25,
+      availableMarkets: ["CA"],
+      availabilityState: "IN_STOCK",
+    },
+  }]);
+
+  assert.equal(estimate.plannedTotalCad, null);
+  assert.equal(estimate.savingsCad, null);
+  assert.equal(estimate.exclusions[0]?.reason, "NO_VERIFIED_BENCHMARK");
 });

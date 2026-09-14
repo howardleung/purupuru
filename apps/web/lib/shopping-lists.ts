@@ -12,10 +12,14 @@ import { selectPrimaryProductImage } from "@beauty-platform/domain/product-image
 
 import { convertToCad } from "./currency-conversion";
 
+// Canada is the settled home market for the current MVP.
+const DEFAULT_COMPARISON_MARKET = "CA";
+
 export type ShoppingListSummary = {
   id: string;
   name: string;
   targetMarket: string;
+  comparisonMarket: string;
   itemCount: number;
   updatedAt: string;
 };
@@ -55,14 +59,16 @@ export type PreparedShoppingListItem = {
     isPrimary: boolean;
     sortOrder: number;
   } | null;
-  offers: PreparedShoppingListOffer[];
   benchmark: PreparedShoppingListBenchmark | null;
+  destinationOffers: PreparedShoppingListOffer[];
+  localOffers: PreparedShoppingListOffer[];
 };
 
 export type PreparedShoppingList = {
   id: string;
   name: string;
   targetMarket: string;
+  comparisonMarket: string;
   items: PreparedShoppingListItem[];
 };
 
@@ -82,7 +88,13 @@ async function amountInCad(amount: number, currency: string) {
 export async function getShoppingListsForUser(userId: string): Promise<ShoppingListSummary[]> {
   const lists = await prisma.shoppingList.findMany({
     where: { userId, visibility: "PRIVATE" },
-    include: { _count: { select: { items: true } } },
+    select: {
+      id: true,
+      name: true,
+      targetMarket: true,
+      updatedAt: true,
+      _count: { select: { items: true } },
+    },
     orderBy: { updatedAt: "desc" },
   });
 
@@ -90,6 +102,7 @@ export async function getShoppingListsForUser(userId: string): Promise<ShoppingL
     id: list.id,
     name: list.name,
     targetMarket: list.targetMarket,
+    comparisonMarket: DEFAULT_COMPARISON_MARKET,
     itemCount: list._count.items,
     updatedAt: list.updatedAt.toISOString(),
   }));
@@ -101,17 +114,20 @@ export async function getShoppingListForUser(
 ): Promise<PreparedShoppingList | null> {
   const list = await prisma.shoppingList.findFirst({
     where: { id: shoppingListId, userId, visibility: "PRIVATE" },
-    include: {
+    select: {
+      id: true,
+      name: true,
+      targetMarket: true,
       items: {
         orderBy: { createdAt: "asc" },
         include: {
           productVariant: {
             include: {
-              benchmarkPrices: { orderBy: { verifiedAt: "desc" } },
               offers: {
                 where: { isActive: true },
                 include: { retailer: true },
               },
+              benchmarkPrices: { orderBy: { verifiedAt: "desc" } },
               productVersion: {
                 include: {
                   images: { orderBy: [{ isPrimary: "desc" }, { sortOrder: "asc" }, { id: "asc" }] },
@@ -160,23 +176,9 @@ export async function getShoppingListForUser(
               rateSource: benchmarkConversion.rateSource,
             }
           : null;
-
-      const offers = (
+      const marketOffers = (
         await Promise.all(
           variant.offers
-            .filter((offer) =>
-              isOfferEligibleForMarket(
-                {
-                  id: offer.id,
-                  nativeAmount: Number(offer.productPrice),
-                  nativeCurrency: offer.nativeCurrency,
-                  amountCad: null,
-                  availableMarkets: offer.availableMarkets,
-                  availabilityState: offer.availabilityState,
-                },
-                list.targetMarket,
-              ),
-            )
             .map(async (offer): Promise<PreparedShoppingListOffer> => {
               const conversion = await amountInCad(
                 Number(offer.productPrice),
@@ -196,7 +198,11 @@ export async function getShoppingListForUser(
               };
             }),
         )
-      ).sort(compareDestinationOffers);
+      );
+      const eligibleOffersFor = (market: string) =>
+        marketOffers
+          .filter((offer) => isOfferEligibleForMarket(offer, market))
+          .sort(compareDestinationOffers);
 
       const version = variant.productVersion;
       const family = version.productFamily;
@@ -213,8 +219,9 @@ export async function getShoppingListForUser(
         productName: family.canonicalName,
         brandName: family.brand.name,
         image: selectPrimaryProductImage(version.images, version.id, variant.id),
-        offers,
         benchmark,
+        destinationOffers: eligibleOffersFor(list.targetMarket),
+        localOffers: eligibleOffersFor(DEFAULT_COMPARISON_MARKET),
       };
     }),
   );
@@ -223,6 +230,7 @@ export async function getShoppingListForUser(
     id: list.id,
     name: list.name,
     targetMarket: list.targetMarket,
+    comparisonMarket: DEFAULT_COMPARISON_MARKET,
     items,
   };
 }

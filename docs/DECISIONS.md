@@ -224,13 +224,13 @@ This file records settled choices and the rationale behind them. New decisions s
 **Implications:** The first Owned action transactionally removes Want and creates exactly one purchase. Repeating Owned is idempotent and exposes a separately confirmed Add another purchase action. Would Repurchase and rating require either existing Tried state or an explicit combined confirmation. Mutations use serializable Prisma transactions with bounded conflict retry, and Holy Grail is never cleared by lifecycle changes. Earlier wording that implied version relationship flags were variant-scoped is superseded by this clarification.
 
 ### 2026-09-12 — Shopping-list savings compare target-market offers with target-market benchmarks
-**Status:** Accepted
+**Status:** Superseded
 **Decision:** Shopping-list destination cost and savings use an eligible offer whose availableMarkets contains the list target market and the strongest trustworthy benchmark for that same market and exact variant. The UI defaults to the lowest eligible raw product-price offer and lets the user choose another eligible offer, but that choice is temporary view state rather than a persisted retailer commitment.
 **Why:** A shopping list represents exact-variant purchase intent while current retailer offers can change. Comparing a visible selected offer with an honestly labeled local benchmark makes the estimate inspectable without freezing stale offer data.
 **Implications:** This supersedes the earlier Canada-offer comparison formula. Multiply both sides by requested quantity; preserve native currencies; use the reusable Bank of Canada layer for approximate CAD totals; exclude any product missing an offer, benchmark, or necessary conversion; disclose included/excluded product counts and reasons; label every incomplete result Partial estimate. Shipping, affiliate data, and bundle value never affect selection or savings.
 
 ### 2026-09-12 — Shopping-list purchase progress records acquisition deltas
-**Status:** Accepted
+**Status:** Superseded
 **Decision:** purchasedQuantity is an absolute, monotonic count for the list item. Increasing it creates one linked PurchaseInstance whose quantity equals only the newly purchased delta; repeating the same target value creates no additional purchase.
 **Why:** Absolute updates are retry-safe, and the existing PurchaseInstance.quantity field represents a specific acquired quantity without generating one database row per identical unit.
 **Implications:** Decreasing purchased quantity is not part of this MVP flow. Planned quantity cannot be reduced below purchased quantity. Recording a list purchase also clears Want for the corresponding version in the same transaction.
@@ -279,3 +279,23 @@ This file records settled choices and the rationale behind them. New decisions s
 **Why:** Otoku must feel appropriate for beauty discovery while answering serious comparison and shopping questions efficiently. Different tasks require different information density, and progressive disclosure keeps the product approachable without weakening research capability.
 
 **Implications:** Click/tap is authoritative and no important behavior may be hover-only; mobile retains feature parity through adapted layouts. My Collection becomes image-first, Shopping Lists become checklist-like by default, the catalogue becomes research-oriented, and all existing product/version/variant, pricing, trust, authentication, and collection invariants remain unchanged. Final visual identity remains unresolved.
+
+### 2026-09-14 — Shopping lists use target benchmarks and reversible checklist state
+
+**Status:** Accepted
+
+**Decision:** The strongest verified exact-variant benchmark for `targetMarket` is the stable planned amount. Savings compare that benchmark with a selected eligible Canadian retailer offer, which defaults to the cheapest raw product price in the settled MVP home market. Target-market retailer offers remain secondary availability details. Separately, `ShoppingListItem.purchasedQuantity` is a reversible checklist compatibility field: zero is unchecked and full current quantity is checked.
+
+**Why:** Travel planning needs a stable, trustworthy target-market expectation plus a real at-home comparison; the planned amount should not jump with whichever destination retailer is cheapest today. A shopping-list checkbox is transient task state, while `PurchaseInstance` is durable acquisition history, so coupling the two makes reversal unsafe and repeated checking ambiguous.
+
+**Implications:** Retain native prices, explicit `Offer.availableMarkets`, quantity-aware CAD estimates, missing-data exclusions, and affiliate-neutral ordering. Missing benchmarks remain unavailable. Checking and unchecking never creates or deletes `PurchaseInstance` rows; changing quantity while checked keeps the row fully checked, and removing a list row detaches any older linked purchase history. Canada remains a presentation/domain default rather than a new persisted field, so no schema migration is required. This supersedes both 2026-09-12 shopping-list decisions for savings and monotonic purchase progress.
+
+### 2026-09-14 — Shopping-list Purchased is separate from personal ownership
+
+**Status:** Accepted
+
+**Decision:** Marking a `ShoppingListItem` Purchased means only that the item on that list was bought. It is reversible checklist state and does not by itself create a personal `PurchaseInstance`, make the product Owned in My Collection, remove Want, or otherwise change Collection state. `PurchaseInstance` is reserved for the user’s own durable acquisition history. Products enter Owned only through an explicit Collection action, including a direct Owned action or a distinct current/future `Add to My Collection` action from a purchased list item.
+
+**Why:** A shopping list may contain gifts, purchases for friends or family, or items the user is helping someone else buy. “Did this item get bought?” and “Is this my product or part of my personal beauty history?” are intentionally different questions.
+
+**Implications:** The compatibility field `ShoppingListItem.purchasedQuantity` represents checklist completion only: `0` is unchecked and the current item quantity is checked. Checking, unchecking, rechecking, and changing quantity while checked may update shopping-list progress and estimated already-saved calculations without implying ownership. Unchecking never deletes personal purchase history. If the user explicitly adds the item to My Collection, the normal Collection transaction applies, including Owned derivation, appropriate `PurchaseInstance` creation, and Want removal. A `PurchaseInstance` linked to a shopping-list item or carrying source `SHOPPING_LIST` therefore indicates an explicit personal-history action, not the checkbox alone.

@@ -595,7 +595,7 @@ Autocomplete should surface matching brands and products as the user types. For 
 
 Collection states are not all mutually exclusive. A product can be Owned and Tried at the same time. `Holy Grail` and `Would Repurchase` should be modeled as tags/endorsements rather than mutually exclusive lifecycle states.
 
-`Want` represents first-time wishlist intent for a `ProductVersion` the user has not yet purchased. The selected variant may be retained as interaction context, but relationship state is version-scoped. When a Wanted version is added to Owned or purchased, remove Want automatically for that version. Repeat-purchase intent should be represented through `Would Repurchase` and/or by adding the product to a shopping list rather than keeping it in Want. Finished refers to a purchase instance, not the abstract product.
+`Want` represents first-time wishlist intent for a `ProductVersion` the user has not yet recorded as their own. The selected variant may be retained as interaction context, but relationship state is version-scoped. When a Wanted version is explicitly added to Owned or recorded in the user’s personal purchase history, remove Want automatically for that version. A shopping-list Purchased checkbox alone does neither. Repeat-purchase intent should be represented through `Would Repurchase` and/or by adding the product to a shopping list rather than keeping it in Want. Finished refers to a purchase instance, not the abstract product.
 
 The MVP distinguishes `CollectionEntry` from `PurchaseInstance`. One user might have bought the same toner three times.
 
@@ -617,9 +617,9 @@ All benchmark prices should retain their native currency, source, market, and la
 
 Recent observed prices should be shown separately from the benchmark price rather than constantly replacing it.
 
-Shopping-list estimated savings compares the user-selected eligible destination-market offer price against the strongest trustworthy benchmark for that same target market, exact version, and exact variant. The initial selection is the lowest eligible raw product-price offer; the user may choose another eligible offer for comparison. Offer selection is temporary view state rather than a frozen retailer choice on the list item. The benchmark may be MSRP, Retail Price, or Reference Price according to the hierarchy above.
+Shopping-list planned spend uses the strongest trustworthy benchmark for the target market, exact version, and exact variant. Estimated savings compares that benchmark with a selected eligible Canadian retail offer, initially the lowest eligible raw product price. The local offer selection is temporary view state rather than a frozen retailer choice on the list item; target-market retailer offers remain secondary availability intelligence. The benchmark may be MSRP, Retail Price, or Reference Price according to the hierarchy above.
 
-If no sufficiently verified target-market benchmark price or eligible target-market offer exists, do not calculate savings for that product. If either side cannot be converted for the common CAD estimate, exclude it from the numeric savings total while continuing to show any trustworthy native-currency price. Missing prices must never be treated as zero or silently substituted with unrelated offers.
+If no sufficiently verified target-market benchmark price or eligible Canadian comparison offer exists, do not calculate savings for that product. If either side cannot be converted for the common CAD estimate, exclude it from the numeric savings total while continuing to show any trustworthy native-currency price. Missing prices must never be treated as zero or silently substituted with unrelated offers.
 
 ### Offer Ranking
 
@@ -744,11 +744,13 @@ Shopping lists have a target market/destination in MVP. Items can be marked purc
 
 Each `ShoppingListItem` supports a `quantity >= 1`. Users may intentionally plan to buy multiple units of the same exact variant. Adding the same exact variant to the same list again should increase its quantity or expose a quantity selector rather than reject it as a duplicate.
 
-Shopping-list destination totals and savings calculations multiply valid selected-offer and benchmark prices by quantity. Savings compare the selected eligible offer for the list target market with the strongest trustworthy benchmark for that same market and exact variant. If a product lacks either side, exclude that product entirely from the savings calculation rather than treating the missing value as zero.
+Shopping-list planned totals and savings calculations multiply valid benchmark and comparison prices by quantity. Planned spend uses the strongest trustworthy benchmark for the list target market and exact variant; savings compare it with the selected eligible Canadian retail offer for that exact variant. If a product lacks either side, exclude that product entirely from the savings calculation rather than treating the missing value as zero.
 
 The UI must disclose missing coverage near the estimate, for example: `2 products excluded because no verified Korea benchmark price is available.` If any products are excluded, label the result as a Partial estimate rather than presenting it with false precision. Coverage messaging should refer primarily to unique products rather than unit count.
 
-Marking a shopping-list item purchased should create or link a `PurchaseInstance` for the purchased quantity, with purchase metadata optional. The interaction may offer a lightweight follow-up to add purchase details but should not block completion.
+Marking a shopping-list item Purchased means only “this item on this list was bought.” It is reversible full-quantity checklist state and may represent gifts or purchases for other people. It must not automatically create or delete a personal `PurchaseInstance`, derive Owned, change Collection state, or remove Want. Shopping-list progress and estimated already-saved calculations may use the checkbox without implying ownership.
+
+Products enter the user’s Collection only through an explicit personal action, such as Owned on the product page or a distinct current/future `Add to My Collection` action from a purchased list item. That explicit action applies the normal Collection rules, including appropriate `PurchaseInstance` creation and Want removal. `PurchaseInstance` represents the user’s own durable purchase history, never the reversible shopping-list checkbox itself.
 
 ### Product-Page Authentication Behavior
 

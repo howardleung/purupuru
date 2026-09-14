@@ -100,6 +100,20 @@ test("collection controls retain successful state for the selected product conte
   assert.match(collectionActions, /aria-pressed=\{state\.wouldRepurchase\}/);
 });
 
+test("shopping lists expose collapsed-row removal, simple quantity, and benchmark planning", () => {
+  assert.match(shoppingList, /selectedLocalOfferIds/);
+  assert.match(shoppingList, /> Remove<\/button>/);
+  assert.match(shoppingList, /Decrease .* quantity/);
+  assert.match(shoppingList, /Increase .* quantity/);
+  assert.match(shoppingList, /Edit .* quantity/);
+  assert.match(shoppingList, /type="number"/);
+  assert.match(shoppingList, /onBlur=\{\(\) => \{ if \(steppingItemId\.current !== item\.id\) commitQuantityDraft\(item\); \}\}/);
+  assert.match(shoppingList, /event\.key === "Enter"/);
+  assert.doesNotMatch(shoppingList, /Planned quantity|Purchased quantity/);
+  assert.match(shoppingList, /verified target-market benchmark/);
+  assert.match(shoppingList, /Canadian comparison defaults to the cheapest eligible product price/);
+});
+
 test("product imagery has an intentional runtime fallback", () => {
   assert.match(productImage, /onError=\{\(\) => setFailed\(true\)\}/);
   assert.match(productImage, /Image coming soon/);

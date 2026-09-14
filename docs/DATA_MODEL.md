@@ -292,7 +292,7 @@ Conceptually supports:
 - may surface/reference the user's private `UserRating` for the ProductVersion
 - private notes/context
 
-`Want` is first-time wishlist intent. Ownership is derived/supported through PurchaseInstances.
+`Want` is first-time wishlist intent. Ownership is derived/supported through PurchaseInstances created by an explicit personal Collection or purchase-history action; shopping-list completion alone is not ownership.
 
 Implementation clarification: a `CollectionEntry` is unique per user and `ProductVersion`, with an optional selected `ProductVariant` as UI context. This prevents duplicate relationship state while keeping ratings at version level and purchases at variant level. `Owned` is derived for the version when the user has at least one `PurchaseInstance` whose variant belongs to that version; each purchase still records its exact variant. The first Owned action is idempotent, while the explicit Add another purchase action creates one additional instance for the currently selected variant.
 The private My Collection read model is assembled from three fixed, user-scoped query sets: `CollectionEntry` plus tags, `UserRating`, and `PurchaseInstance`. The presentation layer unions those records by `ProductVersion`, yielding one normalized item per user/version with relationship flags, rating, selected/default variant context, purchase count, acquired quantity, and latest purchase context. This avoids tag-driven duplicate cards and N+1 queries without adding a persistent aggregate table.
@@ -321,7 +321,7 @@ Possible fields:
 - finishedDate nullable
 - source: MANUAL | SHOPPING_LIST | RECEIPT (future)
 
-Multiple purchases of the same variant are supported. Compound relationship mutations—such as Owned removing Want while creating a purchase, or confirmed Tried plus rating/tag changes—must execute transactionally. The implementation uses serializable Prisma transactions with bounded retry for write conflicts.
+Multiple purchases of the same variant are supported. `PurchaseInstance` is the user’s own durable acquisition history, not generic shopping-list completion. The `SHOPPING_LIST` source and optional `shoppingListItemId` link may identify an explicit personal-history action initiated from a list, but neither is created merely by checking Purchased. Compound relationship mutations—such as an explicit Owned action removing Want while creating a purchase, or confirmed Tried plus rating/tag changes—must execute transactionally. The implementation uses serializable Prisma transactions with bounded retry for write conflicts.
 
 ### UserRating
 - userId
@@ -338,7 +338,7 @@ Private by default in MVP. Public reviews are post-MVP.
 - id
 - userId
 - name
-- targetMarket
+- targetMarket (where the user plans to buy)
 - visibility (schema-ready; MVP private)
 - createdAt/updatedAt
 
@@ -347,9 +347,13 @@ Private by default in MVP. Public reviews are post-MVP.
 - shoppingListId
 - productVariantId
 - quantity >= 1
-- purchasedQuantity >= 0
+- purchasedQuantity is retained as internal checklist state: `0` means unchecked and the current `quantity` means checked
 
 Adding the same exact variant again should increase quantity rather than create meaningless duplicate rows.
+
+`purchasedQuantity` is checklist compatibility state, not evidence that the user personally owns the product. Purchased answers “Did this item get bought?” and may cover gifts or purchases for other people. Collection/Owned answers “Is this my product or part of my personal beauty history?” Checking or unchecking Purchased does not modify `CollectionEntry`, create or delete `PurchaseInstance`, or remove Want. Shopping-list calculations may use this reversible state without deriving ownership from it.
+
+An explicit Owned or `Add to My Collection` action is the boundary into personal ownership. That action applies the normal Collection rules, including appropriate `PurchaseInstance` creation and Want removal. Removing a list item detaches any historical purchase link before deleting only the list row; it does not delete personal purchase history.
 
 The Prisma schema uniquely identifies a `ShoppingListItem` by its list and product variant. The first PostgreSQL migration must add database `CHECK` constraints after Prisma creates the tables; Prisma schema syntax cannot express them directly. Do not apply that migration until a database is configured and explicitly authorized.
 
@@ -373,9 +377,10 @@ ALTER TABLE "PurchaseInstance"
 
 Savings calculations:
 - use quantity
-- compare a selected eligible offer for the list target market with the strongest trustworthy benchmark for that same market and exact version/variant
-- default the temporary view selection to the lowest eligible raw product-price offer; do not persist an offer on ShoppingListItem
-- exclude products missing an eligible offer, trustworthy benchmark, or required common-currency conversion
+- use the strongest verified benchmark for the list target market as the stable planned amount, following canonical MSRP, Retail Price, Reference Price precedence
+- compare that benchmark with a selected eligible Canadian retail offer for the exact version/variant; default the temporary local selection to the lowest eligible raw product-price offer
+- keep target-market retailer offers as secondary availability details; do not persist an offer on ShoppingListItem
+- exclude products missing a target-market benchmark, local offer, or required common-currency conversion
 - never treat missing price as zero
 - disclose excluded unique product count and reason
 - label incomplete calculations as Partial estimate

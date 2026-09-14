@@ -2,8 +2,8 @@
 
 import { prisma } from "@beauty-platform/database";
 import {
-  purchaseDelta,
-  validateQuantityUpdate,
+  checklistPurchasedQuantity,
+  quantityStateAfterChange,
   validateRequestedQuantity,
 } from "@beauty-platform/domain/shopping-list";
 import { revalidatePath } from "next/cache";
@@ -13,6 +13,7 @@ import type {
   CreateListWithVariantInput,
   CreateShoppingListInput,
   MarkShoppingListItemPurchasedInput,
+  RemoveShoppingListItemInput,
   ShoppingListActionResult,
   UpdateShoppingListItemInput,
 } from "../../lib/shopping-list-contract";
@@ -136,15 +137,31 @@ export async function addVariantToShoppingList(
       ]);
       if (!list || !variant) return null;
 
-      return tx.shoppingListItem.upsert({
+      const existing = await tx.shoppingListItem.findUnique({
         where: {
           shoppingListId_productVariantId: {
             shoppingListId: list.id,
             productVariantId: variant.id,
           },
         },
-        update: { quantity: { increment: input.quantity } },
-        create: {
+        select: { id: true, quantity: true, purchasedQuantity: true },
+      });
+      if (existing) {
+        const next = quantityStateAfterChange(
+          existing.quantity,
+          existing.purchasedQuantity,
+          existing.quantity + input.quantity,
+        );
+        if (!next) return null;
+        return tx.shoppingListItem.update({
+          where: { id: existing.id },
+          data: next,
+          select: { id: true, quantity: true },
+        });
+      }
+
+      return tx.shoppingListItem.create({
+        data: {
           shoppingListId: list.id,
           productVariantId: variant.id,
           quantity: input.quantity,
@@ -185,16 +202,19 @@ export async function updateShoppingListItemQuantity(
           shoppingListId: input.shoppingListId,
           shoppingList: { userId: user.id },
         },
-        select: { id: true, purchasedQuantity: true },
+        select: { id: true, quantity: true, purchasedQuantity: true },
       });
       if (!current) return { kind: "NOT_FOUND" as const };
-      if (!validateQuantityUpdate(input.quantity, current.purchasedQuantity)) {
-        return { kind: "INVALID" as const, purchasedQuantity: current.purchasedQuantity };
-      }
+      const next = quantityStateAfterChange(
+        current.quantity,
+        current.purchasedQuantity,
+        input.quantity,
+      );
+      if (!next) return { kind: "INVALID" as const };
 
       const saved = await tx.shoppingListItem.update({
         where: { id: current.id },
-        data: { quantity: input.quantity },
+        data: next,
         select: { quantity: true, purchasedQuantity: true },
       });
       return { kind: "SUCCESS" as const, ...saved };
@@ -206,7 +226,7 @@ export async function updateShoppingListItemQuantity(
     if (item.kind === "INVALID") {
       return {
         status: "INVALID",
-        message: `Quantity must be at least ${Math.max(1, item.purchasedQuantity)} because purchased units are retained.`,
+        message: "Quantity must be a whole number of at least 1.",
       };
     }
 
@@ -227,6 +247,9 @@ export async function markShoppingListItemPurchased(
 ): Promise<ShoppingListActionResult> {
   const user = await getOrCreateCurrentUser();
   if (!user) return { status: "UNAUTHENTICATED", message: "Sign in to record purchases." };
+  if (typeof input?.purchased !== "boolean") {
+    return { status: "INVALID", message: "Choose whether this item is purchased." };
+  }
 
   try {
     const result = await runSerializable(async (tx) => {
@@ -240,62 +263,26 @@ export async function markShoppingListItemPurchased(
           id: true,
           quantity: true,
           purchasedQuantity: true,
-          productVariantId: true,
-          productVariant: { select: { productVersionId: true } },
         },
       });
       if (!item) return { kind: "NOT_FOUND" as const };
 
-      const delta = purchaseDelta(
-        item.quantity,
-        item.purchasedQuantity,
-        input.purchasedQuantity,
-      );
-      if (delta === null) return { kind: "INVALID" as const, item };
-      if (delta === 0) return { kind: "SUCCESS" as const, item, delta };
+      const purchasedQuantity = checklistPurchasedQuantity(item.quantity, input.purchased);
+      if (purchasedQuantity === null) return { kind: "INVALID" as const };
+      if (purchasedQuantity === item.purchasedQuantity) {
+        return { kind: "SUCCESS" as const, item };
+      }
 
       const saved = await tx.shoppingListItem.update({
         where: { id: item.id },
-        data: { purchasedQuantity: input.purchasedQuantity },
+        data: { purchasedQuantity },
         select: {
           id: true,
           quantity: true,
           purchasedQuantity: true,
-          productVariantId: true,
         },
       });
-
-      await tx.purchaseInstance.create({
-        data: {
-          userId: user.id,
-          productVariantId: item.productVariantId,
-          shoppingListItemId: item.id,
-          quantity: delta,
-          source: "SHOPPING_LIST",
-        },
-      });
-
-      await tx.collectionEntry.upsert({
-        where: {
-          userId_productVersionId: {
-            userId: user.id,
-            productVersionId: item.productVariant.productVersionId,
-          },
-        },
-        update: {
-          selectedVariantId: item.productVariantId,
-          wants: false,
-        },
-        create: {
-          userId: user.id,
-          productVersionId: item.productVariant.productVersionId,
-          selectedVariantId: item.productVariantId,
-          wants: false,
-          tried: false,
-        },
-      });
-
-      return { kind: "SUCCESS" as const, item: saved, delta };
+      return { kind: "SUCCESS" as const, item: saved };
     });
 
     if (result.kind === "NOT_FOUND") {
@@ -304,20 +291,56 @@ export async function markShoppingListItemPurchased(
     if (result.kind === "INVALID") {
       return {
         status: "INVALID",
-        message: "Purchased quantity must stay between the current purchased amount and total quantity.",
+        message: "That quantity cannot be marked purchased.",
       };
     }
 
     revalidatePath(`/shopping-lists/${input.shoppingListId}`);
     return {
       status: "SUCCESS",
-      message:
-        result.delta === 0
-          ? "Purchased quantity is already up to date."
-          : `Recorded ${result.delta} newly purchased ${result.delta === 1 ? "unit" : "units"}.`,
+      message: result.item.purchasedQuantity === result.item.quantity ? "Marked purchased." : "Marked not purchased.",
       quantity: result.item.quantity,
       purchasedQuantity: result.item.purchasedQuantity,
     };
+  } catch {
+    return unexpectedError();
+  }
+}
+
+export async function removeShoppingListItem(
+  input: RemoveShoppingListItemInput,
+): Promise<ShoppingListActionResult> {
+  const user = await getOrCreateCurrentUser();
+  if (!user) return { status: "UNAUTHENTICATED", message: "Sign in to update a shopping list." };
+
+  try {
+    const removed = await runSerializable(async (tx) => {
+      const item = await tx.shoppingListItem.findFirst({
+        where: {
+          id: input.shoppingListItemId,
+          shoppingListId: input.shoppingListId,
+          shoppingList: { userId: user.id },
+        },
+        select: { id: true },
+      });
+      if (!item) return false;
+
+      // A list row is ephemeral; linked purchase records are durable history.
+      await tx.purchaseInstance.updateMany({
+        where: { shoppingListItemId: item.id, userId: user.id },
+        data: { shoppingListItemId: null },
+      });
+      await tx.shoppingListItem.delete({ where: { id: item.id } });
+      return true;
+    });
+
+    if (!removed) {
+      return { status: "NOT_FOUND", message: "That private list item was not found." };
+    }
+
+    revalidatePath("/shopping-lists");
+    revalidatePath(`/shopping-lists/${input.shoppingListId}`);
+    return { status: "SUCCESS", message: "Removed from this shopping list.", itemId: input.shoppingListItemId };
   } catch {
     return unexpectedError();
   }

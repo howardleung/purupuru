@@ -34,6 +34,7 @@ If a request conflicts with these documents, flag it before choosing a direction
 - Preserve native prices and provenance. Currency conversions are approximate presentation values. MSRP, Retail Price, and Reference Price have distinct meanings. Missing benchmarks are excluded from savings, never treated as zero.
 - Affiliate relationships never affect ranking. Default offer order is product price ascending; shipping and extras are factual supporting data.
 - Authenticated reads and mutations must enforce active-user ownership. Keep product/version/variant context explicit through links and mutations.
+- Shopping-list `Purchased` is reversible checklist completion, not personal Collection ownership: it must not create or delete `PurchaseInstance` history, change Owned, or remove Want without a separate explicit Collection action.
 - Retryable ingestion and equivalent operations must be idempotent.
 
 ## Proportionate workflow
