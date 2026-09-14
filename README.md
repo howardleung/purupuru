@@ -15,7 +15,9 @@ For humans and agents:
 ## Documentation map
 
 - `PRODUCT_SPEC_V0.md` — authoritative current product specification and MVP scope.
-- `AGENTS.md` — instructions every coding agent should follow.
+- `AGENTS.md` — primary operational guidance for coding agents.
+- `docs/ARCHITECTURE.md` — current package, server, persistence, UI, and ingestion boundaries.
+- `docs/TESTING.md` — test levels, contracts, and verification expectations.
 - `docs/PROJECT_CONTEXT.md` — compact narrative and rationale for the product.
 - `docs/DECISIONS.md` — accepted decisions and rationale; append when decisions change.
 - `docs/DESIGN_PRINCIPLES.md` — UX philosophy and interaction constraints.
