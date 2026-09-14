@@ -65,18 +65,18 @@ A brand result can lead to a minimal brand page listing supported products, even
 The product page groups version-level collection actions and exact-variant shopping-list planning into one clear Save and plan area. A successful list addition provides a direct link to the updated private list.
 Present, in a calm hierarchy:
 - compact, clickable breadcrumbs from the primary canonical category path, for example `Skincare > Toners > Toner`
-- product image
 - brand
 - ProductFamily name
 - primary canonical category
+- product image
 - version pills/selector
 - size/variant selector
-- compact external source signals (logo + rating/ranking/review count where permitted)
+- compact Save and plan action
 - strongest available benchmark (official MSRP, official/trusted Retail Price, or trusted Reference Price)
 - native benchmark currency + CAD conversion when available
-- source + verified date
-- primary save action
-- Add to Shopping List
+- Canadian retailer offers
+
+Show the strongest benchmark only once. Its source, verified date, and CAD rate provenance remain available as secondary details. Destination offers follow Canadian offers, then price history, detailed product information, and external evidence signals. Benchmark and signal sources are not retailer shopping options unless a matching tracked `Offer` actually exists.
 
 Breadcrumbs are lightweight orientation/back-navigation aids, not a major product-page element. Their labels and links always derive from the canonical taxonomy, not retailer/source categories.
 
@@ -106,6 +106,8 @@ Columns may include:
 
 Shipping/delivery may appear as optional supporting information only when sufficiently reliable for that specific offer; otherwise omit it. Default ordering remains lowest product price first and never uses shipping-adjusted total cost.
 
+Retailer links may use a reviewed, repository-hosted logo while retaining the retailer name for assistive technology and hover/focus context. If no approved local asset exists, show the retailer name as accessible linked text; never hotlink an unreviewed logo.
+
 #### Buy in Japan / Korea / relevant market
 Show local-market offers/reference context useful for travel planning.
 
@@ -114,12 +116,12 @@ Bundles remain normal offer rows. Example Extras: `15 g mini + pouch`.
 ### Price history
 For the selected ProductVersion and exact ProductVariant:
 1. Show only dated PriceObservation records that match a currently tracked offer's retailer and listing/source URL.
-2. Keep each retailer/listing in its own series; never blend retailers, versions, sizes, or bundle listings.
+2. Consolidate matching observations into a compact chart while keeping each retailer/listing in its own series; never blend retailers, versions, sizes, or bundle listings.
 3. Show the current tracked offer price separately with its last-verified date.
-4. Show historical observations chronologically in native currency with their observation date and evidence label.
+4. Make observation date, native price, retailer/listing, and evidence available by pointer, keyboard, and tap interaction; keep the full observation table behind a `View data` disclosure.
 5. Do not infer an observation from the current offer price.
 6. If one observation exists, label the series as sparse. If none exist, explain that more observations may appear as Otoku continues tracking.
-7. Do not show historical CAD estimates until Otoku can use an exchange rate appropriate to each observation date.
+7. Put different native currencies on separate chart axes. Do not show historical CAD estimates until Otoku can use an exchange rate appropriate to each observation date.
 
 ### Empty/stale states
 - No Canadian offer → `No Canadian buying options currently tracked.`

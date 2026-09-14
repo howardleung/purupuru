@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import test from "node:test";
 
 import { productSelectionHref } from "../../apps/web/lib/product-links.ts";
+import { resolveRetailerLogo } from "../../apps/web/lib/retailer-logos.ts";
 
 const homePage = readFileSync(new URL("../../apps/web/app/page.tsx", import.meta.url), "utf8");
 const cataloguePage = readFileSync(new URL("../../apps/web/app/catalogue/page.tsx", import.meta.url), "utf8");
@@ -15,6 +16,9 @@ const globalSearch = readFileSync(new URL("../../apps/web/components/global-sear
 const megaMenu = readFileSync(new URL("../../apps/web/components/product-mega-menu.tsx", import.meta.url), "utf8");
 const productPage = readFileSync(new URL("../../apps/web/app/products/[slug]/page.tsx", import.meta.url), "utf8");
 const productImage = readFileSync(new URL("../../apps/web/components/product-image.tsx", import.meta.url), "utf8");
+const offerSection = readFileSync(new URL("../../apps/web/components/offer-section.tsx", import.meta.url), "utf8");
+const retailerLink = readFileSync(new URL("../../apps/web/components/retailer-link.tsx", import.meta.url), "utf8");
+const retailerLogos = readFileSync(new URL("../../apps/web/lib/retailer-logos.ts", import.meta.url), "utf8");
 const privacyPage = readFileSync(new URL("../../apps/web/app/privacy/page.tsx", import.meta.url), "utf8");
 const termsPage = readFileSync(new URL("../../apps/web/app/terms/page.tsx", import.meta.url), "utf8");
 
@@ -85,6 +89,26 @@ test("product menu and product-page hierarchy follow the structural UX contract"
   assert.match(megaMenu, /featuredSlugs/);
   assert.match(productPage, /<PersonalActionsModal/);
   assert.ok(productPage.indexOf('title="Buy in Canada"') < productPage.indexOf("<PriceHistorySection"));
+  assert.ok(productPage.indexOf('title={`Buy in') < productPage.indexOf("<PriceHistorySection"));
+  assert.equal(productPage.match(/Strongest verified benchmark/g)?.length, 1);
+  assert.doesNotMatch(productPage, />Benchmark prices</);
+  assert.match(productPage, /md:col-start-2 md:row-span-3 md:row-start-2/);
+});
+
+test("retailer links use an approved local-logo registry with an accessible text fallback", () => {
+  const registry = {
+    "shoppers drug mart": { src: "/retailers/shoppers.svg", width: 120, height: 32 },
+  } as const;
+
+  assert.deepEqual(resolveRetailerLogo("  Shoppers   Drug Mart ", registry), registry["shoppers drug mart"]);
+  assert.equal(resolveRetailerLogo("Well.ca", registry), null);
+  assert.match(retailerLink, /aria-label={`Shop this listing at \$\{name\}`}/);
+  assert.match(retailerLink, /<span className="sr-only">\{name\}<\/span>/);
+  assert.match(retailerLink, /group-focus-visible:block/);
+  assert.match(retailerLink, /resolveRetailerLogo/);
+  assert.match(retailerLogos, /remote logo hotlinks/);
+  assert.match(offerSection, /<RetailerLink/);
+  assert.doesNotMatch(offerSection, />\s*\{offer\.retailer\.name\}\s*<\/a>/);
 });
 
 test("collection controls retain successful state for the selected product context and expose remove actions", () => {

@@ -1,5 +1,7 @@
 import type { OfferPrice } from "@beauty-platform/domain";
 
+import { RetailerLink } from "./retailer-link";
+
 export type OfferView = OfferPrice & {
   id: string;
   listingUrl: string;
@@ -76,16 +78,18 @@ export function OfferSection({
   description,
   offers,
   emptyMessage = "No currently verified offers are available for this version and size.",
+  compact = false,
 }: {
   title: string;
   description: string;
   offers: OfferView[];
   emptyMessage?: string;
+  compact?: boolean;
 }) {
   const showShipping = offers.some((offer) => shippingText(offer));
 
   return (
-    <section className="mt-10 sm:mt-12">
+    <section className={compact ? "" : "mt-10 sm:mt-12"}>
       <div>
         <h2 className="text-xl font-semibold">{title}</h2>
         <p className="mt-1 text-sm text-slate-600">{description}</p>
@@ -101,14 +105,11 @@ export function OfferSection({
             {offers.map((offer) => (
               <article className="rounded-xl border border-slate-200 p-4" key={offer.id}>
                 <div className="flex items-start justify-between gap-3">
-                  <a
+                  <RetailerLink
                     className="font-semibold text-slate-950 underline decoration-slate-300 underline-offset-2"
                     href={offer.listingUrl}
-                    rel="noreferrer"
-                    target="_blank"
-                  >
-                    {offer.retailer.name}
-                  </a>
+                    name={offer.retailer.name}
+                  />
                   <span className="shrink-0 rounded-full bg-slate-100 px-2.5 py-1 text-xs text-slate-700">
                     {availabilityLabels[offer.availabilityState] ?? "Availability unverified"}
                   </span>
@@ -158,14 +159,10 @@ export function OfferSection({
                 {offers.map((offer) => (
                   <tr key={offer.id}>
                     <td className="px-4 py-4 align-top">
-                      <a
-                        className="font-medium text-slate-950 underline decoration-slate-300 underline-offset-2"
+                      <RetailerLink
                         href={offer.listingUrl}
-                        rel="noreferrer"
-                        target="_blank"
-                      >
-                        {offer.retailer.name}
-                      </a>
+                        name={offer.retailer.name}
+                      />
                     </td>
                     <td className="px-4 py-4 align-top"><OfferPriceDisplay offer={offer} /></td>
                     <td className="px-4 py-4 align-top text-slate-700">

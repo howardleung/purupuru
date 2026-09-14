@@ -2,7 +2,10 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 
-import { buildPriceHistorySeries } from "../../packages/domain/src/price-history.ts";
+import {
+  buildPriceHistorySeries,
+  groupPriceHistoryByCurrency,
+} from "../../packages/domain/src/price-history.ts";
 
 const offers = [
   {
@@ -162,6 +165,36 @@ test("missing history returns no series rather than inventing observations", () 
   assert.deepEqual(series, []);
 });
 
+test("chart groups retain listing identity and never mix native-currency axes", () => {
+  const built = buildPriceHistorySeries({
+    selectedVariantId: "version-a-200ml",
+    offers,
+    observations: [
+      ...observations.slice(0, 3),
+      {
+        ...observations[0],
+        id: "well-jpy",
+        amount: 1_900,
+        nativeCurrency: "JPY",
+        observedAt: "2026-09-10T00:00:00.000Z",
+      },
+    ],
+  });
+  const grouped = groupPriceHistoryByCurrency(built);
+
+  assert.deepEqual(grouped.map((group) => group.nativeCurrency), ["CAD", "JPY"]);
+  assert.deepEqual(grouped[0]?.series.map((value) => value.offerId), ["offer-shoppers", "offer-well"]);
+  assert.deepEqual(
+    grouped.flatMap((group) =>
+      group.series.flatMap((value) =>
+        value.observations.map((observation) => [group.nativeCurrency, observation.nativeCurrency]),
+      ),
+    ),
+    [["CAD", "CAD"], ["CAD", "CAD"], ["CAD", "CAD"], ["JPY", "JPY"]],
+  );
+  assert.equal(grouped[1]?.series[0]?.currentPrice, null);
+});
+
 test("price-history UI includes sparse and missing states and no historical CAD claim", async () => {
   const source = await readFile(
     new URL("../../apps/web/components/price-history-section.tsx", import.meta.url),
@@ -171,6 +204,11 @@ test("price-history UI includes sparse and missing states and no historical CAD 
   assert.match(source, /Sparse history: only one observation/);
   assert.match(source, /No price observations have been recorded/);
   assert.match(source, /observation-date CAD rates are not yet stored/);
+  assert.match(source, /groupPriceHistoryByCurrency/);
+  assert.match(source, /<svg/);
+  assert.match(source, /View data/);
+  assert.match(source, /onMouseEnter/);
+  assert.match(source, /onClick/);
   assert.doesNotMatch(source, /convertToCad/);
 });
 

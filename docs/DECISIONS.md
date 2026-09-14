@@ -299,3 +299,13 @@ This file records settled choices and the rationale behind them. New decisions s
 **Why:** A shopping list may contain gifts, purchases for friends or family, or items the user is helping someone else buy. “Did this item get bought?” and “Is this my product or part of my personal beauty history?” are intentionally different questions.
 
 **Implications:** The compatibility field `ShoppingListItem.purchasedQuantity` represents checklist completion only: `0` is unchecked and the current item quantity is checked. Checking, unchecking, rechecking, and changing quantity while checked may update shopping-list progress and estimated already-saved calculations without implying ownership. Unchecking never deletes personal purchase history. If the user explicitly adds the item to My Collection, the normal Collection transaction applies, including Owned derivation, appropriate `PurchaseInstance` creation, and Want removal. A `PurchaseInstance` linked to a shopping-list item or carrying source `SHOPPING_LIST` therefore indicates an explicit personal-history action, not the checkbox alone.
+
+### 2026-09-14 — Product research uses one benchmark and a consolidated native-currency history chart
+
+**Status:** Accepted
+
+**Decision:** The product page presents the strongest trustworthy benchmark once, makes Canadian retailer offers the primary shopping section, and keeps destination offers, history, and evidence progressively ordered below it. Price history is one compact research surface for the selected exact variant, with one independent series per retailer listing and separate chart groups for each native currency. Raw observations remain available behind a disclosure. Retailer links use reviewed repository-hosted logos only when available and otherwise retain accessible text.
+
+**Why:** Repeating benchmarks and surrounding every fact with an equally weighted card obscures the local buying decision. A consolidated chart makes cross-retailer movement easier to scan, while separate currency axes prevent a false visual comparison and local-only logo assets prevent unreviewed hotlinks or unstable branding.
+
+**Implications:** Benchmark sources and external evidence signals are not promoted to shopping options without an actual matching `Offer`. Sparse and missing history remain explicit, current offers are not synthesized into historical observations, historical CAD is still omitted without observation-date rates, and version/variant/listing identity remains exact. No schema or charting dependency is required; adding a retailer logo is an asset-review and registry change.

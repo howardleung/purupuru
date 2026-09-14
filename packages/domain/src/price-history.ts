@@ -41,6 +41,15 @@ export type PriceHistorySeries = {
   }>;
 };
 
+export type PriceHistoryChartSeries = Omit<PriceHistorySeries, "currentPrice"> & {
+  currentPrice: PriceHistorySeries["currentPrice"] | null;
+};
+
+export type PriceHistoryCurrencyGroup = {
+  nativeCurrency: string;
+  series: PriceHistoryChartSeries[];
+};
+
 function timestamp(value: Date | string) {
   return new Date(value).getTime();
 }
@@ -111,4 +120,47 @@ export function buildPriceHistorySeries({
         left.retailerName.localeCompare(right.retailerName) ||
         left.offerId.localeCompare(right.offerId),
     );
+}
+
+/**
+ * Keeps historical native currencies on independent axes. A listing can appear
+ * in more than one group if its source currency changed over time, but its
+ * observations are never converted or combined on a misleading scale.
+ */
+export function groupPriceHistoryByCurrency(
+  series: readonly PriceHistorySeries[],
+): PriceHistoryCurrencyGroup[] {
+  const groups = new Map<string, PriceHistoryChartSeries[]>();
+
+  for (const retailerSeries of series) {
+    const currencies = [...new Set(retailerSeries.observations.map((value) => value.nativeCurrency))]
+      .sort((left, right) => left.localeCompare(right));
+
+    for (const nativeCurrency of currencies) {
+      const currencySeries: PriceHistoryChartSeries = {
+        ...retailerSeries,
+        currentPrice:
+          retailerSeries.currentPrice.nativeCurrency === nativeCurrency
+            ? retailerSeries.currentPrice
+            : null,
+        observations: retailerSeries.observations.filter(
+          (observation) => observation.nativeCurrency === nativeCurrency,
+        ),
+      };
+      const current = groups.get(nativeCurrency) ?? [];
+      current.push(currencySeries);
+      groups.set(nativeCurrency, current);
+    }
+  }
+
+  return [...groups.entries()]
+    .sort(([left], [right]) => left.localeCompare(right))
+    .map(([nativeCurrency, currencySeries]) => ({
+      nativeCurrency,
+      series: currencySeries.sort(
+        (left, right) =>
+          left.retailerName.localeCompare(right.retailerName) ||
+          left.offerId.localeCompare(right.offerId),
+      ),
+    }));
 }
