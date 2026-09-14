@@ -42,6 +42,14 @@ export function ShoppingListDetails({ list }: { list: PreparedShoppingList }) {
   const [isPending, startTransition] = useTransition();
 
   const estimate = useMemo(() => calculateShoppingListEstimate(items.map((item) => ({ itemId: item.id, productLabel: `${item.brandName} ${item.productName} · ${item.displaySize}`, quantity: item.quantity, offer: selectedOffer(item, selectedOfferIds), benchmark: item.benchmark }))), [items, selectedOfferIds]);
+  const savingsValue = estimate.savingsCad === null
+    ? "Unavailable"
+    : estimate.savingsCad === 0
+      ? "No difference"
+      : cad(estimate.savingsCad);
+  const savingsDetail = estimate.savingsCad === 0
+    ? `${estimate.includedProductCount} of ${items.length} items match their verified ${marketName(list.targetMarket)} benchmark`
+    : `${estimate.includedProductCount} of ${items.length} items compared against a verified ${marketName(list.targetMarket)} benchmark`;
   const nativeTotals = useMemo(() => {
     const totals = new Map<string, number>();
     for (const item of items) {
@@ -86,14 +94,14 @@ export function ShoppingListDetails({ list }: { list: PreparedShoppingList }) {
         <>
           <section className="grid gap-4 rounded-2xl bg-slate-950 p-5 text-white sm:grid-cols-2 lg:grid-cols-4 sm:p-6" aria-label="Shopping list summary">
             <Summary label="Estimated total" value={estimate.destinationTotalCad === null ? "Unavailable" : `Approx. ${cad(estimate.destinationTotalCad)}`} detail={nativeTotals.map(([currency, total]) => `${nativeMoney(total, currency)} ${currency}`).join(" · ") || "No eligible offers"} />
-            <Summary label="Estimated savings" value={estimate.savingsCad === null ? "Unavailable" : cad(estimate.savingsCad)} detail={`${estimate.includedProductCount} of ${items.length} products covered`} />
-            <Summary label="Benchmark coverage" value={`${estimate.includedProductCount} / ${items.length}`} detail={estimate.isPartial ? "Partial estimate" : "Complete for tracked inputs"} />
+            <Summary label="Estimated savings vs benchmark" value={savingsValue} detail={savingsDetail} />
+            <Summary label="Comparison coverage" value={`${estimate.includedProductCount} / ${items.length}`} detail={estimate.isPartial ? "Partial estimate: see exclusions below" : "Every item has an eligible offer and benchmark"} />
             <Summary label="Purchase progress" value={`${purchasedQuantity} / ${totalQuantity}`} detail={`${progress}% purchased`} />
             <div className="col-span-full h-2 overflow-hidden rounded-full bg-slate-800"><div className="h-full rounded-full bg-emerald-400 transition-all" style={{ width: `${progress}%` }} /></div>
             {estimate.exclusions.length > 0 ? (
               <details className="col-span-full rounded-xl border border-slate-700 p-3 text-sm"><summary className="cursor-pointer font-medium">Why {estimate.excludedProductCount} {estimate.excludedProductCount === 1 ? "product is" : "products are"} excluded</summary><ul className="mt-3 space-y-2 text-slate-300">{estimate.exclusions.map((exclusion) => <li key={exclusion.itemId}>{exclusion.productLabel}: {exclusionLabels[exclusion.reason]}.</li>)}</ul></details>
             ) : null}
-            <p className="col-span-full text-xs text-slate-400">Estimated product prices only. Shipping is excluded. Actual savings are not shown until reliable paid-price entry semantics are defined.</p>
+            <p className="col-span-full text-xs text-slate-400">Savings compare the selected eligible offer with the strongest verified benchmark for {marketName(list.targetMarket)} and the exact size. Estimated product prices only; shipping is excluded. Actual savings are not shown until reliable paid-price entry semantics are defined.</p>
           </section>
 
           <section>

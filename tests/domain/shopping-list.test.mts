@@ -160,6 +160,37 @@ test("savings are quantity-aware and missing benchmarks are excluded, never zero
   assert.equal(estimate.exclusions[0]?.reason, "NO_VERIFIED_BENCHMARK");
 });
 
+test("a zero savings estimate means an eligible offer matches its target-market benchmark", () => {
+  const estimate = calculateShoppingListEstimate([
+    {
+      itemId: "matching-price",
+      productLabel: "Matching price product",
+      quantity: 1,
+      offer: {
+        id: "offer",
+        nativeAmount: 20,
+        nativeCurrency: "CAD",
+        amountCad: 20,
+        availableMarkets: ["CA"],
+        availabilityState: "IN_STOCK",
+      },
+      benchmark: {
+        id: "benchmark",
+        type: "RETAIL_PRICE",
+        nativeAmount: 20,
+        nativeCurrency: "CAD",
+        amountCad: 20,
+        verifiedAt: "2026-09-12",
+      },
+    },
+  ]);
+
+  assert.equal(estimate.destinationTotalCad, 20);
+  assert.equal(estimate.savingsCad, 0);
+  assert.equal(estimate.includedProductCount, 1);
+  assert.equal(estimate.isPartial, false);
+});
+
 test("an unavailable CAD conversion excludes the item instead of inventing a value", () => {
   const estimate = calculateShoppingListEstimate([
     {
