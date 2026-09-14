@@ -269,3 +269,13 @@ This file records settled choices and the rationale behind them. New decisions s
 **Decision:** `/` is the public Otoku homepage; searchable catalogue browsing lives at `/catalogue`; canonical taxonomy browsing has a `/categories` index. Primary navigation exposes Home, Browse, Categories, My Collection, Shopping Lists, and About to anonymous and signed-in users. About, Contact, Privacy, Terms, and Affiliate Disclosure pages exist as early-stage public structure, with legal-policy drafts visibly marked for professional review.
 **Why:** Anonymous visitors need to understand Otoku’s value and move from discovery to comparison before authentication. Trust limitations should be visible before launch rather than hidden in product copy.
 **Implications:** Browsing remains public and Clerk is invoked only for private actions/routes. Prices and availability are changeable, CAD conversion is approximate, no retailer partnership is implied, and any future affiliate commission cannot influence ordering. Final legal text and a real contact channel remain launch blockers.
+
+### 2026-09-13 — Dual-density structural UX direction
+
+**Status:** Accepted
+
+**Decision:** Use a beauty-first, image-forward, lower-density approach for discovery and personal surfaces, and a denser sortable/filterable factual approach for catalogue, comparison, and offer research. The product page bridges both modes by prioritizing exact product identity and buying options while moving personal actions into a compact click/tap-triggered overlay. `docs/UX_SPEC.md` is the canonical specification for this next structural redesign.
+
+**Why:** Otoku must feel appropriate for beauty discovery while answering serious comparison and shopping questions efficiently. Different tasks require different information density, and progressive disclosure keeps the product approachable without weakening research capability.
+
+**Implications:** Click/tap is authoritative and no important behavior may be hover-only; mobile retains feature parity through adapted layouts. My Collection becomes image-first, Shopping Lists become checklist-like by default, the catalogue becomes research-oriented, and all existing product/version/variant, pricing, trust, authentication, and collection invariants remain unchanged. Final visual identity remains unresolved.

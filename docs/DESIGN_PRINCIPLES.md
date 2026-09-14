@@ -1,5 +1,7 @@
 # Design Principles
 
+> **Canonical structural UX:** [`docs/UX_SPEC.md`](UX_SPEC.md) governs the next information-architecture and interaction redesign. This document continues to govern enduring quality principles; product scope and domain semantics remain governed by their respective canonical documents.
+
 ## 1. Complex backend, simple frontend
 
 Users should not need to understand retailer identifiers, canonical product resolution, GTIN matching, formulation history, currency normalization, or price-confidence logic. The interface exposes only what helps them make a confident decision.

@@ -42,6 +42,19 @@ For substantial work: (1) read the relevant docs and code, (2) state the approac
 
 Small obvious changes should stay lightweight. For meaningful code changes, run the applicable `pnpm test`, `pnpm lint`, `pnpm typecheck`, `pnpm build`, and `pnpm db:validate` checks; do not claim a check or browser QA that was not run. See `docs/TESTING.md` for scope.
 
+## Token and execution efficiency
+
+> Minimize redundant context, commands, narration, and verification passes; do not minimize necessary reasoning, correctness, safety, or data integrity.
+
+- Read only the files needed for the current task. Prefer targeted searches, symbol lookups, focused reads, and focused diffs over broad repository inspection.
+- Reuse settled product and architecture decisions from canonical documents. Do not repeatedly restate known project context or redo completed research, schema analysis, architecture decisions, or verified work unless new evidence requires it.
+- Keep planning and progress updates brief: for non-trivial work, state the approach and blockers, then execute. Do not explain routine commands or obvious implementation details unless they affect a decision, risk, or user action.
+- During implementation, use focused tests for the changed area. Run expensive full-suite checks once the change is coherent; rerun them only when later changes could invalidate those results.
+- Do not rewrite documentation wholesale for a small change. Do not inspect generated files, build output, lockfiles, generated Prisma clients, or dependency trees unless the task requires them.
+- When resuming interrupted work, inspect the current repository state and continue from completed work rather than reconstructing the task from scratch.
+- Avoid web research unless current external information is necessary. Ask for clarification only when ambiguity materially affects correctness; otherwise make the smallest safe assumption consistent with project documentation.
+- Keep final reports focused on what changed, verification performed, and remaining blockers, risks, or technical debt.
+
 ## Documentation maintenance
 
 Update the appropriate canonical document in the same task when behavior, architecture, data invariants, scope, flows, or design principles change. Append material decisions to `docs/DECISIONS.md` using its established format; do not rewrite history to hide superseded reasoning. Report assumptions, unresolved risks, and technical debt explicitly.
