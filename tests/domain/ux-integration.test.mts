@@ -97,17 +97,30 @@ test("product menu and product-page hierarchy follow the structural UX contract"
 
 test("retailer links use an approved local-logo registry with an accessible text fallback", () => {
   const registry = {
-    "shoppers drug mart": { src: "/retailers/shoppers.svg", width: 120, height: 32 },
+    "retailer:shoppers-drug-mart-ca": {
+      src: "/retailers/shoppers.svg",
+      width: 120,
+      height: 32,
+    },
   } as const;
 
-  assert.deepEqual(resolveRetailerLogo("  Shoppers   Drug Mart ", registry), registry["shoppers drug mart"]);
-  assert.equal(resolveRetailerLogo("Well.ca", registry), null);
+  assert.deepEqual(
+    resolveRetailerLogo("retailer:shoppers-drug-mart-ca", registry),
+    registry["retailer:shoppers-drug-mart-ca"],
+  );
+  assert.equal(resolveRetailerLogo("retailer:well-ca", registry), null);
+  assert.equal(resolveRetailerLogo(null, registry), null);
   assert.match(retailerLink, /aria-label={`Shop this listing at \$\{name\}`}/);
   assert.match(retailerLink, /<span className="sr-only">\{name\}<\/span>/);
   assert.match(retailerLink, /group-focus-visible:block/);
+  assert.match(retailerLink, /href=\{href\}/);
   assert.match(retailerLink, /resolveRetailerLogo/);
   assert.match(retailerLogos, /remote logo hotlinks/);
+  assert.match(retailerLogos, /Retailer\.sourceKey/);
   assert.match(offerSection, /<RetailerLink/);
+  assert.match(offerSection, /sourceKey=\{offer\.retailer\.sourceKey\}/);
+  assert.match(offerSection, /compact \? "mt-4 grid gap-3"/);
+  assert.match(offerSection, /compact \? "hidden"/);
   assert.doesNotMatch(offerSection, />\s*\{offer\.retailer\.name\}\s*<\/a>/);
 });
 

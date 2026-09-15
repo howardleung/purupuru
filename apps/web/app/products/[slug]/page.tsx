@@ -157,7 +157,11 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
     deliveryMethod: offer.deliveryMethod,
     deliveryEstimate: offer.deliveryEstimate,
     lastVerifiedAt: offer.lastVerifiedAt,
-    retailer: { name: offer.retailer.name, country: offer.retailer.country },
+    retailer: {
+      sourceKey: offer.retailer.sourceKey,
+      name: offer.retailer.name,
+      country: offer.retailer.country,
+    },
     items: offer.items,
   });
   const canadianOffers = selectedVariantRecord.offers
@@ -192,6 +196,7 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
       id: offer.id,
       productVariantId: selectedVariantRecord.id,
       retailerId: offer.retailerId,
+      retailerSourceKey: offer.retailer.sourceKey,
       retailerName: offer.retailer.name,
       listingUrl: offer.listingUrl,
       amount: Number(offer.productPrice),

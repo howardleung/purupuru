@@ -175,7 +175,11 @@ function CurrencyHistoryChart({
               className="h-0.5 w-5 rounded-full"
               style={{ backgroundColor: seriesColours[seriesIndex % seriesColours.length] }}
             />
-            <RetailerLink href={retailerSeries.listingUrl} name={retailerSeries.retailerName} />
+            <RetailerLink
+              href={retailerSeries.listingUrl}
+              name={retailerSeries.retailerName}
+              sourceKey={retailerSeries.retailerSourceKey}
+            />
             {retailerSeries.currentPrice ? (
               <span className="text-xs text-slate-500">
                 current {formatMoney(retailerSeries.currentPrice.amount, nativeCurrency)} · verified{" "}
@@ -216,7 +220,13 @@ function CurrencyHistoryChart({
                 .sort((left, right) => Date.parse(left.observedAt) - Date.parse(right.observedAt))
                 .map((point) => (
                   <tr key={point.id}>
-                    <td className="px-3 py-2"><RetailerLink href={point.listingUrl} name={point.retailerName} /></td>
+                    <td className="px-3 py-2">
+                      <RetailerLink
+                        href={point.listingUrl}
+                        name={point.retailerName}
+                        sourceKey={series[point.seriesIndex]?.retailerSourceKey}
+                      />
+                    </td>
                     <td className="px-3 py-2 text-slate-600">{formatDate(point.observedAt)}</td>
                     <td className="px-3 py-2 font-medium">{formatMoney(point.amount, nativeCurrency)}</td>
                     <td className="px-3 py-2 text-slate-600">{verificationLabels[point.verificationType] ?? "Recorded observation"}</td>

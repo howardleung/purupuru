@@ -5,13 +5,15 @@ import { resolveRetailerLogo } from "../lib/retailer-logos";
 export function RetailerLink({
   href,
   name,
+  sourceKey,
   className = "font-medium text-slate-950 underline decoration-slate-300 underline-offset-2",
 }: {
   href: string;
   name: string;
+  sourceKey?: string | null;
   className?: string;
 }) {
-  const logo = resolveRetailerLogo(name);
+  const logo = resolveRetailerLogo(sourceKey);
 
   return (
     <a
@@ -27,7 +29,7 @@ export function RetailerLink({
           <Image
             alt=""
             aria-hidden="true"
-            className="h-6 max-w-28 object-contain object-left"
+            className="h-6 w-auto max-w-28 object-contain object-left"
             height={logo.height}
             src={logo.src}
             width={logo.width}

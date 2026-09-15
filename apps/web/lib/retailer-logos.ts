@@ -6,21 +6,19 @@ export type RetailerLogoAsset = {
 
 export type RetailerLogoRegistry = Readonly<Record<string, RetailerLogoAsset>>;
 
-function normalizeRetailerName(name: string) {
-  return name.trim().toLocaleLowerCase("en-CA").replace(/\s+/g, " ");
-}
-
 /**
- * Only reviewed, repository-hosted retailer marks belong here. A retailer name
+ * Keys are canonical Retailer.sourceKey values, never display names. Only
+ * reviewed, repository-hosted retailer marks belong here. A retailer
  * intentionally falls back to text until its local asset and usage rights have
  * been verified; remote logo hotlinks are not accepted.
  */
 export const approvedRetailerLogos: RetailerLogoRegistry = {};
 
 export function resolveRetailerLogo(
-  retailerName: string,
+  retailerSourceKey: string | null | undefined,
   registry: RetailerLogoRegistry = approvedRetailerLogos,
 ) {
-  return registry[normalizeRetailerName(retailerName)] ?? null;
-}
+  if (!retailerSourceKey) return null;
 
+  return registry[retailerSourceKey] ?? null;
+}

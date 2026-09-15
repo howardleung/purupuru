@@ -145,10 +145,11 @@ test("retailer and offer series remain independent and chronological", () => {
 test("current price remains separate and native observation currency is preserved", () => {
   const [series] = buildPriceHistorySeries({
     selectedVariantId: "version-a-200ml",
-    offers: [offers[0]],
+    offers: [{ ...offers[0], retailerSourceKey: "retailer:well-ca" }],
     observations: [observations[0]],
   });
 
+  assert.equal(series.retailerSourceKey, "retailer:well-ca");
   assert.equal(series.currentPrice.amount, 17.99);
   assert.equal(series.observations.length, 1);
   assert.equal(series.observations[0]?.amount, 17.99);

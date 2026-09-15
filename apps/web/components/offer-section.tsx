@@ -13,7 +13,7 @@ export type OfferView = OfferPrice & {
   deliveryMethod: string | null;
   deliveryEstimate: string | null;
   lastVerifiedAt: Date;
-  retailer: { name: string; country: string | null };
+  retailer: { sourceKey: string; name: string; country: string | null };
   items: Array<{ id: string; label: string; quantity: number; isPromotional: boolean }>;
 };
 
@@ -101,7 +101,7 @@ export function OfferSection({
         </div>
       ) : (
         <>
-          <div className="mt-4 grid gap-3 sm:hidden">
+          <div className={compact ? "mt-4 grid gap-3" : "mt-4 grid gap-3 sm:hidden"}>
             {offers.map((offer) => (
               <article className="rounded-xl border border-slate-200 p-4" key={offer.id}>
                 <div className="flex items-start justify-between gap-3">
@@ -109,6 +109,7 @@ export function OfferSection({
                     className="font-semibold text-slate-950 underline decoration-slate-300 underline-offset-2"
                     href={offer.listingUrl}
                     name={offer.retailer.name}
+                    sourceKey={offer.retailer.sourceKey}
                   />
                   <span className="shrink-0 rounded-full bg-slate-100 px-2.5 py-1 text-xs text-slate-700">
                     {availabilityLabels[offer.availabilityState] ?? "Availability unverified"}
@@ -143,7 +144,7 @@ export function OfferSection({
             ))}
           </div>
 
-          <div className="mt-4 hidden overflow-x-auto rounded-xl border border-slate-200 sm:block">
+          <div className={compact ? "hidden" : "mt-4 hidden overflow-x-auto rounded-xl border border-slate-200 sm:block"}>
             <table className="w-full min-w-[720px] text-left text-sm">
               <thead className="bg-slate-50 text-slate-600">
                 <tr>
@@ -162,6 +163,7 @@ export function OfferSection({
                       <RetailerLink
                         href={offer.listingUrl}
                         name={offer.retailer.name}
+                        sourceKey={offer.retailer.sourceKey}
                       />
                     </td>
                     <td className="px-4 py-4 align-top"><OfferPriceDisplay offer={offer} /></td>

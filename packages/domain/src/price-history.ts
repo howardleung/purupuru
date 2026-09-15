@@ -2,6 +2,7 @@ export type CurrentTrackedOffer = {
   id: string;
   productVariantId: string;
   retailerId: string;
+  retailerSourceKey?: string | null;
   retailerName: string;
   listingUrl: string;
   amount: number;
@@ -25,6 +26,7 @@ export type HistoricalPriceObservation = {
 export type PriceHistorySeries = {
   offerId: string;
   retailerId: string;
+  retailerSourceKey: string | null;
   retailerName: string;
   listingUrl: string;
   currentPrice: {
@@ -104,6 +106,7 @@ export function buildPriceHistorySeries({
       return {
         offerId: offer.id,
         retailerId: offer.retailerId,
+        retailerSourceKey: offer.retailerSourceKey ?? null,
         retailerName: offer.retailerName,
         listingUrl: offer.listingUrl,
         currentPrice: {
