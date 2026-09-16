@@ -10,9 +10,9 @@ export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Browse skincare",
-  description: "Search Otoku’s version-aware skincare catalogue by product, brand, or canonical category.",
+  description: "Search PuruPuru’s version-aware skincare catalogue by product, brand, or canonical category.",
   openGraph: {
-    title: "Browse skincare · Otoku",
+    title: "Browse skincare · PuruPuru",
     description: "Search version-aware skincare products and compare trusted market pricing.",
   },
 };

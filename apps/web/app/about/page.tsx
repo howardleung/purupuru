@@ -5,19 +5,19 @@ import { PublicInfoPage } from "../../components/public-info-page";
 
 export const metadata: Metadata = {
   title: "About",
-  description: "Learn how Otoku approaches version-aware skincare discovery and honest price comparison.",
+  description: "Learn how PuruPuru approaches version-aware skincare discovery and honest price comparison.",
 };
 
 export default function AboutPage() {
   return (
     <PublicInfoPage
-      eyebrow="About Otoku"
+      eyebrow="About PuruPuru"
       title="A clearer way to research skincare across markets"
-      intro="Otoku is an early-stage skincare discovery and shopping-planning product for people comparing exact products, sizes, and prices at home or while travelling."
+      intro="PuruPuru is an early-stage skincare discovery and shopping-planning product for people comparing exact products, sizes, and prices at home or while travelling."
     >
       <section>
         <h2 className="text-lg font-semibold text-slate-950">Why it exists</h2>
-        <p className="mt-2">Skincare research is scattered across brand pages, local platforms, retailers, currency converters, and personal notes. Otoku brings useful context together while linking back to original sources.</p>
+        <p className="mt-2">Skincare research is scattered across brand pages, local platforms, retailers, currency converters, and personal notes. PuruPuru brings useful context together while linking back to original sources.</p>
       </section>
       <section>
         <h2 className="text-lg font-semibold text-slate-950">What we prioritize</h2>

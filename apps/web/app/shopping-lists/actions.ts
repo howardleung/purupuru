@@ -30,7 +30,7 @@ function validName(value: string) {
 }
 
 function unexpectedError(): ShoppingListActionResult {
-  return { status: "ERROR", message: "Otoku could not save that change. Please try again." };
+  return { status: "ERROR", message: "PuruPuru could not save that change. Please try again." };
 }
 
 export async function createShoppingList(

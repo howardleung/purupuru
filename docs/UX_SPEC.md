@@ -1,4 +1,4 @@
-# Otoku Structural UX Specification
+# PuruPuru Structural UX Specification
 
 **Status:** Canonical specification for the next structural UX redesign  
 **Scope:** Information architecture, interaction hierarchy, responsive behavior, and data-presentation rules  
@@ -7,7 +7,7 @@
 
 ## 1. Purpose
 
-This document is the canonical source of truth for Otoku's next structural UX redesign. It translates settled product decisions into an implementation-ready interaction model while preserving the existing domain model and trust rules.
+This document is the canonical source of truth for PuruPuru's next structural UX redesign. It translates settled product decisions into an implementation-ready interaction model while preserving the existing domain model and trust rules.
 
 This is a structural UX specification, not a claim that these surfaces are already implemented. The current application is a functional MVP layout. Future coding and design agents must compare existing behavior with this document before changing components or routes.
 
@@ -15,11 +15,11 @@ The supplied Sukoshi and PCPartPicker screenshots are references for information
 
 - Sukoshi inspires the clean header, image-forward discovery, approachable search suggestions, and beauty-oriented personal surfaces.
 - PCPartPicker inspires the product-category mega-menu, dense catalogue research tools, filtering, sorting, and side-by-side comparison behavior.
-- Otoku must not copy either product's branding, assets, exact layout, typography, or visual identity.
+- PuruPuru must not copy either product's branding, assets, exact layout, typography, or visual identity.
 
 ## 2. Core design philosophy
 
-Otoku should look and feel like a beauty product while behaving like a serious research and shopping-intelligence tool.
+PuruPuru should look and feel like a beauty product while behaving like a serious research and shopping-intelligence tool.
 
 | Surface type | Primary character | Examples | Default density |
 |---|---|---|---|
@@ -81,7 +81,7 @@ Progressive disclosure must not hide:
 - Mutations show pending, success, and recoverable failure states.
 - Do not optimistically display state that cannot be safely rolled back.
 - Preserve product/version/variant context after authentication or error recovery.
-- Empty states explain what is absent without claiming Otoku searched the entire market.
+- Empty states explain what is absent without claiming PuruPuru searched the entire market.
 
 ## 4. Responsive and mobile principles
 
@@ -115,7 +115,7 @@ Provide persistent access to global search, discovery, private tools, and accoun
 Upper row:
 
 - global search on the left;
-- centred Otoku wordmark/logo;
+- centred PuruPuru wordmark/logo;
 - profile/account control on the right.
 
 Second row:
@@ -203,7 +203,7 @@ Use the established combobox/listbox pattern: arrows move, Enter activates, Esca
 
 ### Purpose
 
-Introduce Otoku as an attractive public skincare-discovery product and guide users into trustworthy research.
+Introduce PuruPuru as an attractive public skincare-discovery product and guide users into trustworthy research.
 
 ### Immediately visible
 
@@ -325,7 +325,7 @@ Supported/data-dependent rows may include:
 - lowest tracked price for active customer market;
 - benchmark pricing;
 - active ingredients once structured;
-- other factual dimensions already represented in Otoku.
+- other factual dimensions already represented in PuruPuru.
 
 Never display fabricated or semantically incompatible values. Preserve benchmark labels/sources, and make differing sizes/formulations explicit.
 

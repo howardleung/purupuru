@@ -194,7 +194,7 @@ This file records settled choices and the rationale behind them. New decisions s
 **Why:** A concise working label helps internal communication while final naming is still being evaluated.
 **Implications:** Do not treat this as final brand approval or rename generic technical identifiers. Revisit after domain, trademark, UI, and user-feedback review.
 ### 2026-09-12 — Otoku is the current working name
-**Status:** Accepted
+**Status:** Superseded by the 2026-09-16 PuruPuru identity decision
 **Decision:** Use `Otoku` as the current development/internal working name, replacing Costmetic. The name comes from the Japanese concept of good value or a good deal.
 **Why:** It better reflects the product's value-oriented shopping-intelligence focus while connecting to an initial core beauty market.
 **Implications:** This remains a working name, not final brand approval. Keep package names, database identifiers, environment variables, migration history, and other generic technical identifiers unchanged so a future rename remains inexpensive.
@@ -309,3 +309,13 @@ This file records settled choices and the rationale behind them. New decisions s
 **Why:** Repeating benchmarks and surrounding every fact with an equally weighted card obscures the local buying decision. A consolidated chart makes cross-retailer movement easier to scan, while separate currency axes prevent a false visual comparison and local-only logo assets prevent unreviewed hotlinks or unstable branding.
 
 **Implications:** Benchmark sources and external evidence signals are not promoted to shopping options without an actual matching `Offer`. Sparse and missing history remain explicit, current offers are not synthesized into historical observations, historical CAD is still omitted without observation-date rates, and version/variant/listing identity remains exact. No schema or charting dependency is required; adding a retailer logo is an asset-review and registry change.
+
+### 2026-09-16 — PuruPuru is the current working product name
+
+**Status:** Accepted
+
+**Decision:** Use `PuruPuru` in current product copy, wordmarks, metadata, and active documentation, superseding the earlier Otoku working-name decision. The root package label is `purupuru`; generic workspace package scopes remain unchanged.
+
+**Why:** Adopt the requested new identity without coupling branding to durable product or infrastructure identity. Domain and trademark clearance remain pending.
+
+**Implications:** No changes to product data, database/auth state, schema, migrations, IDs, secrets, environment-variable names, domain rules, or application behavior. Historical decision wording remains intact. External repository/project/application display names and domains require separate manual review; see `BRANDING.md`.

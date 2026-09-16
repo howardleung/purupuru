@@ -1,4 +1,4 @@
-# Otoku engineering guidance
+# PuruPuru engineering guidance
 
 This file is the primary operational instruction for coding agents. The repository—not chat history—is the durable source of truth. Change application behavior only when the request authorizes it.
 
@@ -27,7 +27,7 @@ If a request conflicts with these documents, flag it before choosing a direction
 - Keep migrations conservative and reviewable. Prefer additive, backward-compatible steps where practical; never apply destructive database changes silently.
 - Comment on non-obvious reasoning or constraints, not syntax.
 
-## Otoku invariants
+## PuruPuru invariants
 
 - Preserve `ProductFamily → ProductVersion → ProductVariant → Offer`; never silently merge ambiguous versions, variants, or retailer listings.
 - Retailer data must pass normalization and conservative identity matching before it affects canonical catalogue data. `Offer.availableMarkets` means customer/delivery markets, not retailer location.

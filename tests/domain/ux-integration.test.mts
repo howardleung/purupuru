@@ -22,6 +22,19 @@ const retailerLogos = readFileSync(new URL("../../apps/web/lib/retailer-logos.ts
 const privacyPage = readFileSync(new URL("../../apps/web/app/privacy/page.tsx", import.meta.url), "utf8");
 const termsPage = readFileSync(new URL("../../apps/web/app/terms/page.tsx", import.meta.url), "utf8");
 
+test("current product identity appears in metadata and both wordmarks", () => {
+  const layout = readFileSync(new URL("../../apps/web/app/layout.tsx", import.meta.url), "utf8");
+  assert.match(layout, /default: "PuruPuru"/);
+  assert.match(layout, /template: "%s · PuruPuru"/);
+  assert.match(layout, /siteName: "PuruPuru"/);
+  assert.match(layout, /twitter: \{[\s\S]*?title: "PuruPuru"/);
+  for (const file of ["site-header", "site-footer"]) {
+    const component = readFileSync(new URL(`../../apps/web/components/${file}.tsx`, import.meta.url), "utf8");
+    assert.match(component, /PuruPuru/);
+  }
+  assert.match(homePage, /PuruPuru — skincare discovery and price comparison/);
+});
+
  test("product-selection links preserve exact version and variant context", () => {
   assert.equal(
     productSelectionHref({

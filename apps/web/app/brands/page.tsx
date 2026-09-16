@@ -12,7 +12,7 @@ export default async function BrandsPage() {
     <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
       <p className="text-sm font-medium text-slate-500">Browse the supported catalogue</p>
       <h1 className="mt-2 text-3xl font-semibold tracking-tight">Brands</h1>
-      <p className="mt-3 max-w-2xl text-slate-600">Canonical brand names currently represented in Otoku. Rich brand profiles can grow from this factual index later.</p>
+      <p className="mt-3 max-w-2xl text-slate-600">Canonical brand names currently represented in PuruPuru. Rich brand profiles can grow from this factual index later.</p>
       {brands.length > 0 ? (
         <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {brands.map((brand) => (

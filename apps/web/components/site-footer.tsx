@@ -13,7 +13,7 @@ export function SiteFooter() {
     <footer className="mt-auto border-t border-slate-200 bg-slate-50">
       <div className="mx-auto grid max-w-6xl gap-5 px-4 py-8 text-sm sm:px-6 md:grid-cols-[1fr_auto]">
         <div>
-          <p className="font-semibold text-slate-900">Otoku</p>
+          <p className="font-semibold text-slate-900">PuruPuru</p>
           <p className="mt-2 max-w-2xl leading-6 text-slate-600">
             Prices and availability can change. Native prices remain authoritative and CAD conversions are approximate.
           </p>

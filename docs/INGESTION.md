@@ -1,6 +1,6 @@
 # Retailer/source ingestion foundation
 
-This is Otoku's developer-operated, local ingestion path for trustworthy retailer records. It is intentionally not a scraper, scheduler, feed platform, or automatic catalogue creator.
+This is PuruPuru's developer-operated, local ingestion path for trustworthy retailer records. It is intentionally not a scraper, scheduler, feed platform, or automatic catalogue creator.
 
 ## Safety posture
 

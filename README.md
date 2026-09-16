@@ -1,8 +1,8 @@
-# Otoku (working name) — Repository Context
+# PuruPuru (working name) — Repository Context
 
 This repository is for a web-first global skincare discovery, collection, and shopping-intelligence product.
 
-`Otoku` is the current temporary development/internal working name, from the Japanese concept of good value or a good deal. It is not a final branding decision; keep technical identifiers generic so a future rename remains inexpensive.
+`PuruPuru` is the current working product name. Domain and trademark clearance remain pending; generic technical identifiers stay unchanged. See [branding migration and manual infrastructure checklist](docs/BRANDING.md).
 
 ## Start here
 

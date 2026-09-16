@@ -11,7 +11,7 @@ export default function Loading() {
           <div className="h-72 rounded-xl bg-slate-100" />
         </div>
       </div>
-      <span className="sr-only">Loading Otoku…</span>
+      <span className="sr-only">Loading PuruPuru…</span>
     </main>
   );
 }

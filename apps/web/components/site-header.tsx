@@ -13,7 +13,7 @@ export function SiteHeader() {
       <div className="mx-auto grid max-w-6xl grid-cols-[1fr_auto] items-center gap-3 px-4 py-3 md:grid-cols-[minmax(16rem,1fr)_auto_minmax(16rem,1fr)] md:px-6 md:py-4">
         <div className="hidden max-w-sm md:block"><GlobalSearch /></div>
         <Link className="text-xl font-semibold tracking-tight md:text-2xl" href="/">
-          Otoku
+          PuruPuru
         </Link>
         <div className="ml-auto flex shrink-0 items-center justify-end gap-1">
           {isClerkConfigured ? (

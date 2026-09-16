@@ -284,7 +284,7 @@ export async function updateProductCollection(
   } catch {
     return {
       status: "ERROR",
-      message: "Otoku could not save that change. Please try again.",
+      message: "PuruPuru could not save that change. Please try again.",
     };
   }
 }

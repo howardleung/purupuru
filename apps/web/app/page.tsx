@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   description:
     "Discover version-aware skincare, compare trusted prices across Canada, Japan, and Korea, and plan what to buy.",
   openGraph: {
-    title: "Otoku — skincare discovery and price comparison",
+    title: "PuruPuru — skincare discovery and price comparison",
     description:
       "Compare the exact skincare product, size, and market price before you buy.",
   },
@@ -39,7 +39,7 @@ export default async function HomePage() {
               Compare the right product—not just the lowest-looking price.
             </h1>
             <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-600">
-              Otoku helps you check exact versions and sizes, trustworthy local benchmarks,
+              PuruPuru helps you check exact versions and sizes, trustworthy local benchmarks,
               and tracked buying options before you buy skincare at home or while travelling.
             </p>
             <div className="mt-8"><GlobalSearch id="home-search" prominent /></div>

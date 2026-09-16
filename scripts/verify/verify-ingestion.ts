@@ -19,7 +19,7 @@ class VerificationRollback extends Error {
 async function main() {
   const suffix = randomUUID();
   const externalListingId = `qa-ingestion-${suffix}`;
-  const firstUrl = `https://example.invalid/otoku-ingestion/${suffix}`;
+  const firstUrl = `https://example.invalid/purupuru-ingestion/${suffix}`;
   const changedUrl = `${firstUrl}?revision=2`;
   const base = {
     ...(await loadFixture("well-round-lab")),

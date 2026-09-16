@@ -86,7 +86,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title,
     description,
     openGraph: {
-      title: `${title} · Otoku`,
+      title: `${title} · PuruPuru`,
       description,
       images: image ? [{ url: image.url, alt: image.altText }] : undefined,
     },

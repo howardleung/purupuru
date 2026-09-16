@@ -6,7 +6,7 @@
 
 A global beauty discovery, collection, and shopping-intelligence platform that helps users understand what products are genuinely popular in different beauty markets, compare trusted buying options, and organize the products they own, want, tried, finished, and plan to purchase.
 
-The current development/internal working name is `Otoku`, from the Japanese concept of good value or a good deal. This is not a final naming or branding decision.
+The current working product name is `PuruPuru`. Domain and trademark clearance remain pending; the identity change does not alter product scope or domain behavior.
 
 The initial focus is skincare, with particular emphasis on Korean, Japanese, and selected European skincare markets.
 
@@ -327,7 +327,7 @@ Each supported product should ideally contain:
 
 ### Public Site Structure
 
-The MVP public entry point explains Otoku’s consumer value before authentication and provides prominent product/brand search, canonical category browse, and curated product links backed by PostgreSQL. Primary destinations are Home, Browse, Categories, My Collection, Shopping Lists, and About. Anonymous users can complete discovery and comparison flows; sign-in is introduced only for private save, rating, purchase, and list behavior.
+The MVP public entry point explains PuruPuru’s consumer value before authentication and provides prominent product/brand search, canonical category browse, and curated product links backed by PostgreSQL. Primary destinations are Home, Browse, Categories, My Collection, Shopping Lists, and About. Anonymous users can complete discovery and comparison flows; sign-in is introduced only for private save, rating, purchase, and list behavior.
 
 Public About, Contact, Privacy, Terms, and Affiliate Disclosure pages provide early trust structure. Draft legal copy must be visibly marked for professional review, a real contact channel is required before launch, and the product must not imply partnerships that do not exist.
 

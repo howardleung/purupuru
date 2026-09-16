@@ -1,6 +1,6 @@
 # Architecture
 
-Otoku is a pnpm workspace: `apps/web` is the Next.js application; `packages/domain`, `packages/database`, and `packages/ui` are shared packages; `scripts/import` runs developer-operated ingestion; `tests/domain` contains Node test-runner coverage. The documented structure is intentional even where the current implementation is small.
+PuruPuru is a pnpm workspace: `apps/web` is the Next.js application; `packages/domain`, `packages/database`, and `packages/ui` are shared packages; `scripts/import` runs developer-operated ingestion; `tests/domain` contains Node test-runner coverage. The documented structure is intentional even where the current implementation is small.
 
 ## Dependency boundaries
 

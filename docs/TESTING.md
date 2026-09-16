@@ -1,6 +1,6 @@
 # Testing
 
-Test the behavior Otoku promises, not framework internals. Prioritize domain invariants and user-visible outcomes: product/version/variant separation, missing-data handling, offer ordering, benchmark precedence, collection transitions, shopping-list quantities, user isolation, and ingestion idempotency. Add a regression test when fixing a meaningful bug.
+Test the behavior PuruPuru promises, not framework internals. Prioritize domain invariants and user-visible outcomes: product/version/variant separation, missing-data handling, offer ordering, benchmark precedence, collection transitions, shopping-list quantities, user isolation, and ingestion idempotency. Add a regression test when fixing a meaningful bug.
 
 ## Test levels
 

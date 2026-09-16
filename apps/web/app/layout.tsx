@@ -11,19 +11,19 @@ const siteDescription =
 
 export const metadata: Metadata = {
   title: {
-    default: "Otoku",
-    template: "%s · Otoku",
+    default: "PuruPuru",
+    template: "%s · PuruPuru",
   },
   description: siteDescription,
   openGraph: {
     type: "website",
-    siteName: "Otoku",
-    title: "Otoku",
+    siteName: "PuruPuru",
+    title: "PuruPuru",
     description: siteDescription,
   },
   twitter: {
     card: "summary",
-    title: "Otoku",
+    title: "PuruPuru",
     description: siteDescription,
   },
 };

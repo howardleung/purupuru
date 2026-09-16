@@ -2,11 +2,10 @@
 
 ## Current working name
 
-- **Name:** `Otoku`
-- **Meaning:** Japanese concept of good value / a good deal
-- **Status:** Temporary development/internal working name; not final.
+- **Name:** `PuruPuru`
+- **Status:** Current working product name, adopted 2026-09-16; domain and trademark clearance remain pending.
 
-`Otoku` reflects the product's focus on beauty/skincare price comparison and better purchasing options.
+The historical naming choices are retained in `DECISIONS.md`; current product copy and metadata use PuruPuru. See `BRANDING.md` for the identity migration boundaries.
 
 ## Open concern
 

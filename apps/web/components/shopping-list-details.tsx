@@ -223,7 +223,7 @@ export function ShoppingListDetails({ list }: { list: PreparedShoppingList }) {
         <Link className="text-sm font-medium text-slate-600 underline" href="/shopping-lists">← All shopping lists</Link>
         <p className="mt-5 text-sm text-slate-500">Shopping in {marketName(list.targetMarket)} · comparing with {marketName(list.comparisonMarket)}</p>
         <h1 className="mt-1 text-3xl font-semibold tracking-tight">{list.name}</h1>
-        <p className="mt-2 text-sm text-slate-600">Planned spend uses Otoku’s verified target-market benchmark. Canadian retailer prices provide the at-home comparison.</p>
+        <p className="mt-2 text-sm text-slate-600">Planned spend uses PuruPuru’s verified target-market benchmark. Canadian retailer prices provide the at-home comparison.</p>
       </header>
 
       {items.length === 0 ? (

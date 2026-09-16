@@ -261,7 +261,7 @@ export function PriceHistorySection({
       {currencyGroups.length === 0 ? (
         <div className="mt-4 rounded-xl border border-dashed border-slate-300 p-5 text-sm text-slate-600 sm:p-6">
           <p>No price observations have been recorded for this version and size yet.</p>
-          <p className="mt-1">More observations will appear as Otoku continues tracking this offer.</p>
+          <p className="mt-1">More observations will appear as PuruPuru continues tracking this offer.</p>
         </div>
       ) : (
         <div className="mt-4 space-y-6 rounded-xl border border-slate-200 p-4 sm:p-5">

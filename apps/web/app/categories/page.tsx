@@ -7,9 +7,9 @@ export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Skincare categories",
-  description: "Browse Otoku’s canonical skincare taxonomy by product type.",
+  description: "Browse PuruPuru’s canonical skincare taxonomy by product type.",
   openGraph: {
-    title: "Skincare categories · Otoku",
+    title: "Skincare categories · PuruPuru",
     description: "Explore cleansers, toners, moisturizers, treatments, sunscreen, masks, eye care, and lip care.",
   },
 };
@@ -24,7 +24,7 @@ export default async function CategoriesPage() {
       <p className="text-sm font-medium text-slate-500">Browse by product type</p>
       <h1 className="mt-2 text-3xl font-semibold tracking-tight">Skincare categories</h1>
       <p className="mt-3 max-w-2xl text-slate-600">
-        Otoku uses one consistent skincare taxonomy, so retailer category labels do not change where products appear.
+        PuruPuru uses one consistent skincare taxonomy, so retailer category labels do not change where products appear.
       </p>
 
       {topLevel.length > 0 ? (

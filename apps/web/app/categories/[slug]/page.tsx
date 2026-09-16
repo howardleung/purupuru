@@ -19,14 +19,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const catalogue = await getCatalogue({ categorySlug: slug });
   const title = catalogue.selectedCategory?.displayName ?? "Category";
   const description = catalogue.selectedCategory
-    ? `Browse version-aware ${catalogue.selectedCategory.displayName.toLowerCase()} products and trusted price context on Otoku.`
-    : "Browse Otoku’s canonical skincare categories.";
+    ? `Browse version-aware ${catalogue.selectedCategory.displayName.toLowerCase()} products and trusted price context on PuruPuru.`
+    : "Browse PuruPuru’s canonical skincare categories.";
 
   return {
     title,
     description,
     openGraph: {
-      title: `${title} skincare · Otoku`,
+      title: `${title} skincare · PuruPuru`,
       description,
     },
   };

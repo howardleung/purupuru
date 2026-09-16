@@ -4,7 +4,7 @@
 
 This is a consumer beauty discovery, collection, and shopping-intelligence platform. The initial focus is skincare, beginning with Korean and Japanese skincare and selective French/European support. Canada is the initial home market.
 
-The current development/internal working name is `Otoku`, from the Japanese concept of good value or a good deal. It is temporary only; final branding remains open pending domain, trademark, UI, and user-feedback review.
+The current working product name is `PuruPuru`. Domain, trademark, and final visual-brand review remain pending. Generic technical identifiers and existing infrastructure identities remain unchanged.
 
 The product emerged from a real shopping workflow problem: international beauty research is fragmented across Reddit, YouTube, TikTok, Google, @cosme, Olive Young, Amazon, Canadian specialty retailers, international retailers, currency conversion, notes, and travel shopping lists.
 

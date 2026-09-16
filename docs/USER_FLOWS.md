@@ -4,7 +4,7 @@ These flows describe intended product behavior. Exact visual design is not fixed
 
 ## 0. Public homepage → browse
 
-1. An anonymous visitor lands on `/` and sees Otoku’s value proposition, prominent product/brand search, canonical category entry points, and curated products loaded from PostgreSQL.
+1. An anonymous visitor lands on `/` and sees PuruPuru’s value proposition, prominent product/brand search, canonical category entry points, and curated products loaded from PostgreSQL.
 2. Search submits to `/catalogue`; category links use stable `/categories/[slug]` routes.
 3. The visitor can continue Home → Browse/Search → Product → Compare without signing in.
 4. About and footer trust pages explain source limitations, changing prices/availability, approximate currency conversion, and the affiliate-ordering commitment.
@@ -120,8 +120,8 @@ For the selected ProductVersion and exact ProductVariant:
 3. Show the current tracked offer price separately with its last-verified date.
 4. Make observation date, native price, retailer/listing, and evidence available by pointer, keyboard, and tap interaction; keep the full observation table behind a `View data` disclosure.
 5. Do not infer an observation from the current offer price.
-6. If one observation exists, label the series as sparse. If none exist, explain that more observations may appear as Otoku continues tracking.
-7. Put different native currencies on separate chart axes. Do not show historical CAD estimates until Otoku can use an exchange rate appropriate to each observation date.
+6. If one observation exists, label the series as sparse. If none exist, explain that more observations may appear as PuruPuru continues tracking.
+7. Put different native currencies on separate chart axes. Do not show historical CAD estimates until PuruPuru can use an exchange rate appropriate to each observation date.
 
 ### Empty/stale states
 - No Canadian offer → `No Canadian buying options currently tracked.`
