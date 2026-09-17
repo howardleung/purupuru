@@ -43,17 +43,47 @@ For substantial work: (1) read the relevant docs and code, (2) state the approac
 
 Small obvious changes should stay lightweight. For meaningful code changes, run the applicable `pnpm test`, `pnpm lint`, `pnpm typecheck`, `pnpm build`, and `pnpm db:validate` checks; do not claim a check or browser QA that was not run. See `docs/TESTING.md` for scope.
 
-## Token and execution efficiency
+## Agent efficiency
 
-> Minimize redundant context, commands, narration, and verification passes; do not minimize necessary reasoning, correctness, safety, or data integrity.
+> Optimize for correct work with minimal unnecessary context. Save tokens by avoiding redundant reads, oversized command output, repeated validation, and unrelated scope—not by skipping reasoning, safety, verification, or data-integrity checks.
 
-- Read only the files needed for the current task. Prefer targeted searches, symbol lookups, focused reads, and focused diffs over broad repository inspection.
-- Reuse settled product and architecture decisions from canonical documents. Do not repeatedly restate known project context or redo completed research, schema analysis, architecture decisions, or verified work unless new evidence requires it.
-- Keep planning and progress updates brief: for non-trivial work, state the approach and blockers, then execute. Do not explain routine commands or obvious implementation details unless they affect a decision, risk, or user action.
-- During implementation, use focused tests for the changed area. Run expensive full-suite checks once the change is coherent; rerun them only when later changes could invalidate those results.
-- Do not rewrite documentation wholesale for a small change. Do not inspect generated files, build output, lockfiles, generated Prisma clients, or dependency trees unless the task requires them.
+### Context
+
+- Inspect repository structure first, then read only the files and canonical docs relevant to the task.
+- Prefer targeted `rg`, symbol searches, focused file ranges, and diffs over broad recursive reads.
+- Do not reopen files already understood unless they changed, new evidence requires it, or verification depends on them.
+- Reuse settled product and architecture decisions from canonical documents instead of rediscovering or restating them.
+- Do not inspect generated files, dependency directories, lockfiles, build artifacts, generated Prisma clients, or large data files unless the task specifically requires them.
 - When resuming interrupted work, inspect the current repository state and continue from completed work rather than reconstructing the task from scratch.
-- Avoid web research unless current external information is necessary. Ask for clarification only when ambiguity materially affects correctness; otherwise make the smallest safe assumption consistent with project documentation.
+
+### Command output
+
+- Bound commands whose output size is unknown or potentially large.
+- Prefer targeted queries or bounded output such as `COMMAND 2>&1 | head -c 6000` when only a sample or failure excerpt is needed.
+- Do not print entire lockfiles, generated files, build output, dependency trees, minified files, or large JSON/data files into context.
+- For failures, capture the relevant error and surrounding context rather than the entire log.
+- Do not truncate output when the complete result is necessary to make a correct or safe decision.
+
+### Validation
+
+- Use proportional validation while implementing.
+- Run targeted tests and checks for the changed area during iteration.
+- Run one coherent full verification pass near completion when appropriate: tests, lint, typecheck, build, and database validation as required by `docs/TESTING.md`.
+- Do not repeatedly rerun the full suite after every small edit; rerun only checks that could have been invalidated by later changes or previous failures.
+- Do not perform browser or visual QA for non-visual changes unless the task or risk requires it.
+
+### Scope
+
+- Make the smallest correct coherent change.
+- Do not perform unrelated refactors, cleanup, documentation rewrites, dependency changes, or research.
+- Expand scope only when actual dependencies, root-cause investigation, correctness, or security require it.
+- Avoid external web research when repository sources are sufficient; use current external information only when the task genuinely depends on it.
+- Ask for clarification only when ambiguity materially affects correctness; otherwise make the smallest safe assumption consistent with repository documentation.
+
+### Communication
+
+- Keep planning and progress updates concise: for non-trivial work, state the approach and blockers, then execute.
+- Do not narrate routine commands or obvious implementation details unless they affect a decision, risk, or required user action.
 - Keep final reports focused on what changed, verification performed, and remaining blockers, risks, or technical debt.
 
 ## Documentation maintenance

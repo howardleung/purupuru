@@ -2,8 +2,8 @@ import { clerkMiddleware } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import { isClerkConfigured } from "./lib/clerk-config";
 
-// Routes remain public by default. Future state-changing actions protect
-// themselves close to the server action or route handler that performs them.
+// Discovery routes remain public. Private reads and state-changing actions
+// enforce authentication and ownership at their server boundary.
 export default isClerkConfigured ? clerkMiddleware() : () => NextResponse.next();
 
 export const config = {

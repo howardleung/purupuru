@@ -24,6 +24,8 @@ Prisma migrations live beside the schema. Review generated SQL, backfill needs, 
 
 All private data access starts from the active authenticated user and scopes reads and writes by ownership. Do not accept a user ID, list ID, or collection ID as authority without verifying its relation to that user.
 
+Collection and shopping-list actions share `apps/web/lib/transactions.ts` for serializable transactions with up to three attempts on Prisma `P2034` write conflicts. Do not duplicate this retry policy in route-specific action files. Developer ingestion remains a separate CLI operation with its own transaction boundary.
+
 ## Practical placement
 
 Before adding a helper, look for an existing domain module or server helper. Put a stable, pure rule in `packages/domain`; keep Prisma query composition in server-only code; keep request/session handling and revalidation at the Next.js boundary; keep rendering and transient interaction in components. Introduce a new package, layer, or repository abstraction only when an existing boundary cannot express the need clearly.

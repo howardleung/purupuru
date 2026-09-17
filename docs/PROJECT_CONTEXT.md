@@ -73,7 +73,7 @@ A future receipt workflow could:
 3. Match items against a shopping list.
 4. Let the user confirm/correct all matches.
 5. Mark shopping-list quantities purchased.
-6. Create purchase instances and update the user's collection.
+6. Only after separate confirmation that these are personal acquisitions, create purchase instances and update the user's collection. Shopping-list Purchased alone must not imply ownership.
 7. Contribute verified price observations to the platform.
 
 This is intentionally post-MVP, but the data model should not make it difficult later.

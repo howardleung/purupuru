@@ -24,3 +24,5 @@ pnpm ingest:verify # database-backed ingestion idempotency, when configured/rele
 ```
 
 Run relevant tests before claiming completion; run migration validation and inspect migration SQL for schema work. A passing test suite does not establish browser behavior, live retailer data, or deployment correctness.
+
+Workspace TypeScript checks enforce unused locals and parameters through `tsconfig.base.json`. Source-reading regression checks are structural contracts, not executed UI or database integration tests. The modal-focus tests use narrow DOM stand-ins; they do not replace browser keyboard/accessibility QA.

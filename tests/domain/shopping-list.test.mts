@@ -6,7 +6,6 @@ import {
   checklistPurchasedQuantity,
   compareDestinationOffers,
   isOfferEligibleForMarket,
-  nextQuantityAfterAdd,
   parseRequestedQuantity,
   quantityStateAfterChange,
   selectStrongestBenchmark,
@@ -15,8 +14,9 @@ import {
 } from "../../packages/domain/src/shopping-list.ts";
 
 test("adding the same exact variant increases its quantity", () => {
-  assert.equal(nextQuantityAfterAdd(2, 3), 5);
-  assert.equal(nextQuantityAfterAdd(2, 0), null);
+  assert.deepEqual(quantityStateAfterChange(2, 0, 2 + 3), { quantity: 5, purchasedQuantity: 0 });
+  assert.deepEqual(quantityStateAfterChange(2, 2, 2 + 3), { quantity: 5, purchasedQuantity: 5 });
+  assert.equal(validateRequestedQuantity(0), false);
 });
 
 test("requested quantity cannot drop below one", () => {

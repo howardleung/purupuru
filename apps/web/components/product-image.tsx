@@ -23,9 +23,9 @@ export function ProductImage({
   priority = false,
   sizes = "(max-width: 640px) 100vw, 50vw",
 }: ProductImageProps) {
-  const [failed, setFailed] = useState(false);
+  const [failedUrl, setFailedUrl] = useState<string | null>(null);
 
-  if (!image || failed) {
+  if (!image || failedUrl === image.url) {
     return (
       <div
         aria-label={`Product image unavailable for ${productName}`}
@@ -43,7 +43,7 @@ export function ProductImage({
         alt={image.altText}
         className="object-contain p-4"
         fill
-        onError={() => setFailed(true)}
+        onError={() => setFailedUrl(image.url)}
         priority={priority}
         sizes={sizes}
         src={image.url}

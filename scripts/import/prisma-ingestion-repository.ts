@@ -141,7 +141,7 @@ export class PrismaIngestionRepository implements IngestionRepository {
   }
 
   async replaceOfferItems(offerId: string, items: readonly NormalizedOfferItem[]) {
-    const relatedGtins = [...new Set(items.map((item) => item.relatedGtin).filter(Boolean))] as string[];
+    const relatedGtins = [...new Set(items.map((item) => item.relatedGtin).filter((gtin): gtin is string => Boolean(gtin)))];
     const variants = relatedGtins.length
       ? await this.database.productVariant.findMany({
           where: { gtin: { in: relatedGtins } },

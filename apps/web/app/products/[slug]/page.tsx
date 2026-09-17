@@ -3,6 +3,7 @@ import {
   compareOffersByProductPrice,
 } from "@beauty-platform/domain";
 import { createEmptyCollectionState } from "@beauty-platform/domain/collection";
+import { BENCHMARK_PRECEDENCE } from "@beauty-platform/domain/shopping-list";
 import { buildPriceHistorySeries } from "@beauty-platform/domain/price-history";
 import { selectPrimaryProductImage } from "@beauty-platform/domain/product-images";
 import type { Metadata } from "next";
@@ -175,7 +176,7 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
         .map(toOfferView)
         .sort(compareOffersByProductPrice)
     : [];
-  const primaryBenchmark = ["MSRP", "RETAIL_PRICE", "REFERENCE_PRICE"]
+  const primaryBenchmark = BENCHMARK_PRECEDENCE
     .flatMap((type) => selectedVariantRecord.benchmarkPrices.filter((benchmark) => benchmark.type === type))
     .at(0) ?? null;
   const [primaryBenchmarkConversion, currentUser] = await Promise.all([

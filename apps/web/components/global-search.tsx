@@ -109,9 +109,9 @@ export function GlobalSearch({ id = "global-search", prominent = false }: { id?:
         <Search aria-hidden className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
         <label className="sr-only" htmlFor={id}>Search products, brands, and categories</label>
         <input
-          aria-activedescendant={activeIndex >= 0 ? `${id}-option-${activeIndex}` : undefined}
+          aria-activedescendant={isOpen && activeIndex >= 0 && activeIndex < items.length ? `${id}-option-${activeIndex}` : undefined}
           aria-autocomplete="list"
-          aria-controls={`${id}-results`}
+          aria-controls={isOpen ? `${id}-results` : undefined}
           aria-expanded={isOpen}
           autoComplete="off"
           className={`w-full rounded-full border border-slate-300 bg-white py-2.5 pl-10 pr-10 text-sm outline-none transition focus:border-slate-600 focus:ring-2 focus:ring-slate-200 ${prominent ? "py-3.5 text-base" : ""}`}
@@ -144,6 +144,7 @@ export function GlobalSearch({ id = "global-search", prominent = false }: { id?:
           className="absolute left-0 right-0 z-50 mt-2 max-h-[min(34rem,70vh)] overflow-y-auto rounded-2xl border border-slate-200 bg-white p-2 shadow-xl"
           id={`${id}-results`}
           role="listbox"
+          aria-label="Search suggestions"
         >
           <p aria-live="polite" className="sr-only">
             {isLoading ? "Searching" : `${items.length} search options available`}

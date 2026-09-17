@@ -10,7 +10,7 @@ import {
 } from "@beauty-platform/domain/catalogue";
 import { selectPrimaryProductImage } from "@beauty-platform/domain/product-images";
 
-import type { CatalogueFilters, CatalogueProduct } from "./catalogue-contract";
+import { catalogueSorts, type CatalogueFilters, type CatalogueProduct } from "./catalogue-contract";
 
 const productDetailsInclude = {
   brand: true,
@@ -101,7 +101,7 @@ function finiteNonNegative(value: number | undefined) {
 }
 
 function isCatalogueSort(value: string | undefined): value is CatalogueSort {
-  return ["PRICE_ASC", "PRICE_DESC", "PRODUCT_ASC", "PRODUCT_DESC", "BRAND_ASC", "BRAND_DESC"].includes(value ?? "");
+  return catalogueSorts.some((sort) => sort.value === value);
 }
 
 export async function getCatalogue(options: {

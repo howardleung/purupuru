@@ -110,7 +110,7 @@ function CollectionQuickView({ item, onClose }: { item: MyCollectionItem; onClos
 
   return (
     <div className="fixed inset-0 z-50 grid items-end bg-slate-950/45 sm:place-items-center sm:p-4" onMouseDown={(event) => { if (event.target === event.currentTarget) closeAndRefresh(); }}>
-      <section aria-labelledby="collection-quick-view-title" aria-modal="true" className="max-h-[92vh] w-full overflow-y-auto rounded-t-2xl bg-white p-5 shadow-2xl sm:max-w-3xl sm:rounded-2xl sm:p-6" ref={dialogRef} role="dialog">
+      <section aria-labelledby="collection-quick-view-title" aria-modal="true" className="max-h-[92vh] w-full overflow-y-auto rounded-t-2xl bg-white p-5 shadow-2xl sm:max-w-3xl sm:rounded-2xl sm:p-6" ref={dialogRef} role="dialog" tabIndex={-1}>
         <div className="flex justify-end"><button aria-label="Close collection quick view" className="grid h-10 w-10 place-items-center rounded-full hover:bg-slate-100" onClick={closeAndRefresh} ref={closeRef} type="button"><X aria-hidden className="h-5 w-5" /></button></div>
         <div className="grid gap-6 sm:grid-cols-[15rem_1fr]">
           <ProductImage className="aspect-square h-auto" image={item.image ?? null} productName={`${item.brandName} ${item.productName}`} sizes="240px" />

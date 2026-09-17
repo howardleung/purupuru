@@ -60,14 +60,6 @@ export function parseRequestedQuantity(value: string): number | null {
   return Number.isSafeInteger(quantity) && validateRequestedQuantity(quantity) ? quantity : null;
 }
 
-export function nextQuantityAfterAdd(currentQuantity: number, addedQuantity: number): number | null {
-  if (!validateRequestedQuantity(currentQuantity) || !validateRequestedQuantity(addedQuantity)) {
-    return null;
-  }
-
-  return currentQuantity + addedQuantity;
-}
-
 export function validateQuantityUpdate(quantity: number, purchasedQuantity: number): boolean {
   return (
     validateRequestedQuantity(quantity) &&

@@ -1,7 +1,5 @@
 "use server";
 
-import { prisma } from "@beauty-platform/database";
-import type { Prisma } from "@beauty-platform/database";
 import {
   planCollectionMutation,
   type CollectionMutationIntent,
@@ -14,6 +12,7 @@ import type {
 } from "../../../lib/collection-contract";
 import { getPersistedCollectionState } from "../../../lib/collection-state";
 import { getOrCreateCurrentUser } from "../../../lib/current-user";
+import { runSerializable } from "../../../lib/transactions";
 
 function isMutationIntent(value: unknown): value is CollectionMutationIntent {
   if (!value || typeof value !== "object" || !("type" in value)) return false;
@@ -42,27 +41,6 @@ function isMutationIntent(value: unknown): value is CollectionMutationIntent {
     default:
       return false;
   }
-}
-
-function isRetryableTransactionError(error: unknown) {
-  return (
-    typeof error === "object" &&
-    error !== null &&
-    "code" in error &&
-    (error as { code?: unknown }).code === "P2034"
-  );
-}
-
-async function runSerializable<T>(operation: (tx: Prisma.TransactionClient) => Promise<T>) {
-  for (let attempt = 0; attempt < 3; attempt += 1) {
-    try {
-      return await prisma.$transaction(operation, { isolationLevel: "Serializable" });
-    } catch (error) {
-      if (!isRetryableTransactionError(error) || attempt === 2) throw error;
-    }
-  }
-
-  throw new Error("Serializable transaction retry exhausted.");
 }
 
 export async function updateProductCollection(

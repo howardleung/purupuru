@@ -8,7 +8,7 @@ function isRetryableTransactionError(error: unknown) {
     typeof error === "object" &&
     error !== null &&
     "code" in error &&
-    (error as { code?: unknown }).code === "P2034"
+    error.code === "P2034"
   );
 }
 

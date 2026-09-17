@@ -68,7 +68,7 @@ export function PersonalActionsModal({
       </button>
       {isOpen ? (
         <div className="fixed inset-0 z-50 grid items-end bg-slate-950/45 p-0 sm:place-items-center sm:p-4" onMouseDown={(event) => { if (event.target === event.currentTarget) close(); }}>
-          <section aria-labelledby="personal-actions-title" aria-modal="true" className="max-h-[90vh] w-full overflow-y-auto rounded-t-2xl bg-white p-5 shadow-2xl sm:max-w-2xl sm:rounded-2xl sm:p-6" ref={dialogRef} role="dialog">
+          <section aria-labelledby="personal-actions-title" aria-modal="true" className="max-h-[90vh] w-full overflow-y-auto rounded-t-2xl bg-white p-5 shadow-2xl sm:max-w-2xl sm:rounded-2xl sm:p-6" ref={dialogRef} role="dialog" tabIndex={-1}>
             <div className="flex items-start justify-between gap-4">
               <div><p className="text-xs font-medium uppercase tracking-wide text-slate-500">Selected size · {variantLabel}</p><h2 className="mt-1 text-xl font-semibold" id="personal-actions-title">Save or plan</h2><p className="mt-1 text-sm text-slate-600">Relationship and rating apply to this formulation. Lists and purchases keep the exact size.</p></div>
               <button aria-label="Close save or plan dialog" className="grid h-10 w-10 shrink-0 place-items-center rounded-full hover:bg-slate-100" onClick={close} ref={closeRef} type="button"><X aria-hidden className="h-5 w-5" /></button>

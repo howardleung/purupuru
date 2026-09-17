@@ -22,6 +22,20 @@ const retailerLogos = readFileSync(new URL("../../apps/web/lib/retailer-logos.ts
 const privacyPage = readFileSync(new URL("../../apps/web/app/privacy/page.tsx", import.meta.url), "utf8");
 const termsPage = readFileSync(new URL("../../apps/web/app/terms/page.tsx", import.meta.url), "utf8");
 
+test("collection and shopping-list actions reuse one serializable retry policy", () => {
+  for (const path of ["products/[slug]/collection-actions.ts", "shopping-lists/actions.ts"]) {
+    const actions = readFileSync(new URL(`../../apps/web/app/${path}`, import.meta.url), "utf8");
+    assert.match(actions, /import \{ runSerializable \} from .*lib\/transactions/);
+    assert.doesNotMatch(actions, /function runSerializable|function isRetryableTransactionError|prisma\.\$transaction/);
+  }
+});
+
+test("search accessibility only references mounted suggestions", () => {
+  assert.match(globalSearch, /aria-controls=\{isOpen \?/);
+  assert.match(globalSearch, /aria-activedescendant=\{isOpen && activeIndex >= 0 && activeIndex < items.length/);
+  assert.match(globalSearch, /aria-label="Search suggestions"/);
+});
+
 test("current product identity appears in metadata and both wordmarks", () => {
   const layout = readFileSync(new URL("../../apps/web/app/layout.tsx", import.meta.url), "utf8");
   assert.match(layout, /default: "PuruPuru"/);
@@ -165,9 +179,16 @@ test("shopping lists expose collapsed-row removal, simple quantity, and benchmar
 });
 
 test("product imagery has an intentional runtime fallback", () => {
-  assert.match(productImage, /onError=\{\(\) => setFailed\(true\)\}/);
+  assert.match(productImage, /onError=\{\(\) => setFailedUrl\(image.url\)\}/);
+  assert.match(productImage, /failedUrl === image.url/);
   assert.match(productImage, /Image coming soon/);
   assert.match(productImage, /alt=\{image\.altText\}/);
+});
+
+test("catalogue sort validation and product benchmark ordering reuse canonical definitions", () => {
+  const catalogue = readFileSync(new URL("../../apps/web/lib/catalogue.ts", import.meta.url), "utf8");
+  assert.match(catalogue, /catalogueSorts.some\(\(sort\) => sort.value === value\)/);
+  assert.match(productPage, /const primaryBenchmark = BENCHMARK_PRECEDENCE/);
 });
 
 test("draft legal pages visibly require professional review", () => {

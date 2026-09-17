@@ -108,7 +108,8 @@ The first implementation should optimize for clarity and correctness, not maximu
 
 Catalogue routes:
 
-- `/` — product/brand search and canonical category filtering
+- `/` — public discovery homepage with product/brand search and category entry points
+- `/catalogue` — searchable, sortable catalogue with canonical category and price filters
 - `/categories/[slug]` — canonical category browse
 - `/products/[slug]` — version-aware product detail and market offers
 - `/collection` — private version-normalized personal collection with state filters and sorting
