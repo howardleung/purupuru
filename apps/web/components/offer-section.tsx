@@ -103,7 +103,7 @@ export function OfferSection({
         <>
           <div className={compact ? "mt-4 grid gap-3" : "mt-4 grid gap-3 sm:hidden"}>
             {offers.map((offer) => (
-              <article className="rounded-xl border border-slate-200 p-4" key={offer.id}>
+              <article className="surface-card p-4" key={offer.id}>
                 <div className="flex items-start justify-between gap-3">
                   <RetailerLink
                     className="font-semibold text-slate-950 underline decoration-slate-300 underline-offset-2"
@@ -111,7 +111,7 @@ export function OfferSection({
                     name={offer.retailer.name}
                     sourceKey={offer.retailer.sourceKey}
                   />
-                  <span className="shrink-0 rounded-full bg-slate-100 px-2.5 py-1 text-xs text-slate-700">
+                  <span className="ui-chip shrink-0">
                     {availabilityLabels[offer.availabilityState] ?? "Availability unverified"}
                   </span>
                 </div>

@@ -29,7 +29,7 @@ export default async function ComparePage({ searchParams }: { searchParams: Prom
   const products = await getComparisonProducts(ids);
 
   return (
-    <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-10">
+    <main className="page-container py-8 sm:py-10">
       <Link className="text-sm font-medium text-slate-600 underline" href="/catalogue">← Back to catalogue</Link>
       <h1 className="mt-5 text-3xl font-semibold tracking-tight">Compare products</h1>
       <p className="mt-2 max-w-3xl text-slate-600">A factual comparison of the selected current formulation and default exact size. Missing data stays visible as missing.</p>

@@ -75,7 +75,7 @@ export function AddToShoppingList({
         </div>
         <button
           aria-expanded={isOpen}
-          className="w-full rounded-md border border-slate-900 px-3 py-2 text-sm font-medium text-slate-900 disabled:opacity-50 sm:w-auto"
+          className="ui-button ui-button--secondary w-full sm:w-auto"
           disabled={!isLoaded || isPending}
           onClick={openSelector}
           type="button"
@@ -91,7 +91,7 @@ export function AddToShoppingList({
               <label className="grid min-w-0 gap-1 text-xs font-medium text-slate-600">
                 Existing list
                 <select
-                  className="min-w-0 rounded-md border border-slate-300 bg-white px-3 py-2 text-sm font-normal text-slate-900"
+                  className="ui-input font-normal"
                   onChange={(event) => setListId(event.target.value)}
                   value={listId}
                 >
@@ -103,7 +103,7 @@ export function AddToShoppingList({
               <label className="grid gap-1 text-xs font-medium text-slate-600">
                 Quantity
                 <input
-                  className="min-w-0 rounded-md border border-slate-300 px-3 py-2 text-sm font-normal text-slate-900"
+                  className="ui-input font-normal"
                   min={1}
                   onChange={(event) => setQuantity(Number(event.target.value))}
                   type="number"
@@ -111,7 +111,7 @@ export function AddToShoppingList({
                 />
               </label>
               <button
-                className="self-end rounded-md bg-slate-900 px-3 py-2 text-sm font-medium text-white disabled:opacity-50"
+                className="ui-button ui-button--primary self-end"
                 disabled={isPending || !listId || !Number.isInteger(quantity) || quantity < 1}
                 onClick={() => {
                   startTransition(async () => {
@@ -142,7 +142,7 @@ export function AddToShoppingList({
             <div className="mt-3 grid gap-3 sm:grid-cols-[minmax(0,1fr)_10rem_auto]">
               <input
                 aria-label="New list name"
-                className="min-w-0 rounded-md border border-slate-300 px-3 py-2 text-sm"
+                className="ui-input"
                 maxLength={100}
                 onChange={(event) => setNewName(event.target.value)}
                 placeholder="Korea Trip"
@@ -150,7 +150,7 @@ export function AddToShoppingList({
               />
               <select
                 aria-label="Target market"
-                className="min-w-0 rounded-md border border-slate-300 bg-white px-3 py-2 text-sm"
+                className="ui-input"
                 onChange={(event) => setNewMarket(event.target.value)}
                 value={newMarket}
               >
@@ -159,7 +159,7 @@ export function AddToShoppingList({
                 ))}
               </select>
               <button
-                className="rounded-md border border-slate-900 px-3 py-2 text-sm font-medium disabled:opacity-50"
+                className="ui-button ui-button--secondary"
                 disabled={isPending || !newName.trim() || !Number.isInteger(quantity) || quantity < 1}
                 onClick={() => {
                   startTransition(async () => {

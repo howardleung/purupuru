@@ -230,7 +230,7 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
           <p className="text-sm font-medium uppercase tracking-wide text-slate-500">
             {family.brand.name}
           </p>
-          <h1 className="mt-2 text-3xl font-semibold tracking-tight" id="product-title">
+          <h1 className="mt-2 text-3xl font-extrabold tracking-tight" id="product-title">
             {family.canonicalName}
           </h1>
           <p className="mt-3 text-slate-600">

@@ -8,7 +8,7 @@ export default function ErrorPage({ reset }: { error: Error & { digest?: string 
         PuruPuru could not load this page. Your saved collection and shopping-list data were not changed.
       </p>
       <button
-        className="mt-6 rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white"
+        className="ui-button ui-button--primary mt-6"
         onClick={reset}
         type="button"
       >

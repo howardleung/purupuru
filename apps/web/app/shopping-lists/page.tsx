@@ -53,7 +53,7 @@ export default async function ShoppingListsPage() {
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
             {lists.map((list) => (
               <Link
-                className="rounded-xl border border-slate-200 p-5 transition hover:border-slate-400"
+                className="surface-card p-5 transition hover:border-slate-400 hover:shadow-float"
                 href={`/shopping-lists/${list.id}`}
                 key={list.id}
               >

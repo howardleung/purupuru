@@ -43,7 +43,7 @@ export function ProductSelectors({
                 className={
                   "rounded-md border px-3 py-2 text-sm " +
                   (isSelected
-                    ? "border-slate-900 bg-slate-900 text-white"
+                    ? "border-brand-action bg-brand-action text-white"
                     : "border-slate-300 text-slate-700 hover:border-slate-500")
                 }
                 href={productSelectionHref({
@@ -72,7 +72,7 @@ export function ProductSelectors({
                 className={
                   "rounded-md border px-3 py-2 text-sm " +
                   (isSelected
-                    ? "border-slate-900 bg-slate-900 text-white"
+                    ? "border-brand-action bg-brand-action text-white"
                     : "border-slate-300 text-slate-700 hover:border-slate-500")
                 }
                 href={productSelectionHref({

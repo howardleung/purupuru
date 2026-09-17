@@ -3,13 +3,13 @@
 **Status:** Canonical specification for the next structural UX redesign  
 **Scope:** Information architecture, interaction hierarchy, responsive behavior, and data-presentation rules  
 **Not in scope:** Final branding, visual identity, or implementation in this document  
-**Last updated:** 2026-09-13
+**Last updated:** 2026-09-16
 
 ## 1. Purpose
 
 This document is the canonical source of truth for PuruPuru's next structural UX redesign. It translates settled product decisions into an implementation-ready interaction model while preserving the existing domain model and trust rules.
 
-This is a structural UX specification, not a claim that these surfaces are already implemented. The current application is a functional MVP layout. Future coding and design agents must compare existing behavior with this document before changing components or routes.
+This is a structural UX specification, not a claim that every specified capability is implemented. The application has a structural implementation and an initial shared visual pass; future coding and design agents must compare existing behavior with this document before changing components or routes. Durable visual-system decisions live in [DESIGN_PRINCIPLES.md](DESIGN_PRINCIPLES.md#16-purupuru-visual-system); the visual pass does not supersede these interaction or data rules.
 
 The supplied Sukoshi and PCPartPicker screenshots are references for information architecture and interaction patterns only:
 

@@ -329,3 +329,13 @@ This file records settled choices and the rationale behind them. New decisions s
 **Why:** TypeScript input types do not prevent omitted Prisma predicates, and instance-local counters cannot reliably protect a serverless deployment. Boundary protections should remain separate from personal ownership, pricing and identity semantics.
 
 **Implications:** No database schema/migration or automatically provisioned infrastructure. Production requires manually configured server-only rate-store credentials. The baseline CSP retains Next/Clerk inline compatibility, not a claimed strict nonce policy. Provider firewall/auth settings, live integration checks and the remaining Prisma configuration dependency advisory need release review; see `SECURITY.md`.
+
+### 2026-09-16 — Initial shared PuruPuru visual identity
+
+**Status:** Accepted; final logo artwork pending
+
+**Decision:** Use a shared white-led, muted Nordic-blue visual system with rounded locally hosted Nunito typography, restrained pastel accents, and replaceable temporary shopping-bag/drop branding. See `DESIGN_PRINCIPLES.md` section 16 for tokens, patterns, and asset provenance.
+
+**Why:** Establish a cohesive consumer beauty identity without replacing the factual, dense research tools or treating mockup content as product data.
+
+**Implications:** Homepage prominence uses real catalogue ordering and existing identity-safe images/prices, not invented popularity signals. No schema, domain, pricing, ownership, auth, security, or ingestion changes. Deep research/personal pages inherit the shared system and may receive further dedicated visual polish.

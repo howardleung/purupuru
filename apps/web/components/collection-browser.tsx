@@ -52,7 +52,7 @@ export function CollectionBrowser({ items }: { items: MyCollectionItem[] }) {
             </div>
             {activeFilters.length > 1 ? <p className="mt-2 text-xs text-slate-500">Products must match every selected filter.</p> : null}
           </div>
-          <label className="grid gap-1 text-sm font-medium text-slate-700">Sort by<select className="rounded-lg border border-slate-300 bg-white px-3 py-2 font-normal" onChange={(event) => setSort(event.target.value as CollectionSort)} value={sort}><option value="RECENT">Recently updated</option><option value="RATING">Rating high to low</option><option value="ALPHABETICAL">Brand/name alphabetical</option></select></label>
+          <label className="grid gap-1 text-sm font-medium text-slate-700">Sort by<select className="ui-input font-normal" onChange={(event) => setSort(event.target.value as CollectionSort)} value={sort}><option value="RECENT">Recently updated</option><option value="RATING">Rating high to low</option><option value="ALPHABETICAL">Brand/name alphabetical</option></select></label>
         </div>
       </section>
 
@@ -62,14 +62,14 @@ export function CollectionBrowser({ items }: { items: MyCollectionItem[] }) {
           {visibleItems.map((item) => {
             const labels = stateLabels(item);
             return (
-              <button className="group min-w-0 overflow-hidden rounded-2xl border border-slate-200 bg-white text-left transition hover:-translate-y-0.5 hover:border-slate-400 hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-700" key={item.productVersionId} onClick={(event) => { quickViewTriggerRef.current = event.currentTarget; setSelected(item); }} type="button">
+              <button className="surface-card group min-w-0 overflow-hidden text-left transition hover:border-slate-400 hover:shadow-float" key={item.productVersionId} onClick={(event) => { quickViewTriggerRef.current = event.currentTarget; setSelected(item); }} type="button">
                 <ProductImage className="aspect-square h-auto rounded-none" image={item.image ?? null} productName={`${item.brandName} ${item.productName}`} sizes="(max-width: 640px) 45vw, 25vw" />
                 <span className="block p-3 sm:p-4">
                   <span className="block truncate text-[0.68rem] font-medium uppercase tracking-wide text-slate-500">{item.brandName}</span>
                   <span className="mt-1 block text-sm font-semibold leading-snug sm:text-base">{item.productName}</span>
                   <span className="mt-2 flex items-center justify-between gap-2 text-xs text-slate-500">
                     <span>{item.ratingHalfSteps === null ? "Not rated" : `★ ${(item.ratingHalfSteps / 2).toFixed(1)}`}</span>
-                    {labels[0] ? <span className="truncate rounded-full bg-slate-100 px-2 py-1">{labels[0]}</span> : null}
+                    {labels[0] ? <span className="ui-chip truncate">{labels[0]}</span> : null}
                   </span>
                 </span>
               </button>
@@ -85,7 +85,7 @@ export function CollectionBrowser({ items }: { items: MyCollectionItem[] }) {
 }
 
 function FilterButton({ active, label, onClick }: { active: boolean; label: string; onClick: () => void }) {
-  return <button aria-pressed={active} className={`shrink-0 rounded-full border px-3 py-1.5 text-sm ${active ? "border-slate-900 bg-slate-900 text-white" : "border-slate-300 bg-white text-slate-700 hover:border-slate-500"}`} onClick={onClick} type="button">{label}</button>;
+  return <button aria-pressed={active} className={`shrink-0 rounded-full border px-3 py-1.5 text-sm ${active ? "border-brand-action bg-brand-action text-white" : "border-slate-300 bg-white text-slate-700 hover:border-slate-500"}`} onClick={onClick} type="button">{label}</button>;
 }
 
 function CollectionQuickView({ item, onClose }: { item: MyCollectionItem; onClose: () => void }) {
@@ -110,7 +110,7 @@ function CollectionQuickView({ item, onClose }: { item: MyCollectionItem; onClos
 
   return (
     <div className="fixed inset-0 z-50 grid items-end bg-slate-950/45 sm:place-items-center sm:p-4" onMouseDown={(event) => { if (event.target === event.currentTarget) closeAndRefresh(); }}>
-      <section aria-labelledby="collection-quick-view-title" aria-modal="true" className="max-h-[92vh] w-full overflow-y-auto rounded-t-2xl bg-white p-5 shadow-2xl sm:max-w-3xl sm:rounded-2xl sm:p-6" ref={dialogRef} role="dialog" tabIndex={-1}>
+      <section aria-labelledby="collection-quick-view-title" aria-modal="true" className="max-h-[92vh] w-full overflow-y-auto rounded-t-2xl bg-white p-5 shadow-float sm:max-w-3xl sm:rounded-2xl sm:p-6" ref={dialogRef} role="dialog" tabIndex={-1}>
         <div className="flex justify-end"><button aria-label="Close collection quick view" className="grid h-10 w-10 place-items-center rounded-full hover:bg-slate-100" onClick={closeAndRefresh} ref={closeRef} type="button"><X aria-hidden className="h-5 w-5" /></button></div>
         <div className="grid gap-6 sm:grid-cols-[15rem_1fr]">
           <ProductImage className="aspect-square h-auto" image={item.image ?? null} productName={`${item.brandName} ${item.productName}`} sizes="240px" />
@@ -122,7 +122,7 @@ function CollectionQuickView({ item, onClose }: { item: MyCollectionItem; onClos
             {item.selectedVariantId ? (
               <div className="mt-6"><CollectionActions initialState={{ wants: item.wants, tried: item.tried, purchaseCount: item.purchaseCount, holyGrail: item.holyGrail, wouldRepurchase: item.wouldRepurchase, ratingHalfSteps: item.ratingHalfSteps }} productSlug={item.productSlug} productVariantId={item.selectedVariantId} productVersionId={item.productVersionId} variantLabel={item.selectedVariantLabel ?? "selected size"} /></div>
             ) : <p className="mt-6 text-sm text-slate-500">Personal actions need an exact recorded size.</p>}
-            <Link className="mt-6 inline-flex rounded-full bg-slate-950 px-4 py-2 text-sm font-semibold text-white" href={href}>View full product</Link>
+            <Link className="ui-button ui-button--primary mt-6" href={href}>View full product</Link>
           </div>
         </div>
       </section>

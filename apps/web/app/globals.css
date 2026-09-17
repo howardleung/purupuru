@@ -3,7 +3,83 @@
 @tailwind utilities;
 
 @layer base {
-  body {
-    @apply bg-white text-slate-950;
+  :root {
+    --color-brand: #67869a;
+    --color-action: #47677d;
+    --color-ink: #253442;
+    --color-mist: #c6d1d9;
+    --color-oak: #e7e0d8;
+    --color-blush: #f4ebe9;
+    --surface: #ffffff;
+    --surface-soft: #f4f7f9;
+    --border: #dbe5eb;
+    --radius-card: 1.5rem;
+    --radius-control: 0.875rem;
+    --shadow-soft: 0 8px 30px -12px rgb(71 103 125 / 0.18);
   }
+
+  body {
+    @apply bg-white font-sans text-slate-950 antialiased;
+    font-feature-settings: "tnum";
+  }
+
+  h1, h2, h3 { text-wrap: balance; }
+  input, select, textarea { accent-color: var(--color-action); }
+  input::placeholder, textarea::placeholder { color: #566e80; opacity: 1; }
+  :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: 2px solid var(--color-action);
+    outline-offset: 3px;
+  }
+  ::selection { background: #dbe8f0; color: var(--color-ink); }
+}
+
+@layer components {
+  .page-container { @apply mx-auto w-full max-w-7xl px-5 sm:px-8; }
+  .section-heading { @apply text-2xl font-extrabold tracking-tight text-brand-ink sm:text-3xl; }
+  .eyebrow { @apply text-[0.6875rem] font-bold uppercase tracking-[0.22em] text-slate-500; }
+  .surface-card { @apply rounded-2xl border border-slate-200 bg-white shadow-soft; }
+  .surface-section { @apply rounded-[1.75rem] bg-slate-50; }
+  .ui-button {
+    @apply inline-flex min-h-10 items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-bold transition;
+  }
+  .ui-button:active:not(:disabled) { transform: translateY(1px); }
+  .ui-button:disabled { @apply cursor-not-allowed opacity-50; }
+  .ui-button--primary { @apply bg-brand-action text-white hover:bg-slate-700; }
+  .ui-button--secondary { @apply border border-slate-300 bg-white text-slate-700 hover:bg-slate-50; }
+  .ui-button--ghost { @apply text-slate-600 hover:bg-slate-100 hover:text-slate-950; }
+  .ui-link { @apply inline-flex items-center gap-2 text-sm font-bold text-brand-action underline decoration-slate-300 underline-offset-4 transition hover:decoration-brand-action; }
+  .ui-input { @apply min-w-0 rounded-lg border border-slate-400 bg-white px-3 py-2.5 text-sm text-slate-900 transition focus:border-brand-action focus:ring-2 focus:ring-slate-100; }
+  .ui-chip { @apply inline-flex items-center gap-1 rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-700; }
+  .empty-state { @apply rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center text-sm leading-6 text-slate-600; }
+  .brand-wordmark { @apply text-[1.8rem] font-black leading-none tracking-[-0.055em] text-brand-ink; }
+  .category-tile { @apply flex min-h-24 flex-col items-center justify-center gap-2 rounded-2xl border border-transparent px-2 py-4 text-center text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:shadow-soft; }
+  .category-tile[data-tone="mist"] { background: #eaf1f5; }
+  .category-tile[data-tone="oak"] { background: #f3efea; }
+  .category-tile[data-tone="blush"] { background: #f8eff0; }
+  .category-tile[data-tone="grey"] { background: #f3f3f4; }
+  .hero-section {
+    position: relative;
+    background: radial-gradient(ellipse at 76% 55%, #e4eef4 0, transparent 50%), linear-gradient(110deg, #f3f8fb, #fff 54%, #f5f2ee);
+  }
+  .hero-product { @apply block overflow-hidden rounded-[1.75rem] border border-white bg-white p-2.5 shadow-soft transition hover:-translate-y-1 hover:shadow-float; }
+  .water-detail {
+    pointer-events: none;
+    position: absolute;
+    border-radius: 55% 45% 56% 44% / 62% 42% 58% 38%;
+    border: 1px solid rgb(255 255 255 / 0.9);
+    background: radial-gradient(ellipse at 30% 24%, #fff 0, rgb(255 255 255 / 0.75) 8%, transparent 27%), linear-gradient(140deg, rgb(198 209 217 / 0.5), rgb(234 242 247 / 0.25) 50%, rgb(146 175 194 / 0.3));
+    box-shadow: inset -5px -8px 18px rgb(103 134 154 / 0.12), inset 4px 4px 10px #fff;
+    transform: rotate(-25deg);
+  }
+  .brand-band { background: linear-gradient(115deg, #edf4f8, #fff 50%, #f4f0ec); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+  .hero-product:hover, .ui-button:active:not(:disabled) { transform: none; }
+}
+
+@media (forced-colors: active) {
+  .category-tile, .surface-card, .ui-button { border: 1px solid ButtonText; }
+  .water-detail { display: none; }
 }

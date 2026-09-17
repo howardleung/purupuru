@@ -30,10 +30,10 @@ export function PrimaryNav({ mobile = false }: { mobile?: boolean }) {
         return (
           <Link
             aria-current={active ? "page" : undefined}
-            className={`shrink-0 rounded-md px-2.5 py-2 text-sm transition ${
+            className={`shrink-0 rounded-lg px-2.5 py-2.5 text-sm transition ${
               active
-                ? "bg-slate-100 font-medium text-slate-950"
-                : "text-slate-600 hover:bg-slate-100 hover:text-slate-950"
+                ? "bg-slate-100 font-bold text-brand-action"
+                : "font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-950"
             }`}
             href={item.href}
             key={item.href}

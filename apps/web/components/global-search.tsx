@@ -1,6 +1,6 @@
 "use client";
 
-import { Search, X } from "lucide-react";
+import { ArrowRight, Search, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { FormEvent, KeyboardEvent, useEffect, useMemo, useRef, useState } from "react";
 
@@ -106,7 +106,7 @@ export function GlobalSearch({ id = "global-search", prominent = false }: { id?:
   return (
     <div className={`relative ${prominent ? "w-full max-w-2xl" : "w-full"}`} ref={rootRef}>
       <form action="/catalogue" className="relative" method="get" onSubmit={submit} role="search">
-        <Search aria-hidden className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+        <Search aria-hidden className={`pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 ${prominent ? "h-5 w-5" : "h-4 w-4"}`} />
         <label className="sr-only" htmlFor={id}>Search products, brands, and categories</label>
         <input
           aria-activedescendant={isOpen && activeIndex >= 0 && activeIndex < items.length ? `${id}-option-${activeIndex}` : undefined}
@@ -114,9 +114,10 @@ export function GlobalSearch({ id = "global-search", prominent = false }: { id?:
           aria-controls={isOpen ? `${id}-results` : undefined}
           aria-expanded={isOpen}
           autoComplete="off"
-          className={`w-full rounded-full border border-slate-300 bg-white py-2.5 pl-10 pr-10 text-sm outline-none transition focus:border-slate-600 focus:ring-2 focus:ring-slate-200 ${prominent ? "py-3.5 text-base" : ""}`}
+          className={`w-full rounded-full border border-slate-400 bg-white pl-11 text-sm shadow-sm transition hover:border-slate-500 focus:border-brand-action focus:ring-2 focus:ring-slate-200 ${prominent ? "min-h-14 py-4 pr-24 sm:text-base" : "min-h-11 py-2.5 pr-11"}`}
           id={id}
           name="q"
+          maxLength={80}
           onChange={(event) => setQuery(event.target.value)}
           onFocus={() => setIsFocused(true)}
           onKeyDown={onKeyDown}
@@ -127,7 +128,7 @@ export function GlobalSearch({ id = "global-search", prominent = false }: { id?:
         {query ? (
           <button
             aria-label="Clear search"
-            className="absolute right-2 top-1/2 grid h-8 w-8 -translate-y-1/2 place-items-center rounded-full text-slate-500 hover:bg-slate-100"
+            className={`absolute top-1/2 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-full text-slate-500 hover:bg-slate-100 ${prominent ? "right-14" : "right-2"}`}
             onClick={() => {
               setQuery("");
               setResults(emptySearchResults);
@@ -137,11 +138,16 @@ export function GlobalSearch({ id = "global-search", prominent = false }: { id?:
             <X aria-hidden className="h-4 w-4" />
           </button>
         ) : null}
+        {prominent ? (
+          <button aria-label="Search catalogue" className="absolute right-2 top-1/2 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-brand-action text-white transition hover:bg-slate-700" type="submit">
+            <ArrowRight aria-hidden className="h-5 w-5" />
+          </button>
+        ) : null}
       </form>
 
       {isOpen ? (
         <div
-          className="absolute left-0 right-0 z-50 mt-2 max-h-[min(34rem,70vh)] overflow-y-auto rounded-2xl border border-slate-200 bg-white p-2 shadow-xl"
+          className="absolute left-0 right-0 z-50 mt-3 max-h-[min(34rem,70vh)] overflow-y-auto rounded-2xl border border-slate-200 bg-white p-2 shadow-float"
           id={`${id}-results`}
           role="listbox"
           aria-label="Search suggestions"
@@ -215,7 +221,7 @@ export function GlobalSearch({ id = "global-search", prominent = false }: { id?:
 function SearchGroup({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <section className="border-b border-slate-100 p-1 pb-2">
-      <h2 className="px-2 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-slate-400">{label}</h2>
+      <h2 className="px-2 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-slate-500">{label}</h2>
       <div>{children}</div>
     </section>
   );

@@ -82,10 +82,10 @@ function confirmationRequest(
 
 function actionClass(active: boolean) {
   return (
-    "w-full rounded-md border px-3 py-2 text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto " +
+    "ui-button w-full border sm:w-auto " +
     (active
-      ? "border-slate-900 bg-slate-900 text-white"
-      : "border-slate-300 bg-white text-slate-700 hover:border-slate-500")
+      ? "ui-button--primary border-brand-action"
+      : "ui-button--secondary")
   );
 }
 

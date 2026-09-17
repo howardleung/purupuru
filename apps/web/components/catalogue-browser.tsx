@@ -85,11 +85,11 @@ export function CatalogueBrowser({
     <form action="/catalogue" className="grid gap-5" method="get">
       <label className="grid gap-1.5 text-sm font-medium text-slate-700">
         Search
-        <input className="rounded-lg border border-slate-300 px-3 py-2 font-normal" defaultValue={filters.query} name="q" placeholder="Product or brand" type="search" />
+        <input className="ui-input font-normal" defaultValue={filters.query} name="q" placeholder="Product or brand" type="search" />
       </label>
       <label className="grid gap-1.5 text-sm font-medium text-slate-700">
         Category
-        <select className="min-w-0 rounded-lg border border-slate-300 bg-white px-3 py-2 font-normal" defaultValue={filters.categorySlug} name="category">
+        <select className="min-w-0 ui-input font-normal" defaultValue={filters.categorySlug} name="category">
           <option value="">All skincare</option>
           {categoryLinks.map((category) => (
             <option key={category.id} value={category.slug}>
@@ -100,7 +100,7 @@ export function CatalogueBrowser({
       </label>
       <label className="grid gap-1.5 text-sm font-medium text-slate-700">
         Brand
-        <select className="rounded-lg border border-slate-300 bg-white px-3 py-2 font-normal" defaultValue={filters.brandSlug} name="brand">
+        <select className="ui-input font-normal" defaultValue={filters.brandSlug} name="brand">
           <option value="">All brands</option>
           {brands.map((brand) => <option key={brand.id} value={brand.slug}>{brand.name}</option>)}
         </select>
@@ -108,8 +108,8 @@ export function CatalogueBrowser({
       <fieldset>
         <legend className="text-sm font-medium text-slate-700">Canada price</legend>
         <div className="mt-2 grid grid-cols-2 gap-2">
-          <label className="grid gap-1 text-xs text-slate-500">Minimum CAD<input className="min-w-0 rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900" defaultValue={filters.minimumCad ?? ""} min="0" name="minPrice" step="0.01" type="number" /></label>
-          <label className="grid gap-1 text-xs text-slate-500">Maximum CAD<input className="min-w-0 rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900" defaultValue={filters.maximumCad ?? ""} min="0" name="maxPrice" step="0.01" type="number" /></label>
+          <label className="grid gap-1 text-xs text-slate-500">Minimum CAD<input className="ui-input" defaultValue={filters.minimumCad ?? ""} min="0" name="minPrice" step="0.01" type="number" /></label>
+          <label className="grid gap-1 text-xs text-slate-500">Maximum CAD<input className="ui-input" defaultValue={filters.maximumCad ?? ""} min="0" name="maxPrice" step="0.01" type="number" /></label>
         </div>
       </fieldset>
       <label className="flex items-start gap-2 text-sm text-slate-700">
@@ -118,28 +118,28 @@ export function CatalogueBrowser({
       </label>
       <label className="grid gap-1.5 text-sm font-medium text-slate-700">
         Sort by
-        <select className="rounded-lg border border-slate-300 bg-white px-3 py-2 font-normal" defaultValue={filters.sort} name="sort">
+        <select className="ui-input font-normal" defaultValue={filters.sort} name="sort">
           {catalogueSorts.map((sort) => <option key={sort.value} value={sort.value}>{sort.label}</option>)}
         </select>
       </label>
       <div className="rounded-lg bg-slate-50 p-3 text-xs leading-5 text-slate-500">
         Public ratings and ingredient filters will appear after verified, normalized source data exists.
       </div>
-      <button className="rounded-lg bg-slate-950 px-4 py-2.5 text-sm font-semibold text-white" type="submit">Apply filters</button>
+      <button className="ui-button ui-button--primary" type="submit">Apply filters</button>
       {filterCount(filters) > 0 ? <Link className="text-center text-sm font-medium underline" href="/catalogue">Clear all filters</Link> : null}
     </form>
   );
 
   return (
-    <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-10">
+    <main className="page-container py-8 sm:py-10">
       <Breadcrumbs items={breadcrumbs} />
       <div className="mt-5 max-w-3xl">
         <p className="text-sm font-medium text-slate-500">Research skincare</p>
-        <h1 className="mt-2 text-3xl font-semibold tracking-tight">{title}</h1>
+        <h1 className="mt-2 text-3xl font-extrabold tracking-tight">{title}</h1>
         <p className="mt-3 text-slate-600">{description}</p>
       </div>
 
-      <details className="mt-6 rounded-xl border border-slate-200 p-4 lg:hidden">
+      <details className="mt-6 surface-card p-4 lg:hidden">
         <summary className="flex cursor-pointer list-none items-center justify-between font-medium">
           <span className="flex items-center gap-2"><SlidersHorizontal aria-hidden className="h-4 w-4" /> Filters</span>
           {filterCount(filters) > 0 ? <span className="rounded-full bg-slate-950 px-2 py-0.5 text-xs text-white">{filterCount(filters)}</span> : null}
@@ -148,7 +148,7 @@ export function CatalogueBrowser({
       </details>
 
       <div className="mt-8 grid gap-8 lg:grid-cols-[16rem_minmax(0,1fr)]">
-        <aside className="hidden self-start rounded-xl border border-slate-200 p-5 lg:block lg:sticky lg:top-4" aria-label="Catalogue filters">
+        <aside className="surface-card hidden self-start p-5 lg:block lg:sticky lg:top-4" aria-label="Catalogue filters">
           <h2 className="mb-5 flex items-center gap-2 font-semibold"><SlidersHorizontal aria-hidden className="h-4 w-4" /> Filters</h2>
           {filterPanel}
         </aside>
@@ -159,7 +159,7 @@ export function CatalogueBrowser({
               <h2 className="text-xl font-semibold">Products</h2>
               <p aria-live="polite" className="mt-1 text-sm text-slate-500">{products.length} {products.length === 1 ? "result" : "results"}{filterCount(filters) > 0 ? ` · ${filterCount(filters)} active filters` : ""}</p>
             </div>
-            <label className="flex items-center gap-2 text-sm lg:hidden"><ArrowDownUp aria-hidden className="h-4 w-4" /><select className="rounded-lg border border-slate-300 bg-white px-3 py-2" onChange={(event) => router.push(sortHref(event.target.value))} value={filters.sort}>{catalogueSorts.map((sort) => <option key={sort.value} value={sort.value}>{sort.label}</option>)}</select></label>
+            <label className="flex items-center gap-2 text-sm lg:hidden"><ArrowDownUp aria-hidden className="h-4 w-4" /><select aria-label="Sort catalogue" className="ui-input" onChange={(event) => router.push(sortHref(event.target.value))} value={filters.sort}>{catalogueSorts.map((sort) => <option key={sort.value} value={sort.value}>{sort.label}</option>)}</select></label>
           </div>
 
           {products.length > 0 ? (

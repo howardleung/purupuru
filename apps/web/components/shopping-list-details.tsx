@@ -243,13 +243,13 @@ export function ShoppingListDetails({ list }: { list: PreparedShoppingList }) {
             <div className="col-span-full h-2 overflow-hidden rounded-full bg-slate-800"><div className="h-full rounded-full bg-emerald-400 transition-all" style={{ width: `${progress}%` }} /></div>
             <p className="col-span-full text-sm text-slate-200">Purchase progress · {purchasedQuantity} / {totalQuantity} · {progress}% purchased</p>
             {estimate.exclusions.length > 0 ? <details className="col-span-full rounded-xl border border-slate-700 p-3 text-sm"><summary className="cursor-pointer font-medium">Partial estimate: why {estimate.excludedProductCount} {estimate.excludedProductCount === 1 ? "item is" : "items are"} excluded</summary><ul className="mt-3 space-y-2 text-slate-300">{estimate.exclusions.map((exclusion) => <li key={exclusion.itemId}>{exclusion.productLabel}: {exclusionLabels[exclusion.reason]}.</li>)}</ul></details> : null}
-            <p className="col-span-full text-xs text-slate-400">Savings compare the verified {marketName(list.targetMarket)} benchmark with the selected Canadian retailer price for the exact size. Shipping is excluded.</p>
+            <p className="col-span-full text-xs text-slate-300">Savings compare the verified {marketName(list.targetMarket)} benchmark with the selected Canadian retailer price for the exact size. Shipping is excluded.</p>
           </section>
 
           <section>
             <div className="flex flex-col justify-between gap-3 border-b border-slate-200 pb-4 sm:flex-row sm:items-end">
               <div><h2 className="text-xl font-semibold">Items</h2><p className="mt-1 text-sm text-slate-500">{visibleItems.length} shown · Canadian comparison defaults to the cheapest eligible product price</p></div>
-              <label className="grid gap-1 text-sm font-medium text-slate-700"><span className="flex items-center gap-1.5"><Store aria-hidden className="h-4 w-4" /> Canadian retailer filter</span><select className="rounded-lg border border-slate-300 bg-white px-3 py-2 font-normal" onChange={(event) => setRetailerFilter(event.target.value)} value={retailerFilter}><option value="">All tracked retailers</option>{retailers.map((retailer) => <option key={retailer} value={retailer}>{retailer}</option>)}</select></label>
+              <label className="grid gap-1 text-sm font-medium text-slate-700"><span className="flex items-center gap-1.5"><Store aria-hidden className="h-4 w-4" /> Canadian retailer filter</span><select className="ui-input font-normal" onChange={(event) => setRetailerFilter(event.target.value)} value={retailerFilter}><option value="">All tracked retailers</option>{retailers.map((retailer) => <option key={retailer} value={retailer}>{retailer}</option>)}</select></label>
             </div>
 
             <div className="mt-4 grid gap-3">
@@ -261,7 +261,7 @@ export function ShoppingListDetails({ list }: { list: PreparedShoppingList }) {
                 const parsedDraft = parseRequestedQuantity(quantityDraft);
                 const href = productSelectionHref({ productSlug: item.productSlug, versionKey: item.productVersionId, variantId: item.productVariantId });
                 return (
-                  <article className={`rounded-xl border border-slate-200 bg-white p-3 sm:p-4 ${isPurchased ? "opacity-65" : ""}`} key={item.id}>
+                  <article className={`surface-card p-3 sm:p-4 ${isPurchased ? "opacity-65" : ""}`} key={item.id}>
                     <div className="grid grid-cols-[auto_4rem_minmax(0,1fr)_auto] items-center gap-3 sm:grid-cols-[auto_4.5rem_minmax(0,1fr)_auto_auto]">
                       <label className="grid h-10 w-10 place-items-center"><input aria-label={`Mark ${item.productName} ${isPurchased ? "not purchased" : "purchased"}`} checked={isPurchased} className="h-5 w-5" disabled={isPending} onChange={(event) => setPurchased(item, event.target.checked)} type="checkbox" /></label>
                       <Link href={href}><ProductImage className="h-16 min-h-16 rounded-lg" image={item.image} productName={`${item.brandName} ${item.productName}`} sizes="72px" /></Link>
@@ -312,9 +312,9 @@ function DestinationOffers({ item, market }: { item: PreparedShoppingListItem; m
 }
 
 function OfferSelector({ label, market, offers, selected, onChange }: { label: string; market: string; offers: PreparedShoppingListOffer[]; selected: PreparedShoppingListOffer | null; onChange: (offerId: string) => void }) {
-  return <label className="grid content-start gap-1.5 text-sm font-medium text-slate-700">{label}{offers.length > 0 ? <select className="min-w-0 rounded-lg border border-slate-300 bg-white px-3 py-2 font-normal" onChange={(event) => onChange(event.target.value)} value={selected?.id ?? ""}>{offers.map((candidate) => <option key={candidate.id} value={candidate.id}>{candidate.retailerName} · {nativeMoney(candidate.nativeAmount, candidate.nativeCurrency)}</option>)}</select> : <span className="rounded-lg bg-amber-50 p-3 font-normal text-amber-900">No eligible {marketName(market)} retailer offer tracked</span>}{selected ? <><span className="font-normal text-slate-600">{selected.amountCad !== null && selected.nativeCurrency !== "CAD" ? `Approx. ${cad(selected.amountCad)}` : "Native price shown above"}</span><a className="text-xs font-normal underline" href={safeExternalUrl(selected.listingUrl)} rel="noreferrer" target="_blank">View retailer offer</a></> : null}</label>;
+  return <label className="grid content-start gap-1.5 text-sm font-medium text-slate-700">{label}{offers.length > 0 ? <select className="min-w-0 ui-input font-normal" onChange={(event) => onChange(event.target.value)} value={selected?.id ?? ""}>{offers.map((candidate) => <option key={candidate.id} value={candidate.id}>{candidate.retailerName} · {nativeMoney(candidate.nativeAmount, candidate.nativeCurrency)}</option>)}</select> : <span className="rounded-lg bg-amber-50 p-3 font-normal text-amber-900">No eligible {marketName(market)} retailer offer tracked</span>}{selected ? <><span className="font-normal text-slate-600">{selected.amountCad !== null && selected.nativeCurrency !== "CAD" ? `Approx. ${cad(selected.amountCad)}` : "Native price shown above"}</span><a className="text-xs font-normal underline" href={safeExternalUrl(selected.listingUrl)} rel="noreferrer" target="_blank">View retailer offer</a></> : null}</label>;
 }
 
 function Summary({ label, value, detail }: { label: string; value: string; detail: string }) {
-  return <div><p className="text-xs font-medium uppercase tracking-wide text-slate-400">{label}</p><p className="mt-2 text-xl font-semibold">{value}</p><p className="mt-1 text-xs text-slate-300">{detail}</p></div>;
+  return <div><p className="text-xs font-medium uppercase tracking-wide text-slate-300">{label}</p><p className="mt-2 text-xl font-semibold">{value}</p><p className="mt-1 text-xs text-slate-300">{detail}</p></div>;
 }

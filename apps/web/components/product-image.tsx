@@ -29,7 +29,7 @@ export function ProductImage({
     return (
       <div
         aria-label={`Product image unavailable for ${productName}`}
-        className={`flex items-center justify-center overflow-hidden rounded-xl bg-slate-100 p-6 text-center text-sm font-medium text-slate-400 ${className}`}
+        className={`flex items-center justify-center overflow-hidden rounded-xl bg-slate-100 p-4 text-center text-xs font-semibold text-slate-600 ${className}`}
         role="img"
       >
         Image coming soon

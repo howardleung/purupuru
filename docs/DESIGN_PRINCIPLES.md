@@ -156,3 +156,15 @@ Primary navigation uses consumer labels—Home, Browse, Categories, My Collectio
 Use high-quality curated imagery when its version/variant identity and source are known. Exact-variant imagery takes precedence; a version-wide asset is acceptable only when it safely represents all shown sizes for that formulation. Never borrow another version’s packaging to fill a gap.
 
 Every image needs useful alt text and provenance. A missing or failed asset renders a quiet, intentional fallback. Remote hosts should be narrowly approved, presentation should remain modular for a future gallery, and public-launch image rights/hosting must be reviewed.
+
+## 16. PuruPuru visual system
+
+The first visual pass layers a friendly consumer beauty identity over the existing research tools. White and near-white dominate; Nordic blue (`#67869A`), mist (`#C6D1D9`), oak (`#E7E0D8`), light grey, and sparse pale blush (`#F4EBE9`) provide restrained accents. Functional text, actions, and focus use darker accessible variants, including action blue `#47677D` and ink `#253442`; pastel brand colors are not substitutes for readable foregrounds.
+
+`apps/web/app/globals.css` and `apps/web/tailwind.config.ts` are the shared token/recipe sources: page containers, surface cards, section headings, buttons, inputs, links, chips, and empty states. Rounded controls, soft borders/shadows, consistent spacing, visible keyboard focus, and reduced-motion support should be extended rather than replaced with page-specific design systems. Existing dense tables remain dense; mobile reflow and contained table scrolling remain intentional.
+
+Typography is locally hosted Nunito variable, with system fallbacks and tabular numerals for research UI. The font comes from the [Google Fonts Nunito repository](https://github.com/google/fonts/tree/main/ofl/nunito), under the included SIL Open Font License (`apps/web/app/fonts/OFL.txt`). No external font service is required.
+
+`BrandLogo` is the single replaceable wordmark/mark presentation. The repository-authored shopping-bag/drop SVG at `apps/web/public/brand/purupuru-mark-temporary.svg` is explicitly a temporary approximation of the supplied direction, not approved final artwork. Replace it with reviewed final SVG artwork through this component; do not scatter alternate logos. Water details and category symbols are decorative, never product imagery or evidence of category availability.
+
+Homepage feature selection continues to use real catalogue ordering and images. Visual prominence does not imply popularity: no Trending/Most tracked badge or invented price, review, or availability may be added to match a mockup. Existing product-image provenance and public-launch rights review still apply.

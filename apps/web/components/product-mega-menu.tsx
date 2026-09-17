@@ -1,8 +1,9 @@
 "use client";
 
-import { ChevronDown, PackageSearch } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
+import { CategorySymbol, categoryTone } from "./category-symbol";
 
 type Category = {
   id: string;
@@ -16,6 +17,8 @@ const featuredSlugs = new Set(["cleansers", "toners", "moisturizers", "treatment
 
 export function ProductMegaMenu({ mobile = false }: { mobile?: boolean }) {
   const rootRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const menuId = useId();
   const firstLinkRef = useRef<HTMLAnchorElement>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -41,7 +44,10 @@ export function ProductMegaMenu({ mobile = false }: { mobile?: boolean }) {
     if (!isOpen) return;
     firstLinkRef.current?.focus();
     function onKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") setIsOpen(false);
+      if (event.key === "Escape") {
+        setIsOpen(false);
+        triggerRef.current?.focus();
+      }
     }
     function onOutsideClick(event: MouseEvent) {
       if (!rootRef.current?.contains(event.target as Node)) setIsOpen(false);
@@ -54,6 +60,10 @@ export function ProductMegaMenu({ mobile = false }: { mobile?: boolean }) {
     };
   }, [isOpen]);
 
+  useEffect(() => {
+    if (isOpen && categories.length > 0) firstLinkRef.current?.focus();
+  }, [categories.length, isOpen]);
+
   const root = categories.find((category) => category.slug === "skincare");
   const topLevel = categories.filter((category) => category.parentCategoryId === root?.id);
   const featured = topLevel.filter((category) => featuredSlugs.has(category.slug));
@@ -64,10 +74,11 @@ export function ProductMegaMenu({ mobile = false }: { mobile?: boolean }) {
   return (
     <div className={mobile ? "relative" : "static"} ref={rootRef}>
       <button
-        aria-controls={mobile ? "mobile-products-menu" : "desktop-products-menu"}
+        aria-controls={isOpen ? menuId : undefined}
         aria-expanded={isOpen}
-        className={`flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 ${mobile ? "w-full justify-between" : ""}`}
+        className={`flex min-h-11 items-center gap-1 rounded-lg px-3 py-2 text-sm font-bold text-brand-action hover:bg-slate-100 ${mobile ? "w-full justify-between" : ""}`}
         onClick={() => setIsOpen((value) => !value)}
+        ref={triggerRef}
         type="button"
       >
         Products <ChevronDown aria-hidden className={`h-4 w-4 transition ${isOpen ? "rotate-180" : ""}`} />
@@ -76,10 +87,10 @@ export function ProductMegaMenu({ mobile = false }: { mobile?: boolean }) {
         <div
           className={mobile
             ? "mt-2 rounded-xl border border-slate-200 bg-white p-3"
-            : "absolute left-0 right-0 top-full z-40 border-y border-slate-200 bg-white shadow-xl"}
-          id={mobile ? "mobile-products-menu" : "desktop-products-menu"}
+            : "absolute left-0 right-0 top-full z-40 border-b border-slate-200 bg-white shadow-float"}
+          id={menuId}
         >
-          <div className={mobile ? "" : "mx-auto max-w-6xl px-6 py-6"}>
+          <div className={mobile ? "" : "page-container py-6"}>
             {categories.length === 0 ? (
               <p className="p-4 text-sm text-slate-500">Loading categories…</p>
             ) : (
@@ -87,15 +98,14 @@ export function ProductMegaMenu({ mobile = false }: { mobile?: boolean }) {
                 <div className={`grid gap-3 ${mobile ? "grid-cols-2" : "grid-cols-3 lg:grid-cols-6"}`}>
                   {featured.map((category, index) => (
                     <Link
-                      className="group rounded-xl border border-slate-200 bg-slate-50 p-3 transition hover:border-slate-400 hover:bg-white"
+                      className="category-tile"
+                      data-tone={categoryTone(category.slug)}
                       href={`/categories/${category.slug}`}
                       key={category.id}
                       onClick={() => setIsOpen(false)}
                       ref={index === 0 ? firstLinkRef : undefined}
                     >
-                      <span className="mb-4 grid aspect-[4/3] place-items-center rounded-lg bg-white text-slate-300">
-                        <PackageSearch aria-hidden className="h-7 w-7" />
-                      </span>
+                      <CategorySymbol className="h-9 w-9 text-brand-action" slug={category.slug} />
                       <span className="text-sm font-semibold text-slate-900">{category.displayName}</span>
                     </Link>
                   ))}
