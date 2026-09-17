@@ -1,6 +1,9 @@
 packages:
   - apps/*
   - packages/*
+overrides:
+  # Next 15 pins a vulnerable PostCSS; patch this transitive CSS parser only.
+  'next>postcss': 8.5.28
 allowBuilds:
   '@clerk/shared': false
   '@prisma/client': true

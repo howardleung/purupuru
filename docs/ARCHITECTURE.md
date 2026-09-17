@@ -26,6 +26,8 @@ All private data access starts from the active authenticated user and scopes rea
 
 Collection and shopping-list actions share `apps/web/lib/transactions.ts` for serializable transactions with up to three attempts on Prisma `P2034` write conflicts. Do not duplicate this retry policy in route-specific action files. Developer ingestion remains a separate CLI operation with its own transaction boundary.
 
+Mutation DTOs are untrusted at runtime: `apps/web/lib/input-validation.ts` checks required IDs and payload shapes before queries. `getMutationUser` uses verified Clerk identity for the shared write budget before profile upsert; middleware limits public application work through atomic HTTPS Redis counters. Production storage failures fail closed. Security headers and safe external navigation are boundary protections, not domain rules. See `SECURITY.md` for required deployment configuration, audit findings, and verification limits.
+
 ## Practical placement
 
 Before adding a helper, look for an existing domain module or server helper. Put a stable, pure rule in `packages/domain`; keep Prisma query composition in server-only code; keep request/session handling and revalidation at the Next.js boundary; keep rendering and transient interaction in components. Introduce a new package, layer, or repository abstraction only when an existing boundary cannot express the need clearly.

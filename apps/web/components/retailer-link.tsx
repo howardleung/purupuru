@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import { resolveRetailerLogo } from "../lib/retailer-logos";
+import { safeExternalUrl } from "../lib/external-url";
 
 export function RetailerLink({
   href,
@@ -19,7 +20,7 @@ export function RetailerLink({
     <a
       aria-label={`Shop this listing at ${name}`}
       className={`group relative inline-flex items-center ${className}`}
-      href={href}
+      href={safeExternalUrl(href)}
       rel="noreferrer"
       target="_blank"
       title={name}

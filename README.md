@@ -18,6 +18,7 @@ For humans and agents:
 - `AGENTS.md` — primary operational guidance for coding agents.
 - `docs/ARCHITECTURE.md` — current package, server, persistence, UI, and ingestion boundaries.
 - `docs/TESTING.md` — test levels, contracts, and verification expectations.
+- `docs/SECURITY.md` — security audit, runtime protections, rate-limit setup, and release checklist.
 - `docs/PROJECT_CONTEXT.md` — compact narrative and rationale for the product.
 - `docs/DECISIONS.md` — accepted decisions and rationale; append when decisions change.
 - `docs/DESIGN_PRINCIPLES.md` — UX philosophy and interaction constraints.
@@ -125,3 +126,5 @@ Useful checks:
 - `pnpm ingest --fixture all --dry-run` — inspect fixture matches and planned writes without mutation
 - `pnpm ingest:verify` — run rollback-only database idempotency checks
 - `pnpm build`
+
+Before production deployment, follow `docs/SECURITY.md`. Application requests require the server-only shared rate-limit store variables from `.env.example`; missing/unavailable production storage deliberately returns 503. Local development without either variable remains available. `node scripts/verify/verify-security.mjs` runs the read-only repository/history/browser-bundle credential checks (no credential values are printed).

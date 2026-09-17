@@ -5,6 +5,7 @@ import { getCatalogue } from "../../lib/catalogue";
 import { isClerkConfigured } from "../../lib/clerk-config";
 import { getCurrentUser } from "../../lib/current-user";
 import { getMyCollectionForUser } from "../../lib/my-collection";
+import { boundedParameter, priceParameter } from "../../lib/input-validation";
 
 export const dynamic = "force-dynamic";
 
@@ -31,13 +32,13 @@ export default async function CataloguePage({ searchParams }: { searchParams: Se
   const params = await searchParams;
   const [catalogue, currentUser] = await Promise.all([
     getCatalogue({
-      query: params.q,
-      categorySlug: params.category,
-      brandSlug: params.brand,
-      minimumCad: params.minPrice?.trim() ? Number(params.minPrice) : undefined,
-      maximumCad: params.maxPrice?.trim() ? Number(params.maxPrice) : undefined,
+      query: boundedParameter(params.q, 80),
+      categorySlug: boundedParameter(params.category, 200),
+      brandSlug: boundedParameter(params.brand, 200),
+      minimumCad: priceParameter(params.minPrice),
+      maximumCad: priceParameter(params.maxPrice),
       trackedOnly: params.tracked === "1",
-      sort: params.sort,
+      sort: boundedParameter(params.sort, 32),
     }),
     isClerkConfigured ? getCurrentUser() : Promise.resolve(null),
   ]);

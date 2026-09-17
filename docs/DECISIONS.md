@@ -319,3 +319,13 @@ This file records settled choices and the rationale behind them. New decisions s
 **Why:** Adopt the requested new identity without coupling branding to durable product or infrastructure identity. Domain and trademark clearance remain pending.
 
 **Implications:** No changes to product data, database/auth state, schema, migrations, IDs, secrets, environment-variable names, domain rules, or application behavior. Historical decision wording remains intact. External repository/project/application display names and domains require separate manual review; see `BRANDING.md`.
+
+### 2026-09-16 — Runtime security boundaries and shared production rate limits
+
+**Status:** Accepted
+
+**Decision:** Validate untrusted mutation inputs before Prisma/private work and use the existing canonical quantity/rating rules. Production application traffic uses short-lived atomic HTTPS Redis rate counters, with public trusted-ingress IP and authenticated Clerk user budgets; missing or failed storage fails closed. Add baseline browser security headers and safe HTTP(S) external navigation without replacing Clerk sessions or domain behavior.
+
+**Why:** TypeScript input types do not prevent omitted Prisma predicates, and instance-local counters cannot reliably protect a serverless deployment. Boundary protections should remain separate from personal ownership, pricing and identity semantics.
+
+**Implications:** No database schema/migration or automatically provisioned infrastructure. Production requires manually configured server-only rate-store credentials. The baseline CSP retains Next/Clerk inline compatibility, not a claimed strict nonce policy. Provider firewall/auth settings, live integration checks and the remaining Prisma configuration dependency advisory need release review; see `SECURITY.md`.

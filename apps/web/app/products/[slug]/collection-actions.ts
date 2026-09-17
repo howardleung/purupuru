@@ -2,66 +2,28 @@
 
 import {
   planCollectionMutation,
-  type CollectionMutationIntent,
 } from "@beauty-platform/domain/collection";
 import { revalidatePath } from "next/cache";
 
-import type {
-  ProductCollectionActionInput,
-  ProductCollectionActionResult,
-} from "../../../lib/collection-contract";
+import type { ProductCollectionActionResult } from "../../../lib/collection-contract";
+import { isProductCollectionInput } from "../../../lib/input-validation";
 import { getPersistedCollectionState } from "../../../lib/collection-state";
-import { getOrCreateCurrentUser } from "../../../lib/current-user";
+import { getMutationUser } from "../../../lib/current-user";
+import { RateLimitError } from "../../../lib/rate-limit";
 import { runSerializable } from "../../../lib/transactions";
 
-function isMutationIntent(value: unknown): value is CollectionMutationIntent {
-  if (!value || typeof value !== "object" || !("type" in value)) return false;
-
-  const intent = value as Record<string, unknown>;
-  switch (intent.type) {
-    case "ADD_WANT":
-    case "REMOVE_WANT":
-    case "ADD_TRIED":
-    case "REMOVE_TRIED":
-    case "ADD_HOLY_GRAIL":
-    case "REMOVE_HOLY_GRAIL":
-    case "ADD_OWNED":
-    case "REMOVE_OWNED":
-    case "REMOVE_WOULD_REPURCHASE":
-      return true;
-    case "ADD_WOULD_REPURCHASE":
-      return intent.confirmedTried === undefined || typeof intent.confirmedTried === "boolean";
-    case "SET_RATING":
-      return (
-        typeof intent.ratingHalfSteps === "number" &&
-        (intent.confirmedTried === undefined || typeof intent.confirmedTried === "boolean")
-      );
-    case "ADD_ANOTHER_PURCHASE":
-      return intent.confirmed === undefined || typeof intent.confirmed === "boolean";
-    default:
-      return false;
-  }
-}
-
 export async function updateProductCollection(
-  input: ProductCollectionActionInput,
+  input: unknown,
 ): Promise<ProductCollectionActionResult> {
-  if (
-    !input ||
-    typeof input.productSlug !== "string" ||
-    typeof input.productVersionId !== "string" ||
-    typeof input.productVariantId !== "string" ||
-    !isMutationIntent(input.intent)
-  ) {
+  if (!isProductCollectionInput(input)) {
     return { status: "INVALID", message: "The collection action was not valid." };
   }
 
-  const user = await getOrCreateCurrentUser();
-  if (!user) {
-    return { status: "UNAUTHENTICATED", message: "Sign in to save personal collection state." };
-  }
-
   try {
+    const user = await getMutationUser();
+    if (!user) {
+      return { status: "UNAUTHENTICATED", message: "Sign in to save personal collection state." };
+    }
     const result = await runSerializable(async (tx) => {
       const variant = await tx.productVariant.findFirst({
         where: {
@@ -259,10 +221,10 @@ export async function updateProductCollection(
     }
 
     return result;
-  } catch {
+  } catch (error) {
     return {
       status: "ERROR",
-      message: "PuruPuru could not save that change. Please try again.",
+      message: error instanceof RateLimitError ? error.message : "PuruPuru could not save that change. Please try again.",
     };
   }
 }

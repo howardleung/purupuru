@@ -50,8 +50,12 @@ function roundCurrency(value: number) {
   return Math.round((value + Number.EPSILON) * 100) / 100;
 }
 
-export function validateRequestedQuantity(quantity: number): boolean {
-  return Number.isInteger(quantity) && quantity >= 1;
+// Quantities are persisted as PostgreSQL/Prisma Int, including additive updates.
+export const MAX_REQUESTED_QUANTITY = 2_147_483_647;
+
+export function validateRequestedQuantity(quantity: unknown): quantity is number {
+  return typeof quantity === "number" && Number.isInteger(quantity) &&
+    quantity >= 1 && quantity <= MAX_REQUESTED_QUANTITY;
 }
 
 export function parseRequestedQuantity(value: string): number | null {

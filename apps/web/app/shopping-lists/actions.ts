@@ -4,22 +4,15 @@ import { prisma } from "@beauty-platform/database";
 import {
   checklistPurchasedQuantity,
   quantityStateAfterChange,
-  validateRequestedQuantity,
 } from "@beauty-platform/domain/shopping-list";
 import { revalidatePath } from "next/cache";
 
-import type {
-  AddVariantToListInput,
-  CreateListWithVariantInput,
-  CreateShoppingListInput,
-  MarkShoppingListItemPurchasedInput,
-  RemoveShoppingListItemInput,
-  ShoppingListActionResult,
-  UpdateShoppingListItemInput,
-} from "../../lib/shopping-list-contract";
+import type { ShoppingListActionResult } from "../../lib/shopping-list-contract";
+import { isShoppingListInput } from "../../lib/input-validation";
 import { isSupportedTargetMarket } from "../../lib/markets";
 import { runSerializable } from "../../lib/transactions";
-import { getOrCreateCurrentUser } from "../../lib/current-user";
+import { getMutationUser } from "../../lib/current-user";
+import { RateLimitError } from "../../lib/rate-limit";
 
 function normalizedName(value: string) {
   return value.trim().replace(/\s+/g, " ");
@@ -29,15 +22,17 @@ function validName(value: string) {
   return value.length >= 1 && value.length <= 100;
 }
 
-function unexpectedError(): ShoppingListActionResult {
-  return { status: "ERROR", message: "PuruPuru could not save that change. Please try again." };
+function unexpectedError(error: unknown): ShoppingListActionResult {
+  return { status: "ERROR", message: error instanceof RateLimitError
+    ? error.message : "PuruPuru could not save that change. Please try again." };
 }
 
 export async function createShoppingList(
-  input: CreateShoppingListInput,
+  input: unknown,
 ): Promise<ShoppingListActionResult> {
-  const user = await getOrCreateCurrentUser();
-  if (!user) return { status: "UNAUTHENTICATED", message: "Sign in to create a shopping list." };
+  if (!isShoppingListInput("create", input)) {
+    return { status: "INVALID", message: "Enter a list name and choose a supported target market." };
+  }
 
   const name = normalizedName(input?.name ?? "");
   const targetMarket = input?.targetMarket?.toUpperCase() ?? "";
@@ -46,34 +41,38 @@ export async function createShoppingList(
   }
 
   try {
+    const user = await getMutationUser();
+    if (!user) return { status: "UNAUTHENTICATED", message: "Sign in to create a shopping list." };
     const list = await prisma.shoppingList.create({
       data: { userId: user.id, name, targetMarket, visibility: "PRIVATE" },
       select: { id: true },
     });
     revalidatePath("/shopping-lists");
     return { status: "SUCCESS", message: "Shopping list created.", listId: list.id };
-  } catch {
-    return unexpectedError();
+  } catch (error) {
+    return unexpectedError(error);
   }
 }
 
 export async function createListWithVariant(
-  input: CreateListWithVariantInput,
+  input: unknown,
 ): Promise<ShoppingListActionResult> {
-  const user = await getOrCreateCurrentUser();
-  if (!user) return { status: "UNAUTHENTICATED", message: "Sign in to create a shopping list." };
+  if (!isShoppingListInput("createWithVariant", input)) {
+    return { status: "INVALID", message: "Enter a valid name, market, product size, and quantity." };
+  }
 
   const name = normalizedName(input?.name ?? "");
   const targetMarket = input?.targetMarket?.toUpperCase() ?? "";
   if (
     !validName(name) ||
-    !isSupportedTargetMarket(targetMarket) ||
-    !validateRequestedQuantity(input?.quantity)
+    !isSupportedTargetMarket(targetMarket)
   ) {
     return { status: "INVALID", message: "Enter a valid name, market, and quantity." };
   }
 
   try {
+    const user = await getMutationUser();
+    if (!user) return { status: "UNAUTHENTICATED", message: "Sign in to create a shopping list." };
     const result = await runSerializable(async (tx) => {
       const variant = await tx.productVariant.findUnique({
         where: { id: input.productVariantId },
@@ -109,21 +108,21 @@ export async function createListWithVariant(
       itemId: result.item.id,
       quantity: result.item.quantity,
     };
-  } catch {
-    return unexpectedError();
+  } catch (error) {
+    return unexpectedError(error);
   }
 }
 
 export async function addVariantToShoppingList(
-  input: AddVariantToListInput,
+  input: unknown,
 ): Promise<ShoppingListActionResult> {
-  const user = await getOrCreateCurrentUser();
-  if (!user) return { status: "UNAUTHENTICATED", message: "Sign in to add to a shopping list." };
-  if (!validateRequestedQuantity(input?.quantity)) {
-    return { status: "INVALID", message: "Quantity must be at least 1." };
+  if (!isShoppingListInput("add", input)) {
+    return { status: "INVALID", message: "Choose a valid list, product size, and whole-number quantity of at least 1." };
   }
 
   try {
+    const user = await getMutationUser();
+    if (!user) return { status: "UNAUTHENTICATED", message: "Sign in to add to a shopping list." };
     const item = await runSerializable(async (tx) => {
       const [list, variant] = await Promise.all([
         tx.shoppingList.findFirst({
@@ -183,18 +182,21 @@ export async function addVariantToShoppingList(
       itemId: item.id,
       quantity: item.quantity,
     };
-  } catch {
-    return unexpectedError();
+  } catch (error) {
+    return unexpectedError(error);
   }
 }
 
 export async function updateShoppingListItemQuantity(
-  input: UpdateShoppingListItemInput,
+  input: unknown,
 ): Promise<ShoppingListActionResult> {
-  const user = await getOrCreateCurrentUser();
-  if (!user) return { status: "UNAUTHENTICATED", message: "Sign in to update a shopping list." };
+  if (!isShoppingListInput("update", input)) {
+    return { status: "INVALID", message: "Choose a valid list item and whole-number quantity of at least 1." };
+  }
 
   try {
+    const user = await getMutationUser();
+    if (!user) return { status: "UNAUTHENTICATED", message: "Sign in to update a shopping list." };
     const item = await runSerializable(async (tx) => {
       const current = await tx.shoppingListItem.findFirst({
         where: {
@@ -237,21 +239,21 @@ export async function updateShoppingListItemQuantity(
       quantity: item.quantity,
       purchasedQuantity: item.purchasedQuantity,
     };
-  } catch {
-    return unexpectedError();
+  } catch (error) {
+    return unexpectedError(error);
   }
 }
 
 export async function markShoppingListItemPurchased(
-  input: MarkShoppingListItemPurchasedInput,
+  input: unknown,
 ): Promise<ShoppingListActionResult> {
-  const user = await getOrCreateCurrentUser();
-  if (!user) return { status: "UNAUTHENTICATED", message: "Sign in to record purchases." };
-  if (typeof input?.purchased !== "boolean") {
-    return { status: "INVALID", message: "Choose whether this item is purchased." };
+  if (!isShoppingListInput("purchased", input)) {
+    return { status: "INVALID", message: "Choose a valid list item and whether it is purchased." };
   }
 
   try {
+    const user = await getMutationUser();
+    if (!user) return { status: "UNAUTHENTICATED", message: "Sign in to record purchases." };
     const result = await runSerializable(async (tx) => {
       const item = await tx.shoppingListItem.findFirst({
         where: {
@@ -302,18 +304,21 @@ export async function markShoppingListItemPurchased(
       quantity: result.item.quantity,
       purchasedQuantity: result.item.purchasedQuantity,
     };
-  } catch {
-    return unexpectedError();
+  } catch (error) {
+    return unexpectedError(error);
   }
 }
 
 export async function removeShoppingListItem(
-  input: RemoveShoppingListItemInput,
+  input: unknown,
 ): Promise<ShoppingListActionResult> {
-  const user = await getOrCreateCurrentUser();
-  if (!user) return { status: "UNAUTHENTICATED", message: "Sign in to update a shopping list." };
+  if (!isShoppingListInput("remove", input)) {
+    return { status: "INVALID", message: "Choose a valid shopping-list item." };
+  }
 
   try {
+    const user = await getMutationUser();
+    if (!user) return { status: "UNAUTHENTICATED", message: "Sign in to update a shopping list." };
     const removed = await runSerializable(async (tx) => {
       const item = await tx.shoppingListItem.findFirst({
         where: {
@@ -341,7 +346,7 @@ export async function removeShoppingListItem(
     revalidatePath("/shopping-lists");
     revalidatePath(`/shopping-lists/${input.shoppingListId}`);
     return { status: "SUCCESS", message: "Removed from this shopping list.", itemId: input.shoppingListItemId };
-  } catch {
-    return unexpectedError();
+  } catch (error) {
+    return unexpectedError(error);
   }
 }

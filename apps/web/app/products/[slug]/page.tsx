@@ -7,6 +7,8 @@ import { BENCHMARK_PRECEDENCE } from "@beauty-platform/domain/shopping-list";
 import { buildPriceHistorySeries } from "@beauty-platform/domain/price-history";
 import { selectPrimaryProductImage } from "@beauty-platform/domain/product-images";
 import type { Metadata } from "next";
+import { safeExternalUrl } from "../../../lib/external-url";
+import { boundedParameter } from "../../../lib/input-validation";
 import { notFound } from "next/navigation";
 
 import { Breadcrumbs } from "../../../components/breadcrumbs";
@@ -95,7 +97,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function ProductPage({ params, searchParams }: PageProps) {
-  const [{ slug }, query] = await Promise.all([params, searchParams]);
+  const [{ slug }, rawQuery] = await Promise.all([params, searchParams]);
+  const query = { version: boundedParameter(rawQuery.version), variant: boundedParameter(rawQuery.variant) };
   const { family, breadcrumbs } = await getProductFamilyDetails(slug);
 
   if (!family || family.versions.length === 0) notFound();
@@ -249,7 +252,7 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
               Image: {" "}
               <a
                 className="underline decoration-slate-300 underline-offset-2"
-                href={selectedImage.sourcePageUrl}
+                href={safeExternalUrl(selectedImage.sourcePageUrl)}
                 rel="noreferrer"
                 target="_blank"
               >
@@ -310,7 +313,7 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
                   <div className="mt-2 space-y-1">
                     <p>
                       Source: {primaryBenchmark.sourceUrl ? (
-                        <a className="underline" href={primaryBenchmark.sourceUrl} rel="noreferrer" target="_blank">
+                        <a className="underline" href={safeExternalUrl(primaryBenchmark.sourceUrl)} rel="noreferrer" target="_blank">
                           {primaryBenchmark.sourceDisplayName}
                         </a>
                       ) : primaryBenchmark.sourceDisplayName}
@@ -319,7 +322,7 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
                     {primaryBenchmarkConversion ? (
                       <p>
                         Approx. CAD ·{" "}
-                        <a className="underline" href={primaryBenchmarkConversion.sourceUrl} rel="noreferrer" target="_blank">
+                        <a className="underline" href={safeExternalUrl(primaryBenchmarkConversion.sourceUrl)} rel="noreferrer" target="_blank">
                           {primaryBenchmarkConversion.sourceName} daily rate
                         </a>{" "}
                         · rate updated {formatRateDate(primaryBenchmarkConversion.rateDate)}
@@ -384,7 +387,7 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
               <div className="mt-3 space-y-4">
                 {selectedVersionRecord.externalSignals.map((signal) => (
                   <div key={signal.id}>
-                    <a className="font-medium underline decoration-slate-300 underline-offset-2" href={signal.sourceUrl} rel="noreferrer" target="_blank">
+                    <a className="font-medium underline decoration-slate-300 underline-offset-2" href={safeExternalUrl(signal.sourceUrl)} rel="noreferrer" target="_blank">
                       {signal.sourceDisplayName}
                     </a>
                     <p className="mt-1 text-sm text-slate-700">

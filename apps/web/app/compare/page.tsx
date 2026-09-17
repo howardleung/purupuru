@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ProductImage } from "../../components/product-image";
 import { catalogueProductHref, formatCataloguePrice } from "../../components/product-card";
 import { getComparisonProducts } from "../../lib/catalogue";
+import { comparisonIds } from "../../lib/input-validation";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "Compare products" };
@@ -24,7 +25,7 @@ function money(amount: number, currency: string) {
 
 export default async function ComparePage({ searchParams }: { searchParams: Promise<{ products?: string }> }) {
   const params = await searchParams;
-  const ids = (params.products ?? "").split(",").filter(Boolean);
+  const ids = comparisonIds(params.products);
   const products = await getComparisonProducts(ids);
 
   return (

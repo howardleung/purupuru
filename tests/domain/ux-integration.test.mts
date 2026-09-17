@@ -140,7 +140,7 @@ test("retailer links use an approved local-logo registry with an accessible text
   assert.match(retailerLink, /aria-label={`Shop this listing at \$\{name\}`}/);
   assert.match(retailerLink, /<span className="sr-only">\{name\}<\/span>/);
   assert.match(retailerLink, /group-focus-visible:block/);
-  assert.match(retailerLink, /href=\{href\}/);
+  assert.match(retailerLink, /href=\{safeExternalUrl\(href\)\}/);
   assert.match(retailerLink, /resolveRetailerLogo/);
   assert.match(retailerLogos, /remote logo hotlinks/);
   assert.match(retailerLogos, /Retailer\.sourceKey/);
