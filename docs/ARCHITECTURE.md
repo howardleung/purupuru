@@ -16,6 +16,8 @@ PuruPuru is a pnpm workspace: `apps/web` is the Next.js application; `packages/d
 
 `apps/web` may depend on workspace domain/database/UI packages. `packages/domain` must remain independent of React, Next.js, Prisma, and infrastructure. Database access belongs on the server; client components receive serializable view data and invoke narrow server actions.
 
+The web production build generates Prisma Client before `next build`. Next.js traces from the workspace root and explicitly includes the generated client in pnpm's virtual store so server functions ship the build platform's Prisma query engine. Do not commit generated clients or engine binaries.
+
 ## Data and write boundaries
 
 The canonical identity chain is `ProductFamily → ProductVersion → ProductVariant → Offer`. Version and exact variant context must travel through links, queries, and mutations. Canonical catalogue identity is not created from uncertain retailer text: source adapters normalize untrusted input, matching requires sufficiently strong evidence, and unmatched or ambiguous records stay review outcomes. See `INGESTION.md`.
