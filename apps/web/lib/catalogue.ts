@@ -53,12 +53,24 @@ export type ProductFamilyDetails = Prisma.ProductFamilyGetPayload<{
   include: typeof productDetailsInclude;
 }>;
 
-export type CategoryRecord = Awaited<ReturnType<typeof getCategories>>[number];
+const categorySelect = {
+  id: true,
+  slug: true,
+  displayName: true,
+  parentCategoryId: true,
+  sortOrder: true,
+  isActive: true,
+} satisfies Prisma.CanonicalCategorySelect;
 
-export async function getCategories() {
+export type CategoryRecord = Prisma.CanonicalCategoryGetPayload<{
+  select: typeof categorySelect;
+}>;
+
+export async function getCategories(): Promise<CategoryRecord[]> {
   return prisma.canonicalCategory.findMany({
     where: { isActive: true },
     orderBy: [{ parentCategoryId: "asc" }, { sortOrder: "asc" }, { displayName: "asc" }],
+    select: categorySelect,
   });
 }
 
