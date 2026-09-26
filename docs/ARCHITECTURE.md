@@ -11,7 +11,7 @@ PuruPuru is a pnpm workspace: `apps/web` is the Next.js application; `packages/d
 | Reads and server orchestration | `apps/web/lib` | Server-only query helpers assemble read models and enforce current-user context. Shape queries deliberately to avoid N+1 work. |
 | Mutations | `apps/web/app/**/actions.ts`, colocated server action files, `apps/web/lib` | Authenticate, validate, enforce ownership, invoke domain rules, and use transactions for compound writes. |
 | UI | `apps/web/app`, `apps/web/components`, `packages/ui` | Routes and React components render supplied models and capture interaction; they do not own canonical business rules or access Prisma. |
-| Ingestion | `scripts/import`, `packages/domain/src/ingestion.ts` | Adapters normalize source records; domain matching is conservative; the Prisma repository persists only confirmed canonical matches. |
+| Ingestion | `scripts/import`, `packages/domain/src/ingestion.ts`, `packages/domain/src/product-import.ts`, `apps/web/lib/admin/product-import-service.ts` | Developer adapters normalize retailer records; the staged admin path validates a versioned product graph, records a review plan, and atomically commits only explicit approvals. Matching is conservative in both paths. |
 | Tests | `tests/domain` | Test public domain contracts and persistence-sensitive behavior at the lowest useful layer. |
 
 `apps/web` may depend on workspace domain/database/UI packages. `packages/domain` must remain independent of React, Next.js, Prisma, and infrastructure. Database access belongs on the server; client components receive serializable view data and invoke narrow server actions.
@@ -26,7 +26,7 @@ Prisma migrations live beside the schema. Review generated SQL, backfill needs, 
 
 All private data access starts from the active authenticated user and scopes reads and writes by ownership. Do not accept a user ID, list ID, or collection ID as authority without verifying its relation to that user.
 
-Collection and shopping-list actions share `apps/web/lib/transactions.ts` for serializable transactions with up to three attempts on Prisma `P2034` write conflicts. Do not duplicate this retry policy in route-specific action files. Developer ingestion remains a separate CLI operation with its own transaction boundary.
+Collection and shopping-list actions share `apps/web/lib/transactions.ts` for serializable transactions with up to three attempts on Prisma `P2034` write conflicts. Do not duplicate this retry policy in route-specific action files. Developer retailer ingestion remains a separate CLI operation with its own transaction boundary. Staged product imports use a narrow admin API/review UI and a serializable whole-batch transaction; they do not expose general database operations.
 
 Mutation DTOs are untrusted at runtime: `apps/web/lib/input-validation.ts` checks required IDs and payload shapes before queries. `getMutationUser` uses verified Clerk identity for the shared write budget before profile upsert; middleware limits public application work through atomic HTTPS Redis counters. Production storage failures fail closed. Security headers and safe external navigation are boundary protections, not domain rules. See `SECURITY.md` for required deployment configuration, audit findings, and verification limits.
 

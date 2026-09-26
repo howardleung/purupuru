@@ -78,6 +78,26 @@ enum ProductImageSourceType {
   RETAILER_APPROVED
 }
 
+enum ImportBatchStatus {
+  PENDING
+  VALIDATED
+  NEEDS_REVIEW
+  APPROVED
+  COMMITTED
+  FAILED
+  REJECTED
+}
+
+enum ImportSourceType {
+  CHATGPT_WORK
+  JSON
+  CSV
+  AFFILIATE_FEED
+  RETAILER_API
+  MANUAL_CORRECTION
+  OTHER
+}
+
 model User {
   id                 String    @id @default(cuid())
   clerkUserId        String    @unique
@@ -92,6 +112,33 @@ model User {
   purchases         PurchaseInstance[]
   ratings           UserRating[]
   shoppingLists     ShoppingList[]
+}
+
+model ImportBatch {
+  id                     String            @id @default(cuid())
+  idempotencyKey         String            @unique
+  schemaVersion          String
+  sourceType             ImportSourceType
+  sourceLabel            String
+  sourceUrl              String?
+  retrievedAt            DateTime
+  submittedByClerkUserId String
+  status                 ImportBatchStatus @default(PENDING)
+  rawPayload             Json
+  normalizedPayload      Json?
+  plan                   Json?
+  validationErrors       Json?
+  warnings               Json?
+  commitResult           Json?
+  approvedByClerkUserId  String?
+  approvedAt             DateTime?
+  committedAt            DateTime?
+  failureReason          String?
+  createdAt              DateTime          @default(now())
+  updatedAt              DateTime          @updatedAt
+
+  @@index([status, createdAt])
+  @@index([submittedByClerkUserId, createdAt])
 }
 
 model CanonicalCategory {

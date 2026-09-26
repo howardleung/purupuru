@@ -23,7 +23,7 @@ For humans and agents:
 - `docs/DECISIONS.md` — accepted decisions and rationale; append when decisions change.
 - `docs/DESIGN_PRINCIPLES.md` — UX philosophy and interaction constraints.
 - `docs/DATA_MODEL.md` — canonical domain entities and invariants.
-- `docs/INGESTION.md` — developer retailer/source ingestion contract, safety rules, and commands.
+- `docs/INGESTION.md` — developer retailer ingestion plus the admin-only staged product-import contract, review workflow, safety rules, and commands.
 - `docs/USER_FLOWS.md` — current user-facing flows.
 - `docs/ROADMAP.md` — sequencing of MVP and future work.
 
@@ -126,5 +126,7 @@ Useful checks:
 - `pnpm ingest --fixture all --dry-run` — inspect fixture matches and planned writes without mutation
 - `pnpm ingest:verify` — run rollback-only database idempotency checks
 - `pnpm build`
+
+Machine-generated catalogue additions use the versioned schema in `docs/schemas/product-import-v1.schema.json`, the example in `docs/examples/product-import-v1.json`, `POST /api/admin/ingestion/products`, and the `/admin/imports` review screen. Configure the server-only `PURUPURU_ADMIN_CLERK_USER_IDS` allowlist and apply the staged-import migration before enabling this workflow.
 
 Before production deployment, follow `docs/SECURITY.md`. Application requests require the server-only shared rate-limit store variables from `.env.example`; missing/unavailable production storage deliberately returns 503. Local development without either variable remains available. `node scripts/verify/verify-security.mjs` runs the read-only repository/history/browser-bundle credential checks (no credential values are printed).

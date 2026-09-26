@@ -4,7 +4,7 @@ Audit date: 2026-09-16. Scope: current PuruPuru source, reachable repository his
 
 ## Attack surfaces and priorities
 
-Public server-rendered discovery/product/catalogue/comparison pages and `GET /api/search`, `GET /api/categories` can cause database work. Seven exported Server Actions write private shopping-list/Collection data. Clerk handles authentication; local profiles identify ownership. Currency conversion fetches a fixed Bank of Canada endpoint; approved remote images use narrow Next image host/path allowlists. Source/retailer URLs are browser navigation metadata, not server fetch targets. Ingestion is an operator CLI, not a public/admin HTTP endpoint. No upload, webhook, admin, custom login/password, or arbitrary external-fetch route currently exists.
+Public server-rendered discovery/product/catalogue/comparison pages and `GET /api/search`, `GET /api/categories` can cause database work. Existing Server Actions write private shopping-list/Collection data. Clerk handles authentication; local profiles identify ownership. Currency conversion fetches a fixed Bank of Canada endpoint; approved remote images use narrow Next image host/path allowlists. Source/retailer URLs are browser navigation metadata, not server fetch targets. Retailer ingestion remains an operator CLI. The narrow staged product-ingestion API and review pages are the only admin HTTP surface; there is still no upload, webhook, custom login/password, arbitrary external-fetch route, or generic database console.
 
 Priority order: validate mutations before persistence; protect expensive public requests and private writes; add browser/payload protections; patch compatible vulnerable dependencies; test boundaries and record deployment-dependent gaps. Preserve pricing, identity, Purchased/ownership, and user-isolation semantics throughout.
 
@@ -56,7 +56,7 @@ Only real Vercel deployments (`VERCEL=1`) trust `x-vercel-forwarded-for`; other 
 
 - Clerk verifies the active session; `getMutationUser` derives the limiter identity from Clerk, and persistence resolves that identity to the local profile. Client-supplied `userId` is never authority.
 - Shopping-list reads scope list ID plus active user/private visibility. Item writes scope item ID, list ID, and the list's owner before changing the exact located row. Removal detaches only that user's durable purchase history. Collection state/history/rating predicates include the active user; version/variant/family context is checked before Collection writes.
-- Missing Clerk configuration leaves private operations unauthenticated, not public. There is no current admin HTTP surface requiring a new role system. Operator ingestion is not an admin route.
+- Missing Clerk configuration leaves private operations unauthenticated, not public. Staged product ingestion requires a verified Clerk session plus exact membership in the server-only `PURUPURU_ADMIN_CLERK_USER_IDS` allowlist; it never trusts a submitted user ID and does not create a personal profile. Submission and approval use the existing authenticated mutation budget. Operator retailer ingestion remains separate from the admin route.
 - Executed action tests check anonymous access, forged user IDs, cross-user row rejection, limiter-before-profile behavior, and mismatched product context. Database and Clerk stand-ins verify orchestration/predicates, **not** live provider/session or PostgreSQL isolation behavior.
 
 ## 6. Runtime validation findings

@@ -248,6 +248,14 @@ Historical CAD conversion is intentionally omitted for now. The reusable Bank of
 
 The curated seed's initial history values are explicitly demo observations (OTHER), not verified real-world archives. Ingestion uses RETAILER_SOURCE only when the dated value and source are genuinely verified. Current Offer state stays distinct from historical observations: a new real source timestamp creates one observation, an identical rerun is unchanged, and an existing timestamp with conflicting price data is rejected before writes.
 
+## Staged import audit model
+
+### ImportBatch
+
+A durable admin-review envelope for versioned, machine-generated product imports. It stores the unique idempotency key, schema/source metadata, submitting Clerk identity, raw and normalized payloads, validation findings, proposed identity/write plan, approval identity/timestamps, commit result, and terminal failure reason.
+
+Statuses distinguish `PENDING`, `VALIDATED`, `NEEDS_REVIEW`, `APPROVED`, `COMMITTED`, `FAILED`, and `REJECTED`. The model intentionally does not link to the personal `User` table: administrator authority comes from the verified Clerk identity and a server-only allowlist, and reviewing catalogue data must not create a personal profile. The retained payload plus committed record IDs provides audit provenance without weakening ProductFamily → ProductVersion → ProductVariant → Offer identity.
+
 ## External reputation signals
 
 ### ExternalSignal

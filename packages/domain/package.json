@@ -17,6 +17,7 @@
     "./my-collection": "./src/my-collection.ts",
     "./price-history": "./src/price-history.ts",
     "./product-images": "./src/product-images.ts",
+    "./product-import": "./src/product-import.ts",
     "./shopping-list": "./src/shopping-list.ts"
   }
 }

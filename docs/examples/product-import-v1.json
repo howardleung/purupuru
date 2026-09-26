@@ -1,0 +1,73 @@
+{
+  "schemaVersion": "1.0",
+  "idempotencyKey": "docs:product-import-v1:2026-09-26",
+  "source": {
+    "type": "JSON",
+    "label": "Documentation-only staged import example",
+    "url": "https://example.com/purupuru/import-example",
+    "retrievedAt": "2026-09-26T12:00:00.000Z",
+    "notes": "Illustrative data for contract testing. UNVERIFIED facts and example.com URLs must be replaced and reviewed before a real commit."
+  },
+  "products": [
+    {
+      "brand": { "name": "Round Lab", "slug": "round-lab", "originMarket": "KR", "aliases": [] },
+      "family": { "canonicalName": "1025 Dokdo Toner", "slug": "round-lab-1025-dokdo-toner", "categorySlug": "toner", "originMarket": "KR", "commonEnglishAliases": [] },
+      "version": {
+        "versionName": "Current formula", "versionCode": "current", "releaseDate": null, "status": "CURRENT",
+        "manufacturerVersionCode": null, "formulationFingerprint": null, "packagingDescription": "Clear bottle with blue label",
+        "provenance": { "sourceUrl": "https://example.com/round-lab/dokdo-toner", "sourceType": "MANUFACTURER", "retrievedAt": "2026-09-26T12:00:00.000Z", "verifiedAt": null, "verificationStatus": "UNVERIFIED", "notes": "Example only." },
+        "images": []
+      },
+      "variants": [{
+        "displaySize": "200 ml", "normalizedQuantity": 200, "normalizedUnit": "ml", "gtin": "8809657114738", "manufacturerSku": null, "isDefault": true,
+        "provenance": { "sourceUrl": "https://example.com/round-lab/dokdo-toner", "sourceType": "MANUFACTURER", "retrievedAt": "2026-09-26T12:00:00.000Z", "verifiedAt": null, "verificationStatus": "UNVERIFIED", "notes": "Example identity must be checked." },
+        "images": [],
+        "benchmarks": [{
+          "market": "KR", "type": "RETAIL_PRICE", "amount": 15000, "nativeCurrency": "KRW", "sourceKey": "brand:round-lab", "sourceDisplayName": "Round Lab", "sourceUrl": "https://example.com/round-lab/dokdo-toner", "observedAt": "2026-09-26T12:00:00.000Z", "verifiedAt": "2026-09-26T12:00:00.000Z",
+          "provenance": { "sourceUrl": "https://example.com/round-lab/dokdo-toner", "sourceType": "MANUFACTURER", "retrievedAt": "2026-09-26T12:00:00.000Z", "verifiedAt": null, "verificationStatus": "UNVERIFIED", "notes": "Illustrative benchmark; not a real-world price claim." }
+        }],
+        "offers": [
+          {
+            "retailer": { "sourceKey": "retailer:example-ca", "name": "Example Canada", "country": "CA", "websiteUrl": "https://example.com" },
+            "externalListingId": "roundlab-dokdo-200", "listingUrl": "https://example.com/ca/roundlab-dokdo-200", "productPrice": 24.99, "nativeCurrency": "CAD", "availableMarkets": ["CA"], "availabilityState": "IN_STOCK", "observedAt": "2026-09-26T12:00:00.000Z",
+            "shipping": { "state": "CALCULATED", "amount": null, "currency": null, "method": null, "estimate": null, "conditions": "Calculated at checkout" }, "items": [],
+            "provenance": { "sourceUrl": "https://example.com/ca/roundlab-dokdo-200", "sourceType": "RETAILER", "retrievedAt": "2026-09-26T12:00:00.000Z", "verifiedAt": null, "verificationStatus": "UNVERIFIED", "notes": "Illustrative offer." }
+          },
+          {
+            "retailer": { "sourceKey": "retailer:example-kr", "name": "Example Korea", "country": "KR", "websiteUrl": "https://example.org" },
+            "externalListingId": "RL-1025-200", "listingUrl": "https://example.org/kr/roundlab-dokdo-200", "productPrice": 12900, "nativeCurrency": "KRW", "availableMarkets": ["CA", "KR"], "availabilityState": "IN_STOCK", "observedAt": "2026-09-26T12:00:00.000Z",
+            "shipping": null,
+            "items": [{ "label": "1025 Dokdo Toner 200 ml", "quantity": 1, "itemType": "SAME_PRODUCT", "isPromotional": false, "relatedGtin": "8809657114738" }],
+            "provenance": { "sourceUrl": "https://example.org/kr/roundlab-dokdo-200", "sourceType": "RETAILER", "retrievedAt": "2026-09-26T12:00:00.000Z", "verifiedAt": null, "verificationStatus": "UNVERIFIED", "notes": "Illustrative offer demonstrating a second storefront." }
+          }
+        ]
+      }]
+    },
+    {
+      "brand": { "name": "ANESSA", "slug": "anessa", "originMarket": "JP", "aliases": ["Anessa"] },
+      "family": { "canonicalName": "Perfect UV Skincare Gel", "slug": "anessa-perfect-uv-skincare-gel", "categorySlug": "sunscreen", "originMarket": "JP", "commonEnglishAliases": [] },
+      "version": {
+        "versionName": "2024 release (example)", "versionCode": "2024", "releaseDate": "2024-02-01T00:00:00.000Z", "status": "PREVIOUS", "manufacturerVersionCode": "EXAMPLE-2024", "formulationFingerprint": null, "packagingDescription": "90 g release represented separately from later packaging/formula",
+        "provenance": { "sourceUrl": "https://example.com/anessa/2024", "sourceType": "MANUFACTURER", "retrievedAt": "2026-09-26T12:00:00.000Z", "verifiedAt": null, "verificationStatus": "UNVERIFIED", "notes": "Illustrative release and JAN; replace with verified source data." }, "images": []
+      },
+      "variants": [{
+        "displaySize": "90 g", "normalizedQuantity": 90, "normalizedUnit": "g", "gtin": "4900000000001", "manufacturerSku": "EXAMPLE-ANESSA-2024-90", "isDefault": true,
+        "provenance": { "sourceUrl": "https://example.com/anessa/2024", "sourceType": "MANUFACTURER", "retrievedAt": "2026-09-26T12:00:00.000Z", "verifiedAt": null, "verificationStatus": "UNVERIFIED", "notes": "Distinct illustrative JAN demonstrates version-sensitive matching." }, "images": [], "benchmarks": [], "offers": []
+      }]
+    },
+    {
+      "brand": { "name": "ANESSA", "slug": "anessa", "originMarket": "JP", "aliases": ["Anessa"] },
+      "family": { "canonicalName": "Perfect UV Skincare Gel", "slug": "anessa-perfect-uv-skincare-gel", "categorySlug": "sunscreen", "originMarket": "JP", "commonEnglishAliases": [] },
+      "version": {
+        "versionName": "2026 release (example)", "versionCode": "2026", "releaseDate": "2026-02-01T00:00:00.000Z", "status": "CURRENT", "manufacturerVersionCode": "EXAMPLE-2026", "formulationFingerprint": null, "packagingDescription": "Later 90 g release with a separate version identity",
+        "provenance": { "sourceUrl": "https://example.com/anessa/2026", "sourceType": "MANUFACTURER", "retrievedAt": "2026-09-26T12:00:00.000Z", "verifiedAt": null, "verificationStatus": "UNVERIFIED", "notes": "Illustrative release; JAN shown is only a contract example until verified." }, "images": []
+      },
+      "variants": [{
+        "displaySize": "90 g", "normalizedQuantity": 90, "normalizedUnit": "g", "gtin": "4909978228545", "manufacturerSku": "EXAMPLE-ANESSA-2026-90", "isDefault": true,
+        "provenance": { "sourceUrl": "https://example.com/anessa/2026", "sourceType": "MANUFACTURER", "retrievedAt": "2026-09-26T12:00:00.000Z", "verifiedAt": null, "verificationStatus": "UNVERIFIED", "notes": "Separate JAN keeps same-size releases distinct." }, "images": [],
+        "benchmarks": [{ "market": "JP", "type": "RETAIL_PRICE", "amount": 2508, "nativeCurrency": "JPY", "sourceKey": "brand:shiseido", "sourceDisplayName": "Shiseido Japan", "sourceUrl": "https://example.com/anessa/2026", "observedAt": null, "verifiedAt": "2026-09-26T12:00:00.000Z", "provenance": { "sourceUrl": "https://example.com/anessa/2026", "sourceType": "MANUFACTURER", "retrievedAt": "2026-09-26T12:00:00.000Z", "verifiedAt": null, "verificationStatus": "UNVERIFIED", "notes": "Illustrative price, not a verified real-world claim." } }],
+        "offers": []
+      }]
+    }
+  ]
+}

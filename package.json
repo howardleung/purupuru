@@ -16,6 +16,7 @@
     "db:validate": "pnpm --filter @beauty-platform/database prisma:validate",
     "db:generate": "pnpm --filter @beauty-platform/database prisma:generate",
     "db:seed": "pnpm --filter @beauty-platform/database prisma:seed",
-    "db:migrate": "pnpm --filter @beauty-platform/database prisma:migrate"
+    "db:migrate": "pnpm --filter @beauty-platform/database prisma:migrate",
+    "db:migrate:deploy": "pnpm --filter @beauty-platform/database prisma:migrate:deploy"
   }
 }

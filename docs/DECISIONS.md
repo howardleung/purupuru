@@ -339,3 +339,13 @@ This file records settled choices and the rationale behind them. New decisions s
 **Why:** Establish a cohesive consumer beauty identity without replacing the factual, dense research tools or treating mockup content as product data.
 
 **Implications:** Homepage prominence uses real catalogue ordering and existing identity-safe images/prices, not invented popularity signals. No schema, domain, pricing, ownership, auth, security, or ingestion changes. Deep research/personal pages inherit the shared system and may receive further dedicated visual polish.
+
+### 2026-09-26 — Product-graph ingestion is staged, provenance-retaining, and admin committed
+
+**Status:** Accepted
+
+**Decision:** Machine-generated product data enters through a versioned JSON contract and a durable `ImportBatch`. Submission validates and normalizes data, records provenance and a conservative create/reuse/update/conflict plan, but does not publish it. A Clerk-authenticated allowlisted administrator explicitly commits an approved whole batch through one serializable transaction.
+
+**Why:** Research automation can reduce manual catalogue work only if uncertain identity evidence remains reviewable and retries cannot duplicate or partially publish product graphs. A narrow interface is safer than exposing generic Prisma operations or relying on AI-generated syntax as trust.
+
+**Implications:** GTIN, scoped SKU, and exact version/size evidence are authoritative in that order; ambiguity blocks commit and canonical categories remain curated. The idempotency key uniquely identifies a submitted batch. Raw and normalized payloads, provenance, plan, reviewer identity, and committed IDs remain auditable. `PURUPURU_ADMIN_CLERK_USER_IDS` is required server-side. The additive import-batch migration must be deployed before use; feeds, scraping, schedules, and automatic low-confidence creation remain out of scope.

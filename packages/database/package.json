@@ -12,6 +12,7 @@
     "prisma:generate": "prisma generate",
     "prisma:seed": "node prisma/seed.mjs",
     "prisma:migrate": "prisma migrate dev",
+    "prisma:migrate:deploy": "prisma migrate deploy",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

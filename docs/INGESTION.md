@@ -2,6 +2,36 @@
 
 This is PuruPuru's developer-operated, local ingestion path for trustworthy retailer records. It is intentionally not a scraper, scheduler, feed platform, or automatic catalogue creator.
 
+PuruPuru also has an admin-only staged product-graph path for researched catalogue additions. Unlike the retailer-listing CLI described below, it may propose new brands, families, versions, variants, retailers, offers, images, and benchmarks, but it never publishes a submitted payload automatically.
+
+## Staged product imports
+
+The machine contract is JSON Schema version `1.0` at [`schemas/product-import-v1.schema.json`](schemas/product-import-v1.schema.json), with a complete illustrative payload at [`examples/product-import-v1.json`](examples/product-import-v1.json). The runtime TypeScript validator is the authoritative write boundary and additionally normalizes whitespace, slugs, GTIN separators, market codes, currencies, units, timestamps, and URLs without inventing absent facts.
+
+The workflow is:
+
+`authenticated admin submission → validation/normalization → conservative identity plan → durable review batch → explicit admin approval → serializable atomic commit`
+
+`POST /api/admin/ingestion/products` accepts one versioned JSON batch, up to 512 KiB. It returns the batch ID, status, structured errors/warnings, and the proposed create/reuse/update/conflict plan. Repeating a request with the same `idempotencyKey` returns the original batch and does not rerun writes. `GET /api/admin/ingestion/products` returns recent batches for an authenticated administrator. Submission cannot commit catalogue records.
+
+Review is available at `/admin/imports`. A reviewer sees retained raw and normalized source data, provenance, validation findings, identity decisions, and the write plan. `NEEDS_REVIEW` includes verification warnings or blocking identity conflicts; only the explicit **Approve and commit batch** action attempts a commit. Commit revalidates and replans inside the same serializable transaction so stale review decisions cannot silently win. Any conflict or write failure rolls the entire product graph back.
+
+The batch retains fact-level provenance for product/version identity, variant identifiers, images, benchmarks, and offers. `commitResult` maps the audit record to committed family/version/variant IDs. Existing entity-specific source fields remain populated. This preserves an inspectable source record without scattering a speculative provenance relation through every catalogue table.
+
+Matching is exact and version-sensitive: GTIN first, then scoped SKU, then exact existing family/version/size evidence. Conflicting identifiers and multiple candidates block commit. Canonical categories must already exist and are never created by an import. The same nominal size in separate releases remains separate when version evidence and JANs differ.
+
+Admin authorization uses Clerk's verified server-side user ID and the server-only `PURUPURU_ADMIN_CLERK_USER_IDS` allowlist. Configure a comma-separated set of exact Clerk `user_…` IDs locally and in deployment. Do not expose it as `NEXT_PUBLIC_`. The existing authenticated mutation rate limit also applies.
+
+Migration `20260926120000_add_staged_product_imports` creates only the import status/source enums and `ImportBatch` audit table. Apply the reviewed migration with `pnpm db:migrate:deploy` through the normal deployment process before enabling the endpoint. It does not alter existing catalogue rows.
+
+### Manual workflow check
+
+1. Apply the reviewed migration and configure `PURUPURU_ADMIN_CLERK_USER_IDS` with the reviewing account's Clerk user ID.
+2. Sign in as that account and submit `docs/examples/product-import-v1.json` to `POST /api/admin/ingestion/products` with `Content-Type: application/json`. An external trusted workflow must send a short-lived Clerk bearer/session token for that same allowlisted identity; never embed a long-lived Clerk secret in a payload or repository file.
+3. Confirm the response is staged (the documented example is `NEEDS_REVIEW` because its facts are deliberately `UNVERIFIED`) and repeat the identical request to confirm `replayed: true` with the same batch ID.
+4. Open `/admin/imports/{batchId}`, inspect every warning, match, offer, benchmark, and provenance link, and replace illustrative facts with verified data before approval.
+5. Approve once. Confirm the batch is `COMMITTED`; resubmitting or re-opening the committed batch must not create another graph. Reusing its idempotency key with different JSON returns a conflict.
+
 ## Safety posture
 
 The pipeline is:
