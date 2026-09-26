@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { getAdminAccess } from "../../../lib/admin-auth";
 import { listProductImports } from "../../../lib/admin/product-import-service";
+import { ImportSubmissionForm } from "./import-submission-form";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "Product imports" };
@@ -17,6 +18,7 @@ export default async function ImportBatchesPage() {
   return <main className="page-container py-10">
     <h1 className="text-3xl font-semibold">Staged product imports</h1>
     <p className="mt-2 max-w-3xl text-sm text-slate-600">Review validation, provenance, identity matches, and proposed writes before committing a complete batch.</p>
+    <ImportSubmissionForm />
     {batches.length ? <div className="mt-8 overflow-x-auto rounded-xl border border-slate-200">
       <table className="w-full min-w-[760px] text-left text-sm">
         <thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-500"><tr>
