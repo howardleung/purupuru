@@ -117,7 +117,11 @@ function CollectionQuickView({ item, onClose }: { item: MyCollectionItem; onClos
           <div>
             <p className="text-xs font-medium uppercase tracking-wide text-slate-500">{item.brandName}</p>
             <h2 className="mt-1 text-2xl font-semibold" id="collection-quick-view-title">{item.productName}</h2>
-            <p className="mt-2 text-sm text-slate-600">{item.versionName}{item.selectedVariantLabel ? ` · ${item.selectedVariantLabel}` : ""}</p>
+            <p className="mt-2 text-sm text-slate-600">
+              {item.showVersionName ? item.versionName : null}
+              {item.showVersionName && item.selectedVariantLabel ? " · " : null}
+              {item.selectedVariantLabel}
+            </p>
             {item.owned ? <p className="mt-3 text-sm text-slate-600">{item.purchaseCount} purchase {item.purchaseCount === 1 ? "record" : "records"} · {item.ownedQuantity} acquired</p> : null}
             {item.selectedVariantId ? (
               <div className="mt-6"><CollectionActions initialState={{ wants: item.wants, tried: item.tried, purchaseCount: item.purchaseCount, holyGrail: item.holyGrail, wouldRepurchase: item.wouldRepurchase, ratingHalfSteps: item.ratingHalfSteps }} productSlug={item.productSlug} productVariantId={item.selectedVariantId} productVersionId={item.productVersionId} variantLabel={item.selectedVariantLabel ?? "selected size"} /></div>

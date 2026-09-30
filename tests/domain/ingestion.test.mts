@@ -128,21 +128,64 @@ test("GTIN is the highest-confidence exact match and conflicting size is rejecte
   assert.equal(conflict.status, "rejected");
 });
 
-test("version evidence plus exact size can match while title/brand-only stays reviewable", () => {
+test("brand, product, and exact size match without requiring release or barcode evidence", () => {
   const versionMatch = matchCanonicalVariant(listing({ gtin: null }), [candidate]);
   assert.equal(versionMatch.status, "matched");
 
-  const lowConfidence = matchCanonicalVariant(
+  const bioreStyleMatch = matchCanonicalVariant(
     listing({ gtin: null, versionCode: null, packagingEvidence: null }),
     [candidate],
   );
-  assert.equal(lowConfidence.status, "unmatched");
+  assert.equal(bioreStyleMatch.status, "matched");
+  if (bioreStyleMatch.status === "matched") {
+    assert.deepEqual(bioreStyleMatch.evidence, ["brand", "product title", "exact size"]);
+  }
 
   const unverifiedRelease = matchCanonicalVariant(
     listing({ gtin: null, versionCode: null, packagingEvidence: null, releaseDate: "2025-01-01" }),
     [candidate],
   );
-  assert.equal(unverifiedRelease.status, "unmatched");
+  assert.equal(unverifiedRelease.status, "matched");
+
+  const changedReleaseLabels = matchCanonicalVariant(
+    listing({
+      gtin: null,
+      versionCode: "retailer-2025",
+      releaseDate: "2025-01-01",
+      releaseYear: 2025,
+      packagingEvidence: "minor refreshed package",
+    }),
+    [candidate],
+  );
+  assert.equal(changedReleaseLabels.status, "matched");
+});
+
+test("conflicting identifiers remain rejected even when brand, product, and size match", () => {
+  const conflict = matchCanonicalVariant(listing({ gtin: "8800000000002" }), [candidate]);
+  assert.equal(conflict.status, "rejected");
+});
+
+test("same-size meaningful versions remain ambiguous without distinguishing evidence", () => {
+  const otherVersion = {
+    ...candidate,
+    variantId: "variant-dokdo-previous-200",
+    productVersionId: "version-previous",
+    gtin: "8800000000002",
+    versionCode: "previous",
+    packagingDescription: "Previous package",
+  };
+  const ambiguous = matchCanonicalVariant(
+    listing({ gtin: null, versionCode: null, packagingEvidence: null }),
+    [candidate, otherVersion],
+  );
+  assert.equal(ambiguous.status, "ambiguous");
+
+  const distinguished = matchCanonicalVariant(
+    listing({ gtin: null, versionCode: "current", packagingEvidence: null }),
+    [candidate, otherVersion],
+  );
+  assert.equal(distinguished.status, "matched");
+  if (distinguished.status === "matched") assert.equal(distinguished.candidate.productVersionId, "version-current");
 });
 
 test("multiple candidates with the same exact identifier are ambiguous", () => {

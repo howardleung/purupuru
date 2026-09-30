@@ -77,7 +77,7 @@ export function OfferSection({
   title,
   description,
   offers,
-  emptyMessage = "No currently verified offers are available for this version and size.",
+  emptyMessage = "No currently verified offers are available for this size.",
   compact = false,
 }: {
   title: string;

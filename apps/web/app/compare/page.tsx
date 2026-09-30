@@ -32,7 +32,7 @@ export default async function ComparePage({ searchParams }: { searchParams: Prom
     <main className="page-container py-8 sm:py-10">
       <Link className="text-sm font-medium text-slate-600 underline" href="/catalogue">← Back to catalogue</Link>
       <h1 className="mt-5 text-3xl font-semibold tracking-tight">Compare products</h1>
-      <p className="mt-2 max-w-3xl text-slate-600">A factual comparison of the selected current formulation and default exact size. Missing data stays visible as missing.</p>
+      <p className="mt-2 max-w-3xl text-slate-600">A factual comparison of each product&apos;s default exact size. Missing data stays visible as missing.</p>
 
       {products.length < 2 ? (
         <section className="mt-8 rounded-xl border border-dashed border-slate-300 p-8 text-center">
@@ -60,7 +60,6 @@ export default async function ComparePage({ searchParams }: { searchParams: Prom
             </thead>
             <tbody className="divide-y divide-slate-200">
               <ComparisonRow label="Category" values={products.map((product) => product.primaryCanonicalCategory.displayName)} />
-              <ComparisonRow label="Formulation" values={products.map((product) => product.currentVersion?.versionName ?? "Not recorded")} />
               <ComparisonRow label="Exact size" values={products.map((product) => product.currentVersion?.defaultVariant?.displaySize ?? "Not recorded")} />
               <ComparisonRow label="Lowest Canada price" values={products.map((product) => formatCataloguePrice(product) ?? "No tracked eligible offer")} />
               <ComparisonRow

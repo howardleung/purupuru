@@ -234,7 +234,7 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
             {family.canonicalName}
           </h1>
           <p className="mt-3 text-slate-600">
-            {family.primaryCanonicalCategory.displayName} · {selectedVersionRecord.versionName} · {selectedVariantRecord.displaySize}
+            {family.primaryCanonicalCategory.displayName} · {selectedVariantRecord.displaySize}
           </p>
         </section>
 
@@ -335,7 +335,7 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
               </>
             ) : (
               <p className="mt-2 text-sm text-slate-600">
-                No verified benchmark is available for this formulation and size.
+                No verified benchmark is available for this size.
               </p>
             )}
           </section>
@@ -344,7 +344,7 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
             <OfferSection
               compact
               description="Retailer listings explicitly recorded as serving Canada, ordered by product price before shipping."
-              emptyMessage="No Canadian buying options are currently tracked for this version and size."
+              emptyMessage="No Canadian buying options are currently tracked for this size."
               offers={canadianOffers}
               title="Buy in Canada"
             />
@@ -355,14 +355,14 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
       {destinationMarket && destinationMarket !== "CA" ? (
         <OfferSection
           description={`Actual tracked listings recorded for ${marketNames[destinationMarket] ?? destinationMarket}. Native ${destinationOffers[0]?.nativeCurrency ?? "currency"} prices remain authoritative; benchmark sources and external signals are not treated as shopping options.`}
-          emptyMessage={`No currently verified ${marketNames[destinationMarket] ?? destinationMarket} offers are tracked for this version and size.`}
+          emptyMessage={`No currently verified ${marketNames[destinationMarket] ?? destinationMarket} offers are tracked for this size.`}
           offers={destinationOffers}
           title={`Buy in ${marketNames[destinationMarket] ?? destinationMarket}`}
         />
       ) : null}
 
       <PriceHistorySection
-        productContext={selectedVersionRecord.versionName + " · " + selectedVariantRecord.displaySize}
+        productContext={selectedVariantRecord.displaySize}
         series={priceHistorySeries}
       />
 
@@ -372,7 +372,9 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
           <div>
             <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-500">Product details</h3>
             <dl className="mt-3 grid gap-3 text-sm">
-              <div><dt className="text-slate-500">Version</dt><dd className="font-medium">{selectedVersionRecord.versionName}</dd></div>
+              {versionOptions.length > 1 ? (
+                <div><dt className="text-slate-500">Formula</dt><dd className="font-medium">{selectedVersionRecord.versionName}</dd></div>
+              ) : null}
               <div><dt className="text-slate-500">Size</dt><dd className="font-medium">{selectedVariantRecord.displaySize}</dd></div>
               <div><dt className="text-slate-500">Category</dt><dd className="font-medium">{family.primaryCanonicalCategory.displayName}</dd></div>
               {selectedVersionRecord.packagingDescription ? (

@@ -11,6 +11,7 @@ const catalogueCard = readFileSync(new URL("../../apps/web/components/product-ca
 const collectionCard = readFileSync(new URL("../../apps/web/components/collection-browser.tsx", import.meta.url), "utf8");
 const shoppingList = readFileSync(new URL("../../apps/web/components/shopping-list-details.tsx", import.meta.url), "utf8");
 const productSelectors = readFileSync(new URL("../../apps/web/components/product-selectors.tsx", import.meta.url), "utf8");
+const comparePage = readFileSync(new URL("../../apps/web/app/compare/page.tsx", import.meta.url), "utf8");
 const primaryNav = readFileSync(new URL("../../apps/web/components/primary-nav.tsx", import.meta.url), "utf8");
 const globalSearch = readFileSync(new URL("../../apps/web/components/global-search.tsx", import.meta.url), "utf8");
 const megaMenu = readFileSync(new URL("../../apps/web/components/product-mega-menu.tsx", import.meta.url), "utf8");
@@ -120,6 +121,15 @@ test("product menu and product-page hierarchy follow the structural UX contract"
   assert.equal(productPage.match(/Strongest verified benchmark/g)?.length, 1);
   assert.doesNotMatch(productPage, />Benchmark prices</);
   assert.match(productPage, /md:col-start-2 md:row-span-3 md:row-start-2/);
+});
+
+test("ordinary products emphasize size and only expose formula choices for multiple versions", () => {
+  assert.match(productSelectors, /versions\.length > 1/);
+  assert.match(productSelectors, />Formula</);
+  assert.doesNotMatch(productSelectors, /· Current/);
+  assert.doesNotMatch(comparePage, /label="Formulation"/);
+  assert.match(productPage, /versionOptions\.length > 1/);
+  assert.match(collectionCard, /item\.showVersionName/);
 });
 
 test("retailer links use an approved local-logo registry with an accessible text fallback", () => {

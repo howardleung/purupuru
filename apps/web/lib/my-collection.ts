@@ -14,6 +14,7 @@ const versionContext = {
     include: {
       brand: true,
       primaryCanonicalCategory: true,
+      _count: { select: { versions: true } },
     },
   },
   defaultVariant: true,
@@ -44,6 +45,7 @@ function versionBase(version: VersionContext): CollectionVersionBase {
     productName: family.canonicalName,
     brandName: family.brand.name,
     versionName: version.versionName,
+    showVersionName: family._count.versions > 1,
     categoryName: family.primaryCanonicalCategory.displayName,
     defaultVariantId: fallbackVariant?.id ?? null,
     defaultVariantLabel: fallbackVariant?.displaySize ?? null,

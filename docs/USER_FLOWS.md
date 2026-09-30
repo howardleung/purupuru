@@ -69,7 +69,7 @@ Present, in a calm hierarchy:
 - ProductFamily name
 - primary canonical category
 - product image
-- version pills/selector
+- a formula/version selector only when multiple shopper-relevant versions exist
 - size/variant selector
 - compact Save and plan action
 - strongest available benchmark (official MSRP, official/trusted Retail Price, or trusted Reference Price)
@@ -80,10 +80,10 @@ Show the strongest benchmark only once. Its source, verified date, and CAD rate 
 
 Breadcrumbs are lightweight orientation/back-navigation aids, not a major product-page element. Their labels and links always derive from the canonical taxonomy, not retailer/source categories.
 
-### Version switching
-1. Default to current/latest ProductVersion.
-2. Show only variants that exist for that version.
-3. When selecting another version:
+### Version and size selection
+1. Default internally to the current/default ProductVersion, but do not present version metadata as a required concept when it is the only meaningful version.
+2. Show size as the normal variant control and only sizes that exist for the selected version.
+3. Only when multiple shopper-relevant versions coexist, show a compact formula/version selector. When selecting another version:
    - replace variant controls with that version's known variants
    - preserve exact same normalized size only if that exact variant exists
    - otherwise select that version's curated/default variant

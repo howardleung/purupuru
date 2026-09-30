@@ -34,13 +34,13 @@ Avoid a proprietary “best deal” score in MVP.
 
 ## 4. Product identity must be clear
 
-A product page represents a product family, with explicit version and variant controls.
+A product page should normally read as brand + product name + size. The internal version hierarchy protects data integrity without making shoppers understand release years, barcode revisions, or formulation bookkeeping.
 
-- Version: compact pills/buttons when feasible.
-- Variant/size: only options that actually exist for the selected version.
-- Default: current/latest version and curated/default standard variant.
-- Switching version updates all version-specific information.
-- Never mix offers or ratings from different formulations silently.
+- Variant/size is the normal visible choice.
+- Keep a single current/default ProductVersion visually implicit when no meaningful choice exists.
+- Show a compact formula/version selector only when multiple shopper-relevant versions are actually available.
+- Switching a meaningful version updates its valid sizes and all version-scoped information.
+- Never mix offers or ratings from materially different formulations silently.
 - Use compact clickable breadcrumbs from the canonical category path for product/category-page orientation and back-navigation. They should be visually subordinate to product identity and must never use retailer-specific category labels.
 
 ## 5. Shopping intelligence should be visible, not buried

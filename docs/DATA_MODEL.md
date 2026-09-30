@@ -74,7 +74,9 @@ Source category values may be retained as source metadata, but canonical product
 Canonical source keys are stable lowercase namespaced slugs independent of display names, for example `platform:atcosme`, `retailer:olive-young-kr`, `retailer:amazon-ca`, and `brand:shiseido`. Where source records need user-facing attribution, store a separate display name. Retailers, benchmark prices, external signals, and source-category mappings use this convention.
 
 ### ProductVersion
-A materially distinct formulation/release within a ProductFamily, e.g. `2026 NB` vs `2024 NA`.
+An internal exception for a materially distinct shopper-relevant formula or release within a ProductFamily. Most products should have one current/default version, which remains visually subordinate or invisible in ordinary browsing. Create another version only for a meaningful difference such as formulation, performance/function, SPF/PA, regulatory-market formula, distinguishable packaging generation, or simultaneously sold old/new formulas that affect a purchase decision.
+
+A changed GTIN/JAN/UPC/EAN, manufacturer SKU, release year, marketing phrase, or minor packaging refresh does not by itself create a new ProductVersion. Retain those identifiers and provenance when available, but use the normal consumer identity of brand + product name + size unless material contrary evidence exists.
 
 Likely fields:
 - id
@@ -87,16 +89,14 @@ Likely fields:
 - packaging metadata
 - defaultVariantId
 
-Identity evidence priority:
+Identity and matching evidence priority:
 1. GTIN/JAN/UPC/EAN
 2. manufacturer SKU
-3. explicit version code
-4. release date/year
-5. formulation fingerprint
-6. packaging
-7. title match fallback
+3. exact brand + ProductFamily + normalized size
+4. formulation/function/regulatory evidence when versions genuinely differ
+5. explicit version code, release date/year, and packaging as supporting provenance
 
-Never silently merge when confidence is insufficient.
+Exact identifiers increase confidence but are not mandatory when brand, product, and exact size resolve one compatible item. Never silently merge contradictory or ambiguous material-version evidence.
 
 ### ProductVariant
 A sellable base configuration of a ProductVersion, usually size/quantity/form.

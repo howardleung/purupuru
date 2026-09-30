@@ -18,7 +18,7 @@ Review is available at `/admin/imports`. A reviewer sees retained raw and normal
 
 The batch retains fact-level provenance for product/version identity, variant identifiers, images, benchmarks, and offers. `commitResult` maps the audit record to committed family/version/variant IDs. Existing entity-specific source fields remain populated. This preserves an inspectable source record without scattering a speculative provenance relation through every catalogue table.
 
-Matching is exact and version-sensitive: GTIN first, then scoped SKU, then exact existing family/version/size evidence. Conflicting identifiers and multiple candidates block commit. Canonical categories must already exist and are never created by an import. The same nominal size in separate releases remains separate when version evidence and JANs differ.
+Matching keeps exact identifiers as the strongest evidence but does not require them for an ordinary product. GTIN is considered first, then scoped SKU, then an uncontradicted existing brand/product/exact-size match. Conflicting identifiers and multiple plausible meaningful versions block commit. Canonical categories must already exist and are never created by an import. Separate `ProductVersion` records are reserved for concrete shopper-relevant formula, function, regulatory-market, packaging-generation, or simultaneous-release differences; a barcode, SKU, release year, or minor packaging refresh alone does not justify another version.
 
 Offers are active by default when `isActive` is omitted. An explicit `isActive: false` is a narrowly scoped, reversible correction: it requires an exact existing retailer/listing identity (or the established exact retailer + URL fallback), stages an explicit deactivation with a review warning, and commits only the offer's activation state. It cannot create an offer, delete catalogue identity, replace offer items, or create a price observation. An exact inactive offer can be reactivated with `isActive: true`; unchanged price/timestamp evidence does not create a duplicate observation. Historical observations remain intact in both directions.
 
@@ -70,9 +70,10 @@ Matching is intentionally conservative and follows this evidence order:
 
 1. exact GTIN
 2. exact manufacturer SKU
-3. explicit version evidence (version code, release date/year, formula, or packaging) together with exact brand, product title, and size
+3. exact brand, product title, and normalized size, provided there is no contradictory evidence
+4. explicit material-version evidence to disambiguate multiple otherwise compatible candidates
 
-Exact size prevents observations and offers from crossing variants. Conflicting source evidence is rejected. Multiple compatible candidates are `ambiguous`. Brand/title-only candidates are `unmatched` and require review. No outcome in this foundation automatically creates canonical catalogue identity.
+Exact size prevents observations and offers from crossing variants. A missing barcode or release label is not itself a warning or rejection when brand, product, and exact size resolve uniquely. Conflicting GTINs, sizes, formulas, regional versions, or other supplied evidence are rejected; multiple compatible candidates are `ambiguous`. Brand/title without exact size remains `unmatched`. No outcome in this foundation automatically creates canonical catalogue identity.
 
 ## Offer identity and current state
 

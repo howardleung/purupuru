@@ -30,6 +30,7 @@ If a request conflicts with these documents, flag it before choosing a direction
 ## PuruPuru invariants
 
 - Preserve `ProductFamily → ProductVersion → ProductVariant → Offer`; never silently merge ambiguous versions, variants, or retailer listings.
+- Treat `ProductVersion` as an exception for meaningful shopper-facing differences, not every barcode, release-year, wording, or minor packaging revision. A unique uncontradicted brand/product/exact-size match may associate an offer without exact release proof; contradictory evidence still requires review.
 - Retailer data must pass normalization and conservative identity matching before it affects canonical catalogue data. `Offer.availableMarkets` means customer/delivery markets, not retailer location.
 - Preserve native prices and provenance. Currency conversions are approximate presentation values. MSRP, Retail Price, and Reference Price have distinct meanings. Missing benchmarks are excluded from savings, never treated as zero.
 - Affiliate relationships never affect ranking. Default offer order is product price ascending; shipping and extras are factual supporting data.

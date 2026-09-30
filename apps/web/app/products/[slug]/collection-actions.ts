@@ -35,7 +35,7 @@ export async function updateProductCollection(
       });
 
       if (!variant) {
-        return { status: "INVALID", message: "That version and size combination was not found." } satisfies ProductCollectionActionResult;
+        return { status: "INVALID", message: "That product and size combination was not found." } satisfies ProductCollectionActionResult;
       }
 
       const current = await getPersistedCollectionState(

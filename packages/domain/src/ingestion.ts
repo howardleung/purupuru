@@ -147,6 +147,12 @@ function conflicts(record: NormalizedSourceListing, candidate: MatchCandidate) {
   return issues;
 }
 
+const blockingConflictKinds = new Set(["GTIN", "manufacturer SKU", "brand", "exact size", "formula fingerprint"]);
+
+function blockingConflicts(record: NormalizedSourceListing, candidate: MatchCandidate) {
+  return conflicts(record, candidate).filter((issue) => blockingConflictKinds.has(issue));
+}
+
 function matchingVersionEvidence(record: NormalizedSourceListing, candidate: MatchCandidate) {
   const evidence: string[] = [];
   const sourceCode = normalizedCode(record.versionCode);
@@ -217,8 +223,9 @@ export function validateNormalizedListing(record: NormalizedSourceListing): stri
 }
 
 /**
- * Conservatively resolves one existing exact variant. Brand/title alone never
- * authorizes a write. Conflicting evidence is rejected instead of guessed.
+ * Conservatively resolves one existing exact variant. Exact identifiers are
+ * strongest, while an uncontradicted brand/product/exact-size match is enough
+ * when it identifies one candidate. Conflicting evidence is never guessed.
  */
 export function matchCanonicalVariant(
   record: NormalizedSourceListing,
@@ -231,7 +238,7 @@ export function matchCanonicalVariant(
 
   const choose = (pool: MatchCandidate[], evidence: string[]): VariantMatchResult | null => {
     if (pool.length === 0) return null;
-    const compatible = pool.filter((candidate) => conflicts(record, candidate).length === 0);
+    const compatible = pool.filter((candidate) => blockingConflicts(record, candidate).length === 0);
     if (compatible.length === 1) return { status: "matched", candidate: compatible[0]!, evidence };
     if (compatible.length > 1) {
       return {
@@ -243,7 +250,7 @@ export function matchCanonicalVariant(
     return {
       status: "rejected",
       reason: `Canonical identifier matched, but source evidence conflicts on ${[
-        ...new Set(pool.flatMap((candidate) => conflicts(record, candidate))),
+          ...new Set(pool.flatMap((candidate) => blockingConflicts(record, candidate))),
       ].join(", ")}`,
       candidateIds: pool.map((candidate) => candidate.variantId).sort(),
     };
@@ -273,11 +280,9 @@ export function matchCanonicalVariant(
   const hasVersionEvidence = Boolean(
     record.versionCode || record.releaseDate || record.releaseYear || record.formulationFingerprint || record.packagingEvidence,
   );
-  if (hasVersionEvidence && hasExactSize) {
-    const narrowed = brandAndTitle.filter(
-      (candidate) =>
-        conflicts(record, candidate).length === 0 && matchingVersionEvidence(record, candidate).length > 0,
-    );
+  const compatible = brandAndTitle.filter((candidate) => blockingConflicts(record, candidate).length === 0);
+  if (hasVersionEvidence && compatible.length > 1) {
+    const narrowed = compatible.filter((candidate) => matchingVersionEvidence(record, candidate).length > 0);
     if (narrowed.length === 1) {
       return {
         status: "matched",
@@ -294,9 +299,33 @@ export function matchCanonicalVariant(
     }
   }
 
+  if (hasExactSize && compatible.length === 1) {
+    return {
+      status: "matched",
+      candidate: compatible[0]!,
+      evidence: ["brand", "product title", "exact size"],
+    };
+  }
+  if (hasExactSize && compatible.length > 1) {
+    return {
+      status: "ambiguous",
+      reason: "Brand, product, and exact size match multiple canonical versions",
+      candidateIds: compatible.map((candidate) => candidate.variantId).sort(),
+    };
+  }
+  if (hasExactSize && brandAndTitle.length > 0) {
+    return {
+      status: "rejected",
+      reason: `Brand, product, and exact size matched, but source evidence conflicts on ${[
+        ...new Set(brandAndTitle.flatMap((candidate) => blockingConflicts(record, candidate))),
+      ].join(", ")}`,
+      candidateIds: brandAndTitle.map((candidate) => candidate.variantId).sort(),
+    };
+  }
+
   return {
     status: "unmatched",
-    reason: "No unique high-confidence canonical variant match; title/brand evidence alone requires review",
+    reason: "No unique canonical variant match from exact identifiers or brand, product, and exact size",
     candidateIds: brandAndTitle.map((candidate) => candidate.variantId).sort(),
   };
 }

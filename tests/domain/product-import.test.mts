@@ -99,6 +99,15 @@ test("nullable optional facts remain null instead of being invented", () => {
   assert.equal(result.value.products[1]?.version.formulationFingerprint, null);
 });
 
+test("an exact-size variant does not require GTIN or SKU merely to pass review", () => {
+  const payload = copy(example);
+  payload.products[0].variants[0].gtin = null;
+  payload.products[0].variants[0].manufacturerSku = null;
+  const result = validateProductImportPayload(payload);
+  assert.equal(result.ok, true);
+  assert.equal(result.warnings.some((warning) => warning.code === "WEAK_VARIANT_IDENTITY"), false);
+});
+
 test("multiple variants, offers, and benchmark source keys validate without flattening", () => {
   const payload = copy(example);
   const second = copy(payload.products[0].variants[0]);
@@ -150,6 +159,9 @@ test("variant matching distinguishes proposed, exact, ambiguous, and conflicting
   assert.deepEqual(resolveProductImportVariant(input, [exact]), { status: "REUSE", existingId: "variant-2024" });
   assert.deepEqual(resolveProductImportVariant(input, [exact, { ...exact, id: "duplicate" }]), { status: "AMBIGUOUS", existingId: null });
   assert.deepEqual(resolveProductImportVariant(input, [{ ...exact, productVersionId: "version-2026" }]), { status: "CONFLICT", existingId: null });
+  assert.deepEqual(resolveProductImportVariant({ ...input, gtin: null, manufacturerSku: null }, [exact]), { status: "REUSE", existingId: "variant-2024" });
+  assert.deepEqual(resolveProductImportVariant({ ...input, gtin: "4900000000099", manufacturerSku: null }, [exact]), { status: "CONFLICT", existingId: null });
+  assert.deepEqual(resolveProductImportVariant({ ...input, gtin: null, manufacturerSku: null, normalizedQuantity: 60 }, [exact]), { status: "CREATE", existingId: null });
 });
 
 test("idempotent retries accept equivalent JSON key ordering but reject changed payloads", () => {

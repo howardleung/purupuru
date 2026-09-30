@@ -18,6 +18,7 @@ function base(id: string, brandName = "Round Lab", productName = "1025 Dokdo Ton
     productName,
     brandName,
     versionName: "Current",
+    showVersionName: false,
     categoryName: "Toner",
     defaultVariantId: `default-${id}`,
     defaultVariantLabel: "200 mL",

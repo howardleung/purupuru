@@ -675,17 +675,18 @@ Retailer coverage is separate. If the platform does not track a retailer, displa
 
 ### Version Identity Rules
 
-Use deterministic identifiers first:
+`ProductVersion` is an exception mechanism for meaningful consumer differences. Most ProductFamilies should have one current/default version internally, while the normal visible identity is brand + product name + size. Create or preserve another version only when formula, ingredients, performance/function, SPF/PA, regulatory-market treatment, distinguishable packaging generation, or simultaneous old/new availability affects a purchase decision.
+
+Use deterministic identifiers as confidence and provenance evidence:
 
 - GTIN / JAN / UPC / EAN
 - manufacturer SKU
-- explicit version code
-- release year/date
+- exact brand, product, and normalized size
 - ingredient/formula fingerprint
-- packaging
-- title matching as fallback
+- explicit material version or regional evidence
+- release year/date and packaging as supporting context
 
-If confidence is too low, do not merge.
+A changed barcode, SKU, release year, marketing phrase, or minor packaging refresh does not independently define a new consumer-facing version. Exact identifiers remain valuable but are not required to associate an offer when brand, product, and exact size resolve uniquely with no contradictory evidence. If material identity is ambiguous or conflicting, do not merge.
 
 ### Bundle Behavior
 
@@ -726,9 +727,9 @@ CAD is the MVP user's display currency. Preserve the retailer's native currency 
 
 ### Product-Page Version and Variant Defaults
 
-Product pages default to the current/latest version and a curated `defaultVariantId` where available. If no curated default exists, select a deterministic standard/common active retail variant based on product metadata rather than database ordering.
+Product pages default internally to the current/latest version and a curated `defaultVariantId` where available. If no curated default exists, select a deterministic standard/common active retail variant based on product metadata rather than database ordering. A sole/default version is not promoted in the primary UI; shoppers normally choose size.
 
-The frontend should only show variants that actually exist for the currently selected product version. Version selection should be simple: selecting another version replaces the available variant controls with that version's known variants and updates all version-specific information below.
+The frontend should only show variants that actually exist for the currently selected product version. Show a formula/version selector only when multiple shopper-relevant versions are available. Selecting another meaningful version replaces the available size controls with that version's known variants and updates all version-specific information below.
 
 When switching versions, preserve the exact same normalized size/quantity only if that exact variant exists in the target version. Otherwise select the target version's curated/default variant. No approximate size matching is required. Offers from different versions must never be silently mixed.
 
@@ -875,14 +876,14 @@ The initial above-the-fold area should include:
 - product image
 - brand
 - product name
-- current version selector
-- variant/size selector
+- size selector
+- formula/version selector only when multiple shopper-relevant versions exist
 - external rating signals
 - prominent local MSRP / Retail Price / Reference Price when available
 - primary collection action
 - Add to Shopping List action
 
-Version selection should normally use compact pill/button controls when the number of versions is small. A dropdown may be used if the version history becomes too long. Changing the selected version updates all version-specific information on the page.
+When multiple meaningful formulas exist, use compact pill/button controls when feasible; a dropdown may be used if the history becomes long. Changing that selection updates all version-scoped information. Do not show this control for the ordinary single-version case.
 
 External ratings should be shown as polished compact source signals, using the source/platform logo where permitted alongside its rating and relevant review count or ranking. They should not require separate full-size cards for every source.
 

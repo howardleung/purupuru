@@ -101,7 +101,7 @@ Mobile feature parity matters more than identical layout.
 - Do not shrink a desktop table until labels and controls are unusable.
 - Avoid page-level horizontal overflow; deliberate comparison-region scrolling may be used when clearly indicated.
 - Controls need comfortable touch targets and visible focus states.
-- Search, filters, sorting, version/size selection, collection actions, and list progress retain full capability on narrow screens.
+- Search, filters, sorting, size selection, any meaningful formula selection, collection actions, and list progress retain full capability on narrow screens.
 - Mobile content order follows task priority, not desktop column order.
 
 ## 5. Header and primary navigation
@@ -320,7 +320,7 @@ Supported/data-dependent rows may include:
 - image;
 - product and brand;
 - category;
-- explicit formulation and size context;
+- explicit size and, only when relevant, formula context;
 - catalogue rating once defined;
 - lowest tracked price for active customer market;
 - benchmark pricing;
@@ -341,7 +341,7 @@ Comparison is settled as a structural capability, while richer dimensions and de
 
 Answer in this order:
 
-1. What is this exact product, formulation, and size?
+1. What is this product and size, and is there a meaningful formula distinction I need to know?
 2. Where can the user buy it?
 3. What trustworthy benchmark/supporting evidence exists?
 4. What secondary research context exists?
@@ -354,7 +354,8 @@ Personal controls no longer dominate the primary hierarchy.
 Left:
 
 - large product image/fallback;
-- version selector near/below image;
+- size selector near/below image;
+- a formula/version selector only when multiple shopper-relevant versions exist;
 - size selector near/below image.
 
 Right:
@@ -366,7 +367,7 @@ Right:
 - `Buy in Canada` prominently near the top;
 - compact circular `+` personal-action trigger.
 
-Consumer labels may simplify terminology, but selection maps exactly to ProductVersion and ProductVariant.
+The default presentation is brand + product name + size. A sole/default ProductVersion remains implicit; when multiple meaningful formulas exist, consumer labels map exactly to ProductVersion and ProductVariant without exposing database terminology.
 
 ### Buying options
 
@@ -380,7 +381,7 @@ Destination-market offers, external signals, price history, detailed product inf
 
 Use only images valid for the selected version; prefer exact-variant imagery, then safe version-wide imagery, never another formulation/size. Preserve alt text/provenance.
 
-Recommended mobile order: breadcrumbs/identity, image, version/size, benchmark and Canada offers, compact personal `+`, then secondary research. Offer tables become readable cards/rows without losing source or uncertainty.
+Recommended mobile order: breadcrumbs/identity, image, size (and formula only when meaningful), benchmark and Canada offers, compact personal `+`, then secondary research. Offer tables become readable cards/rows without losing source or uncertainty.
 
 ## 12. Personal `+` action modal or sheet
 
@@ -475,7 +476,7 @@ Inspect and update private state without leaving My Collection.
 
 - product image;
 - brand/product name;
-- formulation context in consumer language;
+- formula context in consumer language only when multiple shopper-relevant versions exist;
 - selected/default size where relevant;
 - personal half-step rating;
 - Want, Tried, derived Owned, Holy Grail, Would Repurchase;

@@ -173,17 +173,33 @@ export function resolveProductImportVariant(input: {
   expectedFamilySlug: string;
   expectedBrandId: string | null;
 }, candidates: readonly ProductImportVariantCandidate[]): ProductImportVariantResolution {
-  const matches = candidates.filter((candidate) =>
+  const identifierMatches = candidates.filter((candidate) =>
     Boolean(input.gtin && candidate.gtin === input.gtin) ||
     Boolean(input.expectedBrandId && input.manufacturerSku && candidate.brandId === input.expectedBrandId &&
-      candidate.manufacturerSku?.toLowerCase() === input.manufacturerSku.toLowerCase()) ||
-    Boolean(input.expectedVersionId && candidate.productVersionId === input.expectedVersionId &&
-      candidate.normalizedQuantity === input.normalizedQuantity && candidate.normalizedUnit === input.normalizedUnit));
-  const ids = new Set(matches.map((candidate) => candidate.id));
-  if (ids.size === 0) return { status: "CREATE", existingId: null };
+      candidate.manufacturerSku?.toLowerCase() === input.manufacturerSku.toLowerCase()));
+  const identifierIds = new Set(identifierMatches.map((candidate) => candidate.id));
+  if (identifierIds.size > 1) return { status: "AMBIGUOUS", existingId: null };
+  const identifierCandidate = identifierMatches[0];
+  if (identifierCandidate) {
+    if (
+      (input.expectedVersionId ? identifierCandidate.productVersionId !== input.expectedVersionId : identifierCandidate.productFamilySlug !== input.expectedFamilySlug) ||
+      identifierCandidate.normalizedQuantity !== input.normalizedQuantity || identifierCandidate.normalizedUnit !== input.normalizedUnit
+    ) return { status: "CONFLICT", existingId: null };
+    return { status: "REUSE", existingId: identifierCandidate.id };
+  }
+
+  const sizeMatches = candidates.filter((candidate) =>
+    (input.expectedVersionId ? candidate.productVersionId === input.expectedVersionId : candidate.productFamilySlug === input.expectedFamilySlug) &&
+    candidate.normalizedQuantity === input.normalizedQuantity && candidate.normalizedUnit === input.normalizedUnit);
+  const compatible = sizeMatches.filter((candidate) =>
+    (!input.gtin || !candidate.gtin || candidate.gtin === input.gtin) &&
+    (!input.manufacturerSku || !candidate.manufacturerSku || candidate.manufacturerSku.toLowerCase() === input.manufacturerSku.toLowerCase()));
+  const ids = new Set(compatible.map((candidate) => candidate.id));
   if (ids.size > 1) return { status: "AMBIGUOUS", existingId: null };
-  const candidate = matches[0];
-  if (!candidate ||
+  const candidate = compatible[0];
+  if (!candidate && sizeMatches.length > 0) return { status: "CONFLICT", existingId: null };
+  if (!candidate) return { status: "CREATE", existingId: null };
+  if (
     (input.expectedVersionId ? candidate.productVersionId !== input.expectedVersionId : candidate.productFamilySlug !== input.expectedFamilySlug) ||
     candidate.normalizedQuantity !== input.normalizedQuantity || candidate.normalizedUnit !== input.normalizedUnit) {
     return { status: "CONFLICT", existingId: null };
@@ -521,7 +537,6 @@ export function validateProductImportPayload(input: unknown): ProductImportValid
         else seenGtins.set(gtin, `${variantPath}.gtin`);
       }
       const manufacturerSku = nullableString(variant, "manufacturerSku", variantPath, errors, 200);
-      if (!gtin && !manufacturerSku) warnings.push(issue(variantPath, "WEAK_VARIANT_IDENTITY", "No GTIN or manufacturer SKU was supplied; explicit review is required."));
       const benchmarksRaw = Array.isArray(variant.benchmarks) ? variant.benchmarks : [];
       const offersRaw = Array.isArray(variant.offers) ? variant.offers : [];
       const imagesRaw = Array.isArray(variant.images) ? variant.images : [];

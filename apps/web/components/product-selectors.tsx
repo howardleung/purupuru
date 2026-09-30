@@ -27,39 +27,40 @@ export function ProductSelectors({
 }) {
   return (
     <div className="grid gap-6">
-      <fieldset>
-        <legend className="text-sm font-medium text-slate-700">Version</legend>
-        <div className="mt-2 flex flex-wrap gap-2">
-          {versions.map((version) => {
-            const target = chooseVariantForVersion(
-              version.variants,
-              selectedVariant,
-              version.defaultVariantId,
-            );
-            const isSelected = version.id === selectedVersion.id;
-            return (
-              <Link
-                aria-current={isSelected ? "page" : undefined}
-                className={
-                  "rounded-md border px-3 py-2 text-sm " +
-                  (isSelected
-                    ? "border-brand-action bg-brand-action text-white"
-                    : "border-slate-300 text-slate-700 hover:border-slate-500")
-                }
-                href={productSelectionHref({
-                  productSlug,
-                  versionKey: version.versionCode ?? version.id,
-                  variantId: target?.id,
-                })}
-                key={version.id}
-              >
-                {version.versionName}
-                {version.status === "CURRENT" ? " · Current" : ""}
-              </Link>
-            );
-          })}
-        </div>
-      </fieldset>
+      {versions.length > 1 ? (
+        <fieldset>
+          <legend className="text-sm font-medium text-slate-700">Formula</legend>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {versions.map((version) => {
+              const target = chooseVariantForVersion(
+                version.variants,
+                selectedVariant,
+                version.defaultVariantId,
+              );
+              const isSelected = version.id === selectedVersion.id;
+              return (
+                <Link
+                  aria-current={isSelected ? "page" : undefined}
+                  className={
+                    "rounded-md border px-3 py-2 text-sm " +
+                    (isSelected
+                      ? "border-brand-action bg-brand-action text-white"
+                      : "border-slate-300 text-slate-700 hover:border-slate-500")
+                  }
+                  href={productSelectionHref({
+                    productSlug,
+                    versionKey: version.versionCode ?? version.id,
+                    variantId: target?.id,
+                  })}
+                  key={version.id}
+                >
+                  {version.versionName}
+                </Link>
+              );
+            })}
+          </div>
+        </fieldset>
+      ) : null}
 
       <fieldset>
         <legend className="text-sm font-medium text-slate-700">Size</legend>

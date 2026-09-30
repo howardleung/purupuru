@@ -15,7 +15,7 @@ const nunito = localFont({
 });
 
 const siteDescription =
-  "Version-aware skincare discovery, trusted cross-market price context, and private shopping planning.";
+  "Skincare discovery, trusted cross-market price context, and private shopping planning.";
 
 export const metadata: Metadata = {
   title: {

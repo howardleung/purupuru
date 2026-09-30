@@ -14,6 +14,7 @@ export type CollectionVersionBase = {
   productName: string;
   brandName: string;
   versionName: string;
+  showVersionName: boolean;
   categoryName: string;
   defaultVariantId: string | null;
   defaultVariantLabel: string | null;

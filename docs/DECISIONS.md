@@ -349,3 +349,13 @@ This file records settled choices and the rationale behind them. New decisions s
 **Why:** Research automation can reduce manual catalogue work only if uncertain identity evidence remains reviewable and retries cannot duplicate or partially publish product graphs. A narrow interface is safer than exposing generic Prisma operations or relying on AI-generated syntax as trust.
 
 **Implications:** GTIN, scoped SKU, and exact version/size evidence are authoritative in that order; ambiguity blocks commit and canonical categories remain curated. The idempotency key uniquely identifies a submitted batch. Raw and normalized payloads, provenance, plan, reviewer identity, and committed IDs remain auditable. `PURUPURU_ADMIN_CLERK_USER_IDS` is required server-side. The additive import-batch migration must be deployed before use; feeds, scraping, schedules, and automatic low-confidence creation remain out of scope.
+
+### 2026-09-29 — ProductVersion is a consumer-relevance exception
+
+**Status:** Accepted
+
+**Decision:** Preserve `ProductFamily → ProductVersion → ProductVariant → Offer`, but normally model one current/default ProductVersion and present brand + product name + size. Create another ProductVersion only for a concrete shopper-relevant difference in formula, function, SPF/PA, regulatory market, distinguishable generation, or simultaneously sold old/new products. Exact identifiers and release metadata remain confidence/provenance evidence but do not independently define a user-facing version.
+
+**Why:** PuruPuru should make ordinary beauty discovery and price comparison simple. A retailer listing that clearly matches brand, product, form, and exact size should not disappear merely because it does not prove a particular JAN or release year.
+
+**Implications:** Exact GTIN/SKU matches remain strongest; a unique uncontradicted brand/product/exact-size match is normally sufficient. Conflicting identifiers, sizes, or material-version evidence still block or require review. Single-version UI hides version labels and emphasizes size; a formula selector appears only for multiple meaningful versions. This supersedes earlier ingestion implications that required exact version evidence for every offer. The staged Bioré Canadian-offer deactivation batch was rejected as obsolete, and the existing offers remain catalogue records subject to normal price refresh.
