@@ -1,0 +1,890 @@
+{
+  "schemaVersion": "1.0",
+  "idempotencyKey": "purupuru:first-real-catalogue-batch:2026-09-27:v2",
+  "source": {
+    "type": "CHATGPT_WORK",
+    "label": "Initial real PuruPuru catalogue research batch",
+    "url": null,
+    "retrievedAt": "2026-09-27T19:06:42.872Z",
+    "notes": "Five-product research batch assembled from official brand/manufacturer pages and current retailer product pages. Each factual claim carries its own provenance; unresolved identity details remain explicitly reviewable."
+  },
+  "products": [
+    {
+      "brand": {
+        "name": "Round Lab",
+        "slug": "round-lab",
+        "originMarket": "KR",
+        "aliases": ["ROUND LAB"]
+      },
+      "family": {
+        "canonicalName": "1025 Dokdo Toner",
+        "slug": "round-lab-1025-dokdo-toner",
+        "categorySlug": "toner",
+        "originMarket": "KR",
+        "commonEnglishAliases": ["1025 Dokdo Toner 200ml"]
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": "Clear cylindrical bottle with white cap, vertical 1025 Dokdo Toner label, and blue island artwork near the base.",
+        "provenance": {
+          "sourceUrl": "https://roundlab.co.kr/product/1025-%EB%8F%85%EB%8F%84-%ED%86%A0%EB%84%88-200ml/22/category/50/display/1/",
+          "sourceType": "MANUFACTURER",
+          "retrievedAt": "2026-09-27T19:06:42.872Z",
+          "verifiedAt": "2026-09-27T19:06:42.872Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Official Round Lab Korea product page establishes the current 200 mL product name, packaging context, regular consumer price, and current selling price."
+        },
+        "images": [
+          {
+            "url": "https://roundlab.co.kr/web/product/small/202511/1ffc403996430656a003ac012165a2d6.jpg",
+            "altText": "Round Lab 1025 Dokdo Toner 200 mL product bottle",
+            "sourceType": "BRAND_APPROVED",
+            "sourceName": "Round Lab Korea",
+            "sourcePageUrl": "https://roundlab.co.kr/product/1025-%EB%8F%85%EB%8F%84-%ED%86%A0%EB%84%88-200ml/22/category/50/display/1/",
+            "isPrimary": true,
+            "sortOrder": 0,
+            "provenance": {
+              "sourceUrl": "https://roundlab.co.kr/product/1025-%EB%8F%85%EB%8F%84-%ED%86%A0%EB%84%88-200ml/22/category/50/display/1/",
+              "sourceType": "MANUFACTURER",
+              "retrievedAt": "2026-09-27T19:06:42.872Z",
+              "verifiedAt": "2026-09-27T19:06:42.872Z",
+              "verificationStatus": "VERIFIED",
+              "notes": "Image URL is served directly by the official Round Lab product page."
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "displaySize": "200 mL",
+          "normalizedQuantity": 200,
+          "normalizedUnit": "ml",
+          "gtin": "8809657114731",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://www.jeancoutu.com/en/shop/categories/beauty/skincare/moisturizer/1025-dokdo-toner/p/8809657114731",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-09-27T19:06:42.872Z",
+            "verifiedAt": "2026-09-27T19:06:42.872Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Jean Coutu identifies the 200 mL product with product number/EAN 8809657114731; the official Round Lab page independently confirms the 200 mL size."
+          },
+          "images": [],
+          "benchmarks": [
+            {
+              "market": "KR",
+              "type": "RETAIL_PRICE",
+              "amount": 15000,
+              "nativeCurrency": "KRW",
+              "sourceKey": "brand:round-lab",
+              "sourceDisplayName": "Round Lab Korea",
+              "sourceUrl": "https://roundlab.co.kr/product/1025-%EB%8F%85%EB%8F%84-%ED%86%A0%EB%84%88-200ml/22/category/50/display/1/",
+              "observedAt": "2026-09-27T19:06:42.872Z",
+              "verifiedAt": "2026-09-27T19:06:42.872Z",
+              "provenance": {
+                "sourceUrl": "https://roundlab.co.kr/product/1025-%EB%8F%85%EB%8F%84-%ED%86%A0%EB%84%88-200ml/22/category/50/display/1/",
+                "sourceType": "MANUFACTURER",
+                "retrievedAt": "2026-09-27T19:06:42.872Z",
+                "verifiedAt": "2026-09-27T19:06:42.872Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Official product page labels KRW 15,000 as 소비자가 (consumer/regular retail price) and KRW 11,900 as the current selling price; it is not represented as MSRP."
+              }
+            }
+          ],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:round-lab-kr",
+                "name": "Round Lab Korea",
+                "country": "KR",
+                "websiteUrl": "https://roundlab.co.kr"
+              },
+              "externalListingId": "22",
+              "listingUrl": "https://roundlab.co.kr/product/1025-%EB%8F%85%EB%8F%84-%ED%86%A0%EB%84%88-200ml/22/category/50/display/1/",
+              "productPrice": 11900,
+              "nativeCurrency": "KRW",
+              "availableMarkets": ["KR"],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-09-27T19:06:42.872Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://roundlab.co.kr/product/1025-%EB%8F%85%EB%8F%84-%ED%86%A0%EB%84%88-200ml/22/category/50/display/1/",
+                "sourceType": "MANUFACTURER",
+                "retrievedAt": "2026-09-27T19:06:42.872Z",
+                "verifiedAt": "2026-09-27T19:06:42.872Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Official Korean storefront current selling price. Shipping is omitted because offer-level delivery terms were not established for a specific destination."
+              }
+            },
+            {
+              "retailer": {
+                "sourceKey": "retailer:well-ca",
+                "name": "Well.ca",
+                "country": "CA",
+                "websiteUrl": "https://well.ca"
+              },
+              "externalListingId": "327666",
+              "listingUrl": "https://well.ca/products/round-lab-1025-dokdo-toner_327666.html",
+              "productPrice": 17.09,
+              "nativeCurrency": "CAD",
+              "availableMarkets": ["CA"],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-09-27T19:06:42.872Z",
+              "shipping": {
+                "state": "CALCULATED",
+                "amount": null,
+                "currency": null,
+                "method": null,
+                "estimate": null,
+                "conditions": "Calculated at checkout; product page advertises free shipping at the retailer's threshold."
+              },
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://well.ca/products/round-lab-1025-dokdo-toner_327666.html",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-09-27T19:06:42.872Z",
+                "verifiedAt": "2026-09-27T19:06:42.872Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Current page shows 200 mL, regular CAD 17.99 and current price CAD 17.09. The current product price is imported; regular price remains provenance context only."
+              }
+            },
+            {
+              "retailer": {
+                "sourceKey": "retailer:kbeauty-shop-ca",
+                "name": "KBeauty Shop",
+                "country": "CA",
+                "websiteUrl": "https://kbeauty.shop"
+              },
+              "externalListingId": null,
+              "listingUrl": "https://kbeauty.shop/en-ca/products/roundlab-1025-dokdo-toner-200ml",
+              "productPrice": 24,
+              "nativeCurrency": "CAD",
+              "availableMarkets": ["CA"],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-09-27T19:06:42.872Z",
+              "shipping": {
+                "state": "CALCULATED",
+                "amount": null,
+                "currency": null,
+                "method": null,
+                "estimate": "Standard 7-14 business days",
+                "conditions": "Product page states free shipping over CA$109 and CA$11.99 below that threshold."
+              },
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://kbeauty.shop/en-ca/products/roundlab-1025-dokdo-toner-200ml",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-09-27T19:06:42.872Z",
+                "verifiedAt": "2026-09-27T19:06:42.872Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Current Canadian storefront page shows the 200 mL product at CA$24.00 and in stock."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "COSRX",
+        "slug": "cosrx",
+        "originMarket": "KR",
+        "aliases": ["Cosrx"]
+      },
+      "family": {
+        "canonicalName": "Advanced Snail 96 Mucin Power Essence",
+        "slug": "cosrx-advanced-snail-96-mucin-power-essence",
+        "categorySlug": "essence",
+        "originMarket": "KR",
+        "commonEnglishAliases": ["Snail 96 Mucin Essence", "Advanced Snail 96 Power Essence"]
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": "Clear rectangular pump bottle with black pump and black/yellow Advanced Snail label; official current range also includes a 30 mL mini.",
+        "provenance": {
+          "sourceUrl": "https://www.cosrx.com/products/advanced-snail-96-mucin-power-essence",
+          "sourceType": "MANUFACTURER",
+          "retrievedAt": "2026-09-27T19:06:42.872Z",
+          "verifiedAt": "2026-09-27T19:06:42.872Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Official COSRX product page establishes the current product identity and currently offered 100 mL and 30 mL sizes."
+        },
+        "images": [
+          {
+            "url": "https://www.cosrx.com/cdn/shop/files/james_800x1067_1_1_4e9750cc-2cd6-4817-ace5-be2305a85806.jpg?v=1763111577",
+            "altText": "COSRX Advanced Snail 96 Mucin Power Essence product bottle",
+            "sourceType": "BRAND_APPROVED",
+            "sourceName": "COSRX Official",
+            "sourcePageUrl": "https://www.cosrx.com/products/advanced-snail-96-mucin-power-essence",
+            "isPrimary": true,
+            "sortOrder": 0,
+            "provenance": {
+              "sourceUrl": "https://www.cosrx.com/products/advanced-snail-96-mucin-power-essence",
+              "sourceType": "MANUFACTURER",
+              "retrievedAt": "2026-09-27T19:06:42.872Z",
+              "verifiedAt": "2026-09-27T19:06:42.872Z",
+              "verificationStatus": "VERIFIED",
+              "notes": "Image URL is served directly by the official COSRX product page."
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "displaySize": "100 mL",
+          "normalizedQuantity": 100,
+          "normalizedUnit": "ml",
+          "gtin": "8809416470009",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://cosrxskincare.eu/en/producto/esencia-advanced-snail-96-mucin-power/",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-09-27T19:06:42.872Z",
+            "verifiedAt": "2026-09-27T19:06:42.872Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "COSRX-branded European regional storefront identifies EAN 8809416470009; the official global and Korean brand pages independently confirm the 100 mL size."
+          },
+          "images": [],
+          "benchmarks": [
+            {
+              "market": "KR",
+              "type": "RETAIL_PRICE",
+              "amount": 23000,
+              "nativeCurrency": "KRW",
+              "sourceKey": "brand:cosrx",
+              "sourceDisplayName": "COSRX Korea",
+              "sourceUrl": "https://www.cosrx.co.kr/shop/shopdetail.html?GfDT=bmx9W15A&branduid=196&cur_code=070001001&mcode=001&scode=001&sort=manual&type=Y&xcode=070",
+              "observedAt": "2026-09-27T19:06:42.872Z",
+              "verifiedAt": "2026-09-27T19:06:42.872Z",
+              "provenance": {
+                "sourceUrl": "https://www.cosrx.co.kr/shop/shopdetail.html?GfDT=bmx9W15A&branduid=196&cur_code=070001001&mcode=001&scode=001&sort=manual&type=Y&xcode=070",
+                "sourceType": "MANUFACTURER",
+                "retrievedAt": "2026-09-27T19:06:42.872Z",
+                "verifiedAt": "2026-09-27T19:06:42.872Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Official Korean COSRX storefront lists the 100 mL product at KRW 23,000. It is represented as Retail Price, not MSRP."
+              }
+            }
+          ],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:cosrx-kr",
+                "name": "COSRX Korea",
+                "country": "KR",
+                "websiteUrl": "https://www.cosrx.co.kr"
+              },
+              "externalListingId": "196",
+              "listingUrl": "https://www.cosrx.co.kr/shop/shopdetail.html?GfDT=bmx9W15A&branduid=196&cur_code=070001001&mcode=001&scode=001&sort=manual&type=Y&xcode=070",
+              "productPrice": 23000,
+              "nativeCurrency": "KRW",
+              "availableMarkets": ["KR"],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-09-27T19:06:42.872Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://www.cosrx.co.kr/shop/shopdetail.html?GfDT=bmx9W15A&branduid=196&cur_code=070001001&mcode=001&scode=001&sort=manual&type=Y&xcode=070",
+                "sourceType": "MANUFACTURER",
+                "retrievedAt": "2026-09-27T19:06:42.872Z",
+                "verifiedAt": "2026-09-27T19:06:42.872Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Official Korean storefront offer for the exact 100 mL product."
+              }
+            },
+            {
+              "retailer": {
+                "sourceKey": "retailer:well-ca",
+                "name": "Well.ca",
+                "country": "CA",
+                "websiteUrl": "https://well.ca"
+              },
+              "externalListingId": "307252",
+              "listingUrl": "https://well.ca/products/cosrx-advanced-snail-96-mucin-power_307252.html",
+              "productPrice": 24.96,
+              "nativeCurrency": "CAD",
+              "availableMarkets": ["CA"],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-09-27T19:06:42.872Z",
+              "shipping": {
+                "state": "CALCULATED",
+                "amount": null,
+                "currency": null,
+                "method": null,
+                "estimate": null,
+                "conditions": "Calculated at checkout; product page advertises free shipping at the retailer's threshold."
+              },
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://well.ca/products/cosrx-advanced-snail-96-mucin-power_307252.html",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-09-27T19:06:42.872Z",
+                "verifiedAt": "2026-09-27T19:06:42.872Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Current Canadian retailer page shows the exact 100 mL product at CA$24.96."
+              }
+            },
+            {
+              "retailer": {
+                "sourceKey": "retailer:kiyoko-ca",
+                "name": "Kiyoko Beauty",
+                "country": "CA",
+                "websiteUrl": "https://kiyoko.ca"
+              },
+              "externalListingId": null,
+              "listingUrl": "https://kiyoko.ca/en-ca/products/cosrx-advanced-snail-96-mucin-power-essence-100ml",
+              "productPrice": 17.99,
+              "nativeCurrency": "CAD",
+              "availableMarkets": ["CA"],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-09-27T19:06:42.872Z",
+              "shipping": {
+                "state": "CALCULATED",
+                "amount": null,
+                "currency": null,
+                "method": null,
+                "estimate": null,
+                "conditions": "Calculated at checkout; product page advertises free shipping over CA$65."
+              },
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/products/cosrx-advanced-snail-96-mucin-power-essence-100ml",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-09-27T19:06:42.872Z",
+                "verifiedAt": "2026-09-27T19:06:42.872Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Current Canadian retailer page shows the exact 100 mL product at CA$17.99, reduced from CA$24.00, and available to add to cart."
+              }
+            }
+          ]
+        },
+        {
+          "displaySize": "30 mL",
+          "normalizedQuantity": 30,
+          "normalizedUnit": "ml",
+          "gtin": null,
+          "manufacturerSku": null,
+          "isDefault": false,
+          "provenance": {
+            "sourceUrl": "https://www.cosrx.com/products/advanced-snail-96-mucin-power-essence",
+            "sourceType": "MANUFACTURER",
+            "retrievedAt": "2026-09-27T19:06:42.872Z",
+            "verifiedAt": "2026-09-27T19:06:42.872Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Official COSRX product page directly lists the 30 mL mini. No reliable GTIN or manufacturer SKU was established, so this variant must remain under explicit human identity review."
+          },
+          "images": [],
+          "benchmarks": [],
+          "offers": []
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "Beauty of Joseon",
+        "slug": "beauty-of-joseon",
+        "originMarket": "KR",
+        "aliases": ["BOJ", "조선미녀"]
+      },
+      "family": {
+        "canonicalName": "Relief Sun: Rice + Niacinamide",
+        "slug": "beauty-of-joseon-relief-sun-rice-niacinamide",
+        "categorySlug": "sunscreen",
+        "originMarket": "KR",
+        "commonEnglishAliases": ["Relief Sun: Rice + Probiotics", "Relief Sun Rice Probiotics SPF50+ PA++++"]
+      },
+      "version": {
+        "versionName": "Korean formula — global label refresh",
+        "versionCode": "KR-global-current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": "50 mL white tube. Beauty of Joseon is phasing the label name from Rice + Probiotics to Rice + Niacinamide; the manufacturer states the formula, ingredients, and size are unchanged.",
+        "provenance": {
+          "sourceUrl": "https://beautyofjoseon.com/products/relief-sun-rice-probiotics-spf50-pa-uk",
+          "sourceType": "MANUFACTURER",
+          "retrievedAt": "2026-09-27T19:06:42.872Z",
+          "verifiedAt": "2026-09-27T19:06:42.872Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Official Beauty of Joseon FAQ explicitly says the rename from Rice + Probiotics to Rice + Niacinamide is a labeling refresh only; formula, ingredients, and 50 mL size remain unchanged. This is not modeled as a separate formulation."
+        },
+        "images": [
+          {
+            "url": "https://beautyofjoseon.com/cdn/shop/files/04_0805_Relief_sun_EU_UK_d87a9756-3bcb-4c1f-a487-1d1b900b0f2e.jpg?v=1787222280&width=1800",
+            "altText": "Beauty of Joseon Relief Sun Rice + Niacinamide 50 mL product tube",
+            "sourceType": "BRAND_APPROVED",
+            "sourceName": "Beauty of Joseon Official",
+            "sourcePageUrl": "https://beautyofjoseon.com/products/relief-sun-rice-probiotics-spf50-pa-uk",
+            "isPrimary": true,
+            "sortOrder": 0,
+            "provenance": {
+              "sourceUrl": "https://beautyofjoseon.com/products/relief-sun-rice-probiotics-spf50-pa-uk",
+              "sourceType": "MANUFACTURER",
+              "retrievedAt": "2026-09-27T19:06:42.872Z",
+              "verifiedAt": "2026-09-27T19:06:42.872Z",
+              "verificationStatus": "VERIFIED",
+              "notes": "Image URL is served directly by the current official Beauty of Joseon product page."
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "displaySize": "50 mL",
+          "normalizedQuantity": 50,
+          "normalizedUnit": "ml",
+          "gtin": "8809782555508",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://pharmaciedesplanetes.fr/produits/parapharmacie-visage-corps-cheveux-solaire-cremes-solaires-beauty-of-joseon-relief-sun-riz-probiotiques-spf50-50ml/ea93137d-e9b5-4cb0-8451-7f666558e13f",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-09-27T19:06:42.872Z",
+            "verifiedAt": null,
+            "verificationStatus": "UNVERIFIED",
+            "notes": "Established pharmacy page identifies EAN 8809782555508 for the 50 mL Rice + Probiotics label. The manufacturer says formula and size are unchanged after the Rice + Niacinamide rename, but GTIN continuity for the refreshed label was not independently established."
+          },
+          "images": [],
+          "benchmarks": [],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:kbeauty-shop-ca",
+                "name": "KBeauty Shop",
+                "country": "CA",
+                "websiteUrl": "https://kbeauty.shop"
+              },
+              "externalListingId": null,
+              "listingUrl": "https://kbeauty.shop/en-ca/products/beautyofjoseon-relief-sun-rice-probiotics-50ml",
+              "productPrice": 26,
+              "nativeCurrency": "CAD",
+              "availableMarkets": ["CA"],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-09-27T19:06:42.872Z",
+              "shipping": {
+                "state": "CALCULATED",
+                "amount": null,
+                "currency": null,
+                "method": null,
+                "estimate": "Standard 7-14 business days",
+                "conditions": "Product page states free shipping over CA$109 and CA$11.99 below that threshold."
+              },
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://kbeauty.shop/en-ca/products/beautyofjoseon-relief-sun-rice-probiotics-50ml",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-09-27T19:06:42.872Z",
+                "verifiedAt": "2026-09-27T19:06:42.872Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Current Canadian storefront page shows the 50 mL Rice + Probiotics label at CA$26.00 and in stock. Official brand guidance confirms this old label is the same formula as the renamed product."
+              }
+            },
+            {
+              "retailer": {
+                "sourceKey": "retailer:thekshop-ca",
+                "name": "THEKSHOP",
+                "country": "CA",
+                "websiteUrl": "https://thekshop.ca"
+              },
+              "externalListingId": null,
+              "listingUrl": "https://thekshop.ca/products/beauty-of-joseon-relief-sun-rice-probiotics-1",
+              "productPrice": 28,
+              "nativeCurrency": "CAD",
+              "availableMarkets": ["CA"],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-09-27T19:06:42.872Z",
+              "shipping": {
+                "state": "CALCULATED",
+                "amount": null,
+                "currency": null,
+                "method": null,
+                "estimate": null,
+                "conditions": "Calculated at checkout; pickup availability is shown for Canadian stores."
+              },
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://thekshop.ca/products/beauty-of-joseon-relief-sun-rice-probiotics-1",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-09-27T19:06:42.872Z",
+                "verifiedAt": "2026-09-27T19:06:42.872Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Current Canadian retailer page shows the single 50 mL option at CA$28.00 and available to add to cart. The page also offers a separate 2 x 50 mL option, which is intentionally not imported as this single-unit offer."
+              }
+            },
+            {
+              "retailer": {
+                "sourceKey": "retailer:koreanbeauty-ca",
+                "name": "Korean Beauty Canada",
+                "country": "CA",
+                "websiteUrl": "https://koreanbeauty.ca"
+              },
+              "externalListingId": null,
+              "listingUrl": "https://koreanbeauty.ca/products/beauty-of-joseon-relief-rice-probiotics-ss",
+              "productPrice": 26,
+              "nativeCurrency": "CAD",
+              "availableMarkets": ["CA"],
+              "availabilityState": "OUT_OF_STOCK",
+              "observedAt": "2026-09-27T19:06:42.872Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://koreanbeauty.ca/products/beauty-of-joseon-relief-rice-probiotics-ss",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-09-27T19:06:42.872Z",
+                "verifiedAt": "2026-09-27T19:06:42.872Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Current Canadian retailer page shows the exact 50 mL old-label product at CA$26.00 and marks it sold out."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "ANESSA",
+        "slug": "anessa",
+        "originMarket": "JP",
+        "aliases": ["Anessa", "Shiseido ANESSA"]
+      },
+      "family": {
+        "canonicalName": "Perfect UV Skincare Milk",
+        "slug": "anessa-perfect-uv-skincare-milk",
+        "categorySlug": "sunscreen",
+        "originMarket": "JP",
+        "commonEnglishAliases": ["Perfect UV Skin Care Milk", "Perfect UV Sunscreen Skincare Milk"]
+      },
+      "version": {
+        "versionName": "2024 NA",
+        "versionCode": "NA",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": "H16501",
+        "formulationFingerprint": null,
+        "packagingDescription": "Gold 60 mL bottle for the NA release, labeled Perfect UV Skincare Milk NA.",
+        "provenance": {
+          "sourceUrl": "https://www.shiseido.co.jp/anessa/products/suncare/perfect_uv_sm/",
+          "sourceType": "MANUFACTURER",
+          "retrievedAt": "2026-09-27T19:06:42.872Z",
+          "verifiedAt": "2026-09-27T19:06:42.872Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Official ANESSA brand page establishes the NA release name and 60 mL size. Shiseido's official product catalogue identifies manufacturer product code H16501."
+        },
+        "images": [
+          {
+            "url": "https://www.shiseido.co.jp/anessa/products/suncare/perfect_uv_sm/img/product_img_pc.png",
+            "altText": "ANESSA Perfect UV Skincare Milk NA 60 mL gold bottle",
+            "sourceType": "BRAND_APPROVED",
+            "sourceName": "Shiseido ANESSA",
+            "sourcePageUrl": "https://www.shiseido.co.jp/anessa/products/suncare/perfect_uv_sm/",
+            "isPrimary": true,
+            "sortOrder": 0,
+            "provenance": {
+              "sourceUrl": "https://www.shiseido.co.jp/anessa/products/suncare/perfect_uv_sm/",
+              "sourceType": "MANUFACTURER",
+              "retrievedAt": "2026-09-27T19:06:42.872Z",
+              "verifiedAt": "2026-09-27T19:06:42.872Z",
+              "verificationStatus": "VERIFIED",
+              "notes": "Image URL is served directly by the official ANESSA product page."
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "displaySize": "60 mL",
+          "normalizedQuantity": 60,
+          "normalizedUnit": "ml",
+          "gtin": "4909978147105",
+          "manufacturerSku": "H16501",
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4909978147105",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-09-27T19:06:42.872Z",
+            "verifiedAt": "2026-09-27T19:06:42.872Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Major Japanese drugstore page identifies JAN 4909978147105 for ANESSA Perfect UV Skincare Milk NA 60 mL; official Shiseido page independently verifies the exact version and size."
+          },
+          "images": [],
+          "benchmarks": [
+            {
+              "market": "JP",
+              "type": "REFERENCE_PRICE",
+              "amount": 3058,
+              "nativeCurrency": "JPY",
+              "sourceKey": "brand:shiseido",
+              "sourceDisplayName": "Shiseido ANESSA",
+              "sourceUrl": "https://www.shiseido.co.jp/anessa/products/suncare/perfect_uv_sm/",
+              "observedAt": "2026-09-27T19:06:42.872Z",
+              "verifiedAt": "2026-09-27T19:06:42.872Z",
+              "provenance": {
+                "sourceUrl": "https://www.shiseido.co.jp/anessa/products/suncare/perfect_uv_sm/",
+                "sourceType": "MANUFACTURER",
+                "retrievedAt": "2026-09-27T19:06:42.872Z",
+                "verifiedAt": "2026-09-27T19:06:42.872Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Official manufacturer page explicitly labels JPY 3,058 tax included as 参考小売価格 (reference retail price). It is intentionally not represented as MSRP."
+              }
+            }
+          ],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:matsukiyococokara-jp",
+                "name": "Matsukiyo Cocokara Online Store",
+                "country": "JP",
+                "websiteUrl": "https://www.matsukiyococokara-online.com"
+              },
+              "externalListingId": "4909978147105",
+              "listingUrl": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4909978147105",
+              "productPrice": 3058,
+              "nativeCurrency": "JPY",
+              "availableMarkets": ["JP"],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-09-27T19:06:42.872Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4909978147105",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-09-27T19:06:42.872Z",
+                "verifiedAt": "2026-09-27T19:06:42.872Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Current Japanese drugstore offer for exact JAN 4909978147105 at JPY 3,058 tax included, with add-to-cart available."
+              }
+            },
+            {
+              "retailer": {
+                "sourceKey": "retailer:japanese-taste-ca",
+                "name": "Japanese Taste",
+                "country": "JP",
+                "websiteUrl": "https://japanesetaste.ca"
+              },
+              "externalListingId": "44293906891072",
+              "listingUrl": "https://japanesetaste.ca/products/shiseido-anessa-perfect-uv-sunscreen-skincare-milk-spf50-60ml",
+              "productPrice": 48.97,
+              "nativeCurrency": "CAD",
+              "availableMarkets": ["CA"],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-09-27T19:06:42.872Z",
+              "shipping": {
+                "state": "CALCULATED",
+                "amount": null,
+                "currency": null,
+                "method": null,
+                "estimate": null,
+                "conditions": "Calculated at checkout for the Canadian storefront."
+              },
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://japanesetaste.ca/products/shiseido-anessa-perfect-uv-sunscreen-skincare-milk-spf50-60ml",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-09-27T19:06:42.872Z",
+                "verifiedAt": "2026-09-27T19:06:42.872Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Current Canadian storefront page explicitly names the NA 60 mL release, lists CA$48.97, and marks the offer in stock. Shopify variant ID 44293906891072 is used as the stable retailer listing ID."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "Bioré",
+        "slug": "biore",
+        "originMarket": "JP",
+        "aliases": ["Biore", "ビオレUV"]
+      },
+      "family": {
+        "canonicalName": "UV Aqua Rich Watery Essence",
+        "slug": "biore-uv-aqua-rich-watery-essence",
+        "categorySlug": "sunscreen",
+        "originMarket": "JP",
+        "commonEnglishAliases": ["Aqua Rich Watery Essence SPF50+ PA++++", "Biore UV Watery Essence"]
+      },
+      "version": {
+        "versionName": "2025 Japan reformulation",
+        "versionCode": "2025-JP",
+        "releaseDate": "2025-02-08T00:00:00.000Z",
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": "2025 Japan 70 g tube release with updated instant, even-film formula. Kept distinct from earlier and non-Japanese formulations.",
+        "provenance": {
+          "sourceUrl": "https://www.kao.com/jp/newsroom/news/release/2024/20241211-002/",
+          "sourceType": "MANUFACTURER",
+          "retrievedAt": "2026-09-27T19:06:42.872Z",
+          "verifiedAt": "2026-09-27T19:06:42.872Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Official Kao release states that UV Aqua Rich Watery Essence was reformulated and launched nationwide in Japan on 2025-02-08; it explicitly identifies the standard tube as 70 g."
+        },
+        "images": [
+          {
+            "url": "https://www.matsukiyococokara-online.com/store/media/catalog/product/4/9/4901301447647_01_b7067977f5e719a42719abc434b4fb84.jpg",
+            "altText": "Bioré UV Aqua Rich Watery Essence 2025 Japan 70 g tube",
+            "sourceType": "RETAILER_APPROVED",
+            "sourceName": "Matsukiyo Cocokara Online Store",
+            "sourcePageUrl": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301447647",
+            "isPrimary": true,
+            "sortOrder": 0,
+            "provenance": {
+              "sourceUrl": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301447647",
+              "sourceType": "RETAILER",
+              "retrievedAt": "2026-09-27T19:06:42.872Z",
+              "verifiedAt": "2026-09-27T19:06:42.872Z",
+              "verificationStatus": "VERIFIED",
+              "notes": "Image URL is served directly by the exact-JAN major Japanese retailer product page."
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "displaySize": "70 g",
+          "normalizedQuantity": 70,
+          "normalizedUnit": "g",
+          "gtin": "4901301447647",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301447647",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-09-27T19:06:42.872Z",
+            "verifiedAt": "2026-09-27T19:06:42.872Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Major Japanese drugstore page identifies JAN 4901301447647 for the 70 g product; the official 2025 Kao release independently confirms the reformulated 70 g tube."
+          },
+          "images": [],
+          "benchmarks": [
+            {
+              "market": "JP",
+              "type": "RETAIL_PRICE",
+              "amount": 1064,
+              "nativeCurrency": "JPY",
+              "sourceKey": "retailer:matsukiyococokara-jp",
+              "sourceDisplayName": "Matsukiyo Cocokara Online Store",
+              "sourceUrl": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301447647",
+              "observedAt": "2026-09-27T19:06:42.872Z",
+              "verifiedAt": "2026-09-27T19:06:42.872Z",
+              "provenance": {
+                "sourceUrl": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301447647",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-09-27T19:06:42.872Z",
+                "verifiedAt": "2026-09-27T19:06:42.872Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Current exact-JAN Japanese retailer price is JPY 1,064 tax included. Kao explicitly states no manufacturer suggested retail price is set, so this is Retail Price, not MSRP."
+              }
+            }
+          ],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:matsukiyococokara-jp",
+                "name": "Matsukiyo Cocokara Online Store",
+                "country": "JP",
+                "websiteUrl": "https://www.matsukiyococokara-online.com"
+              },
+              "externalListingId": "4901301447647",
+              "listingUrl": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301447647",
+              "productPrice": 1064,
+              "nativeCurrency": "JPY",
+              "availableMarkets": ["JP"],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-09-27T19:06:42.872Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301447647",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-09-27T19:06:42.872Z",
+                "verifiedAt": "2026-09-27T19:06:42.872Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Current Japanese drugstore offer for exact JAN 4901301447647 at JPY 1,064 tax included, with add-to-cart available."
+              }
+            },
+            {
+              "retailer": {
+                "sourceKey": "retailer:japanese-taste-ca",
+                "name": "Japanese Taste",
+                "country": "JP",
+                "websiteUrl": "https://japanesetaste.ca"
+              },
+              "externalListingId": null,
+              "listingUrl": "https://japanesetaste.ca/products/biore-uv-aqua-rich-watery-essence-sunscreen-spf50-70g",
+              "productPrice": 18.17,
+              "nativeCurrency": "CAD",
+              "availableMarkets": ["CA"],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-09-27T19:06:42.872Z",
+              "shipping": {
+                "state": "CALCULATED",
+                "amount": null,
+                "currency": null,
+                "method": null,
+                "estimate": null,
+                "conditions": "Calculated at checkout for the Canadian storefront."
+              },
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://japanesetaste.ca/products/biore-uv-aqua-rich-watery-essence-sunscreen-spf50-70g",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-09-27T19:06:42.872Z",
+                "verifiedAt": "2026-09-27T19:06:42.872Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Current Canadian storefront page shows the Japanese 70 g product at CA$18.17 and available to add to cart. Exact JAN is not displayed on this offer page; version association relies on its 2025-updated imagery and product details and remains reviewable against the official/JAN sources."
+              }
+            },
+            {
+              "retailer": {
+                "sourceKey": "retailer:stylevana-ca",
+                "name": "STYLEVANA Canada",
+                "country": "CA",
+                "websiteUrl": "https://www.stylevana.com/en_CA"
+              },
+              "externalListingId": null,
+              "listingUrl": "https://www.stylevana.com/en_CA/kao-biore-uv-aqua-rich-watery-essence-spf50-pa-70g59981.html",
+              "productPrice": 16.94,
+              "nativeCurrency": "CAD",
+              "availableMarkets": ["CA"],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-09-27T19:06:42.872Z",
+              "shipping": {
+                "state": "CALCULATED",
+                "amount": null,
+                "currency": null,
+                "method": null,
+                "estimate": null,
+                "conditions": "Calculated at checkout."
+              },
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://www.stylevana.com/en_CA/kao-biore-uv-aqua-rich-watery-essence-spf50-pa-70g59981.html",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-09-27T19:06:42.872Z",
+                "verifiedAt": "2026-09-27T19:06:42.872Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Current Canadian storefront page shows the 70 g product at CA$16.94, reduced from CA$19.78, and available to add to cart. Exact JAN is not shown; human review should compare the displayed packaging with the official 2025 release before commit."
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

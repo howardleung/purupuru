@@ -24,6 +24,23 @@ test("documented import validates with explicit review warnings and preserves st
   assert.equal(result.value.products[0]?.variants[0]?.offers.length, 2);
   assert.equal(result.value.products[0]?.variants[0]?.benchmarks[0]?.type, "RETAIL_PRICE");
   assert.deepEqual(result.value.products[0]?.variants[0]?.offers[1]?.availableMarkets, ["CA", "KR"]);
+  assert.equal(result.value.products[0]?.variants[0]?.offers[0]?.isActive, true);
+});
+
+test("offer activation defaults to true and accepts an explicit reversible deactivation", () => {
+  const omitted = validateProductImportPayload(example);
+  assert.equal(omitted.ok, true);
+  if (!omitted.ok) return;
+  assert.equal(omitted.value.products[0]?.variants[0]?.offers[0]?.isActive, true);
+
+  const correction = copy(example);
+  correction.products[0].variants[0].offers[0].isActive = false;
+  const deactivated = validateProductImportPayload(correction);
+  assert.equal(deactivated.ok, true);
+  if (!deactivated.ok) return;
+  assert.equal(deactivated.value.products[0]?.variants[0]?.offers[0]?.isActive, false);
+  assert.equal(productImportPayloadsEqual(correction, copy(correction)), true);
+  assert.equal(productImportPayloadsEqual(correction, example), false);
 });
 
 test("same-size ANESSA releases retain separate versions and JAN identities", () => {
@@ -163,4 +180,15 @@ test("the published machine schema is parseable and pinned to version 1.0", () =
   assert.equal(schema.properties.schemaVersion.const, "1.0");
   assert.equal(schema.additionalProperties, false);
   assert.equal(schema.$defs.product.properties.variants.minItems, 1);
+  assert.deepEqual(schema.$defs.offer.properties.isActive, { type: "boolean", default: true });
+});
+
+test("public offer reads consistently exclude inactive offers", () => {
+  for (const path of [
+    "../../apps/web/lib/catalogue.ts",
+    "../../apps/web/lib/shopping-lists.ts",
+  ]) {
+    const source = readFileSync(new URL(path, import.meta.url), "utf8");
+    assert.match(source, /offers:\s*\{[\s\S]*?where:\s*\{\s*isActive:\s*true/);
+  }
 });

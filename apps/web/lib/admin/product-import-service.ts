@@ -13,7 +13,7 @@ import {
 } from "@beauty-platform/domain/product-import";
 import { runSerializable } from "../transactions";
 
-export type ImportPlanAction = "CREATE" | "REUSE" | "UPDATE" | "CONFLICT" | "AMBIGUOUS";
+export type ImportPlanAction = "CREATE" | "REUSE" | "UPDATE" | "DEACTIVATE" | "REACTIVATE" | "CONFLICT" | "AMBIGUOUS";
 export type ImportPlanStep = {
   path: string;
   entity: "CATEGORY" | "BRAND" | "FAMILY" | "VERSION" | "VARIANT" | "IMAGE" | "BENCHMARK" | "RETAILER" | "OFFER";
@@ -67,7 +67,7 @@ function summarize(steps: ImportPlanStep[]): ProductImportPlan["summary"] {
   return steps.reduce<ProductImportPlan["summary"]>((summary, step) => {
     summary[step.action] += 1;
     return summary;
-  }, { CREATE: 0, REUSE: 0, UPDATE: 0, CONFLICT: 0, AMBIGUOUS: 0 });
+  }, { CREATE: 0, REUSE: 0, UPDATE: 0, DEACTIVATE: 0, REACTIVATE: 0, CONFLICT: 0, AMBIGUOUS: 0 });
 }
 
 async function buildImportPlan(tx: Prisma.TransactionClient, payload: ProductImportPayload): Promise<ProductImportPlan> {
@@ -207,12 +207,27 @@ async function buildImportPlan(tx: Prisma.TransactionClient, payload: ProductImp
         const byUrl = retailer ? offers.find((item) => item.retailerId === retailer.id && item.listingUrl === offer.listingUrl) : undefined;
         const existingOffer = byId ?? byUrl;
         let offerAction: ImportPlanAction = existingOffer ? "UPDATE" : "CREATE";
-        if (byId && byUrl && byId.id !== byUrl.id) offerAction = "CONFLICT";
-        if (existingOffer && (!candidate || existingOffer.productVariantId !== candidate.id || existingOffer.nativeCurrency !== offer.nativeCurrency)) offerAction = "CONFLICT";
-        if (offerAction === "CONFLICT") errors.push(issue(offerPath, "OFFER_IDENTITY_CONFLICT", "Offer identifiers conflict with each other, its exact variant, or native currency."));
+        const identityConflict = Boolean((byId && byUrl && byId.id !== byUrl.id) ||
+          (existingOffer && (!candidate || existingOffer.productVariantId !== candidate.id || existingOffer.nativeCurrency !== offer.nativeCurrency)));
+        if (identityConflict) {
+          offerAction = "CONFLICT";
+          errors.push(issue(offerPath, "OFFER_IDENTITY_CONFLICT", "Offer identifiers conflict with each other, its exact variant, or native currency."));
+        } else if (!offer.isActive) {
+          if (!existingOffer) {
+            offerAction = "CONFLICT";
+            errors.push(issue(offerPath, "OFFER_DEACTIVATION_NOT_FOUND", "Offer deactivation requires an exact existing retailer/listing or retailer/URL match."));
+          } else {
+            offerAction = "DEACTIVATE";
+            warnings.push(issue(offerPath, "OFFER_DEACTIVATION_REQUIRES_REVIEW", `Existing offer ${existingOffer.id} will be soft-deactivated.`));
+          }
+        } else if (existingOffer && !existingOffer.isActive) {
+          offerAction = "REACTIVATE";
+        }
         steps.push({ path: offerPath, entity: "OFFER", label: offer.externalListingId ?? offer.listingUrl,
           action: offerAction, existingId: existingOffer?.id ?? null,
-          reason: offer.externalListingId ? "Identity uses retailer plus external listing ID." : "Fallback identity uses retailer, exact variant, and URL." });
+          reason: offerAction === "DEACTIVATE" ? "Exact existing offer will be soft-deactivated; catalogue identity and history remain intact."
+            : offerAction === "REACTIVATE" ? "Exact existing inactive offer will be reactivated."
+            : offer.externalListingId ? "Identity uses retailer plus external listing ID." : "Fallback identity uses retailer, exact variant, and URL." });
       }
     }
   }
@@ -389,9 +404,15 @@ export async function commitValidatedProductImportGraph(tx: Prisma.TransactionCl
         if (offer && (offer.productVariantId !== variant.id || offer.nativeCurrency !== incomingOffer.nativeCurrency)) {
           throw new ImportConflictError(`Offer identity conflicts with its exact variant or native currency at ${retailer.name}.`);
         }
+        if (!incomingOffer.isActive) {
+          if (!offer) throw new ImportConflictError(`Offer deactivation requires an exact existing offer at ${retailer.name}.`);
+          await tx.offer.update({ where: { id: offer.id }, data: { isActive: false } });
+          continue;
+        }
         const observedAt = new Date(incomingOffer.observedAt);
         const offerData = { retailerId: retailer.id, productVariantId: variant.id,
           retailerListingId: incomingOffer.externalListingId, listingUrl: incomingOffer.listingUrl,
+          isActive: true,
           productPrice: incomingOffer.productPrice, nativeCurrency: incomingOffer.nativeCurrency,
           availableMarkets: incomingOffer.availableMarkets, availabilityState: incomingOffer.availabilityState,
           shippingState: incomingOffer.shipping?.state ?? null, shippingAmount: incomingOffer.shipping?.amount ?? null,

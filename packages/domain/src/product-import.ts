@@ -58,6 +58,7 @@ export type ProductImportOffer = {
   };
   externalListingId: string | null;
   listingUrl: string;
+  isActive: boolean;
   productPrice: number;
   nativeCurrency: string;
   availableMarkets: string[];
@@ -386,7 +387,7 @@ function benchmarkValue(value: unknown, path: string, errors: ImportValidationIs
 function offerValue(value: unknown, path: string, errors: ImportValidationIssue[], warnings: ImportValidationIssue[]): ProductImportOffer {
   const record = isRecord(value) ? value : {};
   if (!isRecord(value)) errors.push(issue(path, "INVALID_OFFER", "Offer must be an object."));
-  rejectUnknown(record, ["retailer", "externalListingId", "listingUrl", "productPrice", "nativeCurrency", "availableMarkets", "availabilityState", "observedAt", "shipping", "items", "provenance"], path, errors);
+  rejectUnknown(record, ["retailer", "externalListingId", "listingUrl", "isActive", "productPrice", "nativeCurrency", "availableMarkets", "availabilityState", "observedAt", "shipping", "items", "provenance"], path, errors);
   const retailerRecord = isRecord(record.retailer) ? record.retailer : {};
   if (!isRecord(record.retailer)) errors.push(issue(`${path}.retailer`, "INVALID_RETAILER", "Retailer must be an object."));
   rejectUnknown(retailerRecord, ["sourceKey", "name", "country", "websiteUrl"], `${path}.retailer`, errors);
@@ -448,6 +449,7 @@ function offerValue(value: unknown, path: string, errors: ImportValidationIssue[
     },
     externalListingId: nullableString(record, "externalListingId", path, errors, 200),
     listingUrl: urlValue(nullableString(record, "listingUrl", path, errors, 2048), `${path}.listingUrl`, errors) ?? "",
+    isActive: record.isActive === undefined ? true : booleanValue(record, "isActive", path, errors),
     productPrice: numberValue(record, "productPrice", path, errors),
     nativeCurrency: currency,
     availableMarkets: [...new Set(markets)].sort(),

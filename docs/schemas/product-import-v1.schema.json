@@ -86,6 +86,7 @@
           "properties": { "sourceKey": { "$ref": "#/$defs/sourceKey" }, "name": { "type": "string", "minLength": 1 }, "country": { "$ref": "#/$defs/nullableMarket" }, "websiteUrl": { "$ref": "#/$defs/nullableUrl" } }
         },
         "externalListingId": { "$ref": "#/$defs/nullableString" }, "listingUrl": { "$ref": "#/$defs/url" },
+        "isActive": { "type": "boolean", "default": true },
         "productPrice": { "type": "number", "minimum": 0 }, "nativeCurrency": { "$ref": "#/$defs/currency" },
         "availableMarkets": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/market" } },
         "availabilityState": { "enum": ["IN_STOCK", "LOW_STOCK", "OUT_OF_STOCK", "PREORDER", "UNKNOWN"] },

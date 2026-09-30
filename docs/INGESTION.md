@@ -20,6 +20,8 @@ The batch retains fact-level provenance for product/version identity, variant id
 
 Matching is exact and version-sensitive: GTIN first, then scoped SKU, then exact existing family/version/size evidence. Conflicting identifiers and multiple candidates block commit. Canonical categories must already exist and are never created by an import. The same nominal size in separate releases remains separate when version evidence and JANs differ.
 
+Offers are active by default when `isActive` is omitted. An explicit `isActive: false` is a narrowly scoped, reversible correction: it requires an exact existing retailer/listing identity (or the established exact retailer + URL fallback), stages an explicit deactivation with a review warning, and commits only the offer's activation state. It cannot create an offer, delete catalogue identity, replace offer items, or create a price observation. An exact inactive offer can be reactivated with `isActive: true`; unchanged price/timestamp evidence does not create a duplicate observation. Historical observations remain intact in both directions.
+
 Admin authorization uses Clerk's verified server-side user ID and the server-only `PURUPURU_ADMIN_CLERK_USER_IDS` allowlist. Configure a comma-separated set of exact Clerk `user_…` IDs locally and in deployment. Do not expose it as `NEXT_PUBLIC_`. The existing authenticated mutation rate limit also applies.
 
 Migration `20260926120000_add_staged_product_imports` creates only the import status/source enums and `ImportBatch` audit table. Apply the reviewed migration with `pnpm db:migrate:deploy` through the normal deployment process before enabling the endpoint. It does not alter existing catalogue rows.
