@@ -1,7 +1,7 @@
 import path from "node:path";
 
 import type { NextConfig } from "next";
-import { securityHeaders } from "./lib/security-headers";
+import { PRODUCT_IMAGE_HOSTS, securityHeaders } from "./lib/security-headers";
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
@@ -17,18 +17,10 @@ const nextConfig: NextConfig = {
   },
   transpilePackages: ["@beauty-platform/database", "@beauty-platform/domain"],
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "roundlab.com",
-        pathname: "/cdn/shop/files/**",
-      },
-      {
-        protocol: "https",
-        hostname: "www.shiseido.co.jp",
-        pathname: "/anessa/products/suncare/**",
-      },
-    ],
+    remotePatterns: PRODUCT_IMAGE_HOSTS.map((hostname) => ({
+      protocol: "https" as const,
+      hostname,
+    })),
   },
 };
 

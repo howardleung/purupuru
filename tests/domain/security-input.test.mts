@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { isShoppingListInput, isProductCollectionInput, boundedParameter, priceParameter, comparisonIds } from "../../apps/web/lib/input-validation.ts";
 import { safeExternalUrl } from "../../apps/web/lib/external-url.ts";
-import { securityHeaders } from "../../apps/web/lib/security-headers.ts";
+import { PRODUCT_IMAGE_HOSTS, securityHeaders } from "../../apps/web/lib/security-headers.ts";
 import { MAX_REQUESTED_QUANTITY, quantityStateAfterChange } from "../../packages/domain/src/shopping-list.ts";
 
 test("all shopping-list mutation inputs reject non-objects and missing required IDs", () => {
@@ -75,6 +75,10 @@ test("production headers restrict framing, objects, origins and disable eval", (
   const csp = headers.get("Content-Security-Policy")!;
   assert.match(csp, /frame-ancestors 'none'/);
   assert.match(csp, /object-src 'none'/);
+  for (const host of PRODUCT_IMAGE_HOSTS) {
+    assert.match(csp, new RegExp(`https://${host.replaceAll(".", "\\.")}`));
+  }
+  assert.doesNotMatch(csp, /img-src[^;]*https:\/\/\*/);
   assert.match(csp, /https:\/\/clerk.example.com/);
   assert.match(csp, /https:\/\/\*\.protect.clerk.com:\*/);
   assert.doesNotMatch(csp, /unsafe-eval/);
