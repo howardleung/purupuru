@@ -20,7 +20,7 @@ const siteDescription =
 export const metadata: Metadata = {
   title: {
     default: "PuruPuru",
-    template: "%s · PuruPuru",
+    template: "%s | PuruPuru",
   },
   description: siteDescription,
   openGraph: {

@@ -10,7 +10,6 @@ import { getCatalogue } from "../lib/catalogue";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
-  title: "Compare skincare prices across markets",
   description: "Discover version-aware skincare, compare trusted prices across Canada, Japan, and Korea, and plan what to buy.",
   openGraph: { title: "PuruPuru — skincare discovery and price comparison", description: "Compare the exact skincare product, size, and market price before you buy." },
 };

@@ -9,7 +9,7 @@ import { marketName } from "../../lib/markets";
 import { getShoppingListsForUser } from "../../lib/shopping-lists";
 
 export const dynamic = "force-dynamic";
-export const metadata: Metadata = { title: "Shopping lists" };
+export const metadata: Metadata = { title: "Shopping Lists" };
 
 export default async function ShoppingListsPage() {
   if (!isClerkConfigured) {

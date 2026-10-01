@@ -10,7 +10,7 @@ import { boundedParameter, priceParameter } from "../../lib/input-validation";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Browse skincare",
+  title: "Skincare Catalogue",
   description: "Search PuruPuru’s version-aware skincare catalogue by product, brand, or canonical category.",
   openGraph: {
     title: "Browse skincare · PuruPuru",

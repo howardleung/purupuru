@@ -12,6 +12,9 @@ const collectionCard = readFileSync(new URL("../../apps/web/components/collectio
 const shoppingList = readFileSync(new URL("../../apps/web/components/shopping-list-details.tsx", import.meta.url), "utf8");
 const productSelectors = readFileSync(new URL("../../apps/web/components/product-selectors.tsx", import.meta.url), "utf8");
 const comparePage = readFileSync(new URL("../../apps/web/app/compare/page.tsx", import.meta.url), "utf8");
+const collectionPage = readFileSync(new URL("../../apps/web/app/collection/page.tsx", import.meta.url), "utf8");
+const shoppingListsPage = readFileSync(new URL("../../apps/web/app/shopping-lists/page.tsx", import.meta.url), "utf8");
+const appIcon = readFileSync(new URL("../../apps/web/app/icon.svg", import.meta.url), "utf8");
 const primaryNav = readFileSync(new URL("../../apps/web/components/primary-nav.tsx", import.meta.url), "utf8");
 const globalSearch = readFileSync(new URL("../../apps/web/components/global-search.tsx", import.meta.url), "utf8");
 const megaMenu = readFileSync(new URL("../../apps/web/components/product-mega-menu.tsx", import.meta.url), "utf8");
@@ -40,7 +43,7 @@ test("search accessibility only references mounted suggestions", () => {
 test("current product identity appears in metadata and both wordmarks", () => {
   const layout = readFileSync(new URL("../../apps/web/app/layout.tsx", import.meta.url), "utf8");
   assert.match(layout, /default: "PuruPuru"/);
-  assert.match(layout, /template: "%s · PuruPuru"/);
+  assert.match(layout, /template: "%s \| PuruPuru"/);
   assert.match(layout, /siteName: "PuruPuru"/);
   assert.match(layout, /twitter: \{[\s\S]*?title: "PuruPuru"/);
   for (const file of ["site-header", "site-footer"]) {
@@ -48,6 +51,16 @@ test("current product identity appears in metadata and both wordmarks", () => {
     assert.match(component, /PuruPuru/);
   }
   assert.match(homePage, /PuruPuru — skincare discovery and price comparison/);
+});
+
+test("browser titles and favicon use the compact PuruPuru identity", () => {
+  assert.doesNotMatch(homePage, /title: "Compare skincare prices across markets"/);
+  assert.match(cataloguePage, /title: "Skincare Catalogue"/);
+  assert.match(comparePage, /title: "Compare Products"/);
+  assert.match(collectionPage, /title: "My Collection"/);
+  assert.match(shoppingListsPage, /title: "Shopping Lists"/);
+  assert.match(productPage, /const title = family\.canonicalName/);
+  assert.match(appIcon, /<svg[\s\S]*<path[\s\S]*#88A2B3[\s\S]*<\/svg>/);
 });
 
  test("product-selection links preserve exact version and variant context", () => {

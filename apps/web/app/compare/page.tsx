@@ -7,7 +7,7 @@ import { getComparisonProducts } from "../../lib/catalogue";
 import { comparisonIds } from "../../lib/input-validation";
 
 export const dynamic = "force-dynamic";
-export const metadata: Metadata = { title: "Compare products" };
+export const metadata: Metadata = { title: "Compare Products" };
 
 const benchmarkLabels: Record<string, string> = {
   MSRP: "MSRP",

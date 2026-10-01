@@ -82,14 +82,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const image = version
     ? selectPrimaryProductImage(version.images, version.id, version.defaultVariantId)
     : null;
-  const title = `${family.brand.name} ${family.canonicalName}`;
-  const description = `Compare verified benchmarks, tracked offers, and exact sizes for ${title}.`;
+  const title = family.canonicalName;
+  const productLabel = `${family.brand.name} ${title}`;
+  const description = `Compare verified benchmarks, tracked offers, and exact sizes for ${productLabel}.`;
 
   return {
     title,
     description,
     openGraph: {
-      title: `${title} · PuruPuru`,
+      title: `${productLabel} | PuruPuru`,
       description,
       images: image ? [{ url: image.url, alt: image.altText }] : undefined,
     },
