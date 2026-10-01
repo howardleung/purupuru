@@ -359,3 +359,13 @@ This file records settled choices and the rationale behind them. New decisions s
 **Why:** PuruPuru should make ordinary beauty discovery and price comparison simple. A retailer listing that clearly matches brand, product, form, and exact size should not disappear merely because it does not prove a particular JAN or release year.
 
 **Implications:** Exact GTIN/SKU matches remain strongest; a unique uncontradicted brand/product/exact-size match is normally sufficient. Conflicting identifiers, sizes, or material-version evidence still block or require review. Single-version UI hides version labels and emphasizes size; a formula selector appears only for multiple meaningful versions. This supersedes earlier ingestion implications that required exact version evidence for every offer. The staged Bioré Canadian-offer deactivation batch was rejected as obsolete, and the existing offers remain catalogue records subject to normal price refresh.
+
+### 2026-10-01 — Catalogue browse results are exact current variants
+
+**Status:** Accepted
+
+**Decision:** Keep autocomplete consolidated at the `ProductFamily` level, but render catalogue and category browse results as one row/card per active `ProductVariant` in the family's current shopper-facing `ProductVersion`. Each result shows its exact size, uses only that variant's image/benchmark/eligible offers, and links back with exact version and variant context. Capacity filtering normalizes compatible dimensions to mL, g, or discrete count and excludes incompatible dimensions.
+
+**Why:** Shoppers compare purchasable sizes and their prices, not an arbitrary default size. Variant-level rows prevent one size's offer or image from being presented as another size while retaining a simple family-level search experience.
+
+**Implications:** Multiple offers for one exact variant still produce one result, not duplicate rows. A family with multiple active current sizes produces multiple results. Prior/non-current versions remain available through product-page selection but do not multiply ordinary browse results. No schema or migration change is required because normalized quantity/unit, variant identity, offer linkage, and context-preserving URLs already exist.

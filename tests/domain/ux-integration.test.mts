@@ -7,7 +7,10 @@ import { resolveRetailerLogo } from "../../apps/web/lib/retailer-logos.ts";
 
 const homePage = readFileSync(new URL("../../apps/web/app/page.tsx", import.meta.url), "utf8");
 const cataloguePage = readFileSync(new URL("../../apps/web/app/catalogue/page.tsx", import.meta.url), "utf8");
+const catalogueQuery = readFileSync(new URL("../../apps/web/lib/catalogue.ts", import.meta.url), "utf8");
 const catalogueCard = readFileSync(new URL("../../apps/web/components/product-card.tsx", import.meta.url), "utf8");
+const catalogueBrowser = readFileSync(new URL("../../apps/web/components/catalogue-browser.tsx", import.meta.url), "utf8");
+const productLinks = readFileSync(new URL("../../apps/web/lib/product-links.ts", import.meta.url), "utf8");
 const collectionCard = readFileSync(new URL("../../apps/web/components/collection-browser.tsx", import.meta.url), "utf8");
 const shoppingList = readFileSync(new URL("../../apps/web/components/shopping-list-details.tsx", import.meta.url), "utf8");
 const productSelectors = readFileSync(new URL("../../apps/web/components/product-selectors.tsx", import.meta.url), "utf8");
@@ -78,17 +81,35 @@ test("browser titles and favicon use the compact PuruPuru identity", () => {
   );
 });
 
-test("all core return paths reuse the shared version/variant link helper", () => {
-  for (const source of [catalogueCard, collectionCard, shoppingList, productSelectors]) {
+test("all core return paths preserve exact version and variant context", () => {
+  for (const source of [collectionCard, shoppingList, productSelectors]) {
     assert.match(source, /productSelectionHref/);
   }
+  assert.match(catalogueCard, /catalogueProductHref/);
+  assert.match(productLinks, /productSelectionHref\(\{/);
 });
 
 test("catalogue personalization is optional and limited to visible current versions", () => {
   assert.match(cataloguePage, /isClerkConfigured \? getCurrentUser\(\) : Promise\.resolve\(null\)/);
-  assert.match(cataloguePage, /productVersionIds: catalogue\.products\.flatMap/);
+  assert.match(cataloguePage, /productVersionIds: \[\.\.\.new Set\(catalogue\.products\.flatMap/);
   assert.match(catalogueCard, /personalState\?: MyCollectionItem \| null/);
   assert.doesNotMatch(catalogueCard, /prisma\./);
+});
+
+test("catalogue renders one exact variant per row with capacity controls and variant-scoped pricing", () => {
+  assert.match(catalogueQuery, /expandCatalogueVariants/);
+  assert.match(catalogueQuery, /currentVersion:[\s\S]*variants:/);
+  assert.match(catalogueQuery, /variant\.offers/);
+  assert.match(catalogueQuery, /filterCatalogueCapacity/);
+  assert.match(catalogueQuery, /primaryCanonicalCategoryId: \{ in: categoryIds \}/);
+  assert.match(catalogueQuery, /brand: \{ slug: options\.brandSlug \}/);
+  assert.match(catalogueQuery, /filterCataloguePrice/);
+  assert.match(catalogueBrowser, /name="capacity"/);
+  assert.match(catalogueBrowser, /name="minCapacity"/);
+  assert.match(catalogueBrowser, /name="maxCapacity"/);
+  assert.match(catalogueBrowser, />Size<\/th>/);
+  assert.match(catalogueBrowser, /product\.currentVersion\?\.variant\.displaySize/);
+  assert.match(catalogueBrowser, /lg:hidden[\s\S]*uppercase tracking-wide text-slate-500">Size/);
 });
 
 test("public homepage is database-backed and does not require authentication", () => {

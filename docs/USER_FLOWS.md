@@ -14,7 +14,7 @@ These flows describe intended product behavior. Exact visual design is not fixed
 
 1. User lands on the responsive website without an account.
 2. They can browse/search products by canonical category, prices, benchmark pricing, external signals, and curated discovery sections.
-3. Clicking a product card navigates to its ProductFamily page with the displayed current version and default variant preserved.
+3. Catalogue results show each active size in the current shopper-facing version as a distinct row/card. Clicking one navigates to its ProductFamily page with that current version and exact variant preserved.
 4. No authentication is required until the user attempts a personal action.
 5. When signed in, the same catalogue may add compact private state for the current version; anonymous cards remain catalogue-only.
 
@@ -24,8 +24,9 @@ These flows describe intended product behavior. Exact visual design is not fixed
 2. Show a simple category-filtered product browse view for that category.
 3. Show compact, clickable breadcrumbs for the category's canonical path, for example `Skincare > Cleansers > Oil Cleanser`.
 4. Breadcrumb links support orientation and back-navigation and use SEO-friendly category routes.
-5. Product cards lead to their `ProductFamily` pages.
+5. Each result represents one exact current `ProductVariant`; its link leads to the `ProductFamily` page with that variant selected.
 6. Browse behavior uses each family's required primary canonical category; retailer/source category labels do not determine placement.
+7. Capacity filters compare only compatible normalized dimensions: volume in mL, mass in g, or discrete count. Selecting a dimension excludes incompatible units.
 
 ## 3. Search and autocomplete
 

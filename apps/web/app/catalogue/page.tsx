@@ -24,6 +24,9 @@ type SearchParams = Promise<{
   brand?: string;
   minPrice?: string;
   maxPrice?: string;
+  capacity?: string;
+  minCapacity?: string;
+  maxCapacity?: string;
   tracked?: string;
   sort?: string;
 }>;
@@ -37,16 +40,19 @@ export default async function CataloguePage({ searchParams }: { searchParams: Se
       brandSlug: boundedParameter(params.brand, 200),
       minimumCad: priceParameter(params.minPrice),
       maximumCad: priceParameter(params.maxPrice),
+      capacityDimension: boundedParameter(params.capacity, 16),
+      minimumCapacity: priceParameter(params.minCapacity),
+      maximumCapacity: priceParameter(params.maxCapacity),
       trackedOnly: params.tracked === "1",
       sort: boundedParameter(params.sort, 32),
     }),
     isClerkConfigured ? getCurrentUser() : Promise.resolve(null),
   ]);
   const personalItems = currentUser
-    ? await getMyCollectionForUser(currentUser.id, {
-        productVersionIds: catalogue.products.flatMap((product) =>
+      ? await getMyCollectionForUser(currentUser.id, {
+        productVersionIds: [...new Set(catalogue.products.flatMap((product) =>
           product.currentVersion ? [product.currentVersion.id] : [],
-        ),
+        ))],
       })
     : [];
 

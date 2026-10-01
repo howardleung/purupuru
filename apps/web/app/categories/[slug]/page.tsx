@@ -12,7 +12,7 @@ export const dynamic = "force-dynamic";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ q?: string; brand?: string; minPrice?: string; maxPrice?: string; tracked?: string; sort?: string }>;
+  searchParams: Promise<{ q?: string; brand?: string; minPrice?: string; maxPrice?: string; capacity?: string; minCapacity?: string; maxCapacity?: string; tracked?: string; sort?: string }>;
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -42,6 +42,9 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
       brandSlug: boundedParameter(queryParams.brand, 200),
       minimumCad: priceParameter(queryParams.minPrice),
       maximumCad: priceParameter(queryParams.maxPrice),
+      capacityDimension: boundedParameter(queryParams.capacity, 16),
+      minimumCapacity: priceParameter(queryParams.minCapacity),
+      maximumCapacity: priceParameter(queryParams.maxCapacity),
       trackedOnly: queryParams.tracked === "1",
       sort: boundedParameter(queryParams.sort, 32),
     }),
@@ -52,9 +55,9 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
 
   const personalItems = currentUser
     ? await getMyCollectionForUser(currentUser.id, {
-        productVersionIds: catalogue.products.flatMap((product) =>
+        productVersionIds: [...new Set(catalogue.products.flatMap((product) =>
           product.currentVersion ? [product.currentVersion.id] : [],
-        ),
+        ))],
       })
     : [];
 

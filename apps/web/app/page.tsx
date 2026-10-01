@@ -4,9 +4,10 @@ import { ArrowRight, Globe2, Search, ShieldCheck } from "lucide-react";
 
 import { CategorySymbol, categoryTone } from "../components/category-symbol";
 import { GlobalSearch } from "../components/global-search";
-import { catalogueProductHref, ProductCard } from "../components/product-card";
+import { ProductCard } from "../components/product-card";
 import { ProductImage } from "../components/product-image";
 import { getCatalogue } from "../lib/catalogue";
+import { catalogueProductHref } from "../lib/product-links";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
@@ -51,7 +52,7 @@ export default async function HomePage() {
                   <span className="block px-1 pb-2 pt-3 sm:px-2">
                     <span className="block text-[0.625rem] font-bold uppercase tracking-wide text-slate-500">{product.brand.name}</span>
                     <span className="mt-1 block text-sm font-extrabold leading-snug text-slate-950 sm:text-base">{product.canonicalName}</span>
-                    <span className="mt-2 flex items-center justify-between gap-2 text-xs leading-5 text-slate-500"><span>{product.primaryCanonicalCategory.displayName}{product.currentVersion?.defaultVariant ? ` · ${product.currentVersion.defaultVariant.displaySize}` : ""}</span><ArrowRight aria-hidden className="h-4 w-4 shrink-0 text-brand-action" /></span>
+                    <span className="mt-2 flex items-center justify-between gap-2 text-xs leading-5 text-slate-500"><span>{product.primaryCanonicalCategory.displayName}{product.currentVersion ? ` · ${product.currentVersion.variant.displaySize}` : ""}</span><ArrowRight aria-hidden className="h-4 w-4 shrink-0 text-brand-action" /></span>
                   </span>
                 </Link>
               ))}

@@ -253,7 +253,7 @@ This surface leans most toward PCPartPicker in behavior, never branding.
 
 - left filter rail;
 - result count and active-filter summary;
-- dense readable one-product-per-row results;
+- dense readable one-current-variant-per-row results, with each exact size independently price-comparable;
 - sortable column headers;
 - optional comparison checkboxes.
 
@@ -263,8 +263,9 @@ Limit main visible columns to:
 2. Product name
 3. Brand
 4. Category
-5. Rating
-6. Lowest tracked price
+5. Size
+6. Rating
+7. Lowest tracked price
 
 Actives are filters, not a permanent column.
 
@@ -290,7 +291,7 @@ Do not implement rating sorting until a public catalogue rating source, cross-sc
 
 ### Filters
 
-Initial concepts: Category, Brand, Price, Rating, Active ingredients, and Market/availability where useful.
+Initial concepts: Category, Brand, Capacity, Price, Rating, Active ingredients, and Market/availability where useful. Capacity uses normalized compatible dimensions—volume in mL, mass in g, and discrete count—and never compares unlike units. When results contain multiple dimensions, the shopper chooses the dimension before setting a range.
 
 Active-ingredient filtering reserves the correct structural location; it does not authorize invented ingredient data. Hide, honestly disable, or defer it until a verified taxonomy and populated records exist.
 
@@ -298,18 +299,18 @@ Active-ingredient filtering reserves the correct structural location; it does no
 
 - Row, image, or name opens the full product page, not a quick view.
 - Comparison checkbox toggles without navigation.
-- Preserve known current version/default exact variant in the URL.
+- Preserve the row's current version and exact variant in the URL.
 - Personal state may remain compact; do not turn research rows into collection cards.
 
 ### Mobile
 
-Use stacked rows/cards, never a squeezed six-column table. Show image, product/brand, one identity cue, defined rating, lowest eligible price, and comparison selection. Filters use a drawer/sheet; sorting remains accessible. Underlying results/capability match desktop.
+Use stacked rows/cards, never a squeezed desktop table. Show image, product/brand, exact size, one identity cue, defined rating, lowest eligible price, and comparison selection. Filters use a drawer/sheet; sorting remains accessible. Underlying results/capability match desktop.
 
 ## 10. Product comparison
 
 ### Purpose and entry
 
-Make factual differences between a small selected set easy to scan. Catalogue checkboxes select products and reveal a persistent compare tray/action. Users may remove items before opening comparison.
+Make factual differences between a small selected set easy to scan. Catalogue checkboxes select exact product variants and reveal a persistent compare tray/action. Users may remove items before opening comparison.
 
 The final selection limit and URL/state persistence strategy are open.
 

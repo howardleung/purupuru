@@ -8,8 +8,9 @@ import { useState } from "react";
 
 import type { CategoryRecord } from "../lib/catalogue";
 import { catalogueSorts, type CatalogueFilters, type CatalogueProduct } from "../lib/catalogue-contract";
+import { catalogueProductHref } from "../lib/product-links";
 import { Breadcrumbs } from "./breadcrumbs";
-import { catalogueProductHref, formatCataloguePrice } from "./product-card";
+import { formatCataloguePrice } from "./product-card";
 import { ProductImage } from "./product-image";
 
 type Brand = { id: string; name: string; slug: string };
@@ -37,8 +38,64 @@ function categoryDepth(category: CategoryRecord, categories: readonly CategoryRe
 }
 
 function filterCount(filters: CatalogueFilters) {
-  return [filters.query, filters.categorySlug, filters.brandSlug, filters.minimumCad, filters.maximumCad, filters.trackedOnly]
+  const basicCount = [filters.query, filters.categorySlug, filters.brandSlug, filters.minimumCad, filters.maximumCad, filters.trackedOnly]
     .filter((value) => value !== "" && value !== null && value !== false).length;
+  return basicCount + Number(filters.capacityDimension !== null);
+}
+
+const capacityLabels = {
+  volume: "Volume (mL)",
+  mass: "Mass (g)",
+  count: "Count (items)",
+} as const;
+
+function CapacityFilter({ filters }: { filters: CatalogueFilters }) {
+  const implicitDimension = filters.capacityRanges.length === 1
+    ? filters.capacityRanges[0].dimension
+    : null;
+  const [dimension, setDimension] = useState(filters.capacityDimension ?? implicitDimension ?? "");
+  const initialRange = filters.capacityRanges.find((range) => range.dimension === dimension) ?? null;
+  const [minimum, setMinimum] = useState(filters.minimumCapacity ?? initialRange?.minimum ?? 0);
+  const [maximum, setMaximum] = useState(filters.maximumCapacity ?? initialRange?.maximum ?? 0);
+  const range = filters.capacityRanges.find((item) => item.dimension === dimension) ?? null;
+
+  if (filters.capacityRanges.length === 0) return null;
+
+  function selectDimension(nextDimension: string) {
+    setDimension(nextDimension);
+    const nextRange = filters.capacityRanges.find((item) => item.dimension === nextDimension);
+    setMinimum(nextRange?.minimum ?? 0);
+    setMaximum(nextRange?.maximum ?? 0);
+  }
+
+  return (
+    <fieldset>
+      <legend className="text-sm font-medium text-slate-700">Size / capacity</legend>
+      {filters.capacityRanges.length > 1 ? (
+        <label className="mt-2 grid gap-1 text-xs text-slate-500">
+          Measurement
+          <select className="ui-input font-normal" name="capacity" onChange={(event) => selectDimension(event.target.value)} value={dimension}>
+            <option value="">Any size type</option>
+            {filters.capacityRanges.map((item) => <option key={item.dimension} value={item.dimension}>{capacityLabels[item.dimension]}</option>)}
+          </select>
+        </label>
+      ) : dimension ? <input name="capacity" type="hidden" value={dimension} /> : null}
+      {range ? (
+        <div className="mt-3 grid gap-3">
+          {range.minimum < range.maximum ? (
+            <div className="grid gap-2" aria-label={`${capacityLabels[range.dimension]} range`}>
+              <label className="grid gap-1 text-xs text-slate-500">Minimum slider<input aria-label={`Minimum ${capacityLabels[range.dimension]}`} max={range.maximum} min={range.minimum} onChange={(event) => setMinimum(Math.min(Number(event.target.value), maximum))} step="1" type="range" value={minimum} /></label>
+              <label className="grid gap-1 text-xs text-slate-500">Maximum slider<input aria-label={`Maximum ${capacityLabels[range.dimension]}`} max={range.maximum} min={range.minimum} onChange={(event) => setMaximum(Math.max(Number(event.target.value), minimum))} step="1" type="range" value={maximum} /></label>
+            </div>
+          ) : null}
+          <div className="grid grid-cols-2 gap-2">
+            <label className="grid gap-1 text-xs text-slate-500">Minimum {range.unit}<input className="ui-input" max={range.maximum} min={range.minimum} name="minCapacity" onChange={(event) => { if (event.target.value !== "") setMinimum(Number(event.target.value)); }} step="1" type="number" value={minimum} /></label>
+            <label className="grid gap-1 text-xs text-slate-500">Maximum {range.unit}<input className="ui-input" max={range.maximum} min={range.minimum} name="maxCapacity" onChange={(event) => { if (event.target.value !== "") setMaximum(Number(event.target.value)); }} step="1" type="number" value={maximum} /></label>
+          </div>
+        </div>
+      ) : <p className="mt-2 text-xs text-slate-500">Choose a size type to set a compatible range.</p>}
+    </fieldset>
+  );
 }
 
 export function CatalogueBrowser({
@@ -76,6 +133,9 @@ export function CatalogueBrowser({
     if (filters.brandSlug) params.set("brand", filters.brandSlug);
     if (filters.minimumCad !== null) params.set("minPrice", String(filters.minimumCad));
     if (filters.maximumCad !== null) params.set("maxPrice", String(filters.maximumCad));
+    if (filters.capacityDimension) params.set("capacity", filters.capacityDimension);
+    if (filters.minimumCapacity !== null) params.set("minCapacity", String(filters.minimumCapacity));
+    if (filters.maximumCapacity !== null) params.set("maxCapacity", String(filters.maximumCapacity));
     if (filters.trackedOnly) params.set("tracked", "1");
     params.set("sort", sort);
     return `/catalogue?${params.toString()}`;
@@ -105,6 +165,7 @@ export function CatalogueBrowser({
           {brands.map((brand) => <option key={brand.id} value={brand.slug}>{brand.name}</option>)}
         </select>
       </label>
+      <CapacityFilter filters={filters} />
       <fieldset>
         <legend className="text-sm font-medium text-slate-700">Canada price</legend>
         <div className="mt-2 grid grid-cols-2 gap-2">
@@ -171,6 +232,7 @@ export function CatalogueBrowser({
                       <th className="w-12 px-3 py-3"><span className="sr-only">Compare</span></th>
                       <th className="w-20 px-3 py-3">Image</th>
                       <SortableHeader href={sortHref(filters.sort === "PRODUCT_ASC" ? "PRODUCT_DESC" : "PRODUCT_ASC")} label="Product" />
+                      <th className="w-24 px-3 py-3 font-medium">Size</th>
                       <SortableHeader href={sortHref(filters.sort === "BRAND_ASC" ? "BRAND_DESC" : "BRAND_ASC")} label="Brand" />
                       <th className="px-3 py-3 font-medium">Category</th>
                       <th className="w-24 px-3 py-3 font-medium">Rating</th>
@@ -184,16 +246,17 @@ export function CatalogueBrowser({
                       const personal = product.currentVersion ? personalByVersion.get(product.currentVersion.id) : null;
                       return (
                         <tr
-                          aria-label={`View ${product.brand.name} ${product.canonicalName}`}
+                          aria-label={`View ${product.brand.name} ${product.canonicalName} ${product.currentVersion?.variant.displaySize ?? ""}`}
                           className="cursor-pointer transition hover:bg-slate-50 focus:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-slate-500"
                           key={product.id}
                           onClick={(event) => { if (!(event.target as HTMLElement).closest("a,button,input,label")) router.push(href); }}
                           onKeyDown={(event) => { if (event.key === "Enter") router.push(href); }}
                           tabIndex={0}
                         >
-                          <td className="px-3 py-4 align-middle"><input aria-label={`Compare ${product.brand.name} ${product.canonicalName}`} checked={checked} className="h-4 w-4" onChange={() => toggleComparison(product.id)} type="checkbox" /></td>
+                          <td className="px-3 py-4 align-middle"><input aria-label={`Compare ${product.brand.name} ${product.canonicalName} ${product.currentVersion?.variant.displaySize ?? ""}`} checked={checked} className="h-4 w-4" onChange={() => toggleComparison(product.id)} type="checkbox" /></td>
                           <td className="px-3 py-3"><Link href={href}><ProductImage className="h-14 min-h-14 rounded-lg" image={product.currentVersion?.image ?? null} productName={product.canonicalName} sizes="56px" /></Link></td>
-                          <td className="px-3 py-4"><Link className="font-semibold hover:underline" href={href}>{product.canonicalName}</Link><span className="mt-1 block text-xs text-slate-500">{product.currentVersion?.defaultVariant?.displaySize ?? "Size not recorded"}</span></td>
+                          <td className="px-3 py-4"><Link className="font-semibold hover:underline" href={href}>{product.canonicalName}</Link></td>
+                          <td className="px-3 py-4 font-medium text-slate-700">{product.currentVersion?.variant.displaySize ?? "Not recorded"}</td>
                           <td className="px-3 py-4 text-slate-700">{product.brand.name}</td>
                           <td className="px-3 py-4 text-slate-700">{product.primaryCanonicalCategory.displayName}</td>
                           <td className="px-3 py-4 text-slate-500" title="A normalized public rating source is not yet defined">{personal?.ratingHalfSteps ? <span title="Your private rating">Your {(personal.ratingHalfSteps / 2).toFixed(1)}</span> : "—"}</td>
@@ -214,7 +277,8 @@ export function CatalogueBrowser({
                       <div className="min-w-0">
                         <div className="flex items-start justify-between gap-2"><p className="text-xs font-medium uppercase tracking-wide text-slate-500">{product.brand.name}</p><label className="flex items-center gap-1.5 text-xs text-slate-600"><input checked={selectedIds.includes(product.id)} className="h-4 w-4" onChange={() => toggleComparison(product.id)} type="checkbox" /> Compare</label></div>
                         <h3 className="mt-1 font-semibold"><Link href={href}>{product.canonicalName}</Link></h3>
-                        <p className="mt-1 text-xs text-slate-500">{product.primaryCanonicalCategory.displayName} · {product.currentVersion?.defaultVariant?.displaySize ?? "Size not recorded"}</p>
+                        <p className="mt-1 text-xs text-slate-500">{product.primaryCanonicalCategory.displayName}</p>
+                        <p className="mt-2 text-sm font-medium text-slate-700"><span className="text-xs uppercase tracking-wide text-slate-500">Size</span> · {product.currentVersion?.variant.displaySize ?? "Not recorded"}</p>
                         <p className="mt-3 text-sm font-semibold">{formatCataloguePrice(product) ?? "No Canada price tracked"}</p>
                       </div>
                     </article>

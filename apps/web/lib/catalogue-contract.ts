@@ -1,7 +1,12 @@
-import type { CatalogueSort } from "@beauty-platform/domain/catalogue";
+import type {
+  CatalogueCapacityDimension,
+  CatalogueCapacityRange,
+  CatalogueSort,
+} from "@beauty-platform/domain/catalogue";
 
 export type CatalogueProduct = {
   id: string;
+  productFamilyId: string;
   slug: string;
   canonicalName: string;
   originMarket: string | null;
@@ -20,7 +25,12 @@ export type CatalogueProduct = {
       isPrimary: boolean;
       sortOrder: number;
     } | null;
-    defaultVariant: { id: string; displaySize: string } | null;
+    variant: {
+      id: string;
+      displaySize: string;
+      normalizedQuantity: number;
+      normalizedUnit: string;
+    };
     benchmarks: Array<{
       id: string;
       type: string;
@@ -45,6 +55,10 @@ export type CatalogueFilters = {
   brandSlug: string;
   minimumCad: number | null;
   maximumCad: number | null;
+  capacityDimension: CatalogueCapacityDimension | null;
+  minimumCapacity: number | null;
+  maximumCapacity: number | null;
+  capacityRanges: CatalogueCapacityRange[];
   trackedOnly: boolean;
   sort: CatalogueSort;
 };

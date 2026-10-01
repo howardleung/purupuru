@@ -3,20 +3,10 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 import type { CatalogueProduct } from "../lib/catalogue-contract";
-import { productSelectionHref } from "../lib/product-links";
+import { catalogueProductHref } from "../lib/product-links";
 import { ProductImage } from "./product-image";
 
 export type ProductCardProps = { product: CatalogueProduct; personalState?: MyCollectionItem | null; compact?: boolean };
-
-export function catalogueProductHref(product: CatalogueProduct) {
-  return product.currentVersion
-    ? productSelectionHref({
-        productSlug: product.slug,
-        versionKey: product.currentVersion.versionCode ?? product.currentVersion.id,
-        variantId: product.currentVersion.defaultVariant?.id,
-      })
-    : `/products/${encodeURIComponent(product.slug)}`;
-}
 
 export function formatCataloguePrice(product: CatalogueProduct) {
   const price = product.currentVersion?.lowestCanadianPrice;
@@ -33,7 +23,7 @@ export function ProductCard({ product, personalState = null, compact = false }: 
   const price = formatCataloguePrice(product);
   return (
     <article className={`surface-card group overflow-hidden transition hover:shadow-float ${compact ? "grid grid-cols-[6.5rem_minmax(0,1fr)] gap-3 p-2.5 sm:grid-cols-[9rem_minmax(0,1fr)]" : "flex h-full flex-col"}`}>
-      <Link aria-label={`View ${product.brand.name} ${product.canonicalName}`} className="min-w-0" href={href}>
+      <Link aria-label={`View ${product.brand.name} ${product.canonicalName}${product.currentVersion ? ` ${product.currentVersion.variant.displaySize}` : ""}`} className="min-w-0" href={href}>
         <ProductImage
           className={compact ? "h-full min-h-36 rounded-xl sm:min-h-40" : "h-48 rounded-none sm:h-56"}
           image={product.currentVersion?.image ?? null}
@@ -46,7 +36,7 @@ export function ProductCard({ product, personalState = null, compact = false }: 
         <h3 className={`mt-1 font-extrabold leading-snug ${compact ? "text-sm sm:text-base" : "text-lg"}`}><Link className="hover:underline" href={href}>{product.canonicalName}</Link></h3>
         <p className="mt-2 text-sm text-slate-600">
           {product.primaryCanonicalCategory.displayName}
-          {product.currentVersion?.defaultVariant ? ` · ${product.currentVersion.defaultVariant.displaySize}` : ""}
+          {product.currentVersion ? ` · ${product.currentVersion.variant.displaySize}` : ""}
         </p>
         <p className={`${compact ? "mt-3 text-xs" : "mt-4 text-sm"}`}>
           <span className="block text-slate-500">Lowest tracked Canada price: </span>
