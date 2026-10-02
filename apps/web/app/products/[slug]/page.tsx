@@ -22,7 +22,8 @@ import { isClerkConfigured } from "../../../lib/clerk-config";
 import { getPersistedCollectionState } from "../../../lib/collection-state";
 import { getCurrentUser } from "../../../lib/current-user";
 import { getShoppingListsForUser } from "../../../lib/shopping-lists";
-import { convertToCad } from "../../../lib/currency-conversion";
+import { convertToCad, resolveCadDisplayAmount } from "../../../lib/currency-conversion";
+import { getLocalFirstPrice } from "../../../lib/price-presentation";
 
 export const dynamic = "force-dynamic";
 
@@ -156,6 +157,7 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
     productPrice: Number(offer.productPrice),
     nativeCurrency: offer.nativeCurrency,
     cadConvertedPrice: offer.cadConvertedPrice === null ? null : Number(offer.cadConvertedPrice),
+    displayCadPrice: offer.cadConvertedPrice === null ? null : Number(offer.cadConvertedPrice),
     availabilityState: offer.availabilityState,
     retailer: {
       sourceKey: offer.retailer.sourceKey,
@@ -163,12 +165,12 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
     },
     items: offer.items,
   });
-  const canadianOffers = selectedVariantRecord.offers
+  const canadianOfferRows = selectedVariantRecord.offers
     .filter((offer) => offer.availableMarkets.includes("CA"))
     .map(toOfferView)
     .sort(compareOffersByProductPrice);
   const destinationMarket = family.originMarket;
-  const destinationOffers = destinationMarket
+  const destinationOfferRows = destinationMarket
     ? selectedVariantRecord.offers
         .filter((offer) => offer.availableMarkets.includes(destinationMarket))
         .map(toOfferView)
@@ -177,12 +179,35 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
   const primaryBenchmark = BENCHMARK_PRECEDENCE
     .flatMap((type) => selectedVariantRecord.benchmarkPrices.filter((benchmark) => benchmark.type === type))
     .at(0) ?? null;
-  const [primaryBenchmarkConversion, currentUser] = await Promise.all([
+  const [primaryBenchmarkConversion, canadianOffers, destinationOffers, currentUser] = await Promise.all([
     primaryBenchmark
       ? convertToCad(Number(primaryBenchmark.amount), primaryBenchmark.nativeCurrency)
       : Promise.resolve(null),
+    Promise.all(canadianOfferRows.map(async (offer) => ({
+      ...offer,
+      displayCadPrice: await resolveCadDisplayAmount(
+        offer.productPrice,
+        offer.nativeCurrency,
+        offer.cadConvertedPrice,
+      ),
+    }))),
+    Promise.all(destinationOfferRows.map(async (offer) => ({
+      ...offer,
+      displayCadPrice: await resolveCadDisplayAmount(
+        offer.productPrice,
+        offer.nativeCurrency,
+        offer.cadConvertedPrice,
+      ),
+    }))),
     isClerkConfigured ? getCurrentUser() : Promise.resolve(null),
   ]);
+  const primaryBenchmarkPrice = primaryBenchmark
+    ? getLocalFirstPrice(
+        Number(primaryBenchmark.amount),
+        primaryBenchmark.nativeCurrency,
+        primaryBenchmarkConversion?.amountCad ?? null,
+      )
+    : null;
   const [initialCollectionState, shoppingLists] = await Promise.all([
     currentUser
       ? getPersistedCollectionState(currentUser.id, selectedVersionRecord.id)
@@ -288,26 +313,31 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
         </div>
 
         <div className="md:col-start-2 md:row-start-2">
-          <section className="border-b border-slate-200 pb-6" aria-labelledby="primary-benchmark-title">
-            <p className="text-xs font-medium uppercase tracking-wide text-slate-500" id="primary-benchmark-title">
-              Strongest verified benchmark
-            </p>
-            {primaryBenchmark ? (
+          <section className="border-b border-slate-200 pb-6" aria-label="Benchmark price">
+            {primaryBenchmark && primaryBenchmarkPrice ? (
               <>
-                <p className="mt-2 text-sm text-slate-600">
+                <p className="text-sm text-slate-600">
                   {benchmarkLabels[primaryBenchmark.type]} · {marketNames[primaryBenchmark.market] ?? primaryBenchmark.market}
                 </p>
                 <p className="mt-1 text-2xl font-semibold">
-                  {formatNativeMoney(Number(primaryBenchmark.amount), primaryBenchmark.nativeCurrency)}
-                  {primaryBenchmarkConversion ? (
-                    <span className="ml-2 text-sm font-medium text-slate-500">
-                      Approx. {formatCad(primaryBenchmarkConversion.amountCad)}
-                    </span>
-                  ) : null}
+                  {primaryBenchmarkPrice.primaryCurrency === "CAD"
+                    ? formatCad(primaryBenchmarkPrice.primaryAmount)
+                    : formatNativeMoney(primaryBenchmarkPrice.primaryAmount, primaryBenchmarkPrice.primaryCurrency)}
                 </p>
+                {primaryBenchmarkPrice.nativeSecondary ? (
+                  <p className="mt-0.5 text-sm font-medium text-slate-500">
+                    {formatNativeMoney(
+                      primaryBenchmarkPrice.nativeSecondary.amount,
+                      primaryBenchmarkPrice.nativeSecondary.currency,
+                    )} {primaryBenchmarkPrice.nativeSecondary.currency}
+                  </p>
+                ) : null}
                 <details className="mt-2 text-xs text-slate-500">
                   <summary className="cursor-pointer font-medium text-slate-600">Benchmark details</summary>
                   <div className="mt-2 space-y-1">
+                    <p>
+                      {benchmarkLabels[primaryBenchmark.type]} · native price {formatNativeMoney(Number(primaryBenchmark.amount), primaryBenchmark.nativeCurrency)} {primaryBenchmark.nativeCurrency}
+                    </p>
                     <p>
                       Source: {primaryBenchmark.sourceUrl ? (
                         <a className="underline" href={safeExternalUrl(primaryBenchmark.sourceUrl)} rel="noreferrer" target="_blank">

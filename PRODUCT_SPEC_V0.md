@@ -613,7 +613,7 @@ The platform should distinguish three benchmark price concepts and use the stron
 2. `Retail Price`: an official retail price where supported by an official source, or a trusted major local retail price when a meaningful manufacturer MSRP is not available.
 3. `Reference Price`: a stable, trusted local-market benchmark used when neither an official MSRP nor an official/trusted Retail Price is available cleanly.
 
-All benchmark prices should retain their native currency, source, market, and last-verified date. The product page should show the native benchmark prominently and show every available non-CAD conversion inline as an approximate CAD convenience value. The CAD estimate is calculated through the reusable server-side currency-conversion layer using a dated Bank of Canada daily rate; it is not a second benchmark price and is not hardcoded into product or benchmark seed data. If a rate is unavailable, continue showing the native benchmark normally.
+All benchmark prices should retain their native currency, source, market, and last-verified date. In the Canadian site context, the product page should show an available approximate CAD conversion as the primary presentation value and retain the authoritative native benchmark directly beneath it. The CAD estimate is calculated through the reusable server-side currency-conversion layer using a dated Bank of Canada daily rate; it is not a second benchmark price and is not hardcoded into product or benchmark seed data. If a rate is unavailable, continue showing the native benchmark normally.
 
 Recent observed prices should be shown separately from the benchmark price rather than constantly replacing it.
 
@@ -712,7 +712,7 @@ Same-product multipacks may show normalized unit pricing. Gifts and minis may be
 
 ### Currency Presentation
 
-CAD is the MVP user's display currency. Preserve the retailer's native currency and show the CAD conversion alongside it where available. Currency conversions must include or be associated with an exchange-rate update timestamp. If conversion is unavailable, show the native price only rather than hiding the offer.
+CAD is the MVP user's display currency. In the Canadian site context, use an available CAD conversion as the primary presentation price and keep the retailer's authoritative native currency directly alongside or below it. Currency conversions must include or be associated with an exchange-rate update timestamp. If conversion is unavailable, show the native price only rather than hiding the offer.
 
 ### Collection Tags and Relationship Semantics
 
@@ -889,7 +889,7 @@ External ratings should be shown as polished compact source signals, using the s
 
 Price comparison should be visible in one continuous view rather than hidden behind market tabs. For the Canadian MVP, all tracked offers known to serve Canada should appear together under `Buy in Canada`, regardless of the retailer's home or storefront country. `Offer.availableMarkets` represents known customer/delivery markets for the specific offer; it is not the retailer's country. Retailer storefronts with materially different catalogue, inventory, pricing, or currency—such as `Amazon.ca` and `Amazon.jp`—remain distinct retailer records. Separate local-market sections such as `Buy in Japan` or `Buy in Korea` are used for locally relevant offers and travel-planning context. A normalized offer-market availability model is deferred until market-specific attributes such as shipping or availability justify it.
 
-The product's strongest available local benchmark—official `MSRP`, official or trusted local `Retail Price`, or trusted `Reference Price`—should appear prominently in the main product details rather than being buried as merely another retailer row. Show its native currency, CAD conversion when available, source, and last-verified date. This benchmark is a core shopping-intelligence feature because it gives users context for what the product is normally intended to cost in its local market.
+The product's strongest available local benchmark—official `MSRP`, official or trusted local `Retail Price`, or trusted `Reference Price`—should appear prominently in the main product details rather than being buried as merely another retailer row. Keep the compact summary focused on benchmark type and market, approximate CAD when available, and the authoritative native amount; keep source and last-verified details in an accessible disclosure. This benchmark is a core shopping-intelligence feature because it gives users context for what the product is normally intended to cost in its local market.
 
 Offer tables should expose useful facts without trying to make the entire purchasing decision for the user. The primary desktop comparison columns are `Retailer`, `Extras`, `Availability`, and `Price`; retailer name and price link independently to the exact listing. Shipping/delivery and verification details are not primary comparison columns and may appear only in subtle supporting disclosure when useful and reliable. Default ordering is lowest product price first; shipping and extras do not affect the order.
 

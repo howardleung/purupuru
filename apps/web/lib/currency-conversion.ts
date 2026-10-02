@@ -72,3 +72,16 @@ export async function convertToCad(
     return null;
   }
 }
+
+export async function resolveCadDisplayAmount(
+  amount: number,
+  sourceCurrency: string,
+  storedCadAmount: number | null,
+): Promise<number | null> {
+  const currency = sourceCurrency.trim().toUpperCase();
+
+  if (currency === "CAD") return amount;
+  if (storedCadAmount !== null && Number.isFinite(storedCadAmount)) return storedCadAmount;
+
+  return (await convertToCad(amount, currency))?.amountCad ?? null;
+}

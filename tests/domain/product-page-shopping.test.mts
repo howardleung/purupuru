@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import test from "node:test";
 
 import { getOfferExtraLabels } from "../../packages/domain/src/index.ts";
+import { getLocalFirstPrice } from "../../apps/web/lib/price-presentation.ts";
 
 const productPage = readFileSync(new URL("../../apps/web/app/products/[slug]/page.tsx", import.meta.url), "utf8");
 const selectors = readFileSync(new URL("../../apps/web/components/product-selectors.tsx", import.meta.url), "utf8");
@@ -60,4 +61,37 @@ test("offer extras and responsive rows remain compact and omit shipping from pri
   assert.match(offerSection, /mt-4 grid gap-2 sm:hidden/);
   assert.match(offerSection, /rounded-xl border border-slate-200 p-3/);
   assert.match(offerSection, /<RetailerLink[\s\S]*?<OfferPriceLink offer=\{offer\}/);
+});
+
+test("Canadian presentation currency is primary while native foreign pricing remains visible", () => {
+  assert.deepEqual(getLocalFirstPrice(1064, "JPY", 9.6), {
+    primaryAmount: 9.6,
+    primaryCurrency: "CAD",
+    primaryIsApproximate: true,
+    nativeSecondary: { amount: 1064, currency: "JPY" },
+    cadConversionUnavailable: false,
+  });
+  assert.deepEqual(getLocalFirstPrice(1064, "JPY", null), {
+    primaryAmount: 1064,
+    primaryCurrency: "JPY",
+    primaryIsApproximate: false,
+    nativeSecondary: null,
+    cadConversionUnavailable: true,
+  });
+  assert.equal(getLocalFirstPrice(19.99, "CAD", null).cadConversionUnavailable, false);
+});
+
+test("benchmark and foreign offer rows use local-first pricing without losing exact links", () => {
+  assert.doesNotMatch(productPage, /Strongest verified benchmark/);
+  assert.match(productPage, /primaryBenchmarkPrice\.primaryCurrency === "CAD"[\s\S]*?formatCad\(primaryBenchmarkPrice\.primaryAmount\)/);
+  assert.match(productPage, /primaryBenchmarkPrice\.nativeSecondary[\s\S]*?formatNativeMoney/);
+  assert.match(productPage, /resolveCadDisplayAmount/);
+  assert.match(offerSection, /getLocalFirstPrice/);
+  assert.match(offerSection, /<span>\{primaryPrice\}<\/span>[\s\S]*?\{nativePrice/);
+  assert.match(offerSection, /CAD conversion unavailable/);
+  assert.doesNotMatch(offerSection, /Approx\. CAD conversion unavailable/);
+  assert.match(offerSection, /inline-flex flex-col items-end text-right/);
+  assert.match(offerSection, /flex justify-end/);
+  assert.match(offerSection, /href=\{safeExternalUrl\(offer\.listingUrl\)\}/);
+  assert.match(offerSection, /href=\{offer\.listingUrl\}/);
 });

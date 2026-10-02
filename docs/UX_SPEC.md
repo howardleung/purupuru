@@ -371,7 +371,7 @@ The default presentation is brand + product name + size. A sole/default ProductV
 
 ### Buying options
 
-`Buy in Canada` is one of the first major sections. On desktop, its dense comparison table uses exactly `Retailer`, `Extras`, `Availability`, and `Price`; on mobile, compact rows preserve the same hierarchy. Retailer name and price are separate safe links to the exact listing. Extras come only from structured additional product value, while absent extras display an em dash. Shipping and verification stay out of the primary comparison. Default order remains product price ascending; shipping, extras, and affiliate information do not alter it. Empty state says no Canadian options are currently tracked, not that the product is unavailable.
+`Buy in Canada` is one of the first major sections. On desktop, its dense comparison table uses exactly `Retailer`, `Extras`, `Availability`, and `Price`; on mobile, compact rows preserve the same hierarchy. Retailer name and price are separate safe links to the exact listing. In the Canadian site context, foreign-currency rows put an available approximate CAD value first and retain the authoritative native amount immediately below it. Extras come only from structured additional product value, while absent extras display an em dash. Shipping and verification stay out of the primary comparison. Default order remains product price ascending; shipping, extras, and affiliate information do not alter it. Empty state says no Canadian options are currently tracked, not that the product is unavailable.
 
 ### Secondary content
 
@@ -571,7 +571,7 @@ Rows stack cleanly; check/quantity controls remain tappable; summaries remain re
 | Sizes cannot be mixed | Prices, list items, purchases, and history retain exact ProductVariant context. |
 | Catalogue price is customer-market eligible | Use `Offer.availableMarkets`, not retailer country. |
 | Retailer country is storefront context | Never treat it as delivery eligibility. |
-| Native currency is authoritative | Native first; CAD is approximate convenience context. |
+| Native currency is authoritative | The Canadian UI may put approximate CAD first for scanning, but must retain the native amount immediately alongside/below it and never treat the conversion as authoritative stored price. |
 | Benchmark types differ | Preserve MSRP, Retail Price, and Reference Price labels, precedence, and evidence. |
 | Missing stays missing | Invent no zeroes, conversions, ratings, ingredients, popularity, savings, deals, or availability. |
 | Shopping-list Purchased is not Owned | Use reversible checklist state for “Did this get bought?”; require a separate explicit Collection action for personal ownership and `PurchaseInstance` history. |

@@ -379,3 +379,13 @@ This file records settled choices and the rationale behind them. New decisions s
 **Why:** Size selection and raw product-price comparison are the primary shopping tasks. Large selector regions and verbose offer cards obscure those tasks, while shipping or verification metadata does not belong in the main factual comparison grid.
 
 **Implications:** Extras are derived only from structured additional items or multi-unit primary quantity; a sole primary item is not an extra and missing extras display `—`. Offer ordering remains exact-variant raw product price ascending. ProductVersion stays implicit unless multiple shopper-relevant versions exist. No schema, migration, ingestion, benchmark, collection, or shopping-list behavior changes.
+
+### 2026-10-01 — Canadian price presentation is local-currency first
+
+**Status:** Accepted
+
+**Decision:** In the Canadian site context, show an available approximate CAD conversion as the primary presentation value for non-CAD benchmarks and foreign-market offers, with the authoritative native amount immediately below it. Keep benchmark provenance, verification, native context, and exchange-rate details available through the compact details disclosure.
+
+**Why:** Canadian shoppers can compare values faster in a familiar currency without losing the source-market amount or confusing a convenience conversion with authoritative price data.
+
+**Implications:** Runtime offer presentation reuses the same Bank of Canada conversion layer as benchmark presentation when an optional stored offer conversion is absent. Conversion failure falls back to native currency. Native data, benchmark semantics, raw-price ordering, persistence, and ingestion remain unchanged; no schema or migration is required. This supersedes the native-first presentation ordering in the 2026-09-12 benchmark-conversion implication without changing its data-authority rule.

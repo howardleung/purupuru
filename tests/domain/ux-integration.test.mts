@@ -152,7 +152,8 @@ test("product menu and product-page hierarchy follow the structural UX contract"
   assert.match(productPage, /<PersonalActionsModal/);
   assert.ok(productPage.indexOf('title="Buy in Canada"') < productPage.indexOf("<PriceHistorySection"));
   assert.ok(productPage.indexOf('title={`Buy in') < productPage.indexOf("<PriceHistorySection"));
-  assert.equal(productPage.match(/Strongest verified benchmark/g)?.length, 1);
+  assert.doesNotMatch(productPage, /Strongest verified benchmark/);
+  assert.match(productPage, /aria-label="Benchmark price"/);
   assert.doesNotMatch(productPage, />Benchmark prices</);
   assert.match(productPage, /md:col-start-1 md:row-span-2 md:row-start-1/);
   assert.match(productPage, /md:col-start-2 md:row-start-2/);

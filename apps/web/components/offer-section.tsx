@@ -1,6 +1,7 @@
 import { getOfferExtraLabels, type OfferPrice } from "@beauty-platform/domain";
 
 import { safeExternalUrl } from "../lib/external-url";
+import { getLocalFirstPrice } from "../lib/price-presentation";
 import { RetailerLink } from "./retailer-link";
 
 export type OfferView = OfferPrice & {
@@ -8,6 +9,7 @@ export type OfferView = OfferPrice & {
   productVariantId: string;
   primaryQuantity: number;
   listingUrl: string;
+  displayCadPrice: number | null;
   availabilityState: string;
   retailer: { sourceKey: string; name: string };
   items: Array<{
@@ -39,9 +41,17 @@ function formatMoney(value: number, currency: string) {
   return `${new Intl.NumberFormat("en-CA", {
     style: "currency",
     currency,
+    currencyDisplay: "narrowSymbol",
     minimumFractionDigits: currency === "CAD" ? 2 : 0,
     maximumFractionDigits: currency === "CAD" ? 2 : 0,
   }).format(value)} ${currency}`;
+}
+
+function formatCad(value: number) {
+  return `CA$${new Intl.NumberFormat("en-CA", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(value)}`;
 }
 
 function extrasText(offer: OfferView) {
@@ -54,23 +64,31 @@ function extrasText(offer: OfferView) {
 }
 
 function OfferPriceLink({ offer }: { offer: OfferView }) {
+  const price = getLocalFirstPrice(
+    offer.productPrice,
+    offer.nativeCurrency,
+    offer.displayCadPrice,
+  );
+  const primaryPrice = price.primaryCurrency === "CAD"
+    ? formatCad(price.primaryAmount)
+    : formatMoney(price.primaryAmount, price.primaryCurrency);
+  const nativePrice = price.nativeSecondary
+    ? formatMoney(price.nativeSecondary.amount, price.nativeSecondary.currency)
+    : null;
+
   return (
     <a
-      aria-label={`Shop this listing at ${offer.retailer.name} for ${formatMoney(offer.productPrice, offer.nativeCurrency)}`}
-      className="inline-flex flex-col items-start font-bold text-brand-action underline decoration-slate-300 underline-offset-2 transition hover:decoration-brand-action"
+      aria-label={`Shop this listing at ${offer.retailer.name} for ${price.primaryIsApproximate ? "approximately " : ""}${primaryPrice}${nativePrice ? `; native price ${nativePrice}` : ""}`}
+      className="inline-flex flex-col items-end text-right font-bold text-brand-action underline decoration-slate-300 underline-offset-2 transition hover:decoration-brand-action"
       href={safeExternalUrl(offer.listingUrl)}
       rel="noreferrer"
       target="_blank"
     >
-      <span>{formatMoney(offer.productPrice, offer.nativeCurrency)}</span>
-      {offer.nativeCurrency !== "CAD" ? (
-        offer.cadConvertedPrice !== null ? (
-          <span className="mt-0.5 text-xs font-medium text-slate-500 no-underline">
-            Approx. {formatMoney(offer.cadConvertedPrice, "CAD")}
-          </span>
-        ) : (
-          <span className="mt-0.5 text-xs font-medium text-slate-500 no-underline">Approx. CAD conversion unavailable</span>
-        )
+      <span>{primaryPrice}</span>
+      {nativePrice ? (
+        <span className="mt-0.5 text-xs font-medium text-slate-500 no-underline">{nativePrice}</span>
+      ) : price.cadConversionUnavailable ? (
+        <span className="mt-0.5 max-w-32 text-xs font-medium text-slate-500 no-underline">CAD conversion unavailable</span>
       ) : null}
     </a>
   );
@@ -159,7 +177,9 @@ export function OfferSection({
                         {availabilityLabels[offer.availabilityState] ?? "Unknown"}
                       </span>
                     </td>
-                    <td className="px-4 py-4 text-right align-top text-base"><OfferPriceLink offer={offer} /></td>
+                    <td className="px-4 py-4 text-right align-top text-base">
+                      <div className="flex justify-end"><OfferPriceLink offer={offer} /></div>
+                    </td>
                   </tr>
                 ))}
               </tbody>
