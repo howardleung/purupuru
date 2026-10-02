@@ -33,12 +33,12 @@ export default async function ComparePage({ searchParams }: { searchParams: Prom
     <main className="page-container py-8 sm:py-10">
       <Link className="text-sm font-medium text-slate-600 underline" href="/catalogue">← Back to catalogue</Link>
       <h1 className="mt-5 text-3xl font-semibold tracking-tight">Compare products</h1>
-      <p className="mt-2 max-w-3xl text-slate-600">A factual comparison of each selected exact size. Missing data stays visible as missing.</p>
+      <p className="mt-2 max-w-3xl text-slate-600">Compare tracked prices and useful buying context for each selected size. Missing prices stay visible as missing.</p>
 
       {products.length < 2 ? (
         <section className="mt-8 rounded-xl border border-dashed border-slate-300 p-8 text-center">
           <h2 className="font-semibold">Choose at least two products</h2>
-          <p className="mt-2 text-sm text-slate-600">Use the comparison checkboxes in the catalogue to build a small comparison.</p>
+          <p className="mt-2 text-sm text-slate-600">Use the catalogue checkboxes to compare tracked prices for up to four exact sizes.</p>
           <Link className="mt-4 inline-block text-sm font-semibold underline" href="/catalogue">Browse products</Link>
         </section>
       ) : (

@@ -3,7 +3,7 @@
 **Status:** Canonical specification for the next structural UX redesign  
 **Scope:** Information architecture, interaction hierarchy, responsive behavior, and data-presentation rules  
 **Not in scope:** Final branding, visual identity, or implementation in this document  
-**Last updated:** 2026-09-16
+**Last updated:** 2026-10-01
 
 ## 1. Purpose
 
@@ -19,7 +19,7 @@ The supplied Sukoshi and PCPartPicker screenshots are references for information
 
 ## 2. Core design philosophy
 
-PuruPuru should look and feel like a beauty product while behaving like a serious research and shopping-intelligence tool.
+PuruPuru should look and feel like a beauty product while behaving like a serious price-comparison and shopping-intelligence tool. Its primary job is to help shoppers compare available retailer prices for the exact product and size they want, identify the best tracked buying option, and save money. Versioning, identifiers, provenance, benchmarks, and history make that comparison trustworthy but remain secondary unless they materially help a purchase decision.
 
 | Surface type | Primary character | Examples | Default density |
 |---|---|---|---|
@@ -30,7 +30,7 @@ PuruPuru should look and feel like a beauty product while behaving like a seriou
 
 Global principles:
 
-1. Use progressive disclosure instead of showing every available field everywhere.
+1. Lead with product, exact size, and retailer-price comparison; use progressive disclosure for supporting evidence and internal complexity.
 2. Product imagery carries more weight on discovery and personal surfaces.
 3. Structured facts carry more weight on research and comparison surfaces.
 4. Unknown is better than guessed. Missing data remains missing.
@@ -203,11 +203,11 @@ Use the established combobox/listbox pattern: arrows move, Enter activates, Esca
 
 ### Purpose
 
-Introduce PuruPuru as an attractive public skincare-discovery product and guide users into trustworthy research.
+Introduce PuruPuru as an attractive skincare price-comparison product and guide users from the product and size they want to trustworthy retailer options.
 
 ### Immediately visible
 
-- concise value proposition;
+- concise compare-prices, shop-smarter, save-money value proposition;
 - prominent search;
 - category/browse entry point;
 - image-forward factual or curated discovery content backed by current data.
@@ -240,12 +240,12 @@ Product/card activation opens the product page; category activation opens canoni
 
 ### Purpose
 
-Answer practical questions quickly:
+Answer practical shopping questions quickly:
 
-- What is the cheapest product matching the user's needs?
+- What is the best tracked retailer price for this exact product and size?
+- Which tracked products and sizes have offers available to the user's market?
 - What are the highest-rated supported options?
 - Which products contain desired structured actives once verified data exists?
-- Which products have tracked offers available to the user's market?
 
 This surface leans most toward PCPartPicker in behavior, never branding.
 

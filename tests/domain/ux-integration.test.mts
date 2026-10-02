@@ -53,7 +53,11 @@ test("current product identity appears in metadata and both wordmarks", () => {
     const component = readFileSync(new URL(`../../apps/web/components/${file}.tsx`, import.meta.url), "utf8");
     assert.match(component, /PuruPuru/);
   }
-  assert.match(homePage, /PuruPuru — skincare discovery and price comparison/);
+  assert.match(homePage, /PuruPuru — compare skincare prices/);
+  assert.match(homePage, /Skincare shopping, made smarter/);
+  assert.match(homePage, /Find the best price for the skincare you want/);
+  assert.match(homePage, /Compare tracked prices across retailers for the exact product and size/);
+  assert.doesNotMatch(homePage, /version-aware|exact versions/);
 });
 
 test("browser titles and favicon use the compact PuruPuru identity", () => {

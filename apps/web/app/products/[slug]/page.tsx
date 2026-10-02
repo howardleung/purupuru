@@ -85,7 +85,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     : null;
   const title = family.canonicalName;
   const productLabel = `${family.brand.name} ${title}`;
-  const description = `Compare verified benchmarks, tracked offers, and exact sizes for ${productLabel}.`;
+  const description = `Compare tracked retailer prices, availability, and benchmark context for ${productLabel}.`;
 
   return {
     title,

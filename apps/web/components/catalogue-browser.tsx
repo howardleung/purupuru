@@ -195,7 +195,7 @@ export function CatalogueBrowser({
     <main className="page-container py-8 sm:py-10">
       <Breadcrumbs items={breadcrumbs} />
       <div className="mt-5 max-w-3xl">
-        <p className="text-sm font-medium text-slate-500">Research skincare</p>
+        <p className="text-sm font-medium text-slate-500">Compare skincare prices</p>
         <h1 className="mt-2 text-3xl font-extrabold tracking-tight">{title}</h1>
         <p className="mt-3 text-slate-600">{description}</p>
       </div>

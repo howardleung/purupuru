@@ -6,6 +6,8 @@
 
 Users should not need to understand retailer identifiers, canonical product resolution, GTIN matching, formulation history, currency normalization, or price-confidence logic. The interface exposes only what helps them make a confident decision.
 
+PuruPuru's primary interface job is to help a shopper find the product and exact size they want, compare available retailer prices, identify the best tracked buying option, and save money. Benchmarks, history, provenance, identifiers, and versioning support confidence in that comparison; they must not displace it in the visual or messaging hierarchy.
+
 ### First-build visual posture
 
 The first MVP UI is a functional implementation layout, not the final visual design. Keep it clean and usable, but prioritize operational product behavior over final typography, visual identity, spacing polish, animation, or brand styling.
@@ -45,7 +47,7 @@ A product page should normally read as brand + product name + size. The internal
 
 ## 5. Shopping intelligence should be visible, not buried
 
-The strongest available benchmark should be prominent near the product identity:
+The retailer price comparison is the primary shopping surface. The strongest available benchmark should remain compact but visible near the product identity as supporting context:
 
 - official MSRP when manufacturer-defined.
 - official Retail Price when supported by an official source, or a trusted local Retail Price where appropriate.

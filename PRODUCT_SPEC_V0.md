@@ -165,27 +165,25 @@ Beauty creators who may eventually build public collections, shopping guides, ro
 
 ## 4. Core Value Proposition
 
-The product should help users answer four questions:
+PuruPuru is primarily a skincare price-comparison and shopping-intelligence product. Its core job is to help shoppers compare available retailer prices for the exact product and size they want, identify the best tracked buying option, and save money. The normal shopper-facing identity is brand + product name + size.
 
-### What should I discover?
+ProductVersion, identifiers, provenance, benchmarks, availability, and price history exist to make the comparison trustworthy. Keep that complexity out of the main value proposition unless it materially changes a buying decision.
 
-Show products that are popular or highly regarded in different beauty markets rather than relying only on international social-media trends.
-
-### What does the world think about it?
-
-Present trusted external signals such as ratings, rankings, and review counts from relevant local and international platforms when the data can be obtained legitimately.
-
-The platform should link users back to original sources rather than attempting to replace them.
+The product should help users answer four questions, in this priority order:
 
 ### Where should I buy it?
 
-Compare tracked local and international purchasing options, clearly distinguishing:
+Compare tracked local and international retailer offers for the exact product and size, clearly distinguishing eligible purchasing markets and current availability. Make the lowest comparable tracked product price easy to find without implying that every retailer on the internet has been checked.
 
-- local retailers
-- international retailers shipping to the user's home market
-- destination-country reference prices
+Help users quickly understand which tracked retailer appears cheaper and whether purchasing abroad may be worthwhile. Default ordering remains affiliate-neutral and based on product price rather than an opaque deal score.
 
-The platform should make it easy to understand whether purchasing abroad may be worthwhile without claiming that every retailer in the world has been checked.
+### What should I discover?
+
+Show useful skincare products and categories that lead naturally into exact-size retailer comparison. Popular or highly regarded products from different beauty markets may support discovery only when legitimate evidence exists.
+
+### What does the world think about it?
+
+Present trusted external signals such as ratings, rankings, and review counts from relevant local and international platforms when the data can be obtained legitimately. Link back to original sources rather than attempting to replace them.
 
 ### How does this product fit into my beauty collection?
 
@@ -199,7 +197,7 @@ The core loop is:
 
 1. Discover a product.
 2. Understand its reputation across relevant beauty markets.
-3. Compare versions, variants, bundles, availability, and prices.
+3. Compare tracked retailer prices and availability for the exact size; expose a version/formula distinction only when it materially affects the purchase.
 4. Save the product to a personal collection or shopping list.
 5. Purchase the product.
 6. Record the purchase.

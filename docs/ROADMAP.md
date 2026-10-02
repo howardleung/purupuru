@@ -2,6 +2,8 @@
 
 The roadmap protects focus. Items listed later are not promises or requirements for the current build.
 
+Across phases, PuruPuru's primary outcome is helping shoppers compare available retailer prices for the exact skincare product and size they want, choose the best tracked buying option, and save money. Product identity, provenance, benchmarks, price history, collections, and planning features support that outcome rather than replacing it.
+
 ## Phase 0 — Feasibility and product definition
 
 Status: complete enough to begin Phase 1.
@@ -124,6 +126,7 @@ The feature should save the user work first; community data is a secondary benef
 ## Phase 6 — Shopping intelligence expansion
 
 Potential:
+- broader trustworthy retailer coverage for more useful best-tracked-price comparisons
 - more Canadian retailers
 - additional international affiliate feeds
 - Amazon authorized product APIs once eligible

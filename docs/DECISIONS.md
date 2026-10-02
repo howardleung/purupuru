@@ -389,3 +389,13 @@ This file records settled choices and the rationale behind them. New decisions s
 **Why:** Canadian shoppers can compare values faster in a familiar currency without losing the source-market amount or confusing a convenience conversion with authoritative price data.
 
 **Implications:** Runtime offer presentation reuses the same Bank of Canada conversion layer as benchmark presentation when an optional stored offer conversion is absent. Conversion failure falls back to native currency. Native data, benchmark semantics, raw-price ordering, persistence, and ingestion remain unchanged; no schema or migration is required. This supersedes the native-first presentation ordering in the 2026-09-12 benchmark-conversion implication without changing its data-authority rule.
+
+### 2026-10-01 — Retailer price comparison is the primary product promise
+
+**Status:** Accepted
+
+**Decision:** Position PuruPuru first as a skincare price-comparison and shopping-intelligence product that helps shoppers compare available retailer prices for the exact product and size they want, identify the best tracked buying option, and save money. Use brand + product name + size as the normal shopper identity; expose ProductVersion or formula distinctions only when they materially affect a purchasing decision.
+
+**Why:** Price differences across retailers are the immediate, legible shopper problem PuruPuru solves. Internal identity, provenance, and evidence systems build trust in that answer but should not require technical understanding or obscure the money-saving benefit.
+
+**Implications:** Homepage, catalogue, comparison, About, metadata, and future public messaging lead with compare prices, shop smarter, and spend less while avoiding claims of universal internet coverage. Exact-size matching, retailer identity, native pricing, benchmark semantics, provenance, history, version isolation, and affiliate-neutral raw-price ordering remain unchanged as trust infrastructure. No schema, ingestion, or pricing-behavior change is required.

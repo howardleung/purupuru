@@ -5,23 +5,23 @@ import { PublicInfoPage } from "../../components/public-info-page";
 
 export const metadata: Metadata = {
   title: "About",
-  description: "Learn how PuruPuru approaches version-aware skincare discovery and honest price comparison.",
+  description: "Learn how PuruPuru helps skincare shoppers compare tracked retailer prices and spend less.",
 };
 
 export default function AboutPage() {
   return (
     <PublicInfoPage
       eyebrow="About PuruPuru"
-      title="A clearer way to research skincare across markets"
-      intro="PuruPuru is an early-stage skincare discovery and shopping-planning product for people comparing exact products, sizes, and prices at home or while travelling."
+      title="A smarter way to compare skincare prices"
+      intro="PuruPuru helps shoppers compare available retailer prices for the exact skincare product and size they want, so they can choose where to buy and spend less."
     >
       <section>
         <h2 className="text-lg font-semibold text-slate-950">Why it exists</h2>
-        <p className="mt-2">Skincare research is scattered across brand pages, local platforms, retailers, currency converters, and personal notes. PuruPuru brings useful context together while linking back to original sources.</p>
+        <p className="mt-2">The same skincare product can cost very different amounts across retailers and markets. PuruPuru brings tracked buying options together so shoppers can compare prices quickly and see where it may be cheaper.</p>
       </section>
       <section>
         <h2 className="text-lg font-semibold text-slate-950">What we prioritize</h2>
-        <p className="mt-2">Product identity, source transparency, and honest missing-data states come before catalogue breadth. We do not silently combine different formulations or sizes, and affiliate relationships must never influence offer ordering.</p>
+        <p className="mt-2">Price comparisons stay tied to the correct product and size. Source transparency, honest missing-data states, and affiliate-neutral ordering make those comparisons trustworthy without asking shoppers to understand the underlying data model.</p>
       </section>
       <p><Link className="font-medium underline" href="/catalogue">Browse the current catalogue</Link></p>
     </PublicInfoPage>

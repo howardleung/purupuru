@@ -4,7 +4,7 @@ These flows describe intended product behavior. Exact visual design is not fixed
 
 ## 0. Public homepage → browse
 
-1. An anonymous visitor lands on `/` and sees PuruPuru’s value proposition, prominent product/brand search, canonical category entry points, and curated products loaded from PostgreSQL.
+1. An anonymous visitor lands on `/` and immediately understands that PuruPuru compares tracked retailer prices for the exact skincare product and size they want so they can shop smarter and spend less. Prominent product/brand search, canonical category entry points, and curated products lead into that comparison.
 2. Search submits to `/catalogue`; category links use stable `/categories/[slug]` routes.
 3. The visitor can continue Home → Browse/Search → Product → Compare without signing in.
 4. About and footer trust pages explain source limitations, changing prices/availability, approximate currency conversion, and the affiliate-ordering commitment.
@@ -13,7 +13,7 @@ These flows describe intended product behavior. Exact visual design is not fixed
 ## 1. Anonymous browse → product page
 
 1. User lands on the responsive website without an account.
-2. They can browse/search products by canonical category, prices, benchmark pricing, external signals, and curated discovery sections.
+2. They can browse/search by product, brand, category, size, and tracked price. Benchmarks, history, and external signals provide supporting buying context rather than replacing the retailer comparison.
 3. Catalogue results show each active size in the current shopper-facing version as a distinct row/card. Clicking one navigates to its ProductFamily page with that current version and exact variant preserved.
 4. No authentication is required until the user attempts a personal action.
 5. When signed in, the same catalogue may add compact private state for the current version; anonymous cards remain catalogue-only.
@@ -63,7 +63,7 @@ A brand result can lead to a minimal brand page listing supported products, even
 
 ### Above the fold
 
-The product page groups version-level collection actions and exact-variant shopping-list planning into one clear Save and plan area. A successful list addition provides a direct link to the updated private list.
+The product page leads with shopper identity—brand, product name, and exact size—then makes tracked retailer prices easy to compare. It groups version-level collection actions and exact-variant shopping-list planning into one clear Save and plan area. A successful list addition provides a direct link to the updated private list.
 Present, in a calm hierarchy:
 - compact, clickable breadcrumbs from the primary canonical category path, for example `Skincare > Toners > Toner`
 - brand

@@ -15,7 +15,7 @@ const nunito = localFont({
 });
 
 const siteDescription =
-  "Skincare discovery, trusted cross-market price context, and private shopping planning.";
+  "Compare tracked retailer prices for the skincare product and size you want, shop smarter, and spend less.";
 
 export const metadata: Metadata = {
   title: {

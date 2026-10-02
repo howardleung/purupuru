@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const catalogue = await getCatalogue({ categorySlug: slug });
   const title = catalogue.selectedCategory?.displayName ?? "Category";
   const description = catalogue.selectedCategory
-    ? `Browse version-aware ${catalogue.selectedCategory.displayName.toLowerCase()} products and trusted price context on PuruPuru.`
+    ? `Browse ${catalogue.selectedCategory.displayName.toLowerCase()} products by exact size and compare tracked retailer prices on PuruPuru.`
     : "Browse PuruPuru’s canonical skincare categories.";
 
   return {
@@ -66,7 +66,7 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
       breadcrumbs={catalogue.breadcrumbs}
       brands={catalogue.brands}
       categories={catalogue.categories}
-      description={`Products classified under the canonical ${catalogue.selectedCategory.displayName} category.`}
+      description={`Find the ${catalogue.selectedCategory.displayName.toLowerCase()} product and size you want, then compare available retailer prices.`}
       personalItems={personalItems}
       products={catalogue.products}
       filters={catalogue.filters}

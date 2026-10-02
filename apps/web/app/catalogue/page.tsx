@@ -11,10 +11,10 @@ export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Skincare Catalogue",
-  description: "Search PuruPuru’s version-aware skincare catalogue by product, brand, or canonical category.",
+  description: "Browse skincare by product, brand, or category and compare the best retailer prices PuruPuru currently tracks.",
   openGraph: {
     title: "Browse skincare · PuruPuru",
-    description: "Search version-aware skincare products and compare trusted market pricing.",
+    description: "Find the exact skincare size you want and compare available retailer prices.",
   },
 };
 
@@ -61,7 +61,7 @@ export default async function CataloguePage({ searchParams }: { searchParams: Se
       breadcrumbs={catalogue.breadcrumbs}
       brands={catalogue.brands}
       categories={catalogue.categories}
-      description="Browse a curated, version-aware skincare catalogue with verified price context and source signals."
+      description="Find the product and size you want, then compare the retailer prices PuruPuru currently tracks."
       personalItems={personalItems}
       products={catalogue.products}
       filters={catalogue.filters}

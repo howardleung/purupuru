@@ -29,6 +29,7 @@ If a request conflicts with these documents, flag it before choosing a direction
 
 ## PuruPuru invariants
 
+- Treat PuruPuru primarily as a skincare price-comparison and shopping-intelligence product: help shoppers compare available retailer prices for the exact product and size they want, identify the best tracked buying option, and save money. Keep versioning, identifiers, provenance, and other data-model complexity out of shopper-facing hierarchy unless they materially affect a purchase.
 - Preserve `ProductFamily → ProductVersion → ProductVariant → Offer`; never silently merge ambiguous versions, variants, or retailer listings.
 - Treat `ProductVersion` as an exception for meaningful shopper-facing differences, not every barcode, release-year, wording, or minor packaging revision. A unique uncontradicted brand/product/exact-size match may associate an offer without exact release proof; contradictory evidence still requires review.
 - Retailer data must pass normalization and conservative identity matching before it affects canonical catalogue data. `Offer.availableMarkets` means customer/delivery markets, not retailer location.

@@ -11,8 +11,8 @@ import { catalogueProductHref } from "../lib/product-links";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
-  description: "Discover version-aware skincare, compare trusted prices across Canada, Japan, and Korea, and plan what to buy.",
-  openGraph: { title: "PuruPuru — skincare discovery and price comparison", description: "Compare the exact skincare product, size, and market price before you buy." },
+  description: "Compare tracked retailer prices for the exact skincare product and size you want, shop smarter, and spend less.",
+  openGraph: { title: "PuruPuru — compare skincare prices", description: "Compare available retailer prices for the exact skincare product and size you want." },
 };
 
 export default async function HomePage() {
@@ -31,9 +31,9 @@ export default async function HomePage() {
         </div>
         <div className="page-container relative grid gap-10 py-12 sm:py-16 lg:grid-cols-[1.15fr_1fr] lg:items-center lg:gap-14">
           <div className="min-w-0">
-            <p className="eyebrow">Skincare shopping, with context</p>
-            <h1 className="mt-4 max-w-2xl text-[2.125rem] font-extrabold leading-[1.14] tracking-[-0.035em] text-brand-ink sm:text-[2.5rem]">Compare the right product—not just the lowest-looking price.</h1>
-            <p className="mt-5 max-w-xl text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">PuruPuru helps you check exact versions and sizes, trustworthy local benchmarks, and tracked buying options before you buy skincare at home or while travelling.</p>
+            <p className="eyebrow">Skincare shopping, made smarter</p>
+            <h1 className="mt-4 max-w-2xl text-[2.125rem] font-extrabold leading-[1.14] tracking-[-0.035em] text-brand-ink sm:text-[2.5rem]">Find the best price for the skincare you want.</h1>
+            <p className="mt-5 max-w-xl text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">Compare tracked prices across retailers for the exact product and size you’re looking for, so you can shop smarter and spend less.</p>
             <div className="relative z-10 mt-7"><GlobalSearch id="home-search" prominent /></div>
             <div className="mt-5 flex flex-wrap items-center gap-x-7 gap-y-3">
               <Link className="ui-link no-underline" href="/catalogue">Browse all skincare <ArrowRight aria-hidden className="h-4 w-4" /></Link>
@@ -43,7 +43,7 @@ export default async function HomePage() {
           </div>
           {featuredProducts.length > 0 ? (
             <aside aria-label="Featured catalogue products" className="relative mx-auto grid w-full max-w-lg grid-cols-2 items-start gap-3 sm:gap-4">
-              <p className="absolute -top-7 left-3 hidden text-sm font-semibold italic text-brand-action lg:block">Same products. Smarter choices.</p>
+              <p className="absolute -top-7 left-3 hidden text-sm font-semibold italic text-brand-action lg:block">Same skincare. Smarter spending.</p>
               {featuredProducts.map((product, index) => (
                 <Link className={`hero-product ${index === 0 ? "sm:mt-5" : ""}`} href={catalogueProductHref(product)} key={product.id}>
                   <div className={`relative rounded-[1.125rem] ${index === 0 ? "bg-[#eaf1f6]" : "bg-[#f3eeea]"}`}>
@@ -86,12 +86,12 @@ export default async function HomePage() {
       <section aria-labelledby="home-comparison-title" className="brand-band relative border-y border-slate-100">
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden"><span className="water-detail -bottom-12 -left-5 h-40 w-32 opacity-60" /><span className="water-detail -right-8 -top-6 h-36 w-28 opacity-60" /></div>
         <div className="page-container relative grid gap-7 py-8 sm:grid-cols-2 lg:grid-cols-[1fr_3fr] lg:items-center">
-          <div><p className="eyebrow">Beauty, anywhere</p><h2 className="mt-2 text-xl font-extrabold tracking-tight text-brand-ink" id="home-comparison-title">How comparison works</h2></div>
+          <div><p className="eyebrow">Compare before you buy</p><h2 className="mt-2 text-xl font-extrabold tracking-tight text-brand-ink" id="home-comparison-title">How comparison works</h2></div>
           <div className="grid gap-6 sm:col-span-2 md:grid-cols-3 lg:col-span-1">
             {[
-              { Icon: Search, title: "Compare", copy: "See exact versions, sizes and prices." },
-              { Icon: ShieldCheck, title: "Shop smarter", copy: "Trusted sources and local benchmarks." },
-              { Icon: Globe2, title: "Skincare without borders", copy: "Plan what to buy at home or while travelling." },
+              { Icon: Search, title: "Compare prices", copy: "See tracked retailer prices for the exact size you want." },
+              { Icon: ShieldCheck, title: "Shop smarter", copy: "Use trusted price context to choose where it’s worth buying." },
+              { Icon: Globe2, title: "More buying options", copy: "Compare Canadian and international retailers in one place." },
             ].map(({ Icon, title, copy }) => <article className="flex items-center gap-3" key={title}><span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-slate-200 text-brand-action"><Icon aria-hidden className="h-6 w-6" strokeWidth={1.6} /></span><div><h3 className="text-[0.625rem] font-bold uppercase tracking-[0.16em] text-slate-600">{title}</h3><p className="mt-1 text-sm leading-5 text-slate-500">{copy}</p></div></article>)}
           </div>
         </div>
