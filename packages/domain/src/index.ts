@@ -10,6 +10,41 @@ export type OfferPrice = {
   cadConvertedPrice: number | null;
 };
 
+export type StructuredOfferItem = {
+  label: string;
+  quantity: number;
+  itemType: "SAME_PRODUCT" | "OTHER_PRODUCT" | "MINI" | "GIFT_ACCESSORY";
+  relatedProductVariantId: string | null;
+};
+
+export function getOfferExtraLabels({
+  items,
+  primaryProductVariantId,
+  primaryQuantity,
+}: {
+  items: readonly StructuredOfferItem[];
+  primaryProductVariantId: string;
+  primaryQuantity: number;
+}): string[] {
+  const primaryItemQuantity = items.reduce((maximum, item) => {
+    const describesPrimaryItem =
+      item.itemType === "SAME_PRODUCT" &&
+      (item.relatedProductVariantId === null || item.relatedProductVariantId === primaryProductVariantId);
+    return describesPrimaryItem ? Math.max(maximum, item.quantity) : maximum;
+  }, primaryQuantity);
+  const labels = primaryItemQuantity > 1 ? [`${primaryItemQuantity}-pack`] : [];
+
+  for (const item of items) {
+    const describesPrimaryItem =
+      item.itemType === "SAME_PRODUCT" &&
+      (item.relatedProductVariantId === null || item.relatedProductVariantId === primaryProductVariantId);
+    if (describesPrimaryItem) continue;
+    labels.push(item.quantity > 1 ? `${item.quantity} × ${item.label}` : item.label);
+  }
+
+  return labels;
+}
+
 export function convertCurrencyAmount(
   amount: number,
   targetCurrencyUnitsPerSourceUnit: number,

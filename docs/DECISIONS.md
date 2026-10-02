@@ -369,3 +369,13 @@ This file records settled choices and the rationale behind them. New decisions s
 **Why:** Shoppers compare purchasable sizes and their prices, not an arbitrary default size. Variant-level rows prevent one size's offer or image from being presented as another size while retaining a simple family-level search experience.
 
 **Implications:** Multiple offers for one exact variant still produce one result, not duplicate rows. A family with multiple active current sizes produces multiple results. Prior/non-current versions remain available through product-page selection but do not multiply ordinary browse results. No schema or migration change is required because normalized quantity/unit, variant identity, offer linkage, and context-preserving URLs already exist.
+
+### 2026-10-01 — Product buying options use compact exact-listing comparison
+
+**Status:** Accepted
+
+**Decision:** Place compact exact-size chips directly below product imagery. Present offers as a dense desktop table with exactly `Retailer`, `Extras`, `Availability`, and `Price`, with compact mobile rows carrying the same hierarchy. Retailer name and displayed price independently link to the exact listing through the existing safe external-link boundary. Primary comparison omits shipping and verification metadata.
+
+**Why:** Size selection and raw product-price comparison are the primary shopping tasks. Large selector regions and verbose offer cards obscure those tasks, while shipping or verification metadata does not belong in the main factual comparison grid.
+
+**Implications:** Extras are derived only from structured additional items or multi-unit primary quantity; a sole primary item is not an extra and missing extras display `—`. Offer ordering remains exact-variant raw product price ascending. ProductVersion stays implicit unless multiple shopper-relevant versions exist. No schema, migration, ingestion, benchmark, collection, or shopping-list behavior changes.

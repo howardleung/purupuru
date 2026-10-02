@@ -355,9 +355,8 @@ Personal controls no longer dominate the primary hierarchy.
 Left:
 
 - large product image/fallback;
-- size selector near/below image;
+- compact chip-style size selector directly below image attribution;
 - a formula/version selector only when multiple shopper-relevant versions exist;
-- size selector near/below image.
 
 Right:
 
@@ -372,7 +371,7 @@ The default presentation is brand + product name + size. A sole/default ProductV
 
 ### Buying options
 
-`Buy in Canada` is one of the first major sections. Offers preserve retailer, native product price, availability, factual extras, last-verified context, and optional reliable offer-level shipping. Default order remains product price ascending; shipping and affiliate information do not alter it. Empty state says no Canadian options are currently tracked, not that the product is unavailable.
+`Buy in Canada` is one of the first major sections. On desktop, its dense comparison table uses exactly `Retailer`, `Extras`, `Availability`, and `Price`; on mobile, compact rows preserve the same hierarchy. Retailer name and price are separate safe links to the exact listing. Extras come only from structured additional product value, while absent extras display an em dash. Shipping and verification stay out of the primary comparison. Default order remains product price ascending; shipping, extras, and affiliate information do not alter it. Empty state says no Canadian options are currently tracked, not that the product is unavailable.
 
 ### Secondary content
 

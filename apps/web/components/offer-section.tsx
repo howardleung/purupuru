@@ -1,20 +1,23 @@
-import type { OfferPrice } from "@beauty-platform/domain";
+import { getOfferExtraLabels, type OfferPrice } from "@beauty-platform/domain";
 
+import { safeExternalUrl } from "../lib/external-url";
 import { RetailerLink } from "./retailer-link";
 
 export type OfferView = OfferPrice & {
   id: string;
+  productVariantId: string;
+  primaryQuantity: number;
   listingUrl: string;
   availabilityState: string;
-  shippingState: string | null;
-  shippingAmount: number | null;
-  shippingCurrency: string | null;
-  shippingConditions: string | null;
-  deliveryMethod: string | null;
-  deliveryEstimate: string | null;
-  lastVerifiedAt: Date;
-  retailer: { sourceKey: string; name: string; country: string | null };
-  items: Array<{ id: string; label: string; quantity: number; isPromotional: boolean }>;
+  retailer: { sourceKey: string; name: string };
+  items: Array<{
+    id: string;
+    label: string;
+    quantity: number;
+    itemType: "SAME_PRODUCT" | "OTHER_PRODUCT" | "MINI" | "GIFT_ACCESSORY";
+    isPromotional: boolean;
+    relatedProductVariantId: string | null;
+  }>;
 };
 
 const availabilityLabels: Record<string, string> = {
@@ -22,8 +25,15 @@ const availabilityLabels: Record<string, string> = {
   LOW_STOCK: "Low stock",
   OUT_OF_STOCK: "Out of stock",
   PREORDER: "Pre-order",
-  UNKNOWN: "Availability unverified",
+  UNKNOWN: "Unknown",
 };
+
+function availabilityClass(state: string) {
+  if (state === "IN_STOCK") return "bg-emerald-50 text-emerald-800";
+  if (state === "LOW_STOCK" || state === "PREORDER") return "bg-amber-50 text-amber-900";
+  if (state === "OUT_OF_STOCK") return "bg-slate-200 text-slate-600";
+  return "bg-slate-100 text-slate-600";
+}
 
 function formatMoney(value: number, currency: string) {
   return `${new Intl.NumberFormat("en-CA", {
@@ -34,42 +44,35 @@ function formatMoney(value: number, currency: string) {
   }).format(value)} ${currency}`;
 }
 
-function formatDate(value: Date) {
-  return new Intl.DateTimeFormat("en-CA", { dateStyle: "medium" }).format(value);
-}
-
-function shippingText(offer: OfferView) {
-  if (!offer.shippingState || offer.shippingState === "UNKNOWN") return null;
-  if (offer.shippingState === "FREE") return "Free";
-  if (offer.shippingState === "CALCULATED") return offer.shippingConditions ?? "Calculated at checkout";
-  if (offer.shippingState === "PICKUP_ONLY") return "Pickup only";
-  if (offer.shippingState === "NOT_APPLICABLE") return "Not applicable";
-  if (offer.shippingAmount !== null && offer.shippingCurrency) {
-    return formatMoney(offer.shippingAmount, offer.shippingCurrency);
-  }
-  return offer.shippingConditions;
-}
-
 function extrasText(offer: OfferView) {
-  return offer.items.length > 0
-    ? offer.items.map((item) => `${item.quantity} × ${item.label}`).join(", ")
-    : "None recorded";
+  const labels = getOfferExtraLabels({
+    items: offer.items,
+    primaryProductVariantId: offer.productVariantId,
+    primaryQuantity: offer.primaryQuantity,
+  });
+  return labels.length > 0 ? labels.join(", ") : "—";
 }
 
-function OfferPriceDisplay({ offer }: { offer: OfferView }) {
+function OfferPriceLink({ offer }: { offer: OfferView }) {
   return (
-    <>
-      <span className="font-medium">{formatMoney(offer.productPrice, offer.nativeCurrency)}</span>
+    <a
+      aria-label={`Shop this listing at ${offer.retailer.name} for ${formatMoney(offer.productPrice, offer.nativeCurrency)}`}
+      className="inline-flex flex-col items-start font-bold text-brand-action underline decoration-slate-300 underline-offset-2 transition hover:decoration-brand-action"
+      href={safeExternalUrl(offer.listingUrl)}
+      rel="noreferrer"
+      target="_blank"
+    >
+      <span>{formatMoney(offer.productPrice, offer.nativeCurrency)}</span>
       {offer.nativeCurrency !== "CAD" ? (
         offer.cadConvertedPrice !== null ? (
-          <span className="mt-1 block text-xs text-slate-500">
+          <span className="mt-0.5 text-xs font-medium text-slate-500 no-underline">
             Approx. {formatMoney(offer.cadConvertedPrice, "CAD")}
           </span>
         ) : (
-          <span className="mt-1 block text-xs text-slate-500">Approx. CAD conversion unavailable</span>
+          <span className="mt-0.5 text-xs font-medium text-slate-500 no-underline">Approx. CAD conversion unavailable</span>
         )
       ) : null}
-    </>
+    </a>
   );
 }
 
@@ -86,8 +89,6 @@ export function OfferSection({
   emptyMessage?: string;
   compact?: boolean;
 }) {
-  const showShipping = offers.some((offer) => shippingText(offer));
-
   return (
     <section className={compact ? "" : "mt-10 sm:mt-12"}>
       <div>
@@ -101,88 +102,64 @@ export function OfferSection({
         </div>
       ) : (
         <>
-          <div className={compact ? "mt-4 grid gap-3" : "mt-4 grid gap-3 sm:hidden"}>
+          <div className="mt-4 grid gap-2 sm:hidden">
             {offers.map((offer) => (
-              <article className="surface-card p-4" key={offer.id}>
+              <article className={`rounded-xl border border-slate-200 p-3 ${offer.availabilityState === "OUT_OF_STOCK" ? "bg-slate-50" : "bg-white"}`} key={offer.id}>
                 <div className="flex items-start justify-between gap-3">
                   <RetailerLink
-                    className="font-semibold text-slate-950 underline decoration-slate-300 underline-offset-2"
+                    className="min-w-0 font-semibold text-brand-action underline decoration-slate-300 underline-offset-2 hover:decoration-brand-action"
                     href={offer.listingUrl}
                     name={offer.retailer.name}
+                    showName
                     sourceKey={offer.retailer.sourceKey}
                   />
-                  <span className="ui-chip shrink-0">
-                    {availabilityLabels[offer.availabilityState] ?? "Availability unverified"}
-                  </span>
+                  <OfferPriceLink offer={offer} />
                 </div>
-                <div className="mt-3 text-sm"><OfferPriceDisplay offer={offer} /></div>
-                <dl className="mt-4 grid gap-2 text-xs">
+                <dl className="mt-2 grid grid-cols-[auto_minmax(0,1fr)] items-start gap-x-3 gap-y-2 text-xs">
+                  <div>
+                    <dt className="sr-only">Availability</dt>
+                    <dd className={`inline-flex rounded-full px-2 py-1 font-semibold ${availabilityClass(offer.availabilityState)}`}>
+                      {availabilityLabels[offer.availabilityState] ?? "Unknown"}
+                    </dd>
+                  </div>
                   <div>
                     <dt className="font-medium text-slate-500">Extras</dt>
                     <dd className="mt-0.5 text-slate-700">{extrasText(offer)}</dd>
-                  </div>
-                  {showShipping ? (
-                    <div>
-                      <dt className="font-medium text-slate-500">Shipping</dt>
-                      <dd className="mt-0.5 text-slate-700">
-                        {shippingText(offer) ?? "Not reliably available"}
-                        {offer.deliveryMethod ? (
-                          <span className="block text-slate-500">
-                            {offer.deliveryMethod}
-                            {offer.deliveryEstimate ? ` · ${offer.deliveryEstimate}` : ""}
-                          </span>
-                        ) : null}
-                      </dd>
-                    </div>
-                  ) : null}
-                  <div>
-                    <dt className="font-medium text-slate-500">Verified</dt>
-                    <dd className="mt-0.5 text-slate-700">{formatDate(offer.lastVerifiedAt)}</dd>
                   </div>
                 </dl>
               </article>
             ))}
           </div>
 
-          <div className={compact ? "hidden" : "mt-4 hidden overflow-x-auto rounded-xl border border-slate-200 sm:block"}>
-            <table className="w-full min-w-[720px] text-left text-sm">
+          <div className="mt-4 hidden overflow-hidden rounded-xl border border-slate-200 sm:block">
+            <table className="w-full table-fixed text-left text-sm">
               <thead className="bg-slate-50 text-slate-600">
                 <tr>
-                  <th className="px-4 py-3 font-medium">Retailer</th>
-                  <th className="px-4 py-3 font-medium">Product price</th>
-                  <th className="px-4 py-3 font-medium">Availability</th>
+                  <th className="w-[28%] px-4 py-3 font-medium">Retailer</th>
                   <th className="px-4 py-3 font-medium">Extras</th>
-                  {showShipping ? <th className="px-4 py-3 font-medium">Shipping</th> : null}
-                  <th className="px-4 py-3 font-medium">Verified</th>
+                  <th className="w-28 px-4 py-3 font-medium">Availability</th>
+                  <th className="w-44 px-4 py-3 text-right font-medium">Price</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-200">
                 {offers.map((offer) => (
-                  <tr key={offer.id}>
+                  <tr className={offer.availabilityState === "OUT_OF_STOCK" ? "bg-slate-50 text-slate-500" : undefined} key={offer.id}>
                     <td className="px-4 py-4 align-top">
                       <RetailerLink
+                        className="font-semibold text-brand-action underline decoration-slate-300 underline-offset-2 hover:decoration-brand-action"
                         href={offer.listingUrl}
                         name={offer.retailer.name}
+                        showName
                         sourceKey={offer.retailer.sourceKey}
                       />
                     </td>
-                    <td className="px-4 py-4 align-top"><OfferPriceDisplay offer={offer} /></td>
-                    <td className="px-4 py-4 align-top text-slate-700">
-                      {availabilityLabels[offer.availabilityState] ?? "Availability unverified"}
-                    </td>
                     <td className="px-4 py-4 align-top text-slate-700">{extrasText(offer)}</td>
-                    {showShipping ? (
-                      <td className="max-w-xs px-4 py-4 align-top text-slate-700">
-                        {shippingText(offer) ?? "—"}
-                        {offer.deliveryMethod ? (
-                          <span className="mt-1 block text-xs text-slate-500">
-                            {offer.deliveryMethod}
-                            {offer.deliveryEstimate ? ` · ${offer.deliveryEstimate}` : ""}
-                          </span>
-                        ) : null}
-                      </td>
-                    ) : null}
-                    <td className="px-4 py-4 align-top text-slate-500">{formatDate(offer.lastVerifiedAt)}</td>
+                    <td className="px-4 py-4 align-top">
+                      <span className={`inline-flex rounded-full px-2 py-1 text-xs font-semibold ${availabilityClass(offer.availabilityState)}`}>
+                        {availabilityLabels[offer.availabilityState] ?? "Unknown"}
+                      </span>
+                    </td>
+                    <td className="px-4 py-4 text-right align-top text-base"><OfferPriceLink offer={offer} /></td>
                   </tr>
                 ))}
               </tbody>

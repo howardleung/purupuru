@@ -154,7 +154,8 @@ test("product menu and product-page hierarchy follow the structural UX contract"
   assert.ok(productPage.indexOf('title={`Buy in') < productPage.indexOf("<PriceHistorySection"));
   assert.equal(productPage.match(/Strongest verified benchmark/g)?.length, 1);
   assert.doesNotMatch(productPage, />Benchmark prices</);
-  assert.match(productPage, /md:col-start-2 md:row-span-3 md:row-start-2/);
+  assert.match(productPage, /md:col-start-1 md:row-span-2 md:row-start-1/);
+  assert.match(productPage, /md:col-start-2 md:row-start-2/);
 });
 
 test("ordinary products emphasize size and only expose formula choices for multiple versions", () => {
@@ -182,7 +183,7 @@ test("retailer links use an approved local-logo registry with an accessible text
   assert.equal(resolveRetailerLogo("retailer:well-ca", registry), null);
   assert.equal(resolveRetailerLogo(null, registry), null);
   assert.match(retailerLink, /aria-label={`Shop this listing at \$\{name\}`}/);
-  assert.match(retailerLink, /<span className="sr-only">\{name\}<\/span>/);
+  assert.match(retailerLink, /className=\{showName \? "ml-2" : "sr-only"\}/);
   assert.match(retailerLink, /group-focus-visible:block/);
   assert.match(retailerLink, /href=\{safeExternalUrl\(href\)\}/);
   assert.match(retailerLink, /resolveRetailerLogo/);
@@ -190,8 +191,9 @@ test("retailer links use an approved local-logo registry with an accessible text
   assert.match(retailerLogos, /Retailer\.sourceKey/);
   assert.match(offerSection, /<RetailerLink/);
   assert.match(offerSection, /sourceKey=\{offer\.retailer\.sourceKey\}/);
-  assert.match(offerSection, /compact \? "mt-4 grid gap-3"/);
-  assert.match(offerSection, /compact \? "hidden"/);
+  assert.match(offerSection, /showName/);
+  assert.match(offerSection, /mt-4 grid gap-2 sm:hidden/);
+  assert.match(offerSection, /mt-4 hidden overflow-hidden rounded-xl border border-slate-200 sm:block/);
   assert.doesNotMatch(offerSection, />\s*\{offer\.retailer\.name\}\s*<\/a>/);
 });
 

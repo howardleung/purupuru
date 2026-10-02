@@ -26,10 +26,38 @@ export function ProductSelectors({
   selectedVariant: VariantOption;
 }) {
   return (
-    <div className="grid gap-6">
+    <div className="grid gap-4">
+      <fieldset>
+        <legend className="text-xs font-semibold uppercase tracking-wide text-slate-500">Size</legend>
+        <div className="mt-2 flex flex-wrap gap-2">
+          {selectedVersion.variants.map((variant) => {
+            const isSelected = variant.id === selectedVariant.id;
+            return (
+              <Link
+                aria-current={isSelected ? "page" : undefined}
+                className={
+                  "rounded-full border px-3 py-1.5 text-sm font-medium transition " +
+                  (isSelected
+                    ? "border-brand-action bg-brand-action text-white"
+                    : "border-slate-300 bg-white text-slate-700 hover:border-slate-500")
+                }
+                href={productSelectionHref({
+                  productSlug,
+                  versionKey: selectedVersion.versionCode ?? selectedVersion.id,
+                  variantId: variant.id,
+                })}
+                key={variant.id}
+              >
+                {variant.displaySize}
+              </Link>
+            );
+          })}
+        </div>
+      </fieldset>
+
       {versions.length > 1 ? (
         <fieldset>
-          <legend className="text-sm font-medium text-slate-700">Formula</legend>
+          <legend className="text-xs font-semibold uppercase tracking-wide text-slate-500">Formula</legend>
           <div className="mt-2 flex flex-wrap gap-2">
             {versions.map((version) => {
               const target = chooseVariantForVersion(
@@ -42,10 +70,10 @@ export function ProductSelectors({
                 <Link
                   aria-current={isSelected ? "page" : undefined}
                   className={
-                    "rounded-md border px-3 py-2 text-sm " +
+                    "rounded-full border px-3 py-1.5 text-sm font-medium transition " +
                     (isSelected
                       ? "border-brand-action bg-brand-action text-white"
-                      : "border-slate-300 text-slate-700 hover:border-slate-500")
+                      : "border-slate-300 bg-white text-slate-700 hover:border-slate-500")
                   }
                   href={productSelectionHref({
                     productSlug,
@@ -61,34 +89,6 @@ export function ProductSelectors({
           </div>
         </fieldset>
       ) : null}
-
-      <fieldset>
-        <legend className="text-sm font-medium text-slate-700">Size</legend>
-        <div className="mt-2 flex flex-wrap gap-2">
-          {selectedVersion.variants.map((variant) => {
-            const isSelected = variant.id === selectedVariant.id;
-            return (
-              <Link
-                aria-current={isSelected ? "page" : undefined}
-                className={
-                  "rounded-md border px-3 py-2 text-sm " +
-                  (isSelected
-                    ? "border-brand-action bg-brand-action text-white"
-                    : "border-slate-300 text-slate-700 hover:border-slate-500")
-                }
-                href={productSelectionHref({
-                  productSlug,
-                  versionKey: selectedVersion.versionCode ?? selectedVersion.id,
-                  variantId: variant.id,
-                })}
-                key={variant.id}
-              >
-                {variant.displaySize}
-              </Link>
-            );
-          })}
-        </div>
-      </fieldset>
     </div>
   );
 }

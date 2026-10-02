@@ -891,7 +891,7 @@ Price comparison should be visible in one continuous view rather than hidden beh
 
 The product's strongest available local benchmark—official `MSRP`, official or trusted local `Retail Price`, or trusted `Reference Price`—should appear prominently in the main product details rather than being buried as merely another retailer row. Show its native currency, CAD conversion when available, source, and last-verified date. This benchmark is a core shopping-intelligence feature because it gives users context for what the product is normally intended to cost in its local market.
 
-Offer tables should expose useful facts without trying to make the entire purchasing decision for the user. Core MVP rows include `Retailer`, `Price`, `Availability`, and `Extras`; shipping/delivery is optional supporting information only when reliable for that offer. Default ordering is lowest product price first; shipping does not affect the order.
+Offer tables should expose useful facts without trying to make the entire purchasing decision for the user. The primary desktop comparison columns are `Retailer`, `Extras`, `Availability`, and `Price`; retailer name and price link independently to the exact listing. Shipping/delivery and verification details are not primary comparison columns and may appear only in subtle supporting disclosure when useful and reliable. Default ordering is lowest product price first; shipping and extras do not affect the order.
 
 Bundle offers remain in the normal offer list rather than a separate bundle section. Each offer may include factual `Extras` such as `Includes 15 g mini + pouch`. Extras do not affect default offer ordering.
 

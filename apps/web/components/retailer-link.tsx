@@ -7,11 +7,13 @@ export function RetailerLink({
   href,
   name,
   sourceKey,
+  showName = false,
   className = "font-medium text-slate-950 underline decoration-slate-300 underline-offset-2",
 }: {
   href: string;
   name: string;
   sourceKey?: string | null;
+  showName?: boolean;
   className?: string;
 }) {
   const logo = resolveRetailerLogo(sourceKey);
@@ -35,13 +37,15 @@ export function RetailerLink({
             src={logo.src}
             width={logo.width}
           />
-          <span className="sr-only">{name}</span>
-          <span
-            aria-hidden="true"
-            className="pointer-events-none absolute left-0 top-full z-10 mt-1 hidden whitespace-nowrap rounded bg-slate-950 px-2 py-1 text-xs font-normal text-white no-underline shadow-sm group-hover:block group-focus-visible:block"
-          >
-            {name}
-          </span>
+          <span className={showName ? "ml-2" : "sr-only"}>{name}</span>
+          {!showName ? (
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute left-0 top-full z-10 mt-1 hidden whitespace-nowrap rounded bg-slate-950 px-2 py-1 text-xs font-normal text-white no-underline shadow-sm group-hover:block group-focus-visible:block"
+            >
+              {name}
+            </span>
+          ) : null}
         </>
       ) : (
         name

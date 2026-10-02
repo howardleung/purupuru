@@ -150,22 +150,16 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
   )!;
   const toOfferView = (offer: (typeof selectedVariantRecord.offers)[number]): OfferView => ({
     id: offer.id,
+    productVariantId: selectedVariantRecord.id,
+    primaryQuantity: offer.primaryQuantity,
     listingUrl: offer.listingUrl,
     productPrice: Number(offer.productPrice),
     nativeCurrency: offer.nativeCurrency,
     cadConvertedPrice: offer.cadConvertedPrice === null ? null : Number(offer.cadConvertedPrice),
     availabilityState: offer.availabilityState,
-    shippingState: offer.shippingState,
-    shippingAmount: offer.shippingAmount === null ? null : Number(offer.shippingAmount),
-    shippingCurrency: offer.shippingCurrency,
-    shippingConditions: offer.shippingConditions,
-    deliveryMethod: offer.deliveryMethod,
-    deliveryEstimate: offer.deliveryEstimate,
-    lastVerifiedAt: offer.lastVerifiedAt,
     retailer: {
       sourceKey: offer.retailer.sourceKey,
       name: offer.retailer.name,
-      country: offer.retailer.country,
     },
     items: offer.items,
   });
@@ -239,59 +233,61 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
           </p>
         </section>
 
-        <figure className="md:col-start-1 md:row-span-2 md:row-start-1">
-          <ProductImage
-            className="min-h-72 md:min-h-[28rem]"
-            image={selectedImage}
-            key={selectedImage?.url ?? "image-fallback"}
-            priority
-            productName={`${family.brand.name} ${family.canonicalName} ${selectedVariantRecord.displaySize}`}
-            sizes="(max-width: 768px) calc(100vw - 2rem), 42vw"
-          />
-          {selectedImage?.sourcePageUrl ? (
-            <figcaption className="mt-2 text-xs text-slate-500">
-              Image: {" "}
-              <a
-                className="underline decoration-slate-300 underline-offset-2"
-                href={safeExternalUrl(selectedImage.sourcePageUrl)}
-                rel="noreferrer"
-                target="_blank"
-              >
-                {selectedImage.sourceName}
-              </a>
-            </figcaption>
-          ) : null}
-        </figure>
-
-        <div className="md:col-start-1 md:row-start-3">
-          <ProductSelectors
-            productSlug={family.slug}
-            selectedVariant={selectedVariant}
-            selectedVersion={selectedVersion}
-            versions={versionOptions}
-          />
-        </div>
-
-        <div className="flex items-center gap-3 border-t border-slate-200 pt-5 md:col-start-1 md:row-start-4">
-          {isClerkConfigured ? (
-            <PersonalActionsModal
-              initialState={initialCollectionState}
-              lists={shoppingLists}
-              productSlug={family.slug}
-              productVariantId={selectedVariantRecord.id}
-              productVersionId={selectedVersionRecord.id}
-              variantLabel={selectedVariantRecord.displaySize}
+        <div className="md:col-start-1 md:row-span-2 md:row-start-1">
+          <figure>
+            <ProductImage
+              className="min-h-72 md:min-h-[28rem]"
+              image={selectedImage}
+              key={selectedImage?.url ?? "image-fallback"}
+              priority
+              productName={`${family.brand.name} ${family.canonicalName} ${selectedVariantRecord.displaySize}`}
+              sizes="(max-width: 768px) calc(100vw - 2rem), 42vw"
             />
-          ) : (
-            <span className="grid h-12 w-12 place-items-center rounded-full bg-slate-100 text-slate-400">+</span>
-          )}
-          <div>
-            <p className="text-sm font-semibold">Save or plan</p>
-            <p className="text-xs text-slate-500">Collection, rating, purchase, and shopping-list actions</p>
+            {selectedImage?.sourcePageUrl ? (
+              <figcaption className="mt-2 text-xs text-slate-500">
+                Image: {" "}
+                <a
+                  className="underline decoration-slate-300 underline-offset-2"
+                  href={safeExternalUrl(selectedImage.sourcePageUrl)}
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  {selectedImage.sourceName}
+                </a>
+              </figcaption>
+            ) : null}
+          </figure>
+
+          <div className="mt-4">
+            <ProductSelectors
+              productSlug={family.slug}
+              selectedVariant={selectedVariant}
+              selectedVersion={selectedVersion}
+              versions={versionOptions}
+            />
+          </div>
+
+          <div className="mt-5 flex items-center gap-3 border-t border-slate-200 pt-5">
+            {isClerkConfigured ? (
+              <PersonalActionsModal
+                initialState={initialCollectionState}
+                lists={shoppingLists}
+                productSlug={family.slug}
+                productVariantId={selectedVariantRecord.id}
+                productVersionId={selectedVersionRecord.id}
+                variantLabel={selectedVariantRecord.displaySize}
+              />
+            ) : (
+              <span className="grid h-12 w-12 place-items-center rounded-full bg-slate-100 text-slate-400">+</span>
+            )}
+            <div>
+              <p className="text-sm font-semibold">Save or plan</p>
+              <p className="text-xs text-slate-500">Collection, rating, purchase, and shopping-list actions</p>
+            </div>
           </div>
         </div>
 
-        <div className="md:col-start-2 md:row-span-3 md:row-start-2">
+        <div className="md:col-start-2 md:row-start-2">
           <section className="border-b border-slate-200 pb-6" aria-labelledby="primary-benchmark-title">
             <p className="text-xs font-medium uppercase tracking-wide text-slate-500" id="primary-benchmark-title">
               Strongest verified benchmark
