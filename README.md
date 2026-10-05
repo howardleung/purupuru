@@ -1,174 +1,100 @@
-# [PuruPuru](https://www.purupuru.ca/)
+# PuruPuru
 
-PuruPuru helps shoppers compare available retailer prices for the exact skincare product and size they want, identify the best tracked buying option, and save money.
+PuruPuru is a skincare price-comparison platform that helps shoppers compare retailer prices for the exact product and size they want, identify the best tracked buying option, and save money.
 
-**Live site:** [purupuru.ca](https://www.purupuru.ca/)
+**Live application:** [purupuru.ca](https://www.purupuru.ca/)
 
 ![PuruPuru homepage showing product search, featured skincare, category browsing, and tracked Canadian prices](docs/assets/purupuru-homepage.png)
 
-## Why this project is interesting
+## Tech stack
 
-- Full-stack Next.js, React, and TypeScript monorepo with explicit domain, persistence, server, and presentation boundaries.
-- Normalized PostgreSQL/Prisma model for product families, meaningful versions, exact-size variants, retailer offers, benchmarks, and price observations.
-- Variant-level, market-aware retailer comparisons with normalized capacity filtering and honest missing-price states.
-- Native-currency price storage with approximate CAD presentation using Bank of Canada exchange-rate data.
-- Versioned staged ingestion with runtime validation, provenance, conservative identity matching, and human review.
-- Idempotent ingestion and serializable, atomic catalogue commits that reject ambiguous or stale plans.
-- Clerk-backed authorization and strict user isolation for private collections and shopping lists.
-- Price history and 150+ invariant-focused automated tests covering domain, security, ingestion, and UI contracts.
+| Area | Technologies |
+| --- | --- |
+| Frontend | Next.js 15, React 19, TypeScript, Tailwind CSS, shadcn/ui conventions, Lucide icons |
+| Application layer | Next.js App Router, server components, server actions, runtime input validation |
+| Data | PostgreSQL, Prisma, Neon |
+| Authentication and infrastructure | Clerk, Upstash Redis, Vercel |
+| External data | Bank of Canada exchange-rate data |
+| Tooling | pnpm workspaces, ESLint, Node test runner |
+
+## Engineering highlights
+
+- **Variant-level catalogue:** each purchasable size is independently browsable, filterable, linkable, and price-comparable without duplicating product identity.
+- **Normalized capacity filtering:** compatible volume or mass units are normalized for filtering while incompatible dimensions remain separate.
+- **Market-aware price comparison:** offers retain native currency, availability, and explicit customer markets; Canadian shoppers receive approximate CAD presentation without replacing the source price.
+- **Structured commerce model:** PostgreSQL and Prisma model product families, meaningful versions, exact-size variants, retailers, offers, benchmark prices, and historical observations separately.
+- **Reviewed ingestion pipeline:** versioned imports pass runtime validation, normalization, provenance capture, and conservative identity matching before an administrator can approve a write plan.
+- **Safe catalogue writes:** idempotency keys, stable retailer identities, serializable transactions, stale-plan revalidation, and atomic rollback prevent duplicate or partial product graphs.
+- **Private user data:** Clerk identities resolve to local users, and collection, rating, purchase, and shopping-list reads and mutations enforce ownership.
+- **Boundary-focused quality:** 159 automated tests cover domain invariants, ingestion behavior, authorization and security boundaries, missing-data semantics, and structural UX contracts.
+
+## Why I built it
+
+Skincare products are often sold by several domestic and international retailers, but comparing them is difficult because listings vary by size, currency, availability, packaging, and naming. I built PuruPuru to normalize listings around the product and size a shopper actually wants, then make the tracked buying options easy to compare.
 
 ## Architecture
 
 ```mermaid
 flowchart LR
-    Browser[Browser] --> Web[Next.js App Router<br/>Vercel]
-    Browser -. sign-in .-> Clerk[Clerk]
-    Web --> Server[Server actions, queries,<br/>and request boundaries]
-    Server --> Domain[Domain rules]
+    Browser[Browser]
+
+    subgraph Vercel[Vercel]
+        UI[React UI<br/>Next.js App Router]
+        Server[Server actions, queries,<br/>and request boundaries]
+        Domain[Domain rules]
+    end
+
+    Browser --> UI
+    UI --> Server
+    UI -. sign-in .-> Clerk[Clerk]
+    Server --> Clerk
+    Server --> Domain
+    Server --> Redis[Upstash Redis<br/>shared rate limits]
+    Server --> FX[Bank of Canada<br/>exchange-rate data]
     Server --> Prisma[Prisma Client]
     Prisma --> Neon[(Neon PostgreSQL)]
-    Web --> Redis[Upstash Redis<br/>shared rate limits]
-    Server --> FX[Bank of Canada<br/>exchange-rate data]
-    Clerk --> Server
 ```
 
-Public catalogue reads remain independent of authentication. Private actions resolve the verified Clerk identity to a local user and scope every read and write by ownership. Domain rules stay outside React and Prisma so the same invariants can be tested directly.
+Public catalogue reads do not require authentication. Private operations resolve the verified Clerk identity to a local user, while domain rules remain separate from React and Prisma so they can be tested directly.
 
-### Staged catalogue ingestion
+## Product ingestion architecture
 
 ```mermaid
 flowchart LR
-    JSON[Versioned import JSON] --> Validate[Contract validation]
+    Import[Structured import] --> Validate[Contract validation]
     Validate --> Normalize[Normalization]
-    Normalize --> Match[Conservative identity matching]
+    Normalize --> Match[Identity matching]
     Match -->|ambiguity or conflict| Review[Admin review]
     Match --> Plan[Staged write plan]
     Plan --> Review
     Review --> Commit[Serializable transaction]
-    Commit --> Catalogue[(Catalogue identities)]
+    Commit --> Catalogue[(Catalogue)]
     Commit --> Offers[(Offers)]
-    Commit --> History[(Price observations)]
+    Commit --> History[(Price history)]
 
-    Provenance[Fact-level provenance] -. retained through .-> Plan
+    Provenance[Fact-level provenance] -. retained .-> Plan
     Idempotency[Idempotency key] -. protects .-> Plan
-    Commit -. atomic success or rollback .-> Catalogue
+    Commit -. atomic commit or rollback .-> Catalogue
 ```
 
-Submitted data never publishes automatically. The server revalidates and replans at approval time, and an ambiguity remains a review outcome rather than silently creating or merging catalogue identity.
+Import submissions never publish automatically. Ambiguous identity remains visible for review, and approval revalidates the plan inside the same atomic transaction that writes catalogue records, offers, and price observations.
 
-## Technology
+## Interesting engineering decisions
 
-- Next.js 15, React 19, TypeScript
-- Tailwind CSS and reusable UI components
-- PostgreSQL, Prisma, Neon
-- Clerk authentication
-- Upstash Redis rate limiting
-- Vercel deployment
-- pnpm workspaces
+- **Browse variants, search families:** catalogue rows represent exact purchasable variants, while search and autocomplete avoid flooding results with every size.
+- **Size is the normal shopper-facing distinction:** `ProductVersion` remains an internal exception for formula or release differences that materially affect a purchase.
+- **Native currency is authoritative:** CAD conversion is presentation-only and can fail without hiding or rewriting the original price.
+- **Ranking is affiliate-neutral:** tracked product price determines default ordering; commissions and opaque “best deal” scores do not.
+- **Uncertainty is explicit:** low-confidence imports become review outcomes instead of silently creating or merging catalogue identity.
 
-## Repository structure
+## Testing and quality
 
-```text
-apps/web/                 Next.js application, server actions, and query layer
-packages/database/        Prisma schema, migrations, seed, and shared client
-packages/domain/          Pure domain rules and ingestion contracts
-packages/ui/              Shared presentation primitives
-data/                     Curated seed data and local ingestion fixtures
-scripts/import/           Developer-operated ingestion CLI
-scripts/verify/           Database and security verification tools
-tests/domain/             Invariant-focused Node test suite
-docs/                     Product, architecture, data, UX, and ingestion docs
-```
+The repository currently has **159 automated tests** covering pure domain rules, ingestion planning and transaction behavior, ownership and security boundaries, offer and benchmark semantics, and source-level UX contracts. The normal verification pass also includes linting, workspace typechecking, Prisma validation/generation, dependency auditing, and a production build.
 
-## Local development
+The suite is intentionally strongest around invariants and failure cases. Source-contract tests and narrow DOM stand-ins are not presented as comprehensive browser E2E or accessibility certification.
 
-### Prerequisites
+For implementation detail, see the [architecture](docs/ARCHITECTURE.md), [data model](docs/DATA_MODEL.md), [ingestion design](docs/INGESTION.md), and [testing approach](docs/TESTING.md).
 
-- Node.js 22 LTS (see `.nvmrc`)
-- pnpm 11.19.0, declared in `package.json`
-- A PostgreSQL database; Neon is used by the deployed application
+---
 
-External services are deliberately separate:
-
-- **PostgreSQL/Neon:** required for catalogue and personal-data reads and writes.
-- **Clerk:** required for sign-in and private/admin actions; anonymous catalogue browsing remains public.
-- **Upstash Redis:** required for shared production rate limits. Local development may run without it when both Upstash variables are omitted.
-
-### Environment
-
-Copy `.env.example` to both locations below, then replace placeholders with development credentials:
-
-```text
-apps/web/.env.local
-packages/database/.env
-```
-
-The web environment needs Clerk and database variables. Prisma CLI commands read the database variables from `packages/database/.env`. Admin and Upstash variables are server-only and must never use a `NEXT_PUBLIC_` prefix. Real environment files are ignored by Git.
-
-### Install and prepare the database
-
-```bash
-pnpm install --frozen-lockfile
-pnpm db:generate
-pnpm db:migrate:deploy
-pnpm db:seed
-```
-
-`db:migrate:deploy` applies the repository's reviewed migrations without generating a new one. Use a disposable development database when evaluating the project.
-
-### Run the app
-
-```bash
-pnpm dev
-```
-
-The primary public routes are `/`, `/catalogue`, `/categories/[slug]`, and `/products/[slug]`. Signed-in users also have private collection and shopping-list routes.
-
-## Verification
-
-```bash
-pnpm test          # deterministic domain and source-contract tests
-pnpm lint          # web linting
-pnpm typecheck     # workspace TypeScript checks
-pnpm db:validate   # Prisma schema validation
-pnpm db:generate   # regenerate Prisma Client
-pnpm build         # production Next.js build
-```
-
-When a configured development database is available, `pnpm ingest:verify` performs rollback-only database checks for ingestion identity, idempotency, price changes, and cleanup. Source-contract and narrow DOM-stand-in tests do not replace browser E2E or manual accessibility QA; see [Testing](docs/TESTING.md).
-
-## Deployment
-
-The web application is deployed to Vercel, which generates Prisma Client on its Linux build environment before `next build`. Neon supplies pooled and direct PostgreSQL connections, Clerk supplies authentication, and Upstash supplies shared production rate limiting. Schema changes are applied through reviewed Prisma migrations rather than deployment-provider schema tools.
-
-No production identifiers or credentials belong in this repository. Deployment values are configured in provider-managed environment settings.
-
-## Data-integrity principles
-
-- Shopper-facing identity is normally brand, product name, and exact size.
-- The canonical chain remains `ProductFamily → ProductVersion → ProductVariant → Offer`; meaningful versions and exact variants are never silently merged.
-- Retailer input is normalized and conservatively matched before it can affect canonical data.
-- Native price and provenance remain authoritative; currency conversions are approximate presentation values.
-- MSRP, Retail Price, and Reference Price have distinct meanings, and missing prices are never treated as zero.
-- Default offer ordering uses product price, not affiliate relationships, shipping, or opaque deal scores.
-- Private reads and mutations are scoped to the authenticated local user.
-
-## Documentation
-
-- [Product specification](PRODUCT_SPEC_V0.md)
-- [Architecture](docs/ARCHITECTURE.md)
-- [Data model](docs/DATA_MODEL.md)
-- [Decisions](docs/DECISIONS.md)
-- [Design principles](docs/DESIGN_PRINCIPLES.md)
-- [UX specification](docs/UX_SPEC.md)
-- [User flows](docs/USER_FLOWS.md)
-- [Ingestion](docs/INGESTION.md)
-- [Testing](docs/TESTING.md)
-- [Roadmap](docs/ROADMAP.md)
-- [Security policy](SECURITY.md)
-
-`AGENTS.md` contains the repository's engineering and data-integrity guardrails for coding agents and maintainers.
-
-## License
-
-This repository is publicly viewable for portfolio and recruiter evaluation purposes. All rights are reserved. Copying, modification, distribution, or reuse of the source code or project assets requires explicit permission from the author.
+Source code is publicly viewable for portfolio and evaluation purposes. All rights reserved.
