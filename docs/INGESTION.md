@@ -12,7 +12,7 @@ The workflow is:
 
 `authenticated admin submission → validation/normalization → conservative identity plan → durable review batch → explicit admin approval → serializable atomic commit`
 
-`POST /api/admin/ingestion/products` accepts one versioned JSON batch, up to 512 KiB. It returns the batch ID, status, structured errors/warnings, and the proposed create/reuse/update/conflict plan. Repeating a request with the same `idempotencyKey` returns the original batch and does not rerun writes. `GET /api/admin/ingestion/products` returns recent batches for an authenticated administrator. Submission cannot commit catalogue records.
+The server-side admin endpoint accepts one bounded, versioned JSON batch and returns its review status, structured findings, and proposed create/reuse/update/conflict plan. Repeating a request with the same `idempotencyKey` returns the original batch and does not rerun writes. Submission cannot commit catalogue records.
 
 Review is available at `/admin/imports`. A reviewer sees retained raw and normalized source data, provenance, validation findings, identity decisions, and the write plan. `NEEDS_REVIEW` includes verification warnings or blocking identity conflicts; only the explicit **Approve and commit batch** action attempts a commit. Commit revalidates and replans inside the same serializable transaction so stale review decisions cannot silently win. Any conflict or write failure rolls the entire product graph back.
 
@@ -24,17 +24,13 @@ Matching keeps exact identifiers as the strongest evidence but does not require 
 
 Offers are active by default when `isActive` is omitted. An explicit `isActive: false` is a narrowly scoped, reversible correction: it requires an exact existing retailer/listing identity (or the established exact retailer + URL fallback), stages an explicit deactivation with a review warning, and commits only the offer's activation state. It cannot create an offer, delete catalogue identity, replace offer items, or create a price observation. An exact inactive offer can be reactivated with `isActive: true`; unchanged price/timestamp evidence does not create a duplicate observation. Historical observations remain intact in both directions.
 
-Admin authorization uses Clerk's verified server-side user ID and the server-only `PURUPURU_ADMIN_CLERK_USER_IDS` allowlist. Configure a comma-separated set of exact Clerk `user_…` IDs locally and in deployment. Do not expose it as `NEXT_PUBLIC_`. The existing authenticated mutation rate limit also applies.
+Admin authorization uses Clerk's verified server-side identity and a server-only deployment allowlist. Administrator identities and authentication material must remain outside source control and client-visible configuration. The authenticated mutation rate limit also applies.
 
 Migration `20260926120000_add_staged_product_imports` creates only the import status/source enums and `ImportBatch` audit table. Apply the reviewed migration with `pnpm db:migrate:deploy` through the normal deployment process before enabling the endpoint. It does not alter existing catalogue rows.
 
-### Manual workflow check
+### Workflow verification
 
-1. Apply the reviewed migration and configure `PURUPURU_ADMIN_CLERK_USER_IDS` with the reviewing account's Clerk user ID.
-2. Sign in as that account and submit `docs/examples/product-import-v1.json` to `POST /api/admin/ingestion/products` with `Content-Type: application/json`. An external trusted workflow must send a short-lived Clerk bearer/session token for that same allowlisted identity; never embed a long-lived Clerk secret in a payload or repository file.
-3. Confirm the response is staged (the documented example is `NEEDS_REVIEW` because its facts are deliberately `UNVERIFIED`) and repeat the identical request to confirm `replayed: true` with the same batch ID.
-4. Open `/admin/imports/{batchId}`, inspect every warning, match, offer, benchmark, and provenance link, and replace illustrative facts with verified data before approval.
-5. Approve once. Confirm the batch is `COMMITTED`; resubmitting or re-opening the committed batch must not create another graph. Reusing its idempotency key with different JSON returns a conflict.
+In a configured development environment, an authorized reviewer can submit the illustrative example, confirm that it remains in review because its claims are explicitly unverified, replay it to verify idempotency, and inspect the proposed identities and provenance before approval. A committed batch must remain a single graph, and reusing its idempotency key with different content must conflict. Never embed authentication material in a payload, fixture, or repository file.
 
 ## Safety posture
 

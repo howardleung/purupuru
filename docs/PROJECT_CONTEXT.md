@@ -2,7 +2,7 @@
 
 ## What this product is
 
-This is a consumer beauty discovery, collection, and shopping-intelligence platform. The initial focus is skincare, beginning with Korean and Japanese skincare and selective French/European support. Canada is the initial home market.
+PuruPuru is primarily a skincare price-comparison and shopping-intelligence product. It helps shoppers compare available retailer prices for the exact product and size they want, identify the best tracked buying option, and save money. The initial focus is Korean and Japanese skincare for Canadian shoppers, with selective French/European support.
 
 The current working product name is `PuruPuru`. Domain, trademark, and final visual-brand review remain pending. Generic technical identifiers and existing infrastructure identities remain unchanged.
 
@@ -18,14 +18,13 @@ That analogy describes the interaction model, not a request to copy those produc
 
 ## Core user value
 
-The platform helps answer:
+The platform's first job is to answer:
 
-1. What is worth discovering in different beauty markets?
-2. What do trusted local/global sources say about the product?
-3. Which version/variant am I actually looking at?
-4. What is the product intended to cost in its local market?
-5. What buying options are available to me in Canada or while travelling?
-6. What have I wanted, owned, tried, finished, loved, or planned to buy?
+1. Which tracked retailer has the best price for this exact product and size?
+2. What is the product intended to cost in its local market?
+3. Which buying options are available to me in Canada or while travelling?
+4. How has the tracked price changed over time?
+5. What have I wanted, owned, tried, loved, or planned to buy?
 
 ## Initial wedge
 
@@ -43,8 +42,8 @@ A product can be extremely important in Japan or Korea without being internation
 ### Cross-market shopping intelligence
 Users should see buying options in their home market, international sellers that ship to them, and local destination-market benchmarks for travel planning.
 
-### Product-version intelligence
-Beauty reformulations are frequently sold under nearly identical names. Versions should be distinguished using deterministic identifiers such as JAN/GTIN/UPC/EAN, manufacturer SKU, release version/date, formulation fingerprint, and packaging evidence. Old and new formulations must not be silently merged.
+### Trustworthy product identity
+Shopper-facing identity is normally brand, product name, and exact size. Internal version and identifier evidence prevents materially different products or formulations from being silently merged, but stays out of the interface unless the distinction affects a buying decision.
 
 ### Canonical skincare taxonomy
 The MVP uses a platform-owned hierarchical skincare taxonomy for product type, browse, and navigation. Retailer category labels are normalized into it rather than copied as canonical data. Product type remains distinct from active ingredients, skin concerns, and a user's skin type.

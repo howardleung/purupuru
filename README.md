@@ -1,132 +1,174 @@
-# PuruPuru (working name) — Repository Context
+# PuruPuru
 
-This repository is for a web-first global skincare discovery, collection, and shopping-intelligence product.
+PuruPuru helps shoppers compare available retailer prices for the exact skincare product and size they want, identify the best tracked buying option, and save money.
 
-`PuruPuru` is the current working product name. Domain and trademark clearance remain pending; generic technical identifiers stay unchanged. See [branding migration and manual infrastructure checklist](docs/BRANDING.md).
+**Live site:** [purupuru.ca](https://www.purupuru.ca/)
 
-## Start here
+> Screenshot coming soon. The repository does not currently include a cleared, durable product screenshot.
 
-For humans and agents:
+## Why this project is interesting
 
-1. Read `PRODUCT_SPEC_V0.md`.
-2. Read `AGENTS.md`.
-3. Read the relevant document under `docs/` for the task at hand.
+- Full-stack Next.js, React, and TypeScript monorepo with explicit domain, persistence, server, and presentation boundaries.
+- Normalized PostgreSQL/Prisma model for product families, meaningful versions, exact-size variants, retailer offers, benchmarks, and price observations.
+- Variant-level, market-aware retailer comparisons with normalized capacity filtering and honest missing-price states.
+- Native-currency price storage with approximate CAD presentation using Bank of Canada exchange-rate data.
+- Versioned staged ingestion with runtime validation, provenance, conservative identity matching, and human review.
+- Idempotent ingestion and serializable, atomic catalogue commits that reject ambiguous or stale plans.
+- Clerk-backed authorization and strict user isolation for private collections and shopping lists.
+- Price history and 150+ invariant-focused automated tests covering domain, security, ingestion, and UI contracts.
 
-## Documentation map
+## Architecture
 
-- `PRODUCT_SPEC_V0.md` — authoritative current product specification and MVP scope.
-- `AGENTS.md` — primary operational guidance for coding agents.
-- `docs/ARCHITECTURE.md` — current package, server, persistence, UI, and ingestion boundaries.
-- `docs/TESTING.md` — test levels, contracts, and verification expectations.
-- `docs/SECURITY.md` — security audit, runtime protections, rate-limit setup, and release checklist.
-- `docs/PROJECT_CONTEXT.md` — compact narrative and rationale for the product.
-- `docs/DECISIONS.md` — accepted decisions and rationale; append when decisions change.
-- `docs/DESIGN_PRINCIPLES.md` — UX philosophy and interaction constraints.
-- `docs/DATA_MODEL.md` — canonical domain entities and invariants.
-- `docs/INGESTION.md` — developer retailer ingestion plus the admin-only staged product-import contract, review workflow, safety rules, and commands.
-- `docs/USER_FLOWS.md` — current user-facing flows.
-- `docs/ROADMAP.md` — sequencing of MVP and future work.
-
-## Settled MVP technical stack
-
-- Next.js, React, and TypeScript for the web application
-- Tailwind CSS and shadcn/ui for modular presentation components
-- PostgreSQL with Prisma for persistence and data access
-- Clerk for authentication
-- Vercel for application hosting and deployment
-- Neon for managed PostgreSQL
-
-This stack prioritizes fast MVP development, strong TypeScript support, SEO and server rendering, low operational overhead, and a clean path to redesign the UI without restructuring domain logic.
-
-## Intended repository structure
-
-```text
-/
-├─ apps/
-│  └─ web/
-│     ├─ app/
-│     ├─ components/
-│     └─ lib/
-├─ packages/
-│  ├─ database/
-│  ├─ domain/
-│  └─ ui/
-├─ data/
-│  └─ seed/
-├─ scripts/
-│  ├─ import/
-│  └─ verify/
-├─ docs/
-│  ├─ PROJECT_CONTEXT.md
-│  ├─ DECISIONS.md
-│  ├─ DESIGN_PRINCIPLES.md
-│  ├─ DATA_MODEL.md
-│  ├─ INGESTION.md
-│  ├─ USER_FLOWS.md
-│  └─ ROADMAP.md
-├─ tests/
-│  ├─ domain/
-│  └─ e2e/
-├─ PRODUCT_SPEC_V0.md
-├─ AGENTS.md
-├─ README.md
-└─ .env.example
+```mermaid
+flowchart LR
+    Browser[Browser] --> Web[Next.js App Router<br/>Vercel]
+    Browser -. sign-in .-> Clerk[Clerk]
+    Web --> Server[Server actions, queries,<br/>and request boundaries]
+    Server --> Domain[Domain rules]
+    Server --> Prisma[Prisma Client]
+    Prisma --> Neon[(Neon PostgreSQL)]
+    Web --> Redis[Upstash Redis<br/>shared rate limits]
+    Server --> FX[Bank of Canada<br/>exchange-rate data]
+    Clerk --> Server
 ```
 
-Empty folders/packages are acceptable initially if they represent intentional future boundaries.
+Public catalogue reads remain independent of authentication. Private actions resolve the verified Clerk identity to a local user and scope every read and write by ownership. Domain rules stay outside React and Prisma so the same invariants can be tested directly.
 
-## Documentation workflow
+### Staged catalogue ingestion
 
-The docs are intended to replace reliance on any one chat history.
+```mermaid
+flowchart LR
+    JSON[Versioned import JSON] --> Validate[Contract validation]
+    Validate --> Normalize[Normalization]
+    Normalize --> Match[Conservative identity matching]
+    Match -->|ambiguity or conflict| Review[Admin review]
+    Match --> Plan[Staged write plan]
+    Plan --> Review
+    Review --> Commit[Serializable transaction]
+    Commit --> Catalogue[(Catalogue identities)]
+    Commit --> Offers[(Offers)]
+    Commit --> History[(Price observations)]
 
-When discussing a new feature or decision with an AI agent, ask it to update the corresponding documentation in the same task. For example:
+    Provenance[Fact-level provenance] -. retained through .-> Plan
+    Idempotency[Idempotency key] -. protects .-> Plan
+    Commit -. atomic success or rollback .-> Catalogue
+```
 
-> Before implementing this change, read `PRODUCT_SPEC_V0.md`, `AGENTS.md`, and the relevant docs. If this discussion changes a product decision or flow, update the appropriate documentation and append the decision to `docs/DECISIONS.md` before or alongside the code change.
+Submitted data never publishes automatically. The server revalidates and replans at approval time, and an ambiguity remains a review outcome rather than silently creating or merging catalogue identity.
 
-This allows Cursor Codex, Codex app, future ChatGPT sessions, or another coding agent to recover the project context by reading the repo.
+## Technology
 
-## Current development posture
+- Next.js 15, React 19, TypeScript
+- Tailwind CSS and reusable UI components
+- PostgreSQL, Prisma, Neon
+- Clerk authentication
+- Upstash Redis rate limiting
+- Vercel deployment
+- pnpm workspaces
 
-Do not generate the entire startup in one prompt.
+## Repository structure
 
-Preferred sequence:
-1. finalize core product-page flow
-2. confirm technical stack
-3. scaffold foundation
-4. implement one end-to-end vertical slice
-5. validate architecture against real product/version/offer data
-6. expand catalogue and personal features gradually
-
-The first implementation should optimize for clarity and correctness, not maximum feature count.
+```text
+apps/web/                 Next.js application, server actions, and query layer
+packages/database/        Prisma schema, migrations, seed, and shared client
+packages/domain/          Pure domain rules and ingestion contracts
+packages/ui/              Shared presentation primitives
+data/                     Curated seed data and local ingestion fixtures
+scripts/import/           Developer-operated ingestion CLI
+scripts/verify/           Database and security verification tools
+tests/domain/             Invariant-focused Node test suite
+docs/                     Product, architecture, data, UX, and ingestion docs
+```
 
 ## Local development
 
-1. Copy `.env.example` to `apps/web/.env.local` and `packages/database/.env`, then set the real values when available. The web environment needs the Clerk keys and both database URLs because signed-in server actions resolve the local user profile; the database package environment supplies Prisma CLI commands.
-2. Install dependencies with `pnpm install`.
-3. Generate Prisma Client with `pnpm db:generate`.
-4. Seed the curated catalogue with `pnpm db:seed`.
-5. Start the web app with `pnpm dev`.
+### Prerequisites
 
-Catalogue routes:
+- Node.js 22 LTS (see `.nvmrc`)
+- pnpm 11.19.0, declared in `package.json`
+- A PostgreSQL database; Neon is used by the deployed application
 
-- `/` — public discovery homepage with product/brand search and category entry points
-- `/catalogue` — searchable, sortable catalogue with canonical category and price filters
-- `/categories/[slug]` — canonical category browse
-- `/products/[slug]` — version-aware product detail and market offers
-- `/collection` — private version-normalized personal collection with state filters and sorting
-- `/shopping-lists` — private authenticated list creation and overview
-- `/shopping-lists/[id]` — exact-variant quantities, purchase progress, and target-market estimates
+External services are deliberately separate:
 
-Useful checks:
+- **PostgreSQL/Neon:** required for catalogue and personal-data reads and writes.
+- **Clerk:** required for sign-in and private/admin actions; anonymous catalogue browsing remains public.
+- **Upstash Redis:** required for shared production rate limits. Local development may run without it when both Upstash variables are omitted.
 
-- `pnpm lint`
-- `pnpm typecheck`
-- `pnpm test`
-- `pnpm db:validate`
-- `pnpm ingest --fixture all --dry-run` — inspect fixture matches and planned writes without mutation
-- `pnpm ingest:verify` — run rollback-only database idempotency checks
-- `pnpm build`
+### Environment
 
-Machine-generated catalogue additions use the versioned schema in `docs/schemas/product-import-v1.schema.json`, the example in `docs/examples/product-import-v1.json`, `POST /api/admin/ingestion/products`, and the `/admin/imports` review screen. Configure the server-only `PURUPURU_ADMIN_CLERK_USER_IDS` allowlist and apply the staged-import migration before enabling this workflow.
+Copy `.env.example` to both locations below, then replace placeholders with development credentials:
 
-Before production deployment, follow `docs/SECURITY.md`. Application requests require the server-only shared rate-limit store variables from `.env.example`; missing/unavailable production storage deliberately returns 503. Local development without either variable remains available. `node scripts/verify/verify-security.mjs` runs the read-only repository/history/browser-bundle credential checks (no credential values are printed).
+```text
+apps/web/.env.local
+packages/database/.env
+```
+
+The web environment needs Clerk and database variables. Prisma CLI commands read the database variables from `packages/database/.env`. Admin and Upstash variables are server-only and must never use a `NEXT_PUBLIC_` prefix. Real environment files are ignored by Git.
+
+### Install and prepare the database
+
+```bash
+pnpm install --frozen-lockfile
+pnpm db:generate
+pnpm db:migrate:deploy
+pnpm db:seed
+```
+
+`db:migrate:deploy` applies the repository's reviewed migrations without generating a new one. Use a disposable development database when evaluating the project.
+
+### Run the app
+
+```bash
+pnpm dev
+```
+
+The primary public routes are `/`, `/catalogue`, `/categories/[slug]`, and `/products/[slug]`. Signed-in users also have private collection and shopping-list routes.
+
+## Verification
+
+```bash
+pnpm test          # deterministic domain and source-contract tests
+pnpm lint          # web linting
+pnpm typecheck     # workspace TypeScript checks
+pnpm db:validate   # Prisma schema validation
+pnpm db:generate   # regenerate Prisma Client
+pnpm build         # production Next.js build
+```
+
+When a configured development database is available, `pnpm ingest:verify` performs rollback-only database checks for ingestion identity, idempotency, price changes, and cleanup. Source-contract and narrow DOM-stand-in tests do not replace browser E2E or manual accessibility QA; see [Testing](docs/TESTING.md).
+
+## Deployment
+
+The web application is deployed to Vercel, which generates Prisma Client on its Linux build environment before `next build`. Neon supplies pooled and direct PostgreSQL connections, Clerk supplies authentication, and Upstash supplies shared production rate limiting. Schema changes are applied through reviewed Prisma migrations rather than deployment-provider schema tools.
+
+No production identifiers or credentials belong in this repository. Deployment values are configured in provider-managed environment settings.
+
+## Data-integrity principles
+
+- Shopper-facing identity is normally brand, product name, and exact size.
+- The canonical chain remains `ProductFamily → ProductVersion → ProductVariant → Offer`; meaningful versions and exact variants are never silently merged.
+- Retailer input is normalized and conservatively matched before it can affect canonical data.
+- Native price and provenance remain authoritative; currency conversions are approximate presentation values.
+- MSRP, Retail Price, and Reference Price have distinct meanings, and missing prices are never treated as zero.
+- Default offer ordering uses product price, not affiliate relationships, shipping, or opaque deal scores.
+- Private reads and mutations are scoped to the authenticated local user.
+
+## Documentation
+
+- [Product specification](PRODUCT_SPEC_V0.md)
+- [Architecture](docs/ARCHITECTURE.md)
+- [Data model](docs/DATA_MODEL.md)
+- [Decisions](docs/DECISIONS.md)
+- [Design principles](docs/DESIGN_PRINCIPLES.md)
+- [UX specification](docs/UX_SPEC.md)
+- [User flows](docs/USER_FLOWS.md)
+- [Ingestion](docs/INGESTION.md)
+- [Testing](docs/TESTING.md)
+- [Roadmap](docs/ROADMAP.md)
+- [Security policy](SECURITY.md)
+
+`AGENTS.md` contains the repository's engineering and data-integrity guardrails for coding agents and maintainers.
+
+## License
+
+This repository is publicly viewable for portfolio and recruiter evaluation purposes. All rights are reserved. Copying, modification, distribution, or reuse of the source code or project assets requires explicit permission from the author.
