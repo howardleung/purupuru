@@ -1,4 +1,4 @@
-# PuruPuru
+# [PuruPuru](https://www.purupuru.ca/)
 
 PuruPuru helps shoppers compare available retailer prices for the exact skincare product and size they want, identify the best tracked buying option, and save money.
 
