@@ -4,7 +4,7 @@ PuruPuru helps shoppers compare available retailer prices for the exact skincare
 
 **Live site:** [purupuru.ca](https://www.purupuru.ca/)
 
-> Screenshot coming soon. The repository does not currently include a cleared, durable product screenshot.
+![PuruPuru homepage showing product search, featured skincare, category browsing, and tracked Canadian prices](docs/assets/purupuru-homepage.png)
 
 ## Why this project is interesting
 
