@@ -1,13 +1,24 @@
 "use client";
 
 import type { MyCollectionItem } from "@beauty-platform/domain/my-collection";
-import { ArrowDownUp, Check, SlidersHorizontal, X } from "lucide-react";
+import { ArrowDown, ArrowDownUp, ArrowUp, Check, ChevronDown, ChevronRight, SlidersHorizontal, X } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import type { CategoryRecord } from "../lib/catalogue";
-import { catalogueSorts, type CatalogueFilters, type CatalogueProduct } from "../lib/catalogue-contract";
+import {
+  catalogueSorts,
+  getCatalogueSortDirection,
+  getNextCatalogueSort,
+  type CatalogueFilters,
+  type CatalogueProduct,
+} from "../lib/catalogue-contract";
+import {
+  appendRepeatedValues,
+  getCategorySelectionState,
+  setCategorySelection,
+} from "../lib/catalogue-filter-state";
 import { catalogueProductHref } from "../lib/product-links";
 import { Breadcrumbs } from "./breadcrumbs";
 import { formatCataloguePrice } from "./product-card";
@@ -26,21 +37,72 @@ type CatalogueBrowserProps = {
   breadcrumbs?: CategoryRecord[];
 };
 
-function categoryDepth(category: CategoryRecord, categories: readonly CategoryRecord[]) {
-  const byId = new Map(categories.map((item) => [item.id, item]));
-  let depth = 0;
-  let current = category.parentCategoryId ? byId.get(category.parentCategoryId) : undefined;
-  while (current) {
-    depth += 1;
-    current = current.parentCategoryId ? byId.get(current.parentCategoryId) : undefined;
-  }
-  return depth;
-}
-
 function filterCount(filters: CatalogueFilters) {
-  const basicCount = [filters.query, filters.categorySlug, filters.brandSlug, filters.minimumCad, filters.maximumCad, filters.trackedOnly]
+  const basicCount = [filters.query, filters.categorySlugs.length > 0, filters.brandSlugs.length > 0, filters.minimumCad, filters.maximumCad, filters.trackedOnly]
     .filter((value) => value !== "" && value !== null && value !== false).length;
   return basicCount + Number(filters.capacityDimension !== null);
+}
+
+function CategoryCheckbox({
+  category,
+  categories,
+  selectedSlugs,
+  setSelectedSlugs,
+}: {
+  category: CategoryRecord;
+  categories: readonly CategoryRecord[];
+  selectedSlugs: readonly string[];
+  setSelectedSlugs: (slugs: string[]) => void;
+}) {
+  const children = categories.filter((candidate) => candidate.parentCategoryId === category.id);
+  const [expanded, setExpanded] = useState(false);
+  const checkboxRef = useRef<HTMLInputElement>(null);
+  const selection = getCategorySelectionState(categories, selectedSlugs, category.id);
+
+  useEffect(() => {
+    if (checkboxRef.current) checkboxRef.current.indeterminate = selection.indeterminate;
+  }, [selection.indeterminate]);
+
+  return (
+    <div>
+      <div className="flex min-h-7 items-center gap-1">
+        {children.length > 0 ? (
+          <button
+            aria-expanded={expanded}
+            aria-label={`${expanded ? "Collapse" : "Expand"} ${category.displayName}`}
+            className="grid h-6 w-6 shrink-0 place-items-center rounded hover:bg-slate-100"
+            onClick={() => setExpanded((current) => !current)}
+            type="button"
+          >
+            {expanded ? <ChevronDown aria-hidden className="h-3.5 w-3.5" /> : <ChevronRight aria-hidden className="h-3.5 w-3.5" />}
+          </button>
+        ) : <span className="h-6 w-6 shrink-0" />}
+        <label className="flex min-w-0 flex-1 items-center gap-2 text-sm text-slate-700">
+          <input
+            checked={selection.checked}
+            className="h-4 w-4 rounded border-slate-300"
+            onChange={(event) => setSelectedSlugs(setCategorySelection(selectedSlugs, selection.leafSlugs, event.target.checked))}
+            ref={checkboxRef}
+            type="checkbox"
+          />
+          <span className="truncate">{category.displayName}</span>
+        </label>
+      </div>
+      {expanded && children.length > 0 ? (
+        <div className="ml-3 border-l border-slate-200 pl-2">
+          {children.map((child) => (
+            <CategoryCheckbox
+              categories={categories}
+              category={child}
+              key={child.id}
+              selectedSlugs={selectedSlugs}
+              setSelectedSlugs={setSelectedSlugs}
+            />
+          ))}
+        </div>
+      ) : null}
+    </div>
+  );
 }
 
 const capacityLabels = {
@@ -110,9 +172,15 @@ export function CatalogueBrowser({
 }: CatalogueBrowserProps) {
   const router = useRouter();
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [selectedCategorySlugs, setSelectedCategorySlugs] = useState(filters.categorySlugs);
   const [compareMessage, setCompareMessage] = useState("");
   const personalByVersion = new Map(personalItems.map((item) => [item.productVersionId, item]));
-  const categoryLinks = categories.filter((category) => category.slug !== "skincare" && category.isActive);
+  const skincareRoot = categories.find((category) => category.slug === "skincare");
+  const topCategories = categories.filter((category) => (
+    category.isActive && (skincareRoot
+      ? category.parentCategoryId === skincareRoot.id
+      : category.parentCategoryId === null && category.slug !== "skincare")
+  ));
 
   function toggleComparison(productId: string) {
     setCompareMessage("");
@@ -129,8 +197,8 @@ export function CatalogueBrowser({
   function sortHref(sort: string) {
     const params = new URLSearchParams();
     if (filters.query) params.set("q", filters.query);
-    if (filters.categorySlug) params.set("category", filters.categorySlug);
-    if (filters.brandSlug) params.set("brand", filters.brandSlug);
+    appendRepeatedValues(params, "category", filters.categorySlugs);
+    appendRepeatedValues(params, "brand", filters.brandSlugs);
     if (filters.minimumCad !== null) params.set("minPrice", String(filters.minimumCad));
     if (filters.maximumCad !== null) params.set("maxPrice", String(filters.maximumCad));
     if (filters.capacityDimension) params.set("capacity", filters.capacityDimension);
@@ -147,24 +215,32 @@ export function CatalogueBrowser({
         Search
         <input className="ui-input font-normal" defaultValue={filters.query} name="q" placeholder="Product or brand" type="search" />
       </label>
-      <label className="grid gap-1.5 text-sm font-medium text-slate-700">
-        Category
-        <select className="min-w-0 ui-input font-normal" defaultValue={filters.categorySlug} name="category">
-          <option value="">All skincare</option>
-          {categoryLinks.map((category) => (
-            <option key={category.id} value={category.slug}>
-              {"— ".repeat(Math.max(0, categoryDepth(category, categories) - 1))}{category.displayName}
-            </option>
+      <fieldset>
+        <legend className="text-sm font-medium text-slate-700">Category</legend>
+        {selectedCategorySlugs.map((slug) => <input key={slug} name="category" type="hidden" value={slug} />)}
+        <div className="mt-2 grid gap-0.5">
+          {topCategories.map((category) => (
+            <CategoryCheckbox
+              categories={categories}
+              category={category}
+              key={category.id}
+              selectedSlugs={selectedCategorySlugs}
+              setSelectedSlugs={setSelectedCategorySlugs}
+            />
           ))}
-        </select>
-      </label>
-      <label className="grid gap-1.5 text-sm font-medium text-slate-700">
-        Brand
-        <select className="ui-input font-normal" defaultValue={filters.brandSlug} name="brand">
-          <option value="">All brands</option>
-          {brands.map((brand) => <option key={brand.id} value={brand.slug}>{brand.name}</option>)}
-        </select>
-      </label>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend className="text-sm font-medium text-slate-700">Brand</legend>
+        <div className="mt-2 grid max-h-44 gap-2 overflow-y-auto pr-1">
+          {brands.map((brand) => (
+            <label className="flex items-center gap-2 text-sm text-slate-700" key={brand.id}>
+              <input className="h-4 w-4 rounded border-slate-300" defaultChecked={filters.brandSlugs.includes(brand.slug)} name="brand" type="checkbox" value={brand.slug} />
+              {brand.name}
+            </label>
+          ))}
+        </div>
+      </fieldset>
       <CapacityFilter filters={filters} />
       <fieldset>
         <legend className="text-sm font-medium text-slate-700">Canada price</legend>
@@ -230,13 +306,13 @@ export function CatalogueBrowser({
                   <thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
                     <tr>
                       <th className="w-12 px-3 py-3"><span className="sr-only">Compare</span></th>
-                      <th className="w-20 px-3 py-3">Image</th>
-                      <SortableHeader href={sortHref(filters.sort === "PRODUCT_ASC" ? "PRODUCT_DESC" : "PRODUCT_ASC")} label="Product" />
+                      <th className="w-24 px-3 py-3">Image</th>
+                      <SortableHeader direction={getCatalogueSortDirection(filters.sort, "PRODUCT")} href={sortHref(getNextCatalogueSort(filters.sort, "PRODUCT"))} label="Product" />
                       <th className="w-24 px-3 py-3 font-medium">Size</th>
-                      <SortableHeader href={sortHref(filters.sort === "BRAND_ASC" ? "BRAND_DESC" : "BRAND_ASC")} label="Brand" />
+                      <SortableHeader direction={getCatalogueSortDirection(filters.sort, "BRAND")} href={sortHref(getNextCatalogueSort(filters.sort, "BRAND"))} label="Brand" />
                       <th className="px-3 py-3 font-medium">Category</th>
                       <th className="w-24 px-3 py-3 font-medium">Rating</th>
-                      <SortableHeader className="w-40" href={sortHref(filters.sort === "PRICE_ASC" ? "PRICE_DESC" : "PRICE_ASC")} label="Lowest tracked price" />
+                      <SortableHeader className="w-40" direction={getCatalogueSortDirection(filters.sort, "PRICE")} href={sortHref(getNextCatalogueSort(filters.sort, "PRICE"))} label="Lowest tracked price" />
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-200">
@@ -254,7 +330,7 @@ export function CatalogueBrowser({
                           tabIndex={0}
                         >
                           <td className="px-3 py-4 align-middle"><input aria-label={`Compare ${product.brand.name} ${product.canonicalName} ${product.currentVersion?.variant.displaySize ?? ""}`} checked={checked} className="h-4 w-4" onChange={() => toggleComparison(product.id)} type="checkbox" /></td>
-                          <td className="px-3 py-3"><Link href={href}><ProductImage className="h-14 min-h-14 rounded-lg" image={product.currentVersion?.image ?? null} productName={product.canonicalName} sizes="56px" /></Link></td>
+                          <td className="px-3 py-3"><Link href={href}><ProductImage className="h-[4.5rem] min-h-[4.5rem] rounded-lg" image={product.currentVersion?.image ?? null} productName={product.canonicalName} sizes="72px" /></Link></td>
                           <td className="px-3 py-4"><Link className="font-semibold hover:underline" href={href}>{product.canonicalName}</Link></td>
                           <td className="px-3 py-4 font-medium text-slate-700">{product.currentVersion?.variant.displaySize ?? "Not recorded"}</td>
                           <td className="px-3 py-4 text-slate-700">{product.brand.name}</td>
@@ -302,6 +378,23 @@ export function CatalogueBrowser({
   );
 }
 
-function SortableHeader({ href, label, className = "" }: { href: string; label: string; className?: string }) {
-  return <th className={`px-3 py-3 font-medium ${className}`}><Link className="inline-flex items-center gap-1 hover:text-slate-950" href={href}>{label}<ArrowDownUp aria-hidden className="h-3 w-3" /></Link></th>;
+function SortableHeader({
+  href,
+  label,
+  direction,
+  className = "",
+}: {
+  href: string;
+  label: string;
+  direction: ReturnType<typeof getCatalogueSortDirection>;
+  className?: string;
+}) {
+  const SortIcon = direction === "ascending" ? ArrowUp : direction === "descending" ? ArrowDown : ArrowDownUp;
+  return (
+    <th aria-sort={direction ?? "none"} className={`px-3 py-3 font-medium ${className}`}>
+      <Link className={`inline-flex items-center gap-1 hover:text-slate-950 ${direction ? "text-slate-950" : ""}`} href={href}>
+        {label}<SortIcon aria-hidden className={`h-3 w-3 ${direction ? "" : "opacity-50"}`} />
+      </Link>
+    </th>
+  );
 }

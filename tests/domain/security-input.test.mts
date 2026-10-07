@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { isShoppingListInput, isProductCollectionInput, boundedParameter, priceParameter, comparisonIds } from "../../apps/web/lib/input-validation.ts";
+import { isShoppingListInput, isProductCollectionInput, boundedParameter, boundedParameters, priceParameter, comparisonIds } from "../../apps/web/lib/input-validation.ts";
 import { safeExternalUrl } from "../../apps/web/lib/external-url.ts";
 import { PRODUCT_IMAGE_HOSTS, securityHeaders } from "../../apps/web/lib/security-headers.ts";
 import { MAX_REQUESTED_QUANTITY, quantityStateAfterChange } from "../../packages/domain/src/shopping-list.ts";
@@ -55,6 +55,9 @@ test("collection enums, IDs, half-star ratings and confirmations are validated",
 test("query filters handle repeated/oversized parameters and comparison has at most four IDs", () => {
   assert.equal(boundedParameter(["toner", "serum"]), undefined);
   assert.equal(boundedParameter("x".repeat(81), 80), undefined);
+  assert.deepEqual(boundedParameters("toner"), ["toner"]);
+  assert.deepEqual(boundedParameters(["toner", "serum", "toner"]), ["toner", "serum"]);
+  assert.deepEqual(boundedParameters(["toner", "x".repeat(81)], 80), ["toner"]);
   assert.equal(priceParameter(["1"]), undefined);
   for (const value of ["Infinity", "-1", "", "NaN", "1e999", "0x20"]) assert.equal(priceParameter(value), undefined);
   assert.equal(priceParameter(" 12.50 "), 12.5);

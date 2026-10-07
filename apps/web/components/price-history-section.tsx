@@ -90,7 +90,6 @@ function CurrencyHistoryChart({
   return (
     <section className="border-t border-slate-200 pt-5 first:border-0 first:pt-0" aria-label={`${nativeCurrency} price history`}>
       <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <h3 className="font-semibold">{nativeCurrency} history</h3>
         <p className="text-xs text-slate-500">{points.length} recorded observation{points.length === 1 ? "" : "s"}</p>
       </div>
 
@@ -247,38 +246,33 @@ export function PriceHistorySection({
   productContext: string;
   series: PriceHistorySeries[];
 }) {
-  const currencyGroups = groupPriceHistoryByCurrency(series);
+  const cadSeries = groupPriceHistoryByCurrency(series)
+    .find((group) => group.nativeCurrency === "CAD")?.series ?? [];
 
   return (
     <section className="mt-10 sm:mt-12" aria-labelledby="price-history-title">
       <div>
-        <h2 className="text-xl font-semibold" id="price-history-title">Price History</h2>
+        <h2 className="text-xl font-semibold" id="price-history-title">Price history</h2>
         <p className="mt-1 text-sm text-slate-600">
           Tracked observations for {productContext}. Each retailer listing is a separate series.
         </p>
       </div>
 
-      {currencyGroups.length === 0 ? (
+      {cadSeries.length === 0 ? (
         <div className="mt-4 rounded-xl border border-dashed border-slate-300 p-5 text-sm text-slate-600 sm:p-6">
-          <p>No price observations have been recorded for this size yet.</p>
+          <p>No Canadian price observations have been recorded for this size yet.</p>
           <p className="mt-1">More observations will appear as PuruPuru continues tracking this offer.</p>
         </div>
       ) : (
         <div className="mt-4 space-y-6 rounded-xl border border-slate-200 p-4 sm:p-5">
-          {currencyGroups.map((group) => (
-            <CurrencyHistoryChart
-              key={group.nativeCurrency}
-              nativeCurrency={group.nativeCurrency}
-              series={group.series}
-            />
-          ))}
+          <CurrencyHistoryChart nativeCurrency="CAD" series={cadSeries} />
         </div>
       )}
 
       <p className="mt-3 text-xs text-slate-500">
         Price history is limited to recorded observations. Current offer prices are shown separately
-        and are not backfilled as history. Native currencies use separate charts because
-        observation-date CAD rates are not yet stored.
+        and are not backfilled as history. This chart shows recorded Canadian retailer prices;
+        foreign-market price context remains available in the verified benchmark.
       </p>
     </section>
   );

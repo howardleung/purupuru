@@ -79,6 +79,19 @@ export function boundedParameter(value: unknown, maximumLength = 128): string | 
   return typeof value === "string" && value.length <= maximumLength ? value : undefined;
 }
 
+/** Accept a legacy scalar or repeated query values without allowing an unbounded filter list. */
+export function boundedParameters(
+  value: unknown,
+  maximumLength = 128,
+  maximumItems = 50,
+): string[] {
+  const values = Array.isArray(value) ? value : [value];
+  return [...new Set(values.flatMap((item) => {
+    const parameter = boundedParameter(item, maximumLength);
+    return parameter === undefined ? [] : [parameter];
+  }))].slice(0, maximumItems);
+}
+
 export function priceParameter(value: unknown): number | undefined {
   const scalar = boundedParameter(value, 32)?.trim();
   if (!scalar || !/^\d+(?:\.\d+)?$/.test(scalar)) return undefined;

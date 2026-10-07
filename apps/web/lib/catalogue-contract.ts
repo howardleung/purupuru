@@ -51,8 +51,8 @@ export type CatalogueProduct = {
 
 export type CatalogueFilters = {
   query: string;
-  categorySlug: string;
-  brandSlug: string;
+  categorySlugs: string[];
+  brandSlugs: string[];
   minimumCad: number | null;
   maximumCad: number | null;
   capacityDimension: CatalogueCapacityDimension | null;
@@ -62,6 +62,27 @@ export type CatalogueFilters = {
   trackedOnly: boolean;
   sort: CatalogueSort;
 };
+
+export type CatalogueSortColumn = "PRICE" | "PRODUCT" | "BRAND";
+export type CatalogueSortDirection = "ascending" | "descending";
+
+export function getCatalogueSortDirection(
+  sort: CatalogueSort,
+  column: CatalogueSortColumn,
+): CatalogueSortDirection | null {
+  if (sort === `${column}_ASC`) return "ascending";
+  if (sort === `${column}_DESC`) return "descending";
+  return null;
+}
+
+export function getNextCatalogueSort(
+  sort: CatalogueSort,
+  column: CatalogueSortColumn,
+): CatalogueSort {
+  return getCatalogueSortDirection(sort, column) === "ascending"
+    ? `${column}_DESC`
+    : `${column}_ASC`;
+}
 
 export const catalogueSorts: Array<{ value: CatalogueSort; label: string }> = [
   { value: "PRICE_ASC", label: "Price: low to high" },

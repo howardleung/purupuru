@@ -169,29 +169,14 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
     .filter((offer) => offer.availableMarkets.includes("CA"))
     .map(toOfferView)
     .sort(compareOffersByProductPrice);
-  const destinationMarket = family.originMarket;
-  const destinationOfferRows = destinationMarket
-    ? selectedVariantRecord.offers
-        .filter((offer) => offer.availableMarkets.includes(destinationMarket))
-        .map(toOfferView)
-        .sort(compareOffersByProductPrice)
-    : [];
   const primaryBenchmark = BENCHMARK_PRECEDENCE
     .flatMap((type) => selectedVariantRecord.benchmarkPrices.filter((benchmark) => benchmark.type === type))
     .at(0) ?? null;
-  const [primaryBenchmarkConversion, canadianOffers, destinationOffers, currentUser] = await Promise.all([
+  const [primaryBenchmarkConversion, canadianOffers, currentUser] = await Promise.all([
     primaryBenchmark
       ? convertToCad(Number(primaryBenchmark.amount), primaryBenchmark.nativeCurrency)
       : Promise.resolve(null),
     Promise.all(canadianOfferRows.map(async (offer) => ({
-      ...offer,
-      displayCadPrice: await resolveCadDisplayAmount(
-        offer.productPrice,
-        offer.nativeCurrency,
-        offer.cadConvertedPrice,
-      ),
-    }))),
-    Promise.all(destinationOfferRows.map(async (offer) => ({
       ...offer,
       displayCadPrice: await resolveCadDisplayAmount(
         offer.productPrice,
@@ -378,15 +363,6 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
           </div>
         </div>
       </div>
-
-      {destinationMarket && destinationMarket !== "CA" ? (
-        <OfferSection
-          description={`Actual tracked listings recorded for ${marketNames[destinationMarket] ?? destinationMarket}. Native ${destinationOffers[0]?.nativeCurrency ?? "currency"} prices remain authoritative; benchmark sources and external signals are not treated as shopping options.`}
-          emptyMessage={`No currently verified ${marketNames[destinationMarket] ?? destinationMarket} offers are tracked for this size.`}
-          offers={destinationOffers}
-          title={`Buy in ${marketNames[destinationMarket] ?? destinationMarket}`}
-        />
-      ) : null}
 
       <PriceHistorySection
         productContext={selectedVariantRecord.displaySize}

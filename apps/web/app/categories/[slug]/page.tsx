@@ -6,13 +6,13 @@ import { getCatalogue } from "../../../lib/catalogue";
 import { isClerkConfigured } from "../../../lib/clerk-config";
 import { getCurrentUser } from "../../../lib/current-user";
 import { getMyCollectionForUser } from "../../../lib/my-collection";
-import { boundedParameter, priceParameter } from "../../../lib/input-validation";
+import { boundedParameter, boundedParameters, priceParameter } from "../../../lib/input-validation";
 
 export const dynamic = "force-dynamic";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ q?: string; brand?: string; minPrice?: string; maxPrice?: string; capacity?: string; minCapacity?: string; maxCapacity?: string; tracked?: string; sort?: string }>;
+  searchParams: Promise<{ q?: string; brand?: string | string[]; minPrice?: string; maxPrice?: string; capacity?: string; minCapacity?: string; maxCapacity?: string; tracked?: string; sort?: string }>;
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -39,7 +39,7 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
     getCatalogue({
       categorySlug: slug,
       query: boundedParameter(queryParams.q, 80),
-      brandSlug: boundedParameter(queryParams.brand, 200),
+      brandSlugs: boundedParameters(queryParams.brand, 200),
       minimumCad: priceParameter(queryParams.minPrice),
       maximumCad: priceParameter(queryParams.maxPrice),
       capacityDimension: boundedParameter(queryParams.capacity, 16),
@@ -63,6 +63,7 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
 
   return (
     <CatalogueBrowser
+      key={`${catalogue.filters.categorySlugs.join(",")}|${catalogue.filters.brandSlugs.join(",")}`}
       breadcrumbs={catalogue.breadcrumbs}
       brands={catalogue.brands}
       categories={catalogue.categories}

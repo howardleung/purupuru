@@ -62,7 +62,7 @@ Avoid market tabs that force comparison by memory. Show information in a continu
 For the Canadian MVP:
 
 - `Buy in Canada` includes Canadian and international retailers that allow the user to buy for delivery in Canada.
-- Destination/local-market sections such as `Buy in Japan` or `Buy in Korea` provide local-market context and travel-planning options.
+- The public Canadian product page keeps the purchase comparison focused on `Buy in Canada`. Foreign-market offer records remain available to domain features that need them, while the compact benchmark preserves useful origin-market price context without a second purchase table.
 
 Core MVP offer columns:
 

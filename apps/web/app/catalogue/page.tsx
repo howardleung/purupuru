@@ -5,7 +5,7 @@ import { getCatalogue } from "../../lib/catalogue";
 import { isClerkConfigured } from "../../lib/clerk-config";
 import { getCurrentUser } from "../../lib/current-user";
 import { getMyCollectionForUser } from "../../lib/my-collection";
-import { boundedParameter, priceParameter } from "../../lib/input-validation";
+import { boundedParameter, boundedParameters, priceParameter } from "../../lib/input-validation";
 
 export const dynamic = "force-dynamic";
 
@@ -20,8 +20,8 @@ export const metadata: Metadata = {
 
 type SearchParams = Promise<{
   q?: string;
-  category?: string;
-  brand?: string;
+  category?: string | string[];
+  brand?: string | string[];
   minPrice?: string;
   maxPrice?: string;
   capacity?: string;
@@ -36,8 +36,8 @@ export default async function CataloguePage({ searchParams }: { searchParams: Se
   const [catalogue, currentUser] = await Promise.all([
     getCatalogue({
       query: boundedParameter(params.q, 80),
-      categorySlug: boundedParameter(params.category, 200),
-      brandSlug: boundedParameter(params.brand, 200),
+      categorySlugs: boundedParameters(params.category, 200),
+      brandSlugs: boundedParameters(params.brand, 200),
       minimumCad: priceParameter(params.minPrice),
       maximumCad: priceParameter(params.maxPrice),
       capacityDimension: boundedParameter(params.capacity, 16),
@@ -58,6 +58,7 @@ export default async function CataloguePage({ searchParams }: { searchParams: Se
 
   return (
     <CatalogueBrowser
+      key={`${catalogue.filters.categorySlugs.join(",")}|${catalogue.filters.brandSlugs.join(",")}`}
       breadcrumbs={catalogue.breadcrumbs}
       brands={catalogue.brands}
       categories={catalogue.categories}

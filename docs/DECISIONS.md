@@ -399,3 +399,13 @@ This file records settled choices and the rationale behind them. New decisions s
 **Why:** Price differences across retailers are the immediate, legible shopper problem PuruPuru solves. Internal identity, provenance, and evidence systems build trust in that answer but should not require technical understanding or obscure the money-saving benefit.
 
 **Implications:** Homepage, catalogue, comparison, About, metadata, and future public messaging lead with compare prices, shop smarter, and spend less while avoiding claims of universal internet coverage. Exact-size matching, retailer identity, native pricing, benchmark semantics, provenance, history, version isolation, and affiliate-neutral raw-price ordering remain unchanged as trust infrastructure. No schema, ingestion, or pricing-behavior change is required.
+
+### 2026-10-07 — Canadian product pages and catalogue filters prioritize the primary shopping task
+
+**Status:** Accepted
+
+**Decision:** Keep the Canadian product page focused on `Buy in Canada`, a compact verified benchmark, and recorded CAD price history. Do not show a second foreign-market offer table or native-currency history chart there. Catalogue brand and canonical-category filters support repeated, shareable multi-select query values; category parents control their descendant leaves independently from expansion, and table sort headers expose only the active direction.
+
+**Why:** Foreign purchase tables and parallel currency charts added visual weight without improving the primary Canadian retailer comparison. Multi-select filters and unambiguous sort state make the dense exact-variant catalogue more useful without changing product identity or pricing semantics.
+
+**Implications:** Foreign offers and native `PriceObservation` records remain intact for future market-specific experiences. The benchmark retains authoritative native-market context and approximate CAD presentation. Repeated `brand` and `category` query parameters use OR within each dimension and compose with other dimensions; legacy scalar URLs remain valid. No schema, migration, ingestion, or domain-identity change is required. This supersedes the public product-page presentation portions of the 2026-08-31 continuous-market decision while preserving offer-market semantics.

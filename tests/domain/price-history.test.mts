@@ -196,15 +196,18 @@ test("chart groups retain listing identity and never mix native-currency axes", 
   assert.equal(grouped[1]?.series[0]?.currentPrice, null);
 });
 
-test("price-history UI includes sparse and missing states and no historical CAD claim", async () => {
+test("price-history UI shows only recorded Canadian history with sparse and missing states", async () => {
   const source = await readFile(
     new URL("../../apps/web/components/price-history-section.tsx", import.meta.url),
     "utf8",
   );
 
   assert.match(source, /Sparse history: only one observation/);
-  assert.match(source, /No price observations have been recorded/);
-  assert.match(source, /observation-date CAD rates are not yet stored/);
+  assert.match(source, /No Canadian price observations have been recorded/);
+  assert.match(source, /nativeCurrency === "CAD"/);
+  assert.match(source, />Price history</);
+  assert.doesNotMatch(source, /Native currencies use separate charts/);
+  assert.doesNotMatch(source, />\{nativeCurrency\} history</);
   assert.match(source, /groupPriceHistoryByCurrency/);
   assert.match(source, /<svg/);
   assert.match(source, /View data/);

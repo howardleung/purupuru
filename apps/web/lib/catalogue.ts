@@ -16,6 +16,7 @@ import {
 import { selectPrimaryProductImage } from "@beauty-platform/domain/product-images";
 
 import { catalogueSorts, type CatalogueFilters, type CatalogueProduct } from "./catalogue-contract";
+import { normalizeCategorySlugs } from "./catalogue-filter-state";
 
 const productDetailsInclude = {
   brand: true,
@@ -96,23 +97,6 @@ export function getCategoryPath(categories: readonly CategoryRecord[], categoryI
   return path;
 }
 
-function getCategoryAndDescendantIds(categories: readonly CategoryRecord[], categoryId: string) {
-  const ids = new Set([categoryId]);
-  let changed = true;
-
-  while (changed) {
-    changed = false;
-    for (const category of categories) {
-      if (category.parentCategoryId && ids.has(category.parentCategoryId) && !ids.has(category.id)) {
-        ids.add(category.id);
-        changed = true;
-      }
-    }
-  }
-
-  return [...ids];
-}
-
 function finiteNonNegative(value: number | undefined) {
   return value !== undefined && Number.isFinite(value) && value >= 0 ? value : null;
 }
@@ -127,7 +111,9 @@ function isCapacityDimension(value: string | undefined): value is CatalogueCapac
 
 export async function getCatalogue(options: {
   query?: string;
+  categorySlugs?: readonly string[];
   categorySlug?: string;
+  brandSlugs?: readonly string[];
   brandSlug?: string;
   minimumCad?: number;
   maximumCad?: number;
@@ -138,24 +124,33 @@ export async function getCatalogue(options: {
   sort?: string;
 } = {}) {
   const query = options.query?.trim() ?? "";
-  const categories = await getCategories();
+  const [categories, brands] = await Promise.all([getCategories(), getBrands()]);
+  const requestedCategorySlugs = options.categorySlugs?.length
+    ? options.categorySlugs
+    : options.categorySlug ? [options.categorySlug] : [];
+  const requestedBrandSlugs = options.brandSlugs?.length
+    ? options.brandSlugs
+    : options.brandSlug ? [options.brandSlug] : [];
+  const categorySlugs = normalizeCategorySlugs(categories, requestedCategorySlugs);
+  const categoryIds = categories
+    .filter((category) => categorySlugs.includes(category.slug))
+    .map((category) => category.id);
+  const availableBrandSlugs = new Set(brands.map((brand) => brand.slug));
+  const brandSlugs = [...new Set(requestedBrandSlugs)].filter((slug) => availableBrandSlugs.has(slug));
   const aliasProductIds = query
     ? (await prisma.productFamily.findMany({ select: { id: true, commonEnglishAliases: true } }))
         .filter((product) => product.commonEnglishAliases.some((alias) => alias.toLocaleLowerCase().includes(query.toLocaleLowerCase())))
         .map((product) => product.id)
     : [];
-  const selectedCategory = options.categorySlug
-    ? categories.find((category) => category.slug === options.categorySlug) ?? null
+  const selectedCategory = requestedCategorySlugs.length === 1
+    ? categories.find((category) => category.slug === requestedCategorySlugs[0]) ?? null
     : null;
-  const categoryIds = selectedCategory
-    ? getCategoryAndDescendantIds(categories, selectedCategory.id)
-    : undefined;
 
-  const [productRecords, brands] = await Promise.all([prisma.productFamily.findMany({
+  const productRecords = await prisma.productFamily.findMany({
     where: {
       AND: [
-        categoryIds ? { primaryCanonicalCategoryId: { in: categoryIds } } : {},
-        options.brandSlug ? { brand: { slug: options.brandSlug } } : {},
+        categoryIds.length > 0 ? { primaryCanonicalCategoryId: { in: categoryIds } } : {},
+        brandSlugs.length > 0 ? { brand: { slug: { in: brandSlugs } } } : {},
         query
           ? {
               OR: [
@@ -188,7 +183,7 @@ export async function getCatalogue(options: {
       },
     },
     orderBy: [{ canonicalName: "asc" }],
-  }), getBrands()]);
+  });
 
   const variantRecords = expandCatalogueVariants(productRecords.map((product) => ({
     family: product,
@@ -287,8 +282,8 @@ export async function getCatalogue(options: {
 
   const filters: CatalogueFilters = {
     query,
-    categorySlug: selectedCategory?.slug ?? options.categorySlug ?? "",
-    brandSlug: options.brandSlug ?? "",
+    categorySlugs,
+    brandSlugs,
     minimumCad,
     maximumCad,
     capacityDimension,

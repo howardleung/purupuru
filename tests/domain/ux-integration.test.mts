@@ -22,6 +22,7 @@ const primaryNav = readFileSync(new URL("../../apps/web/components/primary-nav.t
 const globalSearch = readFileSync(new URL("../../apps/web/components/global-search.tsx", import.meta.url), "utf8");
 const megaMenu = readFileSync(new URL("../../apps/web/components/product-mega-menu.tsx", import.meta.url), "utf8");
 const productPage = readFileSync(new URL("../../apps/web/app/products/[slug]/page.tsx", import.meta.url), "utf8");
+const categoriesPage = readFileSync(new URL("../../apps/web/app/categories/page.tsx", import.meta.url), "utf8");
 const productImage = readFileSync(new URL("../../apps/web/components/product-image.tsx", import.meta.url), "utf8");
 const offerSection = readFileSync(new URL("../../apps/web/components/offer-section.tsx", import.meta.url), "utf8");
 const retailerLink = readFileSync(new URL("../../apps/web/components/retailer-link.tsx", import.meta.url), "utf8");
@@ -106,8 +107,15 @@ test("catalogue renders one exact variant per row with capacity controls and var
   assert.match(catalogueQuery, /variant\.offers/);
   assert.match(catalogueQuery, /filterCatalogueCapacity/);
   assert.match(catalogueQuery, /primaryCanonicalCategoryId: \{ in: categoryIds \}/);
-  assert.match(catalogueQuery, /brand: \{ slug: options\.brandSlug \}/);
+  assert.match(catalogueQuery, /brand: \{ slug: \{ in: brandSlugs \} \}/);
   assert.match(catalogueQuery, /filterCataloguePrice/);
+  assert.match(catalogueBrowser, /name="brand"/);
+  assert.match(catalogueBrowser, /name="category" type="hidden"/);
+  assert.match(catalogueBrowser, /aria-expanded=\{expanded\}/);
+  assert.match(catalogueBrowser, /onClick=\{\(\) => setExpanded\(\(current\) => !current\)\}/);
+  assert.match(catalogueBrowser, /onChange=\{\(event\) => setSelectedSlugs\(setCategorySelection/);
+  assert.match(catalogueBrowser, /aria-sort=\{direction \?\? "none"\}/);
+  assert.match(catalogueBrowser, /sizes="72px"/);
   assert.match(catalogueBrowser, /name="capacity"/);
   assert.match(catalogueBrowser, /name="minCapacity"/);
   assert.match(catalogueBrowser, /name="maxCapacity"/);
@@ -155,12 +163,19 @@ test("product menu and product-page hierarchy follow the structural UX contract"
   assert.match(megaMenu, /featuredSlugs/);
   assert.match(productPage, /<PersonalActionsModal/);
   assert.ok(productPage.indexOf('title="Buy in Canada"') < productPage.indexOf("<PriceHistorySection"));
-  assert.ok(productPage.indexOf('title={`Buy in') < productPage.indexOf("<PriceHistorySection"));
+  assert.doesNotMatch(productPage, /title=\{`Buy in/);
   assert.doesNotMatch(productPage, /Strongest verified benchmark/);
   assert.match(productPage, /aria-label="Benchmark price"/);
+  assert.match(productPage, />Benchmark details</);
   assert.doesNotMatch(productPage, />Benchmark prices</);
   assert.match(productPage, /md:col-start-1 md:row-span-2 md:row-start-1/);
   assert.match(productPage, /md:col-start-2 md:row-start-2/);
+});
+
+test("category cards always link to the corresponding filtered catalogue", () => {
+  assert.match(categoriesPage, /href=\{`\/catalogue\?category=\$\{encodeURIComponent\(category\.slug\)\}`\}/);
+  assert.match(categoriesPage, /Browse all \{category\.displayName\.toLowerCase\(\)\}/);
+  assert.doesNotMatch(categoriesPage, /<p[^>]*>Browse all products in this category/);
 });
 
 test("ordinary products emphasize size and only expose formula choices for multiple versions", () => {

@@ -48,9 +48,13 @@ export default async function CategoriesPage() {
                       </li>
                     ))}
                   </ul>
-                ) : (
-                  <p className="mt-3 text-sm text-slate-500">Browse all products in this category.</p>
-                )}
+                ) : null}
+                <Link
+                  className={`${children.length > 0 ? "mt-5" : "mt-3"} inline-flex text-sm font-medium text-slate-900 underline underline-offset-4`}
+                  href={`/catalogue?category=${encodeURIComponent(category.slug)}`}
+                >
+                  Browse all {category.displayName.toLowerCase()}
+                </Link>
               </section>
             );
           })}
