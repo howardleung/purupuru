@@ -2,8 +2,7 @@
 
 import { PROFILE_SKIN_TYPES, type ProfileSkinType } from "@beauty-platform/domain/profile";
 import Image from "next/image";
-import { useActionState, useState } from "react";
-import { useFormStatus } from "react-dom";
+import { useState, useTransition } from "react";
 
 import { updateProfile } from "../app/profile/actions";
 import {
@@ -19,8 +18,7 @@ const skinTypeLabels: Record<ProfileSkinType, string> = {
   COMBINATION: "Combination",
 };
 
-function SaveButton() {
-  const { pending } = useFormStatus();
+function SaveButton({ pending }: { pending: boolean }) {
   return (
     <button className="ui-button ui-button--primary" disabled={pending} type="submit">
       {pending ? "Saving…" : "Save changes"}
@@ -35,7 +33,8 @@ export function ProfileForm({
   avatars: ProfileAvatarView[];
   initialValue: ProfileFormValue;
 }) {
-  const [state, formAction] = useActionState(updateProfile, initialProfileActionState);
+  const [state, setState] = useState(initialProfileActionState);
+  const [isPending, startTransition] = useTransition();
   const [displayName, setDisplayName] = useState(initialValue.displayName);
   const [skinType, setSkinType] = useState<ProfileSkinType | null>(initialValue.skinType);
   const [sensitiveSkin, setSensitiveSkin] = useState(initialValue.sensitiveSkin);
@@ -57,7 +56,14 @@ export function ProfileForm({
         </div>
       </div>
 
-      <form action={formAction} className="grid gap-7 p-5 sm:p-7">
+      <form
+        className="grid gap-7 p-5 sm:p-7"
+        onSubmit={(event) => {
+          event.preventDefault();
+          const formData = new FormData(event.currentTarget);
+          startTransition(async () => setState(await updateProfile(state, formData)));
+        }}
+      >
         <label className="grid max-w-xl gap-2 text-sm font-bold text-slate-800">
           Display name
           <input
@@ -123,7 +129,7 @@ export function ProfileForm({
           <p aria-live="polite" className={`text-sm ${state.status === "SUCCESS" ? "text-emerald-700" : "text-rose-700"}`} role={state.status === "ERROR" || state.status === "INVALID" ? "alert" : undefined}>
             {state.message}
           </p>
-          <SaveButton />
+          <SaveButton pending={isPending} />
         </div>
       </form>
     </section>

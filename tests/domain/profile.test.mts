@@ -87,6 +87,9 @@ test("profile UI keeps app identity separate from Clerk account management", () 
   assert.match(form, /useState\(initialValue\.selectedAvatarId\)/);
   assert.match(form, /name="selectedAvatarId"/);
   assert.match(form, /Save changes/);
+  assert.match(form, /useTransition/);
+  assert.match(form, /onSubmit=/);
+  assert.doesNotMatch(form, /<form action=/);
   assert.match(account, /openUserProfile/);
   assert.match(header, /UserButton\.Link href="\/profile" label="Profile"/);
 });
