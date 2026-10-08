@@ -292,7 +292,7 @@ Likely fields:
 
 `displayName`, the selected first-party avatar, primary skin type, and the independent sensitive-skin flag are application-owned profile data. Clerk remains authoritative for private account identity, email, password/security, and connected accounts; those values are not duplicated into PostgreSQL.
 
-Deleting an account explicitly removes the current user's `CollectionTag` rows through their `CollectionEntry`, then the user's `CollectionEntry`, `UserRating`, `PurchaseInstance`, `ShoppingListItem`, `ShoppingList`, and finally `User` row in one serializable transaction. These relations intentionally remain restrictive rather than adding broad database cascades that could endanger shared catalogue data. `ProfileAvatar`, products, variants, offers, observations, benchmarks, retailers, and ingestion audit batches are shared/operational records and survive personal account deletion. A future user-owned `Review` should default to deletion with its author unless a separate, explicit product decision introduces safe anonymization.
+Deleting an account explicitly removes the current user's `CollectionTag` rows through their `CollectionEntry`, then the user's `CollectionEntry`, `UserRating`, `Review`, `PurchaseInstance`, `ShoppingListItem`, `ShoppingList`, and finally `User` row in one serializable transaction. These relations intentionally remain restrictive rather than adding broad database cascades that could endanger shared catalogue data. `ProfileAvatar`, products, variants, offers, observations, benchmarks, retailers, and ingestion audit batches are shared/operational records and survive personal account deletion. Reviews are deleted rather than anonymized.
 
 Primary skin type is optional, private-only in MVP, and non-medical metadata. New profile writes use `NORMAL`, `DRY`, `OILY`, or `COMBINATION`; sensitivity is represented independently by `sensitiveSkin` because any primary skin type may also be sensitive. Legacy `SENSITIVE` and `NOT_SURE` enum values remain only for migration compatibility and are not offered by current profile UI.
 
@@ -348,7 +348,24 @@ Multiple purchases of the same variant are supported. `PurchaseInstance` is the 
 - contextualVariantId nullable
 - createdAt/updatedAt
 
-Private by default in MVP. Public reviews are post-MVP.
+Private collection feedback remains version-scoped and supports half-star increments. It is distinct from the public product-review rating below and is not migrated or repurposed.
+
+### Review
+
+Represents one public product review per user and shopper-facing `ProductFamily`.
+
+- `userId`
+- `productFamilyId`
+- exact `productVariantId` used
+- derived `productVersionId` for valid internal/formula context
+- required whole-star `rating` from 1–5
+- optional normalized `body`
+- `skinTypeSnapshot` nullable and `sensitiveSkinSnapshot`
+- `createdAt` / `updatedAt`
+
+`@@unique([userId, productFamilyId])` prevents duplicate family reviews. The selected active variant is validated as belonging to that family, and its version is derived on the server rather than accepted from the client. Product aggregates combine all sizes and meaningful versions in the family; individual cards retain `Used: {size}` and show formula only when the family has multiple shopper-relevant versions.
+
+Skin fields are historical review-time snapshots refreshed only when the review is edited. The author's display name and selected PuruPuru avatar are joined from the current `User`/`ProfileAvatar` records at read time, so identity changes update historical review presentation without copying Clerk name, photo, or email. A review may contain only a rating. The initial product-page query uses database grouping for the 1–5 distribution, a bounded newest-first list, and a separate owner lookup; no persisted aggregate columns are introduced.
 
 ## Shopping lists
 

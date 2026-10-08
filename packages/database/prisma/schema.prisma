@@ -113,6 +113,7 @@ model User {
   collectionEntries CollectionEntry[]
   purchases         PurchaseInstance[]
   ratings           UserRating[]
+  reviews           Review[]
   shoppingLists     ShoppingList[]
   selectedAvatar    ProfileAvatar?     @relation(fields: [selectedAvatarId], references: [id], onDelete: SetNull)
 
@@ -225,6 +226,7 @@ model ProductFamily {
   primaryCanonicalCategory CanonicalCategory @relation(fields: [primaryCanonicalCategoryId], references: [id])
   versions                 ProductVersion[]  @relation("ProductFamilyVersions")
   currentVersion           ProductVersion?   @relation("CurrentProductFamilyVersion", fields: [currentVersionId], references: [id])
+  reviews                  Review[]
 
   @@index([brandId])
   @@index([primaryCanonicalCategoryId])
@@ -252,6 +254,7 @@ model ProductVersion {
   externalSignals   ExternalSignal[]
   ratings           UserRating[]
   images            ProductImage[]
+  reviews           Review[]
 
   @@unique([productFamilyId, versionName])
   @@index([productFamilyId, status])
@@ -281,6 +284,7 @@ model ProductVariant {
   purchaseInstances         PurchaseInstance[]
   shoppingListItems         ShoppingListItem[]
   images                    ProductImage[]
+  reviews                   Review[]
 
   @@unique([productVersionId, normalizedQuantity, normalizedUnit])
   @@index([manufacturerSku])
@@ -495,6 +499,30 @@ model UserRating {
 
   @@unique([userId, productVersionId])
   @@index([contextualVariantId])
+}
+
+model Review {
+  id                    String    @id @default(cuid())
+  userId                String
+  productFamilyId       String
+  productVersionId      String
+  productVariantId      String
+  rating                Int
+  body                  String?
+  skinTypeSnapshot      SkinType?
+  sensitiveSkinSnapshot Boolean   @default(false)
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  user           User           @relation(fields: [userId], references: [id])
+  productFamily  ProductFamily  @relation(fields: [productFamilyId], references: [id])
+  productVersion ProductVersion @relation(fields: [productVersionId], references: [id])
+  productVariant ProductVariant @relation(fields: [productVariantId], references: [id])
+
+  @@unique([userId, productFamilyId])
+  @@index([productFamilyId, createdAt])
+  @@index([productVariantId])
+  @@index([productVersionId])
 }
 
 model PurchaseInstance {

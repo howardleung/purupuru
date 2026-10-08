@@ -6,6 +6,7 @@ import { createEmptyCollectionState } from "@beauty-platform/domain/collection";
 import { BENCHMARK_PRECEDENCE } from "@beauty-platform/domain/shopping-list";
 import { buildPriceHistorySeries } from "@beauty-platform/domain/price-history";
 import { selectPrimaryProductImage } from "@beauty-platform/domain/product-images";
+import { isProfileSkinType } from "@beauty-platform/domain/profile";
 import type { Metadata } from "next";
 import { safeExternalUrl } from "../../../lib/external-url";
 import { boundedParameter } from "../../../lib/input-validation";
@@ -17,6 +18,7 @@ import { PersonalActionsModal } from "../../../components/personal-actions-modal
 import { PriceHistorySection } from "../../../components/price-history-section";
 import { ProductImage } from "../../../components/product-image";
 import { ProductSelectors } from "../../../components/product-selectors";
+import { ProductRatingSummary, ReviewsSection } from "../../../components/reviews-section";
 import { getProductFamilyDetails } from "../../../lib/catalogue";
 import { isClerkConfigured } from "../../../lib/clerk-config";
 import { getPersistedCollectionState } from "../../../lib/collection-state";
@@ -24,6 +26,7 @@ import { getCurrentUser } from "../../../lib/current-user";
 import { getShoppingListsForUser } from "../../../lib/shopping-lists";
 import { convertToCad, resolveCadDisplayAmount } from "../../../lib/currency-conversion";
 import { getLocalFirstPrice } from "../../../lib/price-presentation";
+import { getProductReviewData } from "../../../lib/reviews";
 
 export const dynamic = "force-dynamic";
 
@@ -71,6 +74,15 @@ function formatRateDate(value: string) {
 
 function formatVerifiedDate(value: Date) {
   return new Intl.DateTimeFormat("en-CA", { dateStyle: "medium" }).format(value);
+}
+
+function formatProfileContext(skinType: string | null, sensitiveSkin: boolean) {
+  const parts: string[] = [];
+  if (isProfileSkinType(skinType)) {
+    parts.push(`${skinType.charAt(0)}${skinType.slice(1).toLowerCase()} skin`);
+  }
+  if (sensitiveSkin) parts.push("Sensitive");
+  return parts.length > 0 ? parts.join(" · ") : null;
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -193,12 +205,23 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
         primaryBenchmarkConversion?.amountCad ?? null,
       )
     : null;
-  const [initialCollectionState, shoppingLists] = await Promise.all([
+  const [initialCollectionState, shoppingLists, reviewData] = await Promise.all([
     currentUser
       ? getPersistedCollectionState(currentUser.id, selectedVersionRecord.id)
       : Promise.resolve(createEmptyCollectionState()),
     currentUser ? getShoppingListsForUser(currentUser.id) : Promise.resolve([]),
+    getProductReviewData(family.id, currentUser?.id ?? null),
   ]);
+  const reviewVariants = family.versions.flatMap((version) => version.variants
+    .filter((variant) => variant.isActive)
+    .map((variant) => ({
+      id: variant.id,
+      label: variant.displaySize,
+      versionLabel: family.versions.length > 1 ? version.versionName : null,
+    })));
+  const profileContext = currentUser
+    ? formatProfileContext(currentUser.skinType, currentUser.sensitiveSkin)
+    : null;
   const priceHistorySeries = buildPriceHistorySeries({
     selectedVariantId: selectedVariantRecord.id,
     offers: selectedVariantRecord.offers.map((offer) => ({
@@ -238,6 +261,7 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
           <h1 className="mt-2 text-3xl font-extrabold tracking-tight" id="product-title">
             {family.canonicalName}
           </h1>
+          <ProductRatingSummary data={reviewData.summary} />
           <p className="mt-3 text-slate-600">
             {family.primaryCanonicalCategory.displayName} · {selectedVariantRecord.displaySize}
           </p>
@@ -367,6 +391,17 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
       <PriceHistorySection
         productContext={selectedVariantRecord.displaySize}
         series={priceHistorySeries}
+      />
+
+      <ReviewsSection
+        authEnabled={isClerkConfigured}
+        data={reviewData}
+        productFamilyId={family.id}
+        productSlug={family.slug}
+        profileContext={profileContext}
+        selectedVariantId={selectedVariantRecord.id}
+        showVersion={family.versions.length > 1}
+        variants={reviewVariants}
       />
 
       <section className="mt-10 border-t border-slate-200 pt-8 sm:mt-12" aria-labelledby="product-details-title">

@@ -26,6 +26,7 @@ async function deleteLocalAccountData(clerkUserId: string) {
     await tx.collectionTag.deleteMany({ where: { collectionEntry: { userId: user.id } } });
     await tx.collectionEntry.deleteMany({ where: { userId: user.id } });
     await tx.userRating.deleteMany({ where: { userId: user.id } });
+    await tx.review.deleteMany({ where: { userId: user.id } });
     await tx.purchaseInstance.deleteMany({ where: { userId: user.id } });
     await tx.shoppingListItem.deleteMany({ where: { shoppingList: { userId: user.id } } });
     await tx.shoppingList.deleteMany({ where: { userId: user.id } });

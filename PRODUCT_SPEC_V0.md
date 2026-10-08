@@ -733,9 +733,9 @@ When switching versions, preserve the exact same normalized size/quantity only i
 
 ### User Contribution Scope
 
-Keep reviews and price submissions out of the absolute first build, but include data-model hooks. They can be an early post-MVP feature because moderation and trust logic add substantial complexity.
+The first narrow public review capability is product-page-only. One authenticated user may leave one whole-star review per shopper-facing ProductFamily, with an optional written body, exact size-used context, and historical skin-context snapshot. Price submissions and broader community/moderation systems remain post-MVP.
 
-Personal numeric ratings are MVP and private by default. Public written reviews are post-MVP.
+Private half-step `UserRating` feedback remains a separate version-scoped Collection feature; it is not converted into or replaced by public reviews.
 
 ### Shopping-List Behavior
 
@@ -760,6 +760,12 @@ Gated actions should open an authentication modal rather than redirecting away f
 Personal numeric ratings are MVP and apply to `ProductVersion`, not to a specific `PurchaseInstance` or the broad `ProductFamily`. Ratings use a 1–5 star scale in 0.5-star increments. The selected variant may be retained as contextual metadata, but the score represents the user's opinion of that formulation/version.
 
 Ratings may be entered from the product page and edited later from the user's collection. If a user attempts to rate a product that is not marked Tried, prompt to mark it Tried as part of the rating flow rather than silently changing state.
+
+### Public Product Reviews
+
+Public reviews aggregate at `ProductFamily` level across sizes. Every review requires an exact active size used and a whole-star 1–5 rating; text is optional. One user may create one review per family and may subsequently edit or delete it. The variant's ProductVersion is derived internally and shown only when multiple meaningful formulas exist.
+
+Review creation and editing copy the user's current optional skin type and independent Sensitive flag into historical snapshot fields. The review card displays those snapshots, while its display name and curated PuruPuru avatar always resolve from current app-owned profile data. Clerk name, email, and photo are never public review identity. The initial product-page feed is bounded, newest-first, and includes a family average, count, and accessible 5–1 distribution without persisted denormalized aggregates.
 
 ### Empty and Stale Product-Page States
 
@@ -836,7 +842,7 @@ The private authenticated `/profile` route owns PuruPuru identity fields: a vali
 
 Clerk remains the authentication and private-account provider. Full/private name, email, password/security, sessions, and connected accounts remain Clerk-managed and are not copied into PostgreSQL. The PuruPuru Profile page may show the current primary email as read-only private account context, but normal PuruPuru UX does not expose Clerk's generic account-management modal. A first-party danger-zone flow deletes the active user's PuruPuru-owned data and then their Clerk identity only after exact destructive confirmation.
 
-The profile foundation may later support identity alongside reviews or collection activity, but this milestone does not introduce public profile pages, public ratings or review history, avatar uploads, contributions, rewards, social features, or public skin-profile visibility.
+The profile foundation supplies current display name and curated avatar for product-review authors. Review-time skin context is public only on the review where the user explicitly submits it; `/profile` itself remains private. Public profile pages, public review-history pages, avatar uploads, rewards, social features, and general public skin-profile visibility remain out of scope.
 
 ### User-Created Collections and Lists
 

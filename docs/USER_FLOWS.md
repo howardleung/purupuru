@@ -191,6 +191,16 @@ Intended for a Tried product. If not Tried, ask whether to mark Tried + Would Re
 3. If not marked Tried, prompt to mark Tried while rating; only the explicit combined confirmation applies both changes.
 4. Rating is private by default in MVP.
 
+## 7a. Public product review
+
+1. Product pages aggregate public whole-star ratings at `ProductFamily` level so all exact sizes contribute to one shopper-facing summary.
+2. The user follows the rating summary to Reviews. Anonymous users receive a sign-in action; authenticated users see Write a review or Edit your review when one already exists.
+3. The reviewer chooses a required 1–5 whole-star rating and the exact active size used, and may add up to 3,000 characters of review text. Formula/version is implicit unless multiple shopper-relevant versions exist.
+4. The server derives the user and version, verifies that the variant belongs to the family, and snapshots the current optional skin type and independent Sensitive flag. Client-supplied identity or skin context is never accepted.
+5. Saving again updates the user's one review for that family and refreshes its skin snapshot. Later profile skin changes alone do not alter the snapshot; current PuruPuru display-name and avatar changes do appear on historical review cards.
+6. Deletion requires explicit confirmation and removes only the authenticated owner's review. Account deletion removes all reviews owned by that user while preserving the catalogue and other users' reviews.
+7. The initial feed is bounded and newest-first. Rating-only reviews remain valid; an empty family shows `No ratings yet` rather than a zero score.
+
 ## 8. Add to shopping list
 
 From product page:

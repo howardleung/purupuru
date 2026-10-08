@@ -24,6 +24,7 @@ const transaction = {
   collectionTag: { async deleteMany(args: Record<string, unknown>) { calls.push({ name: "collectionTag.deleteMany", args }); return { count: 1 }; } },
   collectionEntry: { async deleteMany(args: Record<string, unknown>) { calls.push({ name: "collectionEntry.deleteMany", args }); return { count: 1 }; } },
   userRating: { async deleteMany(args: Record<string, unknown>) { calls.push({ name: "userRating.deleteMany", args }); return { count: 1 }; } },
+  review: { async deleteMany(args: Record<string, unknown>) { calls.push({ name: "review.deleteMany", args }); return { count: 1 }; } },
   purchaseInstance: { async deleteMany(args: Record<string, unknown>) { calls.push({ name: "purchaseInstance.deleteMany", args }); return { count: 1 }; } },
   shoppingListItem: { async deleteMany(args: Record<string, unknown>) { calls.push({ name: "shoppingListItem.deleteMany", args }); return { count: 1 }; } },
   shoppingList: { async deleteMany(args: Record<string, unknown>) { calls.push({ name: "shoppingList.deleteMany", args }); return { count: 1 }; } },
@@ -95,7 +96,7 @@ test("authenticated deletion scopes every local delete to the current user and p
   assert.equal(result.status, "SUCCESS");
   assert.deepEqual(calls.map((call) => call.name), [
     "auth", "rateLimit", "transaction", "user.findUnique", "collectionTag.deleteMany",
-    "collectionEntry.deleteMany", "userRating.deleteMany", "purchaseInstance.deleteMany",
+    "collectionEntry.deleteMany", "userRating.deleteMany", "review.deleteMany", "purchaseInstance.deleteMany",
     "shoppingListItem.deleteMany", "shoppingList.deleteMany", "user.deleteMany", "clerk.deleteUser",
   ]);
   assert.deepEqual(calls.find((call) => call.name === "user.findUnique")?.args, {
@@ -107,7 +108,7 @@ test("authenticated deletion scopes every local delete to the current user and p
   assert.deepEqual(calls.find((call) => call.name === "shoppingListItem.deleteMany")?.args, {
     where: { shoppingList: { userId: "local-current" } },
   });
-  for (const name of ["collectionEntry", "userRating", "purchaseInstance", "shoppingList"]) {
+  for (const name of ["collectionEntry", "userRating", "review", "purchaseInstance", "shoppingList"]) {
     assert.deepEqual(calls.find((call) => call.name === `${name}.deleteMany`)?.args, {
       where: { userId: "local-current" },
     });

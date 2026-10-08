@@ -54,7 +54,7 @@ Deliver:
 
 ## Phase 2 — MVP catalogue and personal collection
 
-Status: started. The database-backed catalogue includes canonical category browse, product/brand search, exact-size selection with exceptional formula selection, benchmark and external-signal display, market-aware retailer offers, and tracked price history. Authenticated Want, Tried, Owned/purchase, Holy Grail, Would Repurchase, private half-step ratings, target-market shopping lists, My Collection, and a private first-party Profile are implemented. Navigation, personal catalogue state, version/variant-preserving links, responsive offer presentation, and shared loading/error states connect the core journey. Developer fixture ingestion and a separate admin-reviewed product-graph workflow conservatively match identity, retain provenance, and commit atomically. Automated source collection and alerts remain deferred. Product-image permissions, legal copy, broader onboarding, collection statistics, and catalogue expansion remain launch work.
+Status: started. The database-backed catalogue includes canonical category browse, product/brand search, exact-size selection with exceptional formula selection, benchmark and external-signal display, market-aware retailer offers, tracked price history, and a first product-page ratings/reviews foundation. Authenticated Want, Tried, Owned/purchase, Holy Grail, Would Repurchase, private half-step ratings, target-market shopping lists, My Collection, and a private first-party Profile are implemented. Navigation, personal catalogue state, version/variant-preserving links, responsive offer presentation, and shared loading/error states connect the core journey. Developer fixture ingestion and a separate admin-reviewed product-graph workflow conservatively match identity, retain provenance, and commit atomically. Automated source collection and alerts remain deferred. Product-image permissions, legal copy, broader onboarding, review moderation/reporting, collection statistics, and catalogue expansion remain launch work.
 
 Deliver:
 - ~100 curated skincare products
@@ -68,6 +68,7 @@ Deliver:
 - Holy Grail / Would Repurchase
 - multiple PurchaseInstances
 - private numeric ratings
+- product-family rating aggregates and bounded whole-star reviews with exact-size context
 - optional private user-created thematic collections if scope permits; they are not core MVP organization
 - drag/drop collection interactions where stable
 - shopping-list quantities and estimate coverage warnings
@@ -97,7 +98,7 @@ Do not optimize vanity metrics at the expense of trust.
 ## Phase 4 — Early community/data contribution
 
 Potential features after core usage is proven:
-- public written reviews
+- review reporting, moderation, helpful votes, media, and replies
 - community price submissions
 - receipt-photo proof submissions
 - verification/moderation workflow

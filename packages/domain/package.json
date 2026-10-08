@@ -19,6 +19,7 @@
     "./product-images": "./src/product-images.ts",
     "./product-import": "./src/product-import.ts",
     "./profile": "./src/profile.ts",
+    "./reviews": "./src/reviews.ts",
     "./shopping-list": "./src/shopping-list.ts"
   }
 }
