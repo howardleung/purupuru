@@ -5,6 +5,8 @@ import { validatePublicProfileInput } from "@beauty-platform/domain/profile";
 import { revalidatePath } from "next/cache";
 
 import type { ProfileActionState } from "../../lib/profile-contract";
+import type { DeleteAccountActionState } from "../../lib/profile-contract";
+import { deleteCurrentAccount } from "../../lib/account-deletion";
 import { getMutationUser } from "../../lib/current-user";
 import { RateLimitError } from "../../lib/rate-limit";
 
@@ -50,4 +52,11 @@ export async function updateProfile(
         : "PuruPuru could not save your profile. Please try again.",
     };
   }
+}
+
+export async function deleteAccount(
+  _previousState: DeleteAccountActionState,
+  formData: FormData,
+): Promise<DeleteAccountActionState> {
+  return deleteCurrentAccount(formData.get("confirmation"));
 }

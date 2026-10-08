@@ -25,6 +25,10 @@ const prisma = {
 const boundary = {
   prisma,
   getUser: async () => currentUser,
+  deleteAccount: async (confirmation: unknown) => {
+    calls.push({ name: "account.delete", args: { confirmation } });
+    return { status: "SUCCESS", message: "" };
+  },
   revalidate: (path: string) => calls.push({ name: "revalidate", args: { path } }),
 };
 Object.assign(globalThis, { __purupuruProfileTest: boundary });
@@ -35,6 +39,7 @@ const hooks = registerHooks({
       "@beauty-platform/database": `export const prisma = ${root}.prisma;`,
       "next/cache": `export const revalidatePath = ${root}.revalidate;`,
     };
+    if (specifier.endsWith("/account-deletion")) modules[specifier] = `export const deleteCurrentAccount = ${root}.deleteAccount;`;
     if (specifier.endsWith("/current-user")) modules[specifier] = `export const getMutationUser = ${root}.getUser;`;
     if (specifier.endsWith("/rate-limit")) modules[specifier] = "export class RateLimitError extends Error {}";
     if (specifier in modules) return { url: `data:text/javascript,${encodeURIComponent(modules[specifier])}`, shortCircuit: true };
@@ -45,7 +50,7 @@ const hooks = registerHooks({
     return nextResolve(specifier, context);
   },
 });
-const { updateProfile } = await import("../../apps/web/app/profile/actions.ts");
+const { deleteAccount, updateProfile } = await import("../../apps/web/app/profile/actions.ts");
 hooks.deregister();
 
 function form(overrides: Record<string, string> = {}) {
@@ -103,4 +108,15 @@ test("malformed profile fields stop before authentication and database access", 
     assert.equal((await updateProfile({ status: "IDLE", message: "" }, data)).status, "INVALID");
     assert.deepEqual(calls, []);
   }
+});
+
+test("account deletion forwards only confirmation and never a client-selected user ID", async () => {
+  reset();
+  const data = new FormData();
+  data.set("confirmation", "DELETE");
+  data.set("userId", "victim-user");
+  data.set("clerkUserId", "victim-clerk-user");
+
+  assert.equal((await deleteAccount({ status: "IDLE", message: "" }, data)).status, "SUCCESS");
+  assert.deepEqual(calls, [{ name: "account.delete", args: { confirmation: "DELETE" } }]);
 });

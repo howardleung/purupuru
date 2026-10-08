@@ -418,4 +418,14 @@ This file records settled choices and the rationale behind them. New decisions s
 
 **Why:** PuruPuru needs a reusable in-product identity without duplicating authentication data or allowing unsafe arbitrary image URLs. Sensitivity is not a mutually exclusive skin type, and a curated first-party catalogue keeps profile imagery consistent and reversible.
 
-**Implications:** `/profile` is private and user-scoped, initializes missing app-owned values safely for existing Clerk users, and links to Clerk account management for private-account changes. Legacy `SENSITIVE` and `NOT_SURE` enum values are normalized during the additive migration and are not used by current profile writes. Public profile pages, public review/rating history, uploads, rewards, contributions, and social features remain out of scope.
+**Implications:** `/profile` is private and user-scoped and initializes missing app-owned values safely for existing Clerk users. Legacy `SENSITIVE` and `NOT_SURE` enum values are normalized during the additive migration and are not used by current profile writes. Public profile pages, public review/rating history, uploads, rewards, contributions, and social features remain out of scope. The 2026-10-08 first-party account-security decision supersedes the Clerk account-management-modal portion of this implication.
+
+### 2026-10-08 — Account deletion is first-party and local-data-first
+
+**Status:** Accepted
+
+**Decision:** Remove Clerk's generic account-management modal from normal PuruPuru UX. Keep Clerk for authentication and sign-out, show only read-only email context on `/profile`, and provide an explicit first-party account-deletion dialog requiring exact `DELETE` confirmation. Delete the authenticated user's local data in a serializable transaction before deleting that same user through Clerk's supported Backend API.
+
+**Why:** PuruPuru owns the visible profile experience, while account deletion must cover both app-owned data and the backing authentication identity without accepting a client-selected target. Local-first ordering prioritizes removal of personal application data; the remaining cross-system failure mode is explicit and retryable rather than silently successful.
+
+**Implications:** Delete `CollectionTag`, `CollectionEntry`, `UserRating`, `PurchaseInstance`, `ShoppingListItem`, `ShoppingList`, and `User` records in foreign-key-safe order. Preserve shared product/catalogue, offer/history, retailer, benchmark, `ProfileAvatar`, and ingestion-audit records. A Clerk failure after local commit returns a retry-required state; missing local data and Clerk 404 responses are idempotent success cases. Future genuinely user-owned reviews default to deletion unless a later decision explicitly defines anonymization. No schema migration is required.

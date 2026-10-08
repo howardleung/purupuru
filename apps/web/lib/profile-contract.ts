@@ -19,3 +19,10 @@ export type ProfileActionState = {
 };
 
 export const initialProfileActionState: ProfileActionState = { status: "IDLE", message: "" };
+
+export type DeleteAccountActionState = {
+  status: "IDLE" | "SUCCESS" | "INVALID" | "UNAUTHENTICATED" | "ERROR" | "RETRY_REQUIRED";
+  message: string;
+};
+
+export const initialDeleteAccountActionState: DeleteAccountActionState = { status: "IDLE", message: "" };

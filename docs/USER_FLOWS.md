@@ -308,13 +308,14 @@ These do not alter lifecycle state. Public sharing/comments are post-MVP foundat
 
 ## 13. Profile
 
-The private authenticated `/profile` route is the owner-facing home for PuruPuru identity and Clerk account access.
+The private authenticated `/profile` route is the owner-facing home for PuruPuru identity and account security.
 
 1. A signed-out visitor is prompted to sign in and never sees another user's data.
 2. On first authenticated visit, the application lazily creates the local User if needed, derives a non-email display-name default from Clerk first/full name, and assigns the first active first-party avatar when no selection exists.
 3. The user may edit display name, choose an active PuruPuru avatar, select one optional primary skin type (`Normal`, `Dry`, `Oily`, or `Combination`), and independently indicate sensitive skin.
 4. Save validates all fields server-side and updates only the active user's local User row.
-5. A separate private-account section shows limited Clerk-managed identity context and opens Clerk's account-management UI for email, password/security, and connected-account changes.
+5. A separate private-account section shows the current Clerk email as read-only context without exposing Clerk's generic profile modal.
+6. Account deletion requires an explicit dialog and exact `DELETE` confirmation. PuruPuru atomically removes the active user's local profile, collection/tags, ratings, purchase history, shopping-list items, and shopping lists before deleting the authenticated Clerk identity. Success returns to the public homepage; a Clerk failure after local cleanup remains an explicit retryable error.
 
 The page does not expose a public profile route, avatar uploads, review history, ratings history, contributions, rewards, or social features. First-party display name and avatar provide a future reusable identity foundation, but public surfaces remain out of scope until explicitly designed.
 

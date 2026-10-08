@@ -1,7 +1,7 @@
 "use client";
 
 import { useClerk } from "@clerk/nextjs";
-import { ChevronDown, LogOut, Settings, UserRound } from "lucide-react";
+import { ChevronDown, LogOut, UserRound } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useId, useRef, useState } from "react";
@@ -14,7 +14,7 @@ const fallbackIdentity: AccountIdentity = {
 };
 
 export function AccountUserButton({ identity }: { identity: AccountIdentity | null }) {
-  const { openUserProfile, signOut } = useClerk();
+  const { signOut } = useClerk();
   const resolvedIdentity = identity ?? fallbackIdentity;
   const rootRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -92,16 +92,6 @@ export function AccountUserButton({ identity }: { identity: AccountIdentity | nu
           >
             <UserRound aria-hidden className="h-4 w-4" /> Profile
           </Link>
-          <button
-            className="flex min-h-10 w-full items-center gap-3 rounded-xl px-3 py-2 text-left text-sm font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-950"
-            onClick={() => {
-              setIsOpen(false);
-              void openUserProfile();
-            }}
-            type="button"
-          >
-            <Settings aria-hidden className="h-4 w-4" /> Manage account
-          </button>
           <button
             className="flex min-h-10 w-full items-center gap-3 rounded-xl px-3 py-2 text-left text-sm font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-950"
             onClick={() => {

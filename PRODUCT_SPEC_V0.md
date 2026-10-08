@@ -834,7 +834,7 @@ Skin profile data is private-only in MVP. The schema should preserve a visibilit
 
 The private authenticated `/profile` route owns PuruPuru identity fields: a validated display name, one selected avatar from an active first-party catalogue, optional primary skin type, and the independent sensitive-skin flag. Existing users initialize lazily with a non-email display-name default and a stable local avatar selection.
 
-Clerk remains the authentication and private-account provider. Full/private name, email, password/security, sessions, and connected accounts remain Clerk-managed and are not copied into PostgreSQL. The PuruPuru Profile page may show limited private account context and opens Clerk's account-management UI for those changes.
+Clerk remains the authentication and private-account provider. Full/private name, email, password/security, sessions, and connected accounts remain Clerk-managed and are not copied into PostgreSQL. The PuruPuru Profile page may show the current primary email as read-only private account context, but normal PuruPuru UX does not expose Clerk's generic account-management modal. A first-party danger-zone flow deletes the active user's PuruPuru-owned data and then their Clerk identity only after exact destructive confirmation.
 
 The profile foundation may later support identity alongside reviews or collection activity, but this milestone does not introduce public profile pages, public ratings or review history, avatar uploads, contributions, rewards, social features, or public skin-profile visibility.
 

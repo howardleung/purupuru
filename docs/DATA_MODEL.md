@@ -292,6 +292,8 @@ Likely fields:
 
 `displayName`, the selected first-party avatar, primary skin type, and the independent sensitive-skin flag are application-owned profile data. Clerk remains authoritative for private account identity, email, password/security, and connected accounts; those values are not duplicated into PostgreSQL.
 
+Deleting an account explicitly removes the current user's `CollectionTag` rows through their `CollectionEntry`, then the user's `CollectionEntry`, `UserRating`, `PurchaseInstance`, `ShoppingListItem`, `ShoppingList`, and finally `User` row in one serializable transaction. These relations intentionally remain restrictive rather than adding broad database cascades that could endanger shared catalogue data. `ProfileAvatar`, products, variants, offers, observations, benchmarks, retailers, and ingestion audit batches are shared/operational records and survive personal account deletion. A future user-owned `Review` should default to deletion with its author unless a separate, explicit product decision introduces safe anonymization.
+
 Primary skin type is optional, private-only in MVP, and non-medical metadata. New profile writes use `NORMAL`, `DRY`, `OILY`, or `COMBINATION`; sensitivity is represented independently by `sensitiveSkin` because any primary skin type may also be sensitive. Legacy `SENSITIVE` and `NOT_SURE` enum values remain only for migration compatibility and are not offered by current profile UI.
 
 ### ProfileAvatar
