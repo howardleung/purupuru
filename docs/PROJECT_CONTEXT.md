@@ -51,6 +51,8 @@ The MVP uses a platform-owned hierarchical skincare taxonomy for product type, b
 ### Personal beauty record
 Users can track Want, Owned, Tried, purchases, finished instances, private ratings/notes, Holy Grail, Would Repurchase, and shopping lists.
 
+PuruPuru owns the user's in-product display name, curated avatar, and optional private skin-profile context. Clerk owns authentication and private account identity such as email and security settings; PuruPuru does not duplicate those credentials or expose a public profile in the current MVP.
+
 ## Business philosophy
 
 Affiliate commerce is a plausible monetization path, but it must never compromise ranking integrity. A lower commission cannot make a cheaper retailer less visible; a higher commission cannot make an offer rank higher.

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="title">
+  <title id="title">Smiling gentle sun</title><circle cx="48" cy="48" r="46" fill="#f7f1e8"/>
+  <g stroke="#d6a85a" stroke-width="4" stroke-linecap="round"><path d="M48 12v9M48 75v9M12 48h9M75 48h9M23 23l7 7M66 66l7 7M73 23l-7 7M30 66l-7 7"/></g><circle cx="48" cy="48" r="24" fill="#edc97c"/>
+  <circle cx="40" cy="46" r="2.5" fill="#253442"/><circle cx="56" cy="46" r="2.5" fill="#253442"/><path d="M41 55c4 4 10 4 14 0" fill="none" stroke="#253442" stroke-width="2.5" stroke-linecap="round"/>
+</svg>

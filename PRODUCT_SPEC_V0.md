@@ -789,12 +789,13 @@ MVP onboarding should be short, visual, and optional rather than questionnaire-h
 
 Ask users for:
 
-- skin type: Dry, Oily, Combination, Normal, Sensitive, Not sure
+- primary skin type: Dry, Oily, Combination, or Normal
+- sensitive skin: an independent optional flag
 - beauty interests/preferences using multi-select chips, such as K-Beauty, J-Beauty, French pharmacy, European skincare, Sunscreens, Hydration, Acne-prone skincare, Sensitive-skin products, Budget-friendly, and Luxury
 
 Users may skip either step and edit these choices later in profile settings.
 
-Skin type is optional profile metadata and private-only in MVP. Preserve a visibility field in the schema so a future public-profile feature can allow user-controlled visibility without a data-model redesign.
+Skin profile data is optional and private-only in MVP. Sensitive skin is independent of primary skin type because users with any primary type may be sensitive. Preserve a visibility field in the schema so a future public-profile feature can allow user-controlled visibility without a data-model redesign.
 
 Beauty interests may be used in MVP to personalize discovery surfaces, section ordering, suggested collections, and default browse context. They should not be used to make medical, diagnostic, or treatment claims.
 
@@ -818,16 +819,24 @@ Public collections are post-MVP. The schema should support future visibility con
 
 Skin type is included in MVP as optional profile metadata. During account setup, users may select a skin type or skip the question.
 
-Initial values may include:
+Primary values may include:
 
 - dry
 - oily
 - combination
 - normal
-- sensitive
-- unsure / prefer not to say
 
-Skin type is private-only in MVP. The schema should preserve a visibility field for future public profiles, but MVP UI must not expose skin type publicly. The MVP does not use skin type to diagnose conditions, prescribe routines, or make medical claims. The field exists primarily as profile context and as a foundation for future discovery or list personalization.
+Users may leave the primary value unset. Sensitive skin is represented by a separate boolean rather than a mutually exclusive primary type.
+
+Skin profile data is private-only in MVP. The schema should preserve a visibility field for future public profiles, but MVP UI must not expose it publicly. The MVP does not use this metadata to diagnose conditions, prescribe routines, or make medical claims. It exists primarily as profile context and as a foundation for future discovery or list personalization.
+
+### First-Party Profile
+
+The private authenticated `/profile` route owns PuruPuru identity fields: a validated display name, one selected avatar from an active first-party catalogue, optional primary skin type, and the independent sensitive-skin flag. Existing users initialize lazily with a non-email display-name default and a stable local avatar selection.
+
+Clerk remains the authentication and private-account provider. Full/private name, email, password/security, sessions, and connected accounts remain Clerk-managed and are not copied into PostgreSQL. The PuruPuru Profile page may show limited private account context and opens Clerk's account-management UI for those changes.
+
+The profile foundation may later support identity alongside reviews or collection activity, but this milestone does not introduce public profile pages, public ratings or review history, avatar uploads, contributions, rewards, social features, or public skin-profile visibility.
 
 ### User-Created Collections and Lists
 

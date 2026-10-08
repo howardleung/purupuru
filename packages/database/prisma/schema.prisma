@@ -103,6 +103,8 @@ model User {
   clerkUserId        String    @unique
   displayName        String?
   skinType           SkinType?
+  sensitiveSkin      Boolean   @default(false)
+  selectedAvatarId   String?
   skinTypeVisibility String    @default("PRIVATE")
   beautyInterests    String[]
   createdAt          DateTime  @default(now())
@@ -112,6 +114,21 @@ model User {
   purchases         PurchaseInstance[]
   ratings           UserRating[]
   shoppingLists     ShoppingList[]
+  selectedAvatar    ProfileAvatar?     @relation(fields: [selectedAvatarId], references: [id], onDelete: SetNull)
+
+  @@index([selectedAvatarId])
+}
+
+model ProfileAvatar {
+  id        String   @id
+  name      String
+  assetPath String   @unique
+  sortOrder Int      @default(0)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users User[]
 }
 
 model ImportBatch {

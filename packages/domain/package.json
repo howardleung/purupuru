@@ -18,6 +18,7 @@
     "./price-history": "./src/price-history.ts",
     "./product-images": "./src/product-images.ts",
     "./product-import": "./src/product-import.ts",
+    "./profile": "./src/profile.ts",
     "./shopping-list": "./src/shopping-list.ts"
   }
 }

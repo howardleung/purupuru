@@ -3,6 +3,14 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 const verifiedAt = new Date("2026-09-12T00:00:00.000Z");
 
+const profileAvatars = [
+  { id: "purupuru-drop", name: "Puru Drop", assetPath: "/avatars/purupuru-drop.svg", sortOrder: 10 },
+  { id: "dewy-peach", name: "Dewy Peach", assetPath: "/avatars/dewy-peach.svg", sortOrder: 20 },
+  { id: "calm-cloud", name: "Calm Cloud", assetPath: "/avatars/calm-cloud.svg", sortOrder: 30 },
+  { id: "green-tea", name: "Green Tea", assetPath: "/avatars/green-tea.svg", sortOrder: 40 },
+  { id: "sunny-day", name: "Sunny Day", assetPath: "/avatars/sunny-day.svg", sortOrder: 50 },
+];
+
 const taxonomy = [
   { slug: "skincare", displayName: "Skincare", parentSlug: null, sortOrder: 0 },
   { slug: "cleansers", displayName: "Cleansers", parentSlug: "skincare", sortOrder: 10 },
@@ -60,6 +68,16 @@ async function seedTaxonomy() {
   }
 
   return categories;
+}
+
+async function seedProfileAvatars() {
+  for (const avatar of profileAvatars) {
+    await prisma.profileAvatar.upsert({
+      where: { id: avatar.id },
+      update: { ...avatar, isActive: true },
+      create: avatar,
+    });
+  }
 }
 
 async function upsertVariant(productVersionId, data) {
@@ -143,6 +161,7 @@ async function upsertOffer(retailerId, productVariantId, data) {
 }
 
 async function main() {
+  await seedProfileAvatars();
   const categories = await seedTaxonomy();
   const tonerCategory = categories.get("toner");
   const sunscreenCategory = categories.get("sunscreen");
@@ -798,7 +817,7 @@ async function main() {
 
   await prisma.offerItem.deleteMany({ where: { offerId: dokdoWellOffer.id } });
 
-  console.log("Seeded canonical taxonomy, 2 brands, 2 product families, 3 versions, 5 variants, curated product images, and demo price observations.");
+  console.log("Seeded profile avatars, canonical taxonomy, 2 brands, 2 product families, 3 versions, 5 variants, curated product images, and demo price observations.");
 }
 
 main()

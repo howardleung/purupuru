@@ -54,7 +54,7 @@ Deliver:
 
 ## Phase 2 — MVP catalogue and personal collection
 
-Status: started. The database-backed catalogue includes canonical category browse, product/brand search, exact-size selection with exceptional formula selection, benchmark and external-signal display, market-aware retailer offers, and tracked price history. Authenticated Want, Tried, Owned/purchase, Holy Grail, Would Repurchase, private half-step ratings, target-market shopping lists, and My Collection are implemented. Navigation, personal catalogue state, version/variant-preserving links, responsive offer presentation, and shared loading/error states connect the core journey. Developer fixture ingestion and a separate admin-reviewed product-graph workflow conservatively match identity, retain provenance, and commit atomically. Automated source collection and alerts remain deferred. Product-image permissions, legal copy, onboarding, collection statistics, and catalogue expansion remain launch work.
+Status: started. The database-backed catalogue includes canonical category browse, product/brand search, exact-size selection with exceptional formula selection, benchmark and external-signal display, market-aware retailer offers, and tracked price history. Authenticated Want, Tried, Owned/purchase, Holy Grail, Would Repurchase, private half-step ratings, target-market shopping lists, My Collection, and a private first-party Profile are implemented. Navigation, personal catalogue state, version/variant-preserving links, responsive offer presentation, and shared loading/error states connect the core journey. Developer fixture ingestion and a separate admin-reviewed product-graph workflow conservatively match identity, retain provenance, and commit atomically. Automated source collection and alerts remain deferred. Product-image permissions, legal copy, broader onboarding, collection statistics, and catalogue expansion remain launch work.
 
 Deliver:
 - ~100 curated skincare products
@@ -63,6 +63,7 @@ Deliver:
 - browse by canonical category / simple category-filtered views
 - brand result/minimal brand page
 - onboarding preferences
+- first-party display name, curated avatar, and optional private skin profile
 - Want / Owned / Tried
 - Holy Grail / Would Repurchase
 - multiple PurchaseInstances

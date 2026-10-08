@@ -409,3 +409,13 @@ This file records settled choices and the rationale behind them. New decisions s
 **Why:** Foreign purchase tables and parallel currency charts added visual weight without improving the primary Canadian retailer comparison. Multi-select filters and unambiguous sort state make the dense exact-variant catalogue more useful without changing product identity or pricing semantics.
 
 **Implications:** Foreign offers and native `PriceObservation` records remain intact for future market-specific experiences. The benchmark retains authoritative native-market context and approximate CAD presentation. Repeated `brand` and `category` query parameters use OR within each dimension and compose with other dimensions; legacy scalar URLs remain valid. No schema, migration, ingestion, or domain-identity change is required. This supersedes the public product-page presentation portions of the 2026-08-31 continuous-market decision while preserving offer-market semantics.
+
+### 2026-10-07 — PuruPuru owns public identity; Clerk owns private account identity
+
+**Status:** Accepted
+
+**Decision:** Extend the existing Clerk-linked `User` record with a first-party avatar selection and independent sensitive-skin flag. PuruPuru owns the validated display name, avatar, and optional skin-profile context; Clerk remains authoritative for full/private name, email, password/security, sessions, and connected accounts. Primary skin type is limited to Normal, Dry, Oily, or Combination, while sensitivity is independent. Avatar choices come only from an active, locally hosted catalogue with stable IDs.
+
+**Why:** PuruPuru needs a reusable in-product identity without duplicating authentication data or allowing unsafe arbitrary image URLs. Sensitivity is not a mutually exclusive skin type, and a curated first-party catalogue keeps profile imagery consistent and reversible.
+
+**Implications:** `/profile` is private and user-scoped, initializes missing app-owned values safely for existing Clerk users, and links to Clerk account management for private-account changes. Legacy `SENSITIVE` and `NOT_SURE` enum values are normalized during the additive migration and are not used by current profile writes. Public profile pages, public review/rating history, uploads, rewards, contributions, and social features remain out of scope.

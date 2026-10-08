@@ -1,4 +1,5 @@
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
+import { UserRound } from "lucide-react";
 import Link from "next/link";
 
 import { isClerkConfigured } from "../lib/clerk-config";
@@ -30,7 +31,11 @@ export function SiteHeader() {
                 </div>
               </SignedOut>
               <SignedIn>
-                <UserButton />
+                <UserButton>
+                  <UserButton.MenuItems>
+                    <UserButton.Link href="/profile" label="Profile" labelIcon={<UserRound aria-hidden size={16} />} />
+                  </UserButton.MenuItems>
+                </UserButton>
               </SignedIn>
             </>
           ) : (

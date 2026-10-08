@@ -284,11 +284,19 @@ Likely fields:
 - userId
 - displayName
 - skinType nullable
+- sensitiveSkin
+- selectedAvatarId
 - skinTypeVisibility (schema-ready; MVP private only)
 - beautyInterests[]
 - future profile/showcase settings
 
-Skin type is optional, private-only in MVP, and non-medical metadata.
+`displayName`, the selected first-party avatar, primary skin type, and the independent sensitive-skin flag are application-owned profile data. Clerk remains authoritative for private account identity, email, password/security, and connected accounts; those values are not duplicated into PostgreSQL.
+
+Primary skin type is optional, private-only in MVP, and non-medical metadata. New profile writes use `NORMAL`, `DRY`, `OILY`, or `COMBINATION`; sensitivity is represented independently by `sensitiveSkin` because any primary skin type may also be sensitive. Legacy `SENSITIVE` and `NOT_SURE` enum values remain only for migration compatibility and are not offered by current profile UI.
+
+### ProfileAvatar
+
+Defines the small first-party avatar catalogue available to profiles. Stable string IDs are referenced by `User.selectedAvatarId`; each row stores a local asset path, display name, sort order, and active state. Profile updates must select an exact active catalogue row and cannot persist arbitrary image URLs. Deactivating an avatar prevents new selections without deleting existing user or profile history.
 
 ### CollectionEntry
 Represents the user's relationship with a ProductVersion/Variant, separate from individual purchases.

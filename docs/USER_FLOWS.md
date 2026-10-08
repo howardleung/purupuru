@@ -278,7 +278,9 @@ Do not implement separate drag/drop business logic that diverges from normal act
 After/around account creation, optionally ask:
 
 ### Skin type
-Dry / Oily / Combination / Normal / Sensitive / Not sure / Skip
+Dry / Oily / Combination / Normal / Skip
+
+Sensitivity is a separate optional checkbox because any primary skin type may also be sensitive.
 
 ### Beauty interests
 Multi-select visual chips such as:
@@ -292,7 +294,7 @@ Multi-select visual chips such as:
 - Luxury
 - Sensitive-skin products
 
-Users can skip and edit later. Skin type is private-only in MVP. Preferences may personalize browse surfaces but not make medical claims.
+Users can skip and edit later. Skin profile data is private-only in MVP. Preferences may personalize browse surfaces but not make medical claims.
 
 ## 12. Optional post-MVP user-created collections
 
@@ -306,14 +308,15 @@ These do not alter lifecycle state. Public sharing/comments are post-MVP foundat
 
 ## 13. Profile
 
-MVP profile/account may expose to the owner:
-- collection summary/statistics
-- private skin type
-- beauty interests
-- lists/collections
-- settings/privacy
+The private authenticated `/profile` route is the owner-facing home for PuruPuru identity and Clerk account access.
 
-Future public profile/showcase slots are schema-ready but not required for MVP UI.
+1. A signed-out visitor is prompted to sign in and never sees another user's data.
+2. On first authenticated visit, the application lazily creates the local User if needed, derives a non-email display-name default from Clerk first/full name, and assigns the first active first-party avatar when no selection exists.
+3. The user may edit display name, choose an active PuruPuru avatar, select one optional primary skin type (`Normal`, `Dry`, `Oily`, or `Combination`), and independently indicate sensitive skin.
+4. Save validates all fields server-side and updates only the active user's local User row.
+5. A separate private-account section shows limited Clerk-managed identity context and opens Clerk's account-management UI for email, password/security, and connected-account changes.
+
+The page does not expose a public profile route, avatar uploads, review history, ratings history, contributions, rewards, or social features. First-party display name and avatar provide a future reusable identity foundation, but public surfaces remain out of scope until explicitly designed.
 
 ## 14. Destination shopping continuity
 
