@@ -2,6 +2,7 @@ import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
 import Link from "next/link";
 
 import { AccountUserButton } from "./account-user-button";
+import { getCurrentAccountIdentity } from "../lib/account-identity";
 import { isClerkConfigured } from "../lib/clerk-config";
 import { GlobalSearch } from "./global-search";
 import { PrimaryNav } from "./primary-nav";
@@ -9,7 +10,9 @@ import { ProductMegaMenu } from "./product-mega-menu";
 import { BrandLogo } from "./brand-logo";
 import { MobileNavigation } from "./mobile-navigation";
 
-export function SiteHeader() {
+export async function SiteHeader() {
+  const accountIdentity = isClerkConfigured ? await getCurrentAccountIdentity() : null;
+
   return (
     <header className="relative z-30 border-b border-slate-200/70 bg-white">
       <div className="page-container flex flex-wrap items-center justify-between gap-x-6 gap-y-3 py-3 md:py-4">
@@ -31,7 +34,7 @@ export function SiteHeader() {
                 </div>
               </SignedOut>
               <SignedIn>
-                <AccountUserButton />
+                <AccountUserButton identity={accountIdentity} />
               </SignedIn>
             </>
           ) : (

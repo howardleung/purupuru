@@ -80,6 +80,7 @@ test("profile UI keeps app identity separate from Clerk account management", () 
   const form = readFileSync(new URL("../../apps/web/components/profile-form.tsx", import.meta.url), "utf8");
   const account = readFileSync(new URL("../../apps/web/components/manage-clerk-account-button.tsx", import.meta.url), "utf8");
   const accountUserButton = readFileSync(new URL("../../apps/web/components/account-user-button.tsx", import.meta.url), "utf8");
+  const accountIdentity = readFileSync(new URL("../../apps/web/lib/account-identity.ts", import.meta.url), "utf8");
   const header = readFileSync(new URL("../../apps/web/components/site-header.tsx", import.meta.url), "utf8");
 
   assert.match(page, /getClerkUser/);
@@ -91,12 +92,17 @@ test("profile UI keeps app identity separate from Clerk account management", () 
   assert.match(form, /useTransition/);
   assert.match(form, /onSubmit=/);
   assert.doesNotMatch(form, /<form action=/);
+  assert.match(form, /router\.refresh\(\)/);
   assert.match(account, /openUserProfile/);
-  assert.match(header, /<SignedIn>\s*<AccountUserButton \/>\s*<\/SignedIn>/);
+  assert.match(header, /<SignedIn>\s*<AccountUserButton identity=\{accountIdentity\} \/>\s*<\/SignedIn>/);
   assert.match(header, /<SignedOut>[\s\S]*?<SignInButton mode="modal">[\s\S]*?<\/SignedOut>/);
   assert.match(accountUserButton, /^"use client";/m);
+  assert.match(accountUserButton, /resolvedIdentity\.displayName/);
+  assert.match(accountUserButton, /resolvedIdentity\.avatar\.assetPath/);
   assert.match(accountUserButton, /href="\/profile"/);
-  assert.match(accountUserButton, /label="Profile"/);
-  assert.match(accountUserButton, /UserButton\.Action label="manageAccount"/);
-  assert.match(accountUserButton, /UserButton\.Action label="signOut"/);
+  assert.match(accountUserButton, /openUserProfile\(\)/);
+  assert.match(accountUserButton, /signOut\(\{ redirectUrl: "\/" \}\)/);
+  assert.doesNotMatch(accountUserButton, /<UserButton|UserButton\.|imageUrl/);
+  assert.match(accountIdentity, /getOrInitializeProfile\(user\.id, defaultDisplayName\)/);
+  assert.match(accountIdentity, /deriveInitialDisplayName\(clerkUser\?\.firstName \?\? null, clerkUser\?\.fullName \?\? null\)/);
 });

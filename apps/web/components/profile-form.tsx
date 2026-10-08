@@ -2,6 +2,7 @@
 
 import { PROFILE_SKIN_TYPES, type ProfileSkinType } from "@beauty-platform/domain/profile";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 
 import { updateProfile } from "../app/profile/actions";
@@ -33,6 +34,7 @@ export function ProfileForm({
   avatars: ProfileAvatarView[];
   initialValue: ProfileFormValue;
 }) {
+  const router = useRouter();
   const [state, setState] = useState(initialProfileActionState);
   const [isPending, startTransition] = useTransition();
   const [displayName, setDisplayName] = useState(initialValue.displayName);
@@ -61,7 +63,11 @@ export function ProfileForm({
         onSubmit={(event) => {
           event.preventDefault();
           const formData = new FormData(event.currentTarget);
-          startTransition(async () => setState(await updateProfile(state, formData)));
+          startTransition(async () => {
+            const nextState = await updateProfile(state, formData);
+            setState(nextState);
+            if (nextState.status === "SUCCESS") router.refresh();
+          });
         }}
       >
         <label className="grid max-w-xl gap-2 text-sm font-bold text-slate-800">
