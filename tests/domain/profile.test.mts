@@ -79,6 +79,7 @@ test("profile UI keeps app identity separate from Clerk account management", () 
   const page = readFileSync(new URL("../../apps/web/app/profile/page.tsx", import.meta.url), "utf8");
   const form = readFileSync(new URL("../../apps/web/components/profile-form.tsx", import.meta.url), "utf8");
   const account = readFileSync(new URL("../../apps/web/components/manage-clerk-account-button.tsx", import.meta.url), "utf8");
+  const accountUserButton = readFileSync(new URL("../../apps/web/components/account-user-button.tsx", import.meta.url), "utf8");
   const header = readFileSync(new URL("../../apps/web/components/site-header.tsx", import.meta.url), "utf8");
 
   assert.match(page, /getClerkUser/);
@@ -91,5 +92,11 @@ test("profile UI keeps app identity separate from Clerk account management", () 
   assert.match(form, /onSubmit=/);
   assert.doesNotMatch(form, /<form action=/);
   assert.match(account, /openUserProfile/);
-  assert.match(header, /UserButton\.Link href="\/profile" label="Profile"/);
+  assert.match(header, /<SignedIn>\s*<AccountUserButton \/>\s*<\/SignedIn>/);
+  assert.match(header, /<SignedOut>[\s\S]*?<SignInButton mode="modal">[\s\S]*?<\/SignedOut>/);
+  assert.match(accountUserButton, /^"use client";/m);
+  assert.match(accountUserButton, /href="\/profile"/);
+  assert.match(accountUserButton, /label="Profile"/);
+  assert.match(accountUserButton, /UserButton\.Action label="manageAccount"/);
+  assert.match(accountUserButton, /UserButton\.Action label="signOut"/);
 });

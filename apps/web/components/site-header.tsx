@@ -1,7 +1,7 @@
-import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
-import { UserRound } from "lucide-react";
+import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
 import Link from "next/link";
 
+import { AccountUserButton } from "./account-user-button";
 import { isClerkConfigured } from "../lib/clerk-config";
 import { GlobalSearch } from "./global-search";
 import { PrimaryNav } from "./primary-nav";
@@ -31,11 +31,7 @@ export function SiteHeader() {
                 </div>
               </SignedOut>
               <SignedIn>
-                <UserButton>
-                  <UserButton.MenuItems>
-                    <UserButton.Link href="/profile" label="Profile" labelIcon={<UserRound aria-hidden size={16} />} />
-                  </UserButton.MenuItems>
-                </UserButton>
+                <AccountUserButton />
               </SignedIn>
             </>
           ) : (
