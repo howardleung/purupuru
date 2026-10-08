@@ -14,17 +14,20 @@ export default async function middleware(request: NextRequest, event: NextFetchE
   }
   // Do not interfere with Clerk's own session transport. Assets are excluded by matcher.
   if (!request.nextUrl.pathname.startsWith("/__clerk/")) {
-    const result = await enforceRateLimit(
-      publicRequestScope(request.nextUrl.pathname),
-      publicRequestIdentity(request.headers, process.env.VERCEL === "1"),
-    );
-    if (!result.allowed) {
-      return NextResponse.json(
-        { error: result.unavailable ? "Service temporarily unavailable." : "Too many requests." },
-        { status: result.unavailable ? 503 : 429, headers: {
-          "Retry-After": String(result.retryAfter), "Cache-Control": "no-store",
-        } },
+    const scope = publicRequestScope(request.nextUrl.pathname);
+    if (scope) {
+      const result = await enforceRateLimit(
+        scope,
+        publicRequestIdentity(request.headers, process.env.VERCEL === "1"),
       );
+      if (!result.allowed) {
+        return NextResponse.json(
+          { error: result.unavailable ? "Service temporarily unavailable." : "Too many requests." },
+          { status: result.unavailable ? 503 : 429, headers: {
+            "Retry-After": String(result.retryAfter), "Cache-Control": "no-store",
+          } },
+        );
+      }
     }
   }
   return isClerkConfigured ? authenticate(request, event) : NextResponse.next();

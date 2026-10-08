@@ -179,8 +179,13 @@ test("admin allowlist is exact, server-configured, and ignores malformed IDs", (
 
 test("admin endpoint authenticates before staging and commits are transaction-bound", () => {
   const route = readFileSync(new URL("../../apps/web/app/api/admin/ingestion/products/route.ts", import.meta.url), "utf8");
+  const actions = readFileSync(new URL("../../apps/web/app/admin/imports/actions.ts", import.meta.url), "utf8");
+  const reviewPage = readFileSync(new URL("../../apps/web/app/admin/imports/[id]/page.tsx", import.meta.url), "utf8");
   const service = readFileSync(new URL("../../apps/web/lib/admin/product-import-service.ts", import.meta.url), "utf8");
   assert.ok(route.indexOf("getAdminAccess({ mutation: true })") < route.indexOf("stageProductImport(payload"));
+  assert.match(route, /"Retry-After": String\(error\.result\.retryAfter\)/);
+  assert.match(actions, /RateLimitError[\s\S]*notice=rate-limited/);
+  assert.match(reviewPage, /Too many admin changes were submitted at once/);
   assert.match(service, /commitProductImport[\s\S]*runSerializable\(async \(tx\)/);
   assert.match(service, /const result = await commitValidatedProductImportGraph\(tx, validation\.value\)/);
   assert.match(service, /status: "COMMITTED"/);

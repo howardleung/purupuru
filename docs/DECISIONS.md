@@ -439,3 +439,13 @@ This file records settled choices and the rationale behind them. New decisions s
 **Why:** Collection feedback and public product reviews answer different questions and use different scales/scopes. Family aggregation matches the normal brand + product + size shopping model while exact variant and exceptional meaningful version context keep each review honest. Historical skin context should remain stable, while a current first-party identity should update without exposing Clerk data.
 
 **Implications:** Product pages show a clickable family average/count beneath the product name, an accessible distribution, a bounded newest-first feed, and authenticated create/edit/confirmed-delete controls. Database uniqueness and a 1–5 check protect the core constraints; server writes enforce family/variant integrity, ownership, profile-derived snapshots, and mutation throttling. No catalogue/search ratings, public profiles, votes, comments, media, reporting, verified-purchase badges, incentives, or denormalized aggregate columns are introduced. Account deletion explicitly removes the user's reviews and preserves shared catalogue data.
+
+### 2026-10-08 — Public browsing is isolated from explicit rate-limit budgets
+
+**Status:** Accepted
+
+**Decision:** Do not charge page navigation, React Server Component requests, link prefetches, refreshes, or the public category-menu read to a shared browse limiter. Keep a dedicated trusted-ingress IP budget for live-search API requests and the existing verified Clerk-user budget for authenticated mutations, including reviews, profiles, collections, shopping lists, account deletion, and admin ingestion.
+
+**Why:** A single Next.js navigation can issue several framework requests, so a blanket per-IP middleware budget can throttle legitimate browsing, especially behind shared networks or when an ingress identity falls back to one bucket. Explicit expensive reads and authenticated writes remain the correct abuse-control boundaries.
+
+**Implications:** Ordinary browsing cannot return a middleware-generated raw JSON 429. The live-search API may still return HTTP 429 with `Retry-After`, while search UI presents a friendly retry message. Mutation protections remain fail-closed and user-keyed; no schema or migration change is required.

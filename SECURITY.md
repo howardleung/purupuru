@@ -12,7 +12,7 @@ Include the affected area, reproduction steps, likely impact, and any suggested 
 
 ## Security posture
 
-PuruPuru treats client input and retailer data as untrusted. Server boundaries validate mutation and ingestion payloads, private data access is scoped to the authenticated user, catalogue ingestion uses conservative matching and explicit review, compound writes use database transactions, and production requests use shared rate limiting and restrictive browser security headers.
+PuruPuru treats client input and retailer data as untrusted. Server boundaries validate mutation and ingestion payloads, private data access is scoped to the authenticated user, catalogue ingestion uses conservative matching and explicit review, compound writes use database transactions, and production uses shared rate limiting at explicit search and mutation boundaries plus restrictive browser security headers. Ordinary page, prefetch, and React Server Component reads are not charged to mutation-style budgets.
 
 Secrets and production identifiers belong in provider-managed environment configuration, not source control. The repository includes a read-only security verifier for tracked files, Git history, browser output, and accidental matches with configured local secrets:
 

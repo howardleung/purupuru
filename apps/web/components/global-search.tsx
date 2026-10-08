@@ -16,6 +16,7 @@ export function GlobalSearch({ id = "global-search", prominent = false }: { id?:
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<GroupedSearchResults>(emptySearchResults);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isFocused, setIsFocused] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
 
@@ -23,22 +24,30 @@ export function GlobalSearch({ id = "global-search", prominent = false }: { id?:
     if (query.trim().length < 2) {
       setResults(emptySearchResults);
       setIsLoading(false);
+      setErrorMessage(null);
       return;
     }
 
     const controller = new AbortController();
     const timeout = window.setTimeout(async () => {
       setIsLoading(true);
+      setErrorMessage(null);
       try {
         const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`, {
           signal: controller.signal,
         });
+        if (response.status === 429) {
+          setResults(emptySearchResults);
+          setErrorMessage("Search is temporarily limited. Please wait a moment and try again.");
+          return;
+        }
         if (!response.ok) throw new Error("Search request failed");
         setResults((await response.json()) as GroupedSearchResults);
         setActiveIndex(-1);
       } catch (error) {
         if (!(error instanceof DOMException && error.name === "AbortError")) {
           setResults(emptySearchResults);
+          setErrorMessage("Search is temporarily unavailable. Please try again shortly.");
         }
       } finally {
         if (!controller.signal.aborted) setIsLoading(false);
@@ -132,6 +141,7 @@ export function GlobalSearch({ id = "global-search", prominent = false }: { id?:
             onClick={() => {
               setQuery("");
               setResults(emptySearchResults);
+              setErrorMessage(null);
             }}
             type="button"
           >
@@ -153,8 +163,11 @@ export function GlobalSearch({ id = "global-search", prominent = false }: { id?:
           aria-label="Search suggestions"
         >
           <p aria-live="polite" className="sr-only">
-            {isLoading ? "Searching" : `${items.length} search options available`}
+            {isLoading ? "Searching" : errorMessage ?? `${items.length} search options available`}
           </p>
+          {errorMessage ? (
+            <p className="rounded-xl bg-amber-50 px-3 py-3 text-sm text-amber-900" role="status">{errorMessage}</p>
+          ) : null}
           {results.products.length > 0 ? (
             <SearchGroup label="Products">
               {results.products.map((item) => {
@@ -195,7 +208,7 @@ export function GlobalSearch({ id = "global-search", prominent = false }: { id?:
               })}
             </SearchGroup>
           ) : null}
-          {!isLoading && items.length === 1 ? (
+          {!isLoading && !errorMessage && items.length === 1 ? (
             <p className="px-3 py-4 text-sm text-slate-500">No direct matches yet.</p>
           ) : null}
           {(() => {

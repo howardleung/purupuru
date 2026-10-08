@@ -1,4 +1,4 @@
-export type RateLimitScope = "search" | "browse" | "mutation";
+export type RateLimitScope = "search" | "mutation";
 export type RateLimitResult = { allowed: boolean; unavailable: boolean; retryAfter: number };
 export type RateLimitConfiguration = {
   production: boolean;
@@ -6,7 +6,7 @@ export type RateLimitConfiguration = {
   token?: string;
 };
 
-const LIMITS: Record<RateLimitScope, number> = { search: 60, browse: 120, mutation: 60 };
+const LIMITS: Record<RateLimitScope, number> = { search: 60, mutation: 60 };
 const WINDOW_MS = 60_000;
 // Atomic fixed window: concurrent/serverless instances share the same counter.
 const COUNTER_SCRIPT = `local n = redis.call('INCR', KEYS[1])
@@ -16,11 +16,14 @@ if ttl < 0 then redis.call('PEXPIRE', KEYS[1], ARGV[1]); ttl = tonumber(ARGV[1])
 return {n, ttl}`;
 
 export class RateLimitError extends Error {
+  readonly result: RateLimitResult;
+
   constructor(result: RateLimitResult) {
     super(result.unavailable
       ? "Saving is temporarily unavailable. Please try again shortly."
       : `Too many changes. Please try again in ${result.retryAfter} seconds.`);
     this.name = "RateLimitError";
+    this.result = result;
   }
 }
 
@@ -31,8 +34,9 @@ export function publicRequestIdentity(headers: Headers, onVercel: boolean): stri
   return value && value.length <= 64 && /^[a-fA-F0-9:.]+$/.test(value) ? value : "unidentified";
 }
 
-export function publicRequestScope(pathname: string): RateLimitScope {
-  return pathname === "/api/search" ? "search" : "browse";
+/** Public page/RSC requests are not charged to mutation-style budgets. */
+export function publicRequestScope(pathname: string): RateLimitScope | null {
+  return pathname === "/api/search" ? "search" : null;
 }
 
 export async function checkRateLimit(

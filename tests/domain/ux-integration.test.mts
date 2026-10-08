@@ -155,6 +155,9 @@ test("global search is grouped, debounced, cancellable, and keyboard-operable", 
   assert.match(globalSearch, /220/);
   assert.match(globalSearch, /ArrowDown/);
   assert.match(globalSearch, /View all results/);
+  assert.match(globalSearch, /response\.status === 429/);
+  assert.match(globalSearch, /Search is temporarily limited\. Please wait a moment and try again\./);
+  assert.match(globalSearch, /role="status"/);
 });
 
 test("product menu and product-page hierarchy follow the structural UX contract", () => {

@@ -58,7 +58,10 @@ export async function POST(request: NextRequest) {
     }
     if (error instanceof RateLimitError) {
       return NextResponse.json({ ok: false, error: error.message },
-        { status: 429, headers: { "Cache-Control": "no-store", "Retry-After": "60" } });
+        { status: 429, headers: {
+          "Cache-Control": "no-store",
+          "Retry-After": String(error.result.retryAfter),
+        } });
     }
     return NextResponse.json({ ok: false, error: "The import could not be staged." },
       { status: 500, headers: { "Cache-Control": "no-store" } });

@@ -6,7 +6,7 @@ const config = { production: true, url: "https://redis.example.test", token: "te
 const response = (count: number, ttl = 30_000): typeof fetch => async () => Response.json({ result: [count, ttl] });
 
 test("limits deny the first request above each shared scope's budget", async () => {
-  for (const [scope, limit] of [["search", 60], ["browse", 120], ["mutation", 60]] as const) {
+  for (const [scope, limit] of [["search", 60], ["mutation", 60]] as const) {
     assert.equal((await checkRateLimit(scope, "user", config, response(limit))).allowed, true);
     const blocked = await checkRateLimit(scope, "user", config, response(limit + 1));
     assert.deepEqual(blocked, { allowed: false, unavailable: false, retryAfter: 30 });
@@ -63,5 +63,22 @@ test("client-controlled forwarding headers are never trusted outside Vercel", ()
   assert.equal(publicRequestIdentity(headers, true), "5.6.7.8");
   assert.equal(publicRequestIdentity(new Headers({ "x-forwarded-for": "1.2.3.4" }), true), "unidentified");
   assert.equal(publicRequestScope("/api/search"), "search");
-  assert.equal(publicRequestScope("/products/toner"), "browse");
+  assert.equal(publicRequestScope("/products/toner"), null);
+});
+
+test("normal browsing, prefetch and refresh routes do not consume a public rate-limit bucket", () => {
+  const browsingPaths = [
+    "/",
+    "/catalogue",
+    "/categories",
+    "/categories/toners",
+    "/products/round-lab-1025-dokdo-toner",
+    "/profile",
+    "/collection",
+    "/shopping-lists",
+    "/api/categories",
+  ];
+  for (let request = 0; request < 1_000; request += 1) {
+    for (const pathname of browsingPaths) assert.equal(publicRequestScope(pathname), null);
+  }
 });

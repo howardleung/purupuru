@@ -27,13 +27,20 @@ function sourceLinks(value: unknown, found = new Set<string>()): string[] {
   return [...found];
 }
 
-export default async function ImportBatchPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function ImportBatchPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ notice?: string }>;
+}) {
   const access = await getAdminAccess();
   if (access.status !== "AUTHORIZED") {
     return <main className="page-container py-10"><h1 className="text-2xl font-semibold">Product import</h1>
       <p className="mt-3 text-sm text-slate-600">Administrator access is required.</p></main>;
   }
   const { id } = await params;
+  const notice = (await searchParams).notice;
   const batch = await getProductImport(id);
   if (!batch) notFound();
   const hasBlockingErrors = Array.isArray(batch.validationErrors) && batch.validationErrors.length > 0;
@@ -42,6 +49,9 @@ export default async function ImportBatchPage({ params }: { params: Promise<{ id
   const links = sourceLinks(batch.normalizedPayload ?? batch.rawPayload);
   return <main className="page-container py-10">
     <Link className="text-sm underline" href="/admin/imports">← All imports</Link>
+    {notice === "rate-limited" ? <p className="mt-5 rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900" role="status">
+      Too many admin changes were submitted at once. Please wait a moment and try again.
+    </p> : null}
     <div className="mt-5 flex flex-wrap items-start justify-between gap-4">
       <div><h1 className="text-3xl font-semibold">{batch.sourceLabel}</h1>
         <p className="mt-2 text-sm text-slate-600">{batch.status.replaceAll("_", " ")} · schema {batch.schemaVersion} · retrieved {batch.retrievedAt.toLocaleString("en-CA")}</p></div>
