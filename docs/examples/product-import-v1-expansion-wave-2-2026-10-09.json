@@ -1,0 +1,1935 @@
+{
+  "schemaVersion": "1.0",
+  "idempotencyKey": "chatgpt-work:catalogue-expansion-wave-2:2026-10-09:01",
+  "source": {
+    "type": "CHATGPT_WORK",
+    "label": "PuruPuru catalogue expansion Wave 2 — researched handoff",
+    "url": null,
+    "retrievedAt": "2026-10-09T20:00:00.000Z",
+    "notes": "Built from the supplied Wave 2 research packet with targeted verification only. Production identity preflight found no matching candidate family slugs or candidate GTIN collisions. Banila Pore Clarifying and Calming candidates were omitted for unresolved formula identity and unavailable current price respectively. Staging only; do not commit without human review."
+  },
+  "products": [
+    {
+      "brand": {
+        "name": "Banila Co",
+        "slug": "banila-co",
+        "originMarket": "KR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "Clean It Zero Cleansing Balm Original",
+        "slug": "banila-co-clean-it-zero-cleansing-balm-original",
+        "categorySlug": "balm-cleanser",
+        "originMarket": "KR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://ca.iherb.com/pr/banila-co-clean-it-zero-cleansing-balm-3-38-fl-oz-100-ml/139267",
+          "sourceType": "RETAILER",
+          "retrievedAt": "2026-10-09T20:00:00.000Z",
+          "verifiedAt": "2026-10-09T20:00:00.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Exact 100 ml listing; UPC 8809759907545 identifies the Original formula."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "100 ml",
+          "normalizedQuantity": 100,
+          "normalizedUnit": "ml",
+          "gtin": "8809759907545",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://ca.iherb.com/pr/banila-co-clean-it-zero-cleansing-balm-3-38-fl-oz-100-ml/139267",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-09T20:00:00.000Z",
+            "verifiedAt": "2026-10-09T20:00:00.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact 100 ml listing; UPC 8809759907545 identifies the Original formula."
+          },
+          "images": [
+            {
+              "url": "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/bnl/bnl90754/g/43.jpg",
+              "altText": "Banila Co Clean It Zero Cleansing Balm Original 100 ml",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "iHerb Canada",
+              "sourcePageUrl": "https://ca.iherb.com/pr/banila-co-clean-it-zero-cleansing-balm-3-38-fl-oz-100-ml/139267",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://ca.iherb.com/pr/banila-co-clean-it-zero-cleansing-balm-3-38-fl-oz-100-ml/139267",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T20:00:00.000Z",
+                "verifiedAt": "2026-10-09T20:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact-size representative image for Banila Co Clean It Zero Cleansing Balm Original 100 ml."
+              }
+            }
+          ],
+          "benchmarks": [],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:iherb-ca",
+                "name": "iHerb Canada",
+                "country": "US",
+                "websiteUrl": "https://ca.iherb.com/"
+              },
+              "externalListingId": "139267",
+              "listingUrl": "https://ca.iherb.com/pr/banila-co-clean-it-zero-cleansing-balm-3-38-fl-oz-100-ml/139267",
+              "isActive": true,
+              "productPrice": 25.47,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T20:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://ca.iherb.com/pr/banila-co-clean-it-zero-cleansing-balm-3-38-fl-oz-100-ml/139267",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T20:00:00.000Z",
+                "verifiedAt": "2026-10-09T20:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 100 ml Original listing showed CA$25.47 and in stock."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "Heimish",
+        "slug": "heimish",
+        "originMarket": "KR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "All Clean Balm",
+        "slug": "heimish-all-clean-balm",
+        "categorySlug": "balm-cleanser",
+        "originMarket": "KR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://ca.iherb.com/pr/heimish-all-clean-balm-120-ml/79027",
+          "sourceType": "RETAILER",
+          "retrievedAt": "2026-10-09T20:00:00.000Z",
+          "verifiedAt": "2026-10-09T20:00:00.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Exact 120 ml listing; UPC 8809481760678."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "120 ml",
+          "normalizedQuantity": 120,
+          "normalizedUnit": "ml",
+          "gtin": "8809481760678",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://ca.iherb.com/pr/heimish-all-clean-balm-120-ml/79027",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-09T20:00:00.000Z",
+            "verifiedAt": "2026-10-09T20:00:00.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact 120 ml listing; UPC 8809481760678."
+          },
+          "images": [
+            {
+              "url": "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/hei/hei76067/g/46.jpg",
+              "altText": "Heimish All Clean Balm 120 ml",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "iHerb Canada",
+              "sourcePageUrl": "https://ca.iherb.com/pr/heimish-all-clean-balm-120-ml/79027",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://ca.iherb.com/pr/heimish-all-clean-balm-120-ml/79027",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T20:00:00.000Z",
+                "verifiedAt": "2026-10-09T20:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact-size representative image for Heimish All Clean Balm 120 ml."
+              }
+            }
+          ],
+          "benchmarks": [],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:iherb-ca",
+                "name": "iHerb Canada",
+                "country": "US",
+                "websiteUrl": "https://ca.iherb.com/"
+              },
+              "externalListingId": "79027",
+              "listingUrl": "https://ca.iherb.com/pr/heimish-all-clean-balm-120-ml/79027",
+              "isActive": true,
+              "productPrice": 25.9,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "OUT_OF_STOCK",
+              "observedAt": "2026-10-09T20:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://ca.iherb.com/pr/heimish-all-clean-balm-120-ml/79027",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T20:00:00.000Z",
+                "verifiedAt": "2026-10-09T20:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 120 ml listing showed CA$25.90 and out of stock."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "Beauty of Joseon",
+        "slug": "beauty-of-joseon",
+        "originMarket": "KR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "Radiance Cleansing Balm",
+        "slug": "beauty-of-joseon-radiance-cleansing-balm",
+        "categorySlug": "balm-cleanser",
+        "originMarket": "KR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://well.ca/products/beauty-of-joseon-radiance-cleansing_327517.html",
+          "sourceType": "RETAILER",
+          "retrievedAt": "2026-10-09T20:00:00.000Z",
+          "verifiedAt": "2026-10-09T20:00:00.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Exact Beauty of Joseon Radiance Cleansing Balm 100 ml listing."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "100 ml",
+          "normalizedQuantity": 100,
+          "normalizedUnit": "ml",
+          "gtin": null,
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://well.ca/products/beauty-of-joseon-radiance-cleansing_327517.html",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-09T20:00:00.000Z",
+            "verifiedAt": "2026-10-09T20:00:00.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact Beauty of Joseon Radiance Cleansing Balm 100 ml listing."
+          },
+          "images": [
+            {
+              "url": "https://dr9wvh6oz7mzp.cloudfront.net/i/1917c4c92bf3b4d7ad8b468c6b215192_ra,w403,h806_pa,w403,h806.jpg",
+              "altText": "Beauty of Joseon Radiance Cleansing Balm 100 ml",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "Well.ca",
+              "sourcePageUrl": "https://well.ca/products/beauty-of-joseon-radiance-cleansing_327517.html",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://well.ca/products/beauty-of-joseon-radiance-cleansing_327517.html",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T20:00:00.000Z",
+                "verifiedAt": "2026-10-09T20:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact-size representative image for Beauty of Joseon Radiance Cleansing Balm 100 ml."
+              }
+            }
+          ],
+          "benchmarks": [],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:well-ca",
+                "name": "Well.ca",
+                "country": "CA",
+                "websiteUrl": "https://well.ca/"
+              },
+              "externalListingId": "327517",
+              "listingUrl": "https://well.ca/products/beauty-of-joseon-radiance-cleansing_327517.html",
+              "isActive": true,
+              "productPrice": 23.99,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T20:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://well.ca/products/beauty-of-joseon-radiance-cleansing_327517.html",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T20:00:00.000Z",
+                "verifiedAt": "2026-10-09T20:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 100 ml listing showed CA$23.99 with an active Add to Cart action."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "PURITO",
+        "slug": "purito",
+        "originMarket": "KR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "From Green Cleansing Oil",
+        "slug": "purito-from-green-cleansing-oil",
+        "categorySlug": "oil-cleanser",
+        "originMarket": "KR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://ca.iherb.com/pr/purito-from-green-cleansing-oil-6-76-fl-oz-200-ml/125965",
+          "sourceType": "RETAILER",
+          "retrievedAt": "2026-10-09T20:00:00.000Z",
+          "verifiedAt": "2026-10-09T20:00:00.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Exact 200 ml listing; UPC 8809563102532."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "200 ml",
+          "normalizedQuantity": 200,
+          "normalizedUnit": "ml",
+          "gtin": "8809563102532",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://ca.iherb.com/pr/purito-from-green-cleansing-oil-6-76-fl-oz-200-ml/125965",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-09T20:00:00.000Z",
+            "verifiedAt": "2026-10-09T20:00:00.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact 200 ml listing; UPC 8809563102532."
+          },
+          "images": [
+            {
+              "url": "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/pit/pit10253/g/60.jpg",
+              "altText": "PURITO From Green Cleansing Oil 200 ml",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "iHerb Canada",
+              "sourcePageUrl": "https://ca.iherb.com/pr/purito-from-green-cleansing-oil-6-76-fl-oz-200-ml/125965",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://ca.iherb.com/pr/purito-from-green-cleansing-oil-6-76-fl-oz-200-ml/125965",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T20:00:00.000Z",
+                "verifiedAt": "2026-10-09T20:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact-size representative image for PURITO From Green Cleansing Oil 200 ml."
+              }
+            }
+          ],
+          "benchmarks": [],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:iherb-ca",
+                "name": "iHerb Canada",
+                "country": "US",
+                "websiteUrl": "https://ca.iherb.com/"
+              },
+              "externalListingId": "125965",
+              "listingUrl": "https://ca.iherb.com/pr/purito-from-green-cleansing-oil-6-76-fl-oz-200-ml/125965",
+              "isActive": true,
+              "productPrice": 28.82,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T20:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://ca.iherb.com/pr/purito-from-green-cleansing-oil-6-76-fl-oz-200-ml/125965",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T20:00:00.000Z",
+                "verifiedAt": "2026-10-09T20:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 200 ml listing showed CA$28.82 and in stock."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "SKIN1004",
+        "slug": "skin1004",
+        "originMarket": "KR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "Madagascar Centella Light Cleansing Oil",
+        "slug": "skin1004-madagascar-centella-light-cleansing-oil",
+        "categorySlug": "oil-cleanser",
+        "originMarket": "KR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://kiyoko.ca/en-ca/products/skin1004-madagascar-centella-light-cleansing-oil-200ml",
+          "sourceType": "RETAILER",
+          "retrievedAt": "2026-10-09T20:00:00.000Z",
+          "verifiedAt": "2026-10-09T20:00:00.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Exact 200 ml selected listing; retailer SKU/GTIN 8809576261110."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "200 ml",
+          "normalizedQuantity": 200,
+          "normalizedUnit": "ml",
+          "gtin": "8809576261110",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://kiyoko.ca/en-ca/products/skin1004-madagascar-centella-light-cleansing-oil-200ml",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-09T20:00:00.000Z",
+            "verifiedAt": "2026-10-09T20:00:00.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact 200 ml selected listing; retailer SKU/GTIN 8809576261110."
+          },
+          "images": [
+            {
+              "url": "https://cdn.shopify.com/s/files/1/0515/4589/9157/files/Product_Images_31_e536d6d3-5d03-4ef4-86b6-b54cf30a72cf.png?v=1791379726",
+              "altText": "SKIN1004 Madagascar Centella Light Cleansing Oil 200 ml",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "Kiyoko Beauty",
+              "sourcePageUrl": "https://kiyoko.ca/en-ca/products/skin1004-madagascar-centella-light-cleansing-oil-200ml",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/products/skin1004-madagascar-centella-light-cleansing-oil-200ml",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T20:00:00.000Z",
+                "verifiedAt": "2026-10-09T20:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact-size representative image for SKIN1004 Madagascar Centella Light Cleansing Oil 200 ml."
+              }
+            }
+          ],
+          "benchmarks": [],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:kiyoko-ca",
+                "name": "Kiyoko Beauty",
+                "country": "CA",
+                "websiteUrl": "https://kiyoko.ca/"
+              },
+              "externalListingId": "47242901815532",
+              "listingUrl": "https://kiyoko.ca/en-ca/products/skin1004-madagascar-centella-light-cleansing-oil-200ml",
+              "isActive": true,
+              "productPrice": 29,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T20:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/products/skin1004-madagascar-centella-light-cleansing-oil-200ml",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T20:00:00.000Z",
+                "verifiedAt": "2026-10-09T20:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 200 ml Canadian listing showed CA$29.00 and in stock."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "Avène",
+        "slug": "avene",
+        "originMarket": "FR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "Thermal Spring Water",
+        "slug": "avene-thermal-spring-water",
+        "categorySlug": "facial-mist",
+        "originMarket": "FR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://www.shoppersdrugmart.ca/avene-eau-thermale/p/BB_673914010016?variantCode=673914010016",
+          "sourceType": "RETAILER",
+          "retrievedAt": "2026-10-09T20:00:00.000Z",
+          "verifiedAt": "2026-10-09T20:00:00.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Exact 150 ml variant; UPC 673914010016 is present in the retailer product record and URL."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "150 ml",
+          "normalizedQuantity": 150,
+          "normalizedUnit": "ml",
+          "gtin": "673914010016",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://www.shoppersdrugmart.ca/avene-eau-thermale/p/BB_673914010016?variantCode=673914010016",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-09T20:00:00.000Z",
+            "verifiedAt": "2026-10-09T20:00:00.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact 150 ml variant; UPC 673914010016 is present in the retailer product record and URL."
+          },
+          "images": [
+            {
+              "url": "https://digital.loblaws.ca/SDM/SDM_673914010016/en/1/673914010016_enfr_01_1200.jpeg",
+              "altText": "Avène Thermal Spring Water 150 ml",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "Shoppers Drug Mart",
+              "sourcePageUrl": "https://www.shoppersdrugmart.ca/avene-eau-thermale/p/BB_673914010016?variantCode=673914010016",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://www.shoppersdrugmart.ca/avene-eau-thermale/p/BB_673914010016?variantCode=673914010016",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T20:00:00.000Z",
+                "verifiedAt": "2026-10-09T20:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact-size representative image for Avène Thermal Spring Water 150 ml."
+              }
+            }
+          ],
+          "benchmarks": [],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:shoppers-drug-mart-ca",
+                "name": "Shoppers Drug Mart",
+                "country": "CA",
+                "websiteUrl": "https://www.shoppersdrugmart.ca/"
+              },
+              "externalListingId": "SDM_673914010016",
+              "listingUrl": "https://www.shoppersdrugmart.ca/avene-eau-thermale/p/BB_673914010016?variantCode=673914010016",
+              "isActive": true,
+              "productPrice": 21,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "UNKNOWN",
+              "observedAt": "2026-10-09T20:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://www.shoppersdrugmart.ca/avene-eau-thermale/p/BB_673914010016?variantCode=673914010016",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T20:00:00.000Z",
+                "verifiedAt": "2026-10-09T20:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 150 ml variant showed an effective price of CA$21.00; stock state was not exposed reliably."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "Heimish",
+        "slug": "heimish",
+        "originMarket": "KR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "Bulgarian Rose Water Hydrogel Eye Patch",
+        "slug": "heimish-bulgarian-rose-water-hydrogel-eye-patch",
+        "categorySlug": "eye-mask",
+        "originMarket": "KR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://ca.iherb.com/pr/heimish-hydrogel-eye-patch-bulgarian-rose-water-60-patches/84588",
+          "sourceType": "RETAILER",
+          "retrievedAt": "2026-10-09T20:00:00.000Z",
+          "verifiedAt": "2026-10-09T20:00:00.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Exact 60-patch listing; UPC 8809481760883."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "60 patches",
+          "normalizedQuantity": 60,
+          "normalizedUnit": "count",
+          "gtin": "8809481760883",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://ca.iherb.com/pr/heimish-hydrogel-eye-patch-bulgarian-rose-water-60-patches/84588",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-09T20:00:00.000Z",
+            "verifiedAt": "2026-10-09T20:00:00.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact 60-patch listing; UPC 8809481760883."
+          },
+          "images": [
+            {
+              "url": "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/hei/hei76088/g/86.jpg",
+              "altText": "Heimish Bulgarian Rose Water Hydrogel Eye Patch 60 patches",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "iHerb Canada",
+              "sourcePageUrl": "https://ca.iherb.com/pr/heimish-hydrogel-eye-patch-bulgarian-rose-water-60-patches/84588",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://ca.iherb.com/pr/heimish-hydrogel-eye-patch-bulgarian-rose-water-60-patches/84588",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T20:00:00.000Z",
+                "verifiedAt": "2026-10-09T20:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact-size representative image for Heimish Bulgarian Rose Water Hydrogel Eye Patch 60 patches."
+              }
+            }
+          ],
+          "benchmarks": [],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:iherb-ca",
+                "name": "iHerb Canada",
+                "country": "US",
+                "websiteUrl": "https://ca.iherb.com/"
+              },
+              "externalListingId": "84588",
+              "listingUrl": "https://ca.iherb.com/pr/heimish-hydrogel-eye-patch-bulgarian-rose-water-60-patches/84588",
+              "isActive": true,
+              "productPrice": 17.77,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "LOW_STOCK",
+              "observedAt": "2026-10-09T20:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://ca.iherb.com/pr/heimish-hydrogel-eye-patch-bulgarian-rose-water-60-patches/84588",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T20:00:00.000Z",
+                "verifiedAt": "2026-10-09T20:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 60-patch listing showed CA$17.77 and only 8 left."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "Petitfee",
+        "slug": "petitfee",
+        "originMarket": "KR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "Black Pearl & Gold Hydrogel Eye Patch",
+        "slug": "petitfee-black-pearl-gold-hydrogel-eye-patch",
+        "categorySlug": "eye-mask",
+        "originMarket": "KR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://ca.iherb.com/pr/petitfee-black-pearl-gold-hydrogel-eye-patch-60-pieces-2-96-oz-84-g/69148",
+          "sourceType": "RETAILER",
+          "retrievedAt": "2026-10-09T20:00:00.000Z",
+          "verifiedAt": "2026-10-09T20:00:00.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Exact 60-patch / 84 g listing; UPC 8809239801820."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "60 patches",
+          "normalizedQuantity": 60,
+          "normalizedUnit": "count",
+          "gtin": "8809239801820",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://ca.iherb.com/pr/petitfee-black-pearl-gold-hydrogel-eye-patch-60-pieces-2-96-oz-84-g/69148",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-09T20:00:00.000Z",
+            "verifiedAt": "2026-10-09T20:00:00.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact 60-patch / 84 g listing; UPC 8809239801820."
+          },
+          "images": [
+            {
+              "url": "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/ptt/ptt80182/g/75.jpg",
+              "altText": "Petitfee Black Pearl & Gold Hydrogel Eye Patch 60 patches",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "iHerb Canada",
+              "sourcePageUrl": "https://ca.iherb.com/pr/petitfee-black-pearl-gold-hydrogel-eye-patch-60-pieces-2-96-oz-84-g/69148",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://ca.iherb.com/pr/petitfee-black-pearl-gold-hydrogel-eye-patch-60-pieces-2-96-oz-84-g/69148",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T20:00:00.000Z",
+                "verifiedAt": "2026-10-09T20:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact-size representative image for Petitfee Black Pearl & Gold Hydrogel Eye Patch 60 patches."
+              }
+            }
+          ],
+          "benchmarks": [],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:iherb-ca",
+                "name": "iHerb Canada",
+                "country": "US",
+                "websiteUrl": "https://ca.iherb.com/"
+              },
+              "externalListingId": "69148",
+              "listingUrl": "https://ca.iherb.com/pr/petitfee-black-pearl-gold-hydrogel-eye-patch-60-pieces-2-96-oz-84-g/69148",
+              "isActive": true,
+              "productPrice": 16.2,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T20:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://ca.iherb.com/pr/petitfee-black-pearl-gold-hydrogel-eye-patch-60-pieces-2-96-oz-84-g/69148",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T20:00:00.000Z",
+                "verifiedAt": "2026-10-09T20:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 60-patch listing showed CA$16.20 and in stock."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "SKIN1004",
+        "slug": "skin1004",
+        "originMarket": "KR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "Madagascar Centella Poremizing Quick Clay Stick Mask",
+        "slug": "skin1004-madagascar-centella-poremizing-quick-clay-stick-mask",
+        "categorySlug": "wash-off-mask",
+        "originMarket": "KR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://ca.iherb.com/pr/skin1004-madagascar-centella-poremizing-quick-clay-stick-beauty-mask-0-95-oz-27-g/141200",
+          "sourceType": "RETAILER",
+          "retrievedAt": "2026-10-09T20:00:00.000Z",
+          "verifiedAt": "2026-10-09T20:00:00.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Current iHerb and Kiyoko listings both identify the exact UPC 8809913830085 product as 27 g, resolving the packet's older 26 g metadata conflict in favor of the current package title."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "27 g",
+          "normalizedQuantity": 27,
+          "normalizedUnit": "g",
+          "gtin": "8809913830085",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://ca.iherb.com/pr/skin1004-madagascar-centella-poremizing-quick-clay-stick-beauty-mask-0-95-oz-27-g/141200",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-09T20:00:00.000Z",
+            "verifiedAt": "2026-10-09T20:00:00.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Current iHerb and Kiyoko listings both identify the exact UPC 8809913830085 product as 27 g, resolving the packet's older 26 g metadata conflict in favor of the current package title."
+          },
+          "images": [
+            {
+              "url": "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/sio/sio83008/g/19.jpg",
+              "altText": "SKIN1004 Madagascar Centella Poremizing Quick Clay Stick Mask 27 g",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "iHerb Canada",
+              "sourcePageUrl": "https://ca.iherb.com/pr/skin1004-madagascar-centella-poremizing-quick-clay-stick-beauty-mask-0-95-oz-27-g/141200",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://ca.iherb.com/pr/skin1004-madagascar-centella-poremizing-quick-clay-stick-beauty-mask-0-95-oz-27-g/141200",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T20:00:00.000Z",
+                "verifiedAt": "2026-10-09T20:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact-size representative image for SKIN1004 Madagascar Centella Poremizing Quick Clay Stick Mask 27 g."
+              }
+            }
+          ],
+          "benchmarks": [],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:iherb-ca",
+                "name": "iHerb Canada",
+                "country": "US",
+                "websiteUrl": "https://ca.iherb.com/"
+              },
+              "externalListingId": "141200",
+              "listingUrl": "https://ca.iherb.com/pr/skin1004-madagascar-centella-poremizing-quick-clay-stick-beauty-mask-0-95-oz-27-g/141200",
+              "isActive": true,
+              "productPrice": 29.95,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T20:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://ca.iherb.com/pr/skin1004-madagascar-centella-poremizing-quick-clay-stick-beauty-mask-0-95-oz-27-g/141200",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T20:00:00.000Z",
+                "verifiedAt": "2026-10-09T20:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 27 g / UPC 8809913830085 listing showed CA$29.95 and in stock."
+              }
+            },
+            {
+              "retailer": {
+                "sourceKey": "retailer:kiyoko-ca",
+                "name": "Kiyoko Beauty",
+                "country": "CA",
+                "websiteUrl": "https://kiyoko.ca/"
+              },
+              "externalListingId": "8809913830085",
+              "listingUrl": "https://kiyoko.ca/en-ca/products/skin1004-madagascar-centella-poremizing-quick-clay-stick-mask-27g",
+              "isActive": true,
+              "productPrice": 25,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T20:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/products/skin1004-madagascar-centella-poremizing-quick-clay-stick-mask-27g",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T20:00:00.000Z",
+                "verifiedAt": "2026-10-09T20:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 27 g / UPC 8809913830085 Canadian listing showed CA$25.00 and in stock."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "SKIN1004",
+        "slug": "skin1004",
+        "originMarket": "KR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "Madagascar Centella Ampoule",
+        "slug": "skin1004-madagascar-centella-ampoule",
+        "categorySlug": "serum-ampoule",
+        "originMarket": "KR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://ca.iherb.com/pr/skin1004-madagascar-centella-ampoule-1-85-fl-oz-55-ml/104715",
+          "sourceType": "RETAILER",
+          "retrievedAt": "2026-10-09T20:00:00.000Z",
+          "verifiedAt": "2026-10-09T20:00:00.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Exact 55 ml listing; UPC 8809576260601."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "55 ml",
+          "normalizedQuantity": 55,
+          "normalizedUnit": "ml",
+          "gtin": "8809576260601",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://ca.iherb.com/pr/skin1004-madagascar-centella-ampoule-1-85-fl-oz-55-ml/104715",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-09T20:00:00.000Z",
+            "verifiedAt": "2026-10-09T20:00:00.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact 55 ml listing; UPC 8809576260601."
+          },
+          "images": [
+            {
+              "url": "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/sio/sio26060/g/57.jpg",
+              "altText": "SKIN1004 Madagascar Centella Ampoule 55 ml",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "iHerb Canada",
+              "sourcePageUrl": "https://ca.iherb.com/pr/skin1004-madagascar-centella-ampoule-1-85-fl-oz-55-ml/104715",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://ca.iherb.com/pr/skin1004-madagascar-centella-ampoule-1-85-fl-oz-55-ml/104715",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T20:00:00.000Z",
+                "verifiedAt": "2026-10-09T20:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact-size representative image for SKIN1004 Madagascar Centella Ampoule 55 ml."
+              }
+            }
+          ],
+          "benchmarks": [],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:iherb-ca",
+                "name": "iHerb Canada",
+                "country": "US",
+                "websiteUrl": "https://ca.iherb.com/"
+              },
+              "externalListingId": "104715",
+              "listingUrl": "https://ca.iherb.com/pr/skin1004-madagascar-centella-ampoule-1-85-fl-oz-55-ml/104715",
+              "isActive": true,
+              "productPrice": 22.82,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T20:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://ca.iherb.com/pr/skin1004-madagascar-centella-ampoule-1-85-fl-oz-55-ml/104715",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T20:00:00.000Z",
+                "verifiedAt": "2026-10-09T20:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 55 ml listing showed CA$22.82 and in stock."
+              }
+            },
+            {
+              "retailer": {
+                "sourceKey": "retailer:kiyoko-ca",
+                "name": "Kiyoko Beauty",
+                "country": "CA",
+                "websiteUrl": "https://kiyoko.ca/"
+              },
+              "externalListingId": "45330507202796",
+              "listingUrl": "https://kiyoko.ca/en-ca/products/skin1004-madagascar-centella-ampoule-55ml-100ml?variant=45330507202796",
+              "isActive": true,
+              "productPrice": 14.99,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T20:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/products/skin1004-madagascar-centella-ampoule-55ml-100ml?variant=45330507202796",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T20:00:00.000Z",
+                "verifiedAt": "2026-10-09T20:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Selected 55 ml Canadian variant showed CA$14.99 and in stock; product image is sourced from the exact-size iHerb listing to avoid the retailer page's 100 ml hero image."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "SKIN1004",
+        "slug": "skin1004",
+        "originMarket": "KR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "Madagascar Centella Ampoule Foam",
+        "slug": "skin1004-madagascar-centella-ampoule-foam",
+        "categorySlug": "facial-cleanser",
+        "originMarket": "KR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://kiyoko.ca/en-ca/products/skin1004-madagascar-centella-ampoule-foam-125ml",
+          "sourceType": "RETAILER",
+          "retrievedAt": "2026-10-09T20:00:00.000Z",
+          "verifiedAt": "2026-10-09T20:00:00.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Exact 125 ml Canadian listing; retailer SKU/GTIN 8809576261127."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "125 ml",
+          "normalizedQuantity": 125,
+          "normalizedUnit": "ml",
+          "gtin": "8809576261127",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://kiyoko.ca/en-ca/products/skin1004-madagascar-centella-ampoule-foam-125ml",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-09T20:00:00.000Z",
+            "verifiedAt": "2026-10-09T20:00:00.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact 125 ml Canadian listing; retailer SKU/GTIN 8809576261127."
+          },
+          "images": [
+            {
+              "url": "https://cdn.shopify.com/s/files/1/0515/4589/9157/files/Product_Images_70_3de7e486-8ec6-4805-8722-62b419127ca6.png?v=1791386324",
+              "altText": "SKIN1004 Madagascar Centella Ampoule Foam 125 ml",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "Kiyoko Beauty",
+              "sourcePageUrl": "https://kiyoko.ca/en-ca/products/skin1004-madagascar-centella-ampoule-foam-125ml",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/products/skin1004-madagascar-centella-ampoule-foam-125ml",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T20:00:00.000Z",
+                "verifiedAt": "2026-10-09T20:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact-size representative image for SKIN1004 Madagascar Centella Ampoule Foam 125 ml."
+              }
+            }
+          ],
+          "benchmarks": [],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:kiyoko-ca",
+                "name": "Kiyoko Beauty",
+                "country": "CA",
+                "websiteUrl": "https://kiyoko.ca/"
+              },
+              "externalListingId": "43819065934060",
+              "listingUrl": "https://kiyoko.ca/en-ca/products/skin1004-madagascar-centella-ampoule-foam-125ml",
+              "isActive": true,
+              "productPrice": 22,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T20:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/products/skin1004-madagascar-centella-ampoule-foam-125ml",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T20:00:00.000Z",
+                "verifiedAt": "2026-10-09T20:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 125 ml Canadian listing showed CA$22.00 and in stock."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "SKIN1004",
+        "slug": "skin1004",
+        "originMarket": "KR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "Madagascar Centella Toning Toner",
+        "slug": "skin1004-madagascar-centella-toning-toner",
+        "categorySlug": "toner",
+        "originMarket": "KR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://ca.iherb.com/pr/skin1004-madagascar-centella-toning-toner-7-10-fl-oz-210-ml/108346",
+          "sourceType": "RETAILER",
+          "retrievedAt": "2026-10-09T20:00:00.000Z",
+          "verifiedAt": "2026-10-09T20:00:00.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Exact 210 ml listing; UPC 8809576261141."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "210 ml",
+          "normalizedQuantity": 210,
+          "normalizedUnit": "ml",
+          "gtin": "8809576261141",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://ca.iherb.com/pr/skin1004-madagascar-centella-toning-toner-7-10-fl-oz-210-ml/108346",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-09T20:00:00.000Z",
+            "verifiedAt": "2026-10-09T20:00:00.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact 210 ml listing; UPC 8809576261141."
+          },
+          "images": [
+            {
+              "url": "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/sio/sio26114/g/29.jpg",
+              "altText": "SKIN1004 Madagascar Centella Toning Toner 210 ml",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "iHerb Canada",
+              "sourcePageUrl": "https://ca.iherb.com/pr/skin1004-madagascar-centella-toning-toner-7-10-fl-oz-210-ml/108346",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://ca.iherb.com/pr/skin1004-madagascar-centella-toning-toner-7-10-fl-oz-210-ml/108346",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T20:00:00.000Z",
+                "verifiedAt": "2026-10-09T20:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact-size representative image for SKIN1004 Madagascar Centella Toning Toner 210 ml."
+              }
+            }
+          ],
+          "benchmarks": [],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:iherb-ca",
+                "name": "iHerb Canada",
+                "country": "US",
+                "websiteUrl": "https://ca.iherb.com/"
+              },
+              "externalListingId": "108346",
+              "listingUrl": "https://ca.iherb.com/pr/skin1004-madagascar-centella-toning-toner-7-10-fl-oz-210-ml/108346",
+              "isActive": true,
+              "productPrice": 27.35,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T20:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://ca.iherb.com/pr/skin1004-madagascar-centella-toning-toner-7-10-fl-oz-210-ml/108346",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T20:00:00.000Z",
+                "verifiedAt": "2026-10-09T20:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 210 ml listing showed CA$27.35 and in stock."
+              }
+            },
+            {
+              "retailer": {
+                "sourceKey": "retailer:kiyoko-ca",
+                "name": "Kiyoko Beauty",
+                "country": "CA",
+                "websiteUrl": "https://kiyoko.ca/"
+              },
+              "externalListingId": "46128687743212",
+              "listingUrl": "https://kiyoko.ca/en-ca/products/skin1004-madagascar-centella-toning-toner-210ml?variant=46128687743212",
+              "isActive": true,
+              "productPrice": 23,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T20:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/products/skin1004-madagascar-centella-toning-toner-210ml?variant=46128687743212",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T20:00:00.000Z",
+                "verifiedAt": "2026-10-09T20:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Selected 210 ml Canadian variant showed CA$23.00 and in stock; image is sourced from the exact-size iHerb listing."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "SKIN1004",
+        "slug": "skin1004",
+        "originMarket": "KR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "Madagascar Centella Probio-Cica Intensive Ampoule",
+        "slug": "skin1004-madagascar-centella-probio-cica-intensive-ampoule",
+        "categorySlug": "serum-ampoule",
+        "originMarket": "KR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://ca.iherb.com/pr/skin1004-madagascar-centella-probio-cica-intensive-ampoule-1-69-fl-oz-50-ml/122910",
+          "sourceType": "RETAILER",
+          "retrievedAt": "2026-10-09T20:00:00.000Z",
+          "verifiedAt": "2026-10-09T20:00:00.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Exact 50 ml listing; UPC 8809576261752."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "50 ml",
+          "normalizedQuantity": 50,
+          "normalizedUnit": "ml",
+          "gtin": "8809576261752",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://ca.iherb.com/pr/skin1004-madagascar-centella-probio-cica-intensive-ampoule-1-69-fl-oz-50-ml/122910",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-09T20:00:00.000Z",
+            "verifiedAt": "2026-10-09T20:00:00.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact 50 ml listing; UPC 8809576261752."
+          },
+          "images": [
+            {
+              "url": "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/sio/sio26175/g/50.jpg",
+              "altText": "SKIN1004 Madagascar Centella Probio-Cica Intensive Ampoule 50 ml",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "iHerb Canada",
+              "sourcePageUrl": "https://ca.iherb.com/pr/skin1004-madagascar-centella-probio-cica-intensive-ampoule-1-69-fl-oz-50-ml/122910",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://ca.iherb.com/pr/skin1004-madagascar-centella-probio-cica-intensive-ampoule-1-69-fl-oz-50-ml/122910",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T20:00:00.000Z",
+                "verifiedAt": "2026-10-09T20:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact-size representative image for SKIN1004 Madagascar Centella Probio-Cica Intensive Ampoule 50 ml."
+              }
+            }
+          ],
+          "benchmarks": [],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:iherb-ca",
+                "name": "iHerb Canada",
+                "country": "US",
+                "websiteUrl": "https://ca.iherb.com/"
+              },
+              "externalListingId": "122910",
+              "listingUrl": "https://ca.iherb.com/pr/skin1004-madagascar-centella-probio-cica-intensive-ampoule-1-69-fl-oz-50-ml/122910",
+              "isActive": true,
+              "productPrice": 33.53,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T20:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://ca.iherb.com/pr/skin1004-madagascar-centella-probio-cica-intensive-ampoule-1-69-fl-oz-50-ml/122910",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T20:00:00.000Z",
+                "verifiedAt": "2026-10-09T20:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 50 ml listing showed CA$33.53 and in stock."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "PURITO",
+        "slug": "purito",
+        "originMarket": "KR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "Oat In Calming Gel Cream",
+        "slug": "purito-oat-in-calming-gel-cream",
+        "categorySlug": "gel-moisturizer",
+        "originMarket": "KR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://ca.iherb.com/pr/purito-oat-in-calming-gel-cream-3-38-fl-oz-100-ml/115198",
+          "sourceType": "RETAILER",
+          "retrievedAt": "2026-10-09T20:00:00.000Z",
+          "verifiedAt": "2026-10-09T20:00:00.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Exact 100 ml listing; UPC 8809563101054."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "100 ml",
+          "normalizedQuantity": 100,
+          "normalizedUnit": "ml",
+          "gtin": "8809563101054",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://ca.iherb.com/pr/purito-oat-in-calming-gel-cream-3-38-fl-oz-100-ml/115198",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-09T20:00:00.000Z",
+            "verifiedAt": "2026-10-09T20:00:00.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact 100 ml listing; UPC 8809563101054."
+          },
+          "images": [
+            {
+              "url": "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/pit/pit10105/g/56.jpg",
+              "altText": "PURITO Oat In Calming Gel Cream 100 ml",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "iHerb Canada",
+              "sourcePageUrl": "https://ca.iherb.com/pr/purito-oat-in-calming-gel-cream-3-38-fl-oz-100-ml/115198",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://ca.iherb.com/pr/purito-oat-in-calming-gel-cream-3-38-fl-oz-100-ml/115198",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T20:00:00.000Z",
+                "verifiedAt": "2026-10-09T20:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact-size representative image for PURITO Oat In Calming Gel Cream 100 ml."
+              }
+            }
+          ],
+          "benchmarks": [],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:iherb-ca",
+                "name": "iHerb Canada",
+                "country": "US",
+                "websiteUrl": "https://ca.iherb.com/"
+              },
+              "externalListingId": "115198",
+              "listingUrl": "https://ca.iherb.com/pr/purito-oat-in-calming-gel-cream-3-38-fl-oz-100-ml/115198",
+              "isActive": true,
+              "productPrice": 22.16,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "OUT_OF_STOCK",
+              "observedAt": "2026-10-09T20:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://ca.iherb.com/pr/purito-oat-in-calming-gel-cream-3-38-fl-oz-100-ml/115198",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T20:00:00.000Z",
+                "verifiedAt": "2026-10-09T20:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 100 ml listing showed CA$22.16 and out of stock."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "Abib",
+        "slug": "abib",
+        "originMarket": "KR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "Glutathiosome Dark Spot Serum Vita Drop",
+        "slug": "abib-glutathiosome-dark-spot-serum-vita-drop",
+        "categorySlug": "serum-ampoule",
+        "originMarket": "KR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://ca.iherb.com/pr/abib-glutathiosome-dark-spot-serum-vita-drop-1-69-fl-oz-50-ml/154861",
+          "sourceType": "RETAILER",
+          "retrievedAt": "2026-10-09T20:00:00.000Z",
+          "verifiedAt": "2026-10-09T20:00:00.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Exact 50 ml listing; UPC 8809562558514."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "50 ml",
+          "normalizedQuantity": 50,
+          "normalizedUnit": "ml",
+          "gtin": "8809562558514",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://ca.iherb.com/pr/abib-glutathiosome-dark-spot-serum-vita-drop-1-69-fl-oz-50-ml/154861",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-09T20:00:00.000Z",
+            "verifiedAt": "2026-10-09T20:00:00.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact 50 ml listing; UPC 8809562558514."
+          },
+          "images": [
+            {
+              "url": "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/abb/abb55851/g/17.jpg",
+              "altText": "Abib Glutathiosome Dark Spot Serum Vita Drop 50 ml",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "iHerb Canada",
+              "sourcePageUrl": "https://ca.iherb.com/pr/abib-glutathiosome-dark-spot-serum-vita-drop-1-69-fl-oz-50-ml/154861",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://ca.iherb.com/pr/abib-glutathiosome-dark-spot-serum-vita-drop-1-69-fl-oz-50-ml/154861",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T20:00:00.000Z",
+                "verifiedAt": "2026-10-09T20:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact-size representative image for Abib Glutathiosome Dark Spot Serum Vita Drop 50 ml."
+              }
+            }
+          ],
+          "benchmarks": [],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:iherb-ca",
+                "name": "iHerb Canada",
+                "country": "US",
+                "websiteUrl": "https://ca.iherb.com/"
+              },
+              "externalListingId": "154861",
+              "listingUrl": "https://ca.iherb.com/pr/abib-glutathiosome-dark-spot-serum-vita-drop-1-69-fl-oz-50-ml/154861",
+              "isActive": true,
+              "productPrice": 28.44,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T20:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://ca.iherb.com/pr/abib-glutathiosome-dark-spot-serum-vita-drop-1-69-fl-oz-50-ml/154861",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T20:00:00.000Z",
+                "verifiedAt": "2026-10-09T20:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 50 ml listing showed CA$28.44 and in stock."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "La Roche-Posay",
+        "slug": "la-roche-posay",
+        "originMarket": "FR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "Toleriane Micellar Water Sensitive Skin",
+        "slug": "la-roche-posay-toleriane-micellar-water-sensitive-skin",
+        "categorySlug": "makeup-remover",
+        "originMarket": "FR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://www.laroche-posay.ca/en_CA/micellar-water-ultra-sensitive-skin/3337872411595.html",
+          "sourceType": "RETAILER",
+          "retrievedAt": "2026-10-09T20:00:00.000Z",
+          "verifiedAt": "2026-10-09T20:00:00.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Official Canadian manufacturer listing identifies the 400 ml product and GTIN 3337872411595; current shopper-facing name is Toleriane Micellar Water Sensitive Skin."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "400 ml",
+          "normalizedQuantity": 400,
+          "normalizedUnit": "ml",
+          "gtin": "3337872411595",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://www.laroche-posay.ca/en_CA/micellar-water-ultra-sensitive-skin/3337872411595.html",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-09T20:00:00.000Z",
+            "verifiedAt": "2026-10-09T20:00:00.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Official Canadian manufacturer listing identifies the 400 ml product and GTIN 3337872411595; current shopper-facing name is Toleriane Micellar Water Sensitive Skin."
+          },
+          "images": [
+            {
+              "url": "https://www.laroche-posay.ca/dw/image/v2/AATL_PRD/on/demandware.static/-/Sites-larocheposay-master-catalog/default/dw3b4c34d6/2022/3337872411595/3337872411595_1.jpg",
+              "altText": "La Roche-Posay Toleriane Micellar Water Sensitive Skin 400 ml",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "La Roche-Posay Canada",
+              "sourcePageUrl": "https://www.laroche-posay.ca/en_CA/micellar-water-ultra-sensitive-skin/3337872411595.html",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://www.laroche-posay.ca/en_CA/micellar-water-ultra-sensitive-skin/3337872411595.html",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T20:00:00.000Z",
+                "verifiedAt": "2026-10-09T20:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact-size representative image for La Roche-Posay Toleriane Micellar Water Sensitive Skin 400 ml."
+              }
+            }
+          ],
+          "benchmarks": [
+            {
+              "market": "CA",
+              "type": "RETAIL_PRICE",
+              "amount": 27.95,
+              "nativeCurrency": "CAD",
+              "sourceKey": "brand:la-roche-posay-ca",
+              "sourceDisplayName": "La Roche-Posay Canada",
+              "sourceUrl": "https://www.laroche-posay.ca/en_CA/micellar-water-ultra-sensitive-skin/3337872411595.html",
+              "observedAt": "2026-10-09T20:00:00.000Z",
+              "verifiedAt": "2026-10-09T20:00:00.000Z",
+              "provenance": {
+                "sourceUrl": "https://www.laroche-posay.ca/en_CA/micellar-water-ultra-sensitive-skin/3337872411595.html",
+                "sourceType": "MANUFACTURER",
+                "retrievedAt": "2026-10-09T20:00:00.000Z",
+                "verifiedAt": "2026-10-09T20:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Official Canadian manufacturer retail price for the exact 400 ml product; treated as Retail Price, not MSRP."
+              }
+            }
+          ],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:la-roche-posay-ca",
+                "name": "La Roche-Posay Canada",
+                "country": "CA",
+                "websiteUrl": "https://www.laroche-posay.ca/"
+              },
+              "externalListingId": "3337872411595",
+              "listingUrl": "https://www.laroche-posay.ca/en_CA/micellar-water-ultra-sensitive-skin/3337872411595.html",
+              "isActive": true,
+              "productPrice": 27.95,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T20:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://www.laroche-posay.ca/en_CA/micellar-water-ultra-sensitive-skin/3337872411595.html",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T20:00:00.000Z",
+                "verifiedAt": "2026-10-09T20:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Official exact 400 ml Canadian listing showed CA$27.95 with Add to Cart available."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "Caudalie",
+        "slug": "caudalie",
+        "originMarket": "FR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "Beauty Elixir",
+        "slug": "caudalie-beauty-elixir",
+        "categorySlug": "facial-mist",
+        "originMarket": "FR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://www.sephora.com/ca/en/product/caudalie-beauty-elixir-face-mist-P481817",
+          "sourceType": "RETAILER",
+          "retrievedAt": "2026-10-09T20:00:00.000Z",
+          "verifiedAt": "2026-10-09T20:00:00.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Exact Sephora Canada product group with selected standard 3.3 oz / 100 ml variant (item 2534485)."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "100 ml",
+          "normalizedQuantity": 100,
+          "normalizedUnit": "ml",
+          "gtin": null,
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://www.sephora.com/ca/en/product/caudalie-beauty-elixir-face-mist-P481817",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-09T20:00:00.000Z",
+            "verifiedAt": "2026-10-09T20:00:00.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact Sephora Canada product group with selected standard 3.3 oz / 100 ml variant (item 2534485)."
+          },
+          "images": [
+            {
+              "url": "https://www.sephora.com/productimages/sku/s2534485-main-hero.jpg",
+              "altText": "Caudalie Beauty Elixir 100 ml",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "Sephora Canada",
+              "sourcePageUrl": "https://www.sephora.com/ca/en/product/caudalie-beauty-elixir-face-mist-P481817",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://www.sephora.com/ca/en/product/caudalie-beauty-elixir-face-mist-P481817",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T20:00:00.000Z",
+                "verifiedAt": "2026-10-09T20:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact-size representative image for Caudalie Beauty Elixir 100 ml."
+              }
+            }
+          ],
+          "benchmarks": [],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:sephora-ca",
+                "name": "Sephora Canada",
+                "country": "CA",
+                "websiteUrl": "https://www.sephora.com/ca/en"
+              },
+              "externalListingId": "2534485",
+              "listingUrl": "https://www.sephora.com/ca/en/product/caudalie-beauty-elixir-face-mist-P481817?skuId=2534485",
+              "isActive": true,
+              "productPrice": 66,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T20:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://www.sephora.com/ca/en/product/caudalie-beauty-elixir-face-mist-P481817?skuId=2534485",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T20:00:00.000Z",
+                "verifiedAt": "2026-10-09T20:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 100 ml standard-size variant (item 2534485) showed CA$66.00 and in stock."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "SKIN1004",
+        "slug": "skin1004",
+        "originMarket": "KR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "Madagascar Centella Hyalu-Cica Brightening Toner",
+        "slug": "skin1004-madagascar-centella-hyalu-cica-brightening-toner",
+        "categorySlug": "toner",
+        "originMarket": "KR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://ca.iherb.com/pr/skin1004-madagascar-centella-hyalu-cica-brightening-toner-7-10-fl-oz-210-ml/119401",
+          "sourceType": "RETAILER",
+          "retrievedAt": "2026-10-09T20:00:00.000Z",
+          "verifiedAt": "2026-10-09T20:00:00.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Exact 210 ml listing; UPC 8809576260700; distinct from Madagascar Centella Toning Toner."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "210 ml",
+          "normalizedQuantity": 210,
+          "normalizedUnit": "ml",
+          "gtin": "8809576260700",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://ca.iherb.com/pr/skin1004-madagascar-centella-hyalu-cica-brightening-toner-7-10-fl-oz-210-ml/119401",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-09T20:00:00.000Z",
+            "verifiedAt": "2026-10-09T20:00:00.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact 210 ml listing; UPC 8809576260700; distinct from Madagascar Centella Toning Toner."
+          },
+          "images": [
+            {
+              "url": "https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/sio/sio26070/g/35.jpg",
+              "altText": "SKIN1004 Madagascar Centella Hyalu-Cica Brightening Toner 210 ml",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "iHerb Canada",
+              "sourcePageUrl": "https://ca.iherb.com/pr/skin1004-madagascar-centella-hyalu-cica-brightening-toner-7-10-fl-oz-210-ml/119401",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://ca.iherb.com/pr/skin1004-madagascar-centella-hyalu-cica-brightening-toner-7-10-fl-oz-210-ml/119401",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T20:00:00.000Z",
+                "verifiedAt": "2026-10-09T20:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact-size representative image for SKIN1004 Madagascar Centella Hyalu-Cica Brightening Toner 210 ml."
+              }
+            }
+          ],
+          "benchmarks": [],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:iherb-ca",
+                "name": "iHerb Canada",
+                "country": "US",
+                "websiteUrl": "https://ca.iherb.com/"
+              },
+              "externalListingId": "119401",
+              "listingUrl": "https://ca.iherb.com/pr/skin1004-madagascar-centella-hyalu-cica-brightening-toner-7-10-fl-oz-210-ml/119401",
+              "isActive": true,
+              "productPrice": 29.73,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T20:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://ca.iherb.com/pr/skin1004-madagascar-centella-hyalu-cica-brightening-toner-7-10-fl-oz-210-ml/119401",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T20:00:00.000Z",
+                "verifiedAt": "2026-10-09T20:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 210 ml listing showed CA$29.73 and in stock."
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
