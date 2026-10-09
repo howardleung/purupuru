@@ -1,0 +1,1796 @@
+{
+  "schemaVersion": "1.0",
+  "idempotencyKey": "chatgpt-work:category-expansion:2026-10-09:03",
+  "source": {
+    "type": "CHATGPT_WORK",
+    "label": "PuruPuru category breadth expansion — 13 products",
+    "url": null,
+    "retrievedAt": "2026-10-08T23:54:28.000Z",
+    "notes": "Curated from official manufacturer pages and current Canadian-accessible retailer listings under the simplified Brand + Product Name + Exact Size identity policy. Staging only; human review is required before commit."
+  },
+  "products": [
+    {
+      "brand": {
+        "name": "COSRX",
+        "slug": "cosrx",
+        "originMarket": "KR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "Low pH Good Morning Gel Cleanser",
+        "slug": "cosrx-low-ph-good-morning-gel-cleanser",
+        "categorySlug": "facial-cleanser",
+        "originMarket": "KR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://www.cosrx.com/products/low-ph-good-morning-gel-cleanser",
+          "sourceType": "MANUFACTURER",
+          "retrievedAt": "2026-10-08T23:54:28.000Z",
+          "verifiedAt": "2026-10-08T23:54:28.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Source establishes COSRX Low pH Good Morning Gel Cleanser in the exact 150 ml size."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "150 ml",
+          "normalizedQuantity": 150,
+          "normalizedUnit": "ml",
+          "gtin": "8809416470511",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://kiyoko.ca/en-ca/collections/water-based-cleansers/products/cosrx-low-ph-good-morning-gel-cleanser-150ml?variant=42714696319212",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-08T23:54:28.000Z",
+            "verifiedAt": "2026-10-08T23:54:28.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact Kiyoko Beauty listing establishes the 150 ml variant and barcode 8809416470511."
+          },
+          "images": [
+            {
+              "url": "https://cdn.shopify.com/s/files/1/0515/4589/9157/files/COSRX_Low_pH_Good_Morning_Gel_Cleanser__150ml_-removebg-preview.png?v=1766170435",
+              "altText": "COSRX Low pH Good Morning Gel Cleanser 150 ml",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "Kiyoko Beauty",
+              "sourcePageUrl": "https://kiyoko.ca/en-ca/collections/water-based-cleansers/products/cosrx-low-ph-good-morning-gel-cleanser-150ml?variant=42714696319212",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/collections/water-based-cleansers/products/cosrx-low-ph-good-morning-gel-cleanser-150ml?variant=42714696319212",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Primary image is served by the exact Kiyoko Beauty product listing."
+              }
+            }
+          ],
+          "benchmarks": [
+            {
+              "market": "US",
+              "type": "RETAIL_PRICE",
+              "amount": 14,
+              "nativeCurrency": "USD",
+              "sourceKey": "brand:cosrx-us",
+              "sourceDisplayName": "COSRX official store",
+              "sourceUrl": "https://www.cosrx.com/products/low-ph-good-morning-gel-cleanser",
+              "observedAt": "2026-10-08T23:54:28.000Z",
+              "verifiedAt": "2026-10-08T23:54:28.000Z",
+              "provenance": {
+                "sourceUrl": "https://www.cosrx.com/products/low-ph-good-morning-gel-cleanser",
+                "sourceType": "MANUFACTURER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Official COSRX store lists the 150 ml product at US$14.00."
+              }
+            }
+          ],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:kiyoko-ca",
+                "name": "Kiyoko Beauty",
+                "country": "CA",
+                "websiteUrl": "https://kiyoko.ca"
+              },
+              "externalListingId": "42714696319212",
+              "listingUrl": "https://kiyoko.ca/en-ca/collections/water-based-cleansers/products/cosrx-low-ph-good-morning-gel-cleanser-150ml?variant=42714696319212",
+              "isActive": true,
+              "productPrice": 11.95,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-08T23:54:28.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/collections/water-based-cleansers/products/cosrx-low-ph-good-morning-gel-cleanser-150ml?variant=42714696319212",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 150 ml listing was available at CA$11.95."
+              }
+            },
+            {
+              "retailer": {
+                "sourceKey": "retailer:real-canadian-superstore-ca",
+                "name": "Real Canadian Superstore",
+                "country": "CA",
+                "websiteUrl": "https://www.realcanadiansuperstore.ca"
+              },
+              "externalListingId": "21690051_EA",
+              "listingUrl": "https://www.realcanadiansuperstore.ca/en/good-morning-gel-cleanser-low-ph/p/21690051_EA",
+              "isActive": true,
+              "productPrice": 12.59,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "LOW_STOCK",
+              "observedAt": "2026-10-08T23:54:28.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://www.realcanadiansuperstore.ca/en/good-morning-gel-cleanser-low-ph/p/21690051_EA",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 150 ml listing showed CA$12.59 and low stock; store-level availability can vary."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "Beauty of Joseon",
+        "slug": "beauty-of-joseon",
+        "originMarket": "KR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "Red Bean Water Gel",
+        "slug": "beauty-of-joseon-red-bean-water-gel",
+        "categorySlug": "gel-moisturizer",
+        "originMarket": "KR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://beautyofjoseon.com/products/red-bean-water-gel",
+          "sourceType": "MANUFACTURER",
+          "retrievedAt": "2026-10-08T23:54:28.000Z",
+          "verifiedAt": "2026-10-08T23:54:28.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Source establishes Beauty of Joseon Red Bean Water Gel in the exact 100 ml size."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "100 ml",
+          "normalizedQuantity": 100,
+          "normalizedUnit": "ml",
+          "gtin": "8809738316993",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://kiyoko.ca/en-ca/products/beauty-of-joseon-red-bean-water-gel-100ml?variant=43702050193644",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-08T23:54:28.000Z",
+            "verifiedAt": "2026-10-08T23:54:28.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact Kiyoko Beauty listing establishes the 100 ml variant and barcode 8809738316993."
+          },
+          "images": [
+            {
+              "url": "https://cdn.shopify.com/s/files/1/0515/4589/9157/files/Product_Images_64_0543a62f-f871-459e-95c3-2044715083e1.png?v=1769052653",
+              "altText": "Beauty of Joseon Red Bean Water Gel 100 ml",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "Kiyoko Beauty",
+              "sourcePageUrl": "https://kiyoko.ca/en-ca/products/beauty-of-joseon-red-bean-water-gel-100ml?variant=43702050193644",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/products/beauty-of-joseon-red-bean-water-gel-100ml?variant=43702050193644",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Primary image is served by the exact Kiyoko Beauty product listing."
+              }
+            }
+          ],
+          "benchmarks": [
+            {
+              "market": "US",
+              "type": "RETAIL_PRICE",
+              "amount": 18,
+              "nativeCurrency": "USD",
+              "sourceKey": "brand:beauty-of-joseon-us",
+              "sourceDisplayName": "Beauty of Joseon official store",
+              "sourceUrl": "https://beautyofjoseon.com/products/red-bean-water-gel",
+              "observedAt": "2026-10-08T23:54:28.000Z",
+              "verifiedAt": "2026-10-08T23:54:28.000Z",
+              "provenance": {
+                "sourceUrl": "https://beautyofjoseon.com/products/red-bean-water-gel",
+                "sourceType": "MANUFACTURER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Official Beauty of Joseon store lists the 100 ml product with an US$18.00 regular retail price."
+              }
+            }
+          ],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:kiyoko-ca",
+                "name": "Kiyoko Beauty",
+                "country": "CA",
+                "websiteUrl": "https://kiyoko.ca"
+              },
+              "externalListingId": "43702050193644",
+              "listingUrl": "https://kiyoko.ca/en-ca/products/beauty-of-joseon-red-bean-water-gel-100ml?variant=43702050193644",
+              "isActive": true,
+              "productPrice": 21.95,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-08T23:54:28.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/products/beauty-of-joseon-red-bean-water-gel-100ml?variant=43702050193644",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 100 ml listing was available at CA$21.95."
+              }
+            },
+            {
+              "retailer": {
+                "sourceKey": "retailer:asung-ca",
+                "name": "A-Sung",
+                "country": "CA",
+                "websiteUrl": "https://asung.ca"
+              },
+              "externalListingId": null,
+              "listingUrl": "https://asung.ca/products/beauty-of-joseon-red-bean-water-gel-100ml",
+              "isActive": true,
+              "productPrice": 17.39,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-08T23:54:28.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://asung.ca/products/beauty-of-joseon-red-bean-water-gel-100ml",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 100 ml listing showed CA$17.39, in stock, and barcode 8809738316993."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "COSRX",
+        "slug": "cosrx",
+        "originMarket": "KR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "Advanced Snail 92 All in One Cream",
+        "slug": "cosrx-advanced-snail-92-all-in-one-cream",
+        "categorySlug": "cream",
+        "originMarket": "KR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://www.cosrx.com/products/advanced-snail-92-all-in-one-cream",
+          "sourceType": "MANUFACTURER",
+          "retrievedAt": "2026-10-08T23:54:28.000Z",
+          "verifiedAt": "2026-10-08T23:54:28.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Source establishes COSRX Advanced Snail 92 All in One Cream in the exact 100 g size."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "100 g",
+          "normalizedQuantity": 100,
+          "normalizedUnit": "g",
+          "gtin": "8809416470016",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://kiyoko.ca/en-ca/products/cosrx-advanced-snail-92-all-in-one-cream-100g?variant=42677959033068",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-08T23:54:28.000Z",
+            "verifiedAt": "2026-10-08T23:54:28.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact Kiyoko Beauty listing establishes the 100 g variant and barcode 8809416470016."
+          },
+          "images": [
+            {
+              "url": "https://cdn.shopify.com/s/files/1/0515/4589/9157/files/Product_Images_22_45a10f95-cc83-4eea-8db7-8b6de01fb6a7.png?v=1791378765",
+              "altText": "COSRX Advanced Snail 92 All in One Cream 100 g",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "Kiyoko Beauty",
+              "sourcePageUrl": "https://kiyoko.ca/en-ca/products/cosrx-advanced-snail-92-all-in-one-cream-100g?variant=42677959033068",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/products/cosrx-advanced-snail-92-all-in-one-cream-100g?variant=42677959033068",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Primary image is served by the exact Kiyoko Beauty product listing."
+              }
+            }
+          ],
+          "benchmarks": [
+            {
+              "market": "US",
+              "type": "RETAIL_PRICE",
+              "amount": 26,
+              "nativeCurrency": "USD",
+              "sourceKey": "brand:cosrx-us",
+              "sourceDisplayName": "COSRX official store",
+              "sourceUrl": "https://www.cosrx.com/products/advanced-snail-92-all-in-one-cream",
+              "observedAt": "2026-10-08T23:54:28.000Z",
+              "verifiedAt": "2026-10-08T23:54:28.000Z",
+              "provenance": {
+                "sourceUrl": "https://www.cosrx.com/products/advanced-snail-92-all-in-one-cream",
+                "sourceType": "MANUFACTURER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Official COSRX store lists the 100 g jar at US$26.00."
+              }
+            }
+          ],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:kiyoko-ca",
+                "name": "Kiyoko Beauty",
+                "country": "CA",
+                "websiteUrl": "https://kiyoko.ca"
+              },
+              "externalListingId": "42677959033068",
+              "listingUrl": "https://kiyoko.ca/en-ca/products/cosrx-advanced-snail-92-all-in-one-cream-100g?variant=42677959033068",
+              "isActive": true,
+              "productPrice": 22.95,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-08T23:54:28.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/products/cosrx-advanced-snail-92-all-in-one-cream-100g?variant=42677959033068",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 100 g listing was available at CA$22.95."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "Beauty of Joseon",
+        "slug": "beauty-of-joseon",
+        "originMarket": "KR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "Dynasty Cream",
+        "slug": "beauty-of-joseon-dynasty-cream",
+        "categorySlug": "cream",
+        "originMarket": "KR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://beautyofjoseon.com/products/dynasty-cream",
+          "sourceType": "MANUFACTURER",
+          "retrievedAt": "2026-10-08T23:54:28.000Z",
+          "verifiedAt": "2026-10-08T23:54:28.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Source establishes Beauty of Joseon Dynasty Cream in the exact 50 ml size."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "50 ml",
+          "normalizedQuantity": 50,
+          "normalizedUnit": "ml",
+          "gtin": "8809525249565",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://kiyoko.ca/en-ca/products/beauty-of-joseon-dynasty-cream?variant=45367768350956",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-08T23:54:28.000Z",
+            "verifiedAt": "2026-10-08T23:54:28.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact Kiyoko Beauty listing establishes the 50 ml variant and barcode 8809525249565."
+          },
+          "images": [
+            {
+              "url": "https://cdn.shopify.com/s/files/1/0515/4589/9157/files/Product_Images_9_f37e1e49-b992-4f79-afde-1aed15df53e5.png?v=1791377316",
+              "altText": "Beauty of Joseon Dynasty Cream 50 ml",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "Kiyoko Beauty",
+              "sourcePageUrl": "https://kiyoko.ca/en-ca/products/beauty-of-joseon-dynasty-cream?variant=45367768350956",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/products/beauty-of-joseon-dynasty-cream?variant=45367768350956",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Primary image is served by the exact Kiyoko Beauty product listing."
+              }
+            }
+          ],
+          "benchmarks": [
+            {
+              "market": "US",
+              "type": "RETAIL_PRICE",
+              "amount": 24,
+              "nativeCurrency": "USD",
+              "sourceKey": "brand:beauty-of-joseon-us",
+              "sourceDisplayName": "Beauty of Joseon official store",
+              "sourceUrl": "https://beautyofjoseon.com/products/dynasty-cream",
+              "observedAt": "2026-10-08T23:54:28.000Z",
+              "verifiedAt": "2026-10-08T23:54:28.000Z",
+              "provenance": {
+                "sourceUrl": "https://beautyofjoseon.com/products/dynasty-cream",
+                "sourceType": "MANUFACTURER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Official Beauty of Joseon store lists the 50 ml product at US$24.00."
+              }
+            }
+          ],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:kiyoko-ca",
+                "name": "Kiyoko Beauty",
+                "country": "CA",
+                "websiteUrl": "https://kiyoko.ca"
+              },
+              "externalListingId": "45367768350956",
+              "listingUrl": "https://kiyoko.ca/en-ca/products/beauty-of-joseon-dynasty-cream?variant=45367768350956",
+              "isActive": true,
+              "productPrice": 24.95,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-08T23:54:28.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/products/beauty-of-joseon-dynasty-cream?variant=45367768350956",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 50 ml listing was available at CA$24.95."
+              }
+            },
+            {
+              "retailer": {
+                "sourceKey": "retailer:korean-shop-ca",
+                "name": "Korean Shop",
+                "country": "CA",
+                "websiteUrl": "https://koreanshop.ca"
+              },
+              "externalListingId": null,
+              "listingUrl": "https://koreanshop.ca/product/boj-dynasty-cream-50ml/",
+              "isActive": true,
+              "productPrice": 24.99,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-08T23:54:28.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://koreanshop.ca/product/boj-dynasty-cream-50ml/",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 50 ml listing showed CA$24.99 and 57 units in stock."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "Beauty of Joseon",
+        "slug": "beauty-of-joseon",
+        "originMarket": "KR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "Glow Serum: Propolis + Niacinamide",
+        "slug": "beauty-of-joseon-glow-serum-propolis-niacinamide",
+        "categorySlug": "serum-ampoule",
+        "originMarket": "KR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://beautyofjoseon.com/products/glow-serum-propolis-niacinamide",
+          "sourceType": "MANUFACTURER",
+          "retrievedAt": "2026-10-08T23:54:28.000Z",
+          "verifiedAt": "2026-10-08T23:54:28.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Source establishes Beauty of Joseon Glow Serum: Propolis + Niacinamide in the exact 30 ml size."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "30 ml",
+          "normalizedQuantity": 30,
+          "normalizedUnit": "ml",
+          "gtin": "8809657114960",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://kiyoko.ca/en-ca/products/beauty-of-joseon-glow-serum-propolis-niacinamide-30ml-1?variant=43309367558380",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-08T23:54:28.000Z",
+            "verifiedAt": "2026-10-08T23:54:28.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact Kiyoko Beauty listing establishes the 30 ml variant and barcode 8809657114960."
+          },
+          "images": [
+            {
+              "url": "https://cdn.shopify.com/s/files/1/0515/4589/9157/files/Product_Images_47_bdf0e9fa-7594-4599-ad12-08842e4d8ee7.png?v=1791381110",
+              "altText": "Beauty of Joseon Glow Serum: Propolis + Niacinamide 30 ml",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "Kiyoko Beauty",
+              "sourcePageUrl": "https://kiyoko.ca/en-ca/products/beauty-of-joseon-glow-serum-propolis-niacinamide-30ml-1?variant=43309367558380",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/products/beauty-of-joseon-glow-serum-propolis-niacinamide-30ml-1?variant=43309367558380",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Primary image is served by the exact Kiyoko Beauty product listing."
+              }
+            }
+          ],
+          "benchmarks": [
+            {
+              "market": "US",
+              "type": "RETAIL_PRICE",
+              "amount": 17,
+              "nativeCurrency": "USD",
+              "sourceKey": "brand:beauty-of-joseon-us",
+              "sourceDisplayName": "Beauty of Joseon official store",
+              "sourceUrl": "https://beautyofjoseon.com/products/glow-serum-propolis-niacinamide",
+              "observedAt": "2026-10-08T23:54:28.000Z",
+              "verifiedAt": "2026-10-08T23:54:28.000Z",
+              "provenance": {
+                "sourceUrl": "https://beautyofjoseon.com/products/glow-serum-propolis-niacinamide",
+                "sourceType": "MANUFACTURER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Official Beauty of Joseon store lists the 30 ml product with an US$17.00 regular retail price."
+              }
+            }
+          ],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:kiyoko-ca",
+                "name": "Kiyoko Beauty",
+                "country": "CA",
+                "websiteUrl": "https://kiyoko.ca"
+              },
+              "externalListingId": "43309367558380",
+              "listingUrl": "https://kiyoko.ca/en-ca/products/beauty-of-joseon-glow-serum-propolis-niacinamide-30ml-1?variant=43309367558380",
+              "isActive": true,
+              "productPrice": 19.95,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-08T23:54:28.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/products/beauty-of-joseon-glow-serum-propolis-niacinamide-30ml-1?variant=43309367558380",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 30 ml listing was available at CA$19.95."
+              }
+            },
+            {
+              "retailer": {
+                "sourceKey": "retailer:lamour-beauty-ca",
+                "name": "LAMOUR Beauty & Life",
+                "country": "CA",
+                "websiteUrl": "https://www.lamourlife.com"
+              },
+              "externalListingId": null,
+              "listingUrl": "https://www.lamourlife.com/products/beauty-of-joseon-glow-serum-30ml",
+              "isActive": true,
+              "productPrice": 22.99,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "LOW_STOCK",
+              "observedAt": "2026-10-08T23:54:28.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://www.lamourlife.com/products/beauty-of-joseon-glow-serum-30ml",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 30 ml listing showed CA$22.99 and low stock."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "Beauty of Joseon",
+        "slug": "beauty-of-joseon",
+        "originMarket": "KR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "Ground Rice and Honey Glow Mask",
+        "slug": "beauty-of-joseon-ground-rice-and-honey-glow-mask",
+        "categorySlug": "wash-off-mask",
+        "originMarket": "KR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://beautyofjoseon.com/products/ground-rice-and-honey-glow-mask",
+          "sourceType": "MANUFACTURER",
+          "retrievedAt": "2026-10-08T23:54:28.000Z",
+          "verifiedAt": "2026-10-08T23:54:28.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Source establishes Beauty of Joseon Ground Rice and Honey Glow Mask in the exact 150 ml size."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "150 ml",
+          "normalizedQuantity": 150,
+          "normalizedUnit": "ml",
+          "gtin": "8809968130246",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://kiyoko.ca/en-ca/collections/wash-off-masks/products/beauty-of-joseon-ground-rice-and-honey-glow-mask-150ml?variant=45420876660972",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-08T23:54:28.000Z",
+            "verifiedAt": "2026-10-08T23:54:28.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact Kiyoko Beauty listing establishes the 150 ml variant and barcode 8809968130246."
+          },
+          "images": [
+            {
+              "url": "https://cdn.shopify.com/s/files/1/0515/4589/9157/files/Beauty-of-Joseon-Ground-Rice-and-Honey-Glow-Mask-sentisenti.png?v=1725317604",
+              "altText": "Beauty of Joseon Ground Rice and Honey Glow Mask 150 ml",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "Kiyoko Beauty",
+              "sourcePageUrl": "https://kiyoko.ca/en-ca/collections/wash-off-masks/products/beauty-of-joseon-ground-rice-and-honey-glow-mask-150ml?variant=45420876660972",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/collections/wash-off-masks/products/beauty-of-joseon-ground-rice-and-honey-glow-mask-150ml?variant=45420876660972",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Primary image is served by the exact Kiyoko Beauty product listing."
+              }
+            }
+          ],
+          "benchmarks": [
+            {
+              "market": "US",
+              "type": "RETAIL_PRICE",
+              "amount": 18,
+              "nativeCurrency": "USD",
+              "sourceKey": "brand:beauty-of-joseon-us",
+              "sourceDisplayName": "Beauty of Joseon official store",
+              "sourceUrl": "https://beautyofjoseon.com/products/ground-rice-and-honey-glow-mask",
+              "observedAt": "2026-10-08T23:54:28.000Z",
+              "verifiedAt": "2026-10-08T23:54:28.000Z",
+              "provenance": {
+                "sourceUrl": "https://beautyofjoseon.com/products/ground-rice-and-honey-glow-mask",
+                "sourceType": "MANUFACTURER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Official Beauty of Joseon store lists the 150 ml product with an US$18.00 regular retail price."
+              }
+            }
+          ],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:kiyoko-ca",
+                "name": "Kiyoko Beauty",
+                "country": "CA",
+                "websiteUrl": "https://kiyoko.ca"
+              },
+              "externalListingId": "45420876660972",
+              "listingUrl": "https://kiyoko.ca/en-ca/collections/wash-off-masks/products/beauty-of-joseon-ground-rice-and-honey-glow-mask-150ml?variant=45420876660972",
+              "isActive": true,
+              "productPrice": 22.95,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-08T23:54:28.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/collections/wash-off-masks/products/beauty-of-joseon-ground-rice-and-honey-glow-mask-150ml?variant=45420876660972",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 150 ml listing was available at CA$22.95."
+              }
+            },
+            {
+              "retailer": {
+                "sourceKey": "retailer:lewkin-ca",
+                "name": "LEWKIN Canada",
+                "country": "CA",
+                "websiteUrl": "https://ca.lewkin.com"
+              },
+              "externalListingId": "268599",
+              "listingUrl": "https://ca.lewkin.com/products/ground-rice-and-honey-glow-mask-150ml",
+              "isActive": true,
+              "productPrice": 20.53,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-08T23:54:28.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://ca.lewkin.com/products/ground-rice-and-honey-glow-mask-150ml",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 150 ml listing showed CA$20.53 and was available to add to cart."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "Beauty of Joseon",
+        "slug": "beauty-of-joseon",
+        "originMarket": "KR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "Red Bean Refreshing Pore Mask",
+        "slug": "beauty-of-joseon-red-bean-refreshing-pore-mask",
+        "categorySlug": "wash-off-mask",
+        "originMarket": "KR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://beautyofjoseon.com/products/red-bean-refreshing-pore-mask",
+          "sourceType": "MANUFACTURER",
+          "retrievedAt": "2026-10-08T23:54:28.000Z",
+          "verifiedAt": "2026-10-08T23:54:28.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Source establishes Beauty of Joseon Red Bean Refreshing Pore Mask in the exact 140 ml size."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "140 ml",
+          "normalizedQuantity": 140,
+          "normalizedUnit": "ml",
+          "gtin": "8809738316986",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://kiyoko.ca/en-ca/collections/south-korea/products/beauty-of-joseon-red-bean-refreshing-pore-mask-140ml?variant=43552469582060",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-08T23:54:28.000Z",
+            "verifiedAt": "2026-10-08T23:54:28.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact Kiyoko Beauty listing establishes the 140 ml variant and barcode 8809738316986."
+          },
+          "images": [
+            {
+              "url": "https://cdn.shopify.com/s/files/1/0515/4589/9157/files/Beauty_of_Joseon_Red_Bean_Refreshing_Pore_Mask_140ml.png?v=1772989575",
+              "altText": "Beauty of Joseon Red Bean Refreshing Pore Mask 140 ml",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "Kiyoko Beauty",
+              "sourcePageUrl": "https://kiyoko.ca/en-ca/collections/south-korea/products/beauty-of-joseon-red-bean-refreshing-pore-mask-140ml?variant=43552469582060",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/collections/south-korea/products/beauty-of-joseon-red-bean-refreshing-pore-mask-140ml?variant=43552469582060",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Primary image is served by the exact Kiyoko Beauty product listing."
+              }
+            }
+          ],
+          "benchmarks": [],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:kiyoko-ca",
+                "name": "Kiyoko Beauty",
+                "country": "CA",
+                "websiteUrl": "https://kiyoko.ca"
+              },
+              "externalListingId": "43552469582060",
+              "listingUrl": "https://kiyoko.ca/en-ca/collections/south-korea/products/beauty-of-joseon-red-bean-refreshing-pore-mask-140ml?variant=43552469582060",
+              "isActive": true,
+              "productPrice": 24.95,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-08T23:54:28.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/collections/south-korea/products/beauty-of-joseon-red-bean-refreshing-pore-mask-140ml?variant=43552469582060",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 140 ml listing was available at CA$24.95."
+              }
+            },
+            {
+              "retailer": {
+                "sourceKey": "retailer:asung-ca",
+                "name": "A-Sung",
+                "country": "CA",
+                "websiteUrl": "https://asung.ca"
+              },
+              "externalListingId": null,
+              "listingUrl": "https://asung.ca/products/beauty-of-joseon-red-bean-refreshing-pore-mask-140ml",
+              "isActive": true,
+              "productPrice": 19.49,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "LOW_STOCK",
+              "observedAt": "2026-10-08T23:54:28.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://asung.ca/products/beauty-of-joseon-red-bean-refreshing-pore-mask-140ml",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 140 ml listing showed CA$19.49, low stock, and barcode 8809738316986."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "Mediheal",
+        "slug": "mediheal",
+        "originMarket": "KR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "Hydra Soothing Mask",
+        "slug": "mediheal-hydra-soothing-mask",
+        "categorySlug": "sheet-mask",
+        "originMarket": "KR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://kiyoko.ca/en-ca/collections/south-korea/products/mediheal-hydra-soothing-mask-1-pc?variant=46382699151596",
+          "sourceType": "RETAILER",
+          "retrievedAt": "2026-10-08T23:54:28.000Z",
+          "verifiedAt": "2026-10-08T23:54:28.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Source establishes Mediheal Hydra Soothing Mask in the exact 1 mask size."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "1 mask",
+          "normalizedQuantity": 1,
+          "normalizedUnit": "count",
+          "gtin": "8809615052433",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://kiyoko.ca/en-ca/collections/south-korea/products/mediheal-hydra-soothing-mask-1-pc?variant=46382699151596",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-08T23:54:28.000Z",
+            "verifiedAt": "2026-10-08T23:54:28.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact Kiyoko Beauty listing establishes the 1 mask variant and barcode 8809615052433."
+          },
+          "images": [
+            {
+              "url": "https://cdn.shopify.com/s/files/1/0515/4589/9157/files/MEDIHEAL_Hydra_Soothing_Mask_1_PC.png?v=1766257539",
+              "altText": "Mediheal Hydra Soothing Mask 1 mask",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "Kiyoko Beauty",
+              "sourcePageUrl": "https://kiyoko.ca/en-ca/collections/south-korea/products/mediheal-hydra-soothing-mask-1-pc?variant=46382699151596",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/collections/south-korea/products/mediheal-hydra-soothing-mask-1-pc?variant=46382699151596",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Primary image is served by the exact Kiyoko Beauty product listing."
+              }
+            }
+          ],
+          "benchmarks": [],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:kiyoko-ca",
+                "name": "Kiyoko Beauty",
+                "country": "CA",
+                "websiteUrl": "https://kiyoko.ca"
+              },
+              "externalListingId": "46382699151596",
+              "listingUrl": "https://kiyoko.ca/en-ca/collections/south-korea/products/mediheal-hydra-soothing-mask-1-pc?variant=46382699151596",
+              "isActive": true,
+              "productPrice": 3,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-08T23:54:28.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/collections/south-korea/products/mediheal-hydra-soothing-mask-1-pc?variant=46382699151596",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 1 mask listing was available at CA$3.00."
+              }
+            },
+            {
+              "retailer": {
+                "sourceKey": "retailer:oceanbuy-ca",
+                "name": "Oceanbuy",
+                "country": "CA",
+                "websiteUrl": "https://oceanbuy.ca"
+              },
+              "externalListingId": null,
+              "listingUrl": "https://oceanbuy.ca/products/mediheal-hydra-soothing-mask-1pcs",
+              "isActive": true,
+              "productPrice": 2.69,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-08T23:54:28.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://oceanbuy.ca/products/mediheal-hydra-soothing-mask-1pcs",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact single-mask listing showed CA$2.69 and was available to add to cart."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "Beauty of Joseon",
+        "slug": "beauty-of-joseon",
+        "originMarket": "KR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "Revive Eye Serum: Ginseng + Retinal",
+        "slug": "beauty-of-joseon-revive-eye-serum-ginseng-retinal",
+        "categorySlug": "eye-care",
+        "originMarket": "KR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://beautyofjoseon.com/products/revive-eye-serum-ginseng-retinal",
+          "sourceType": "MANUFACTURER",
+          "retrievedAt": "2026-10-08T23:54:28.000Z",
+          "verifiedAt": "2026-10-08T23:54:28.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Source establishes Beauty of Joseon Revive Eye Serum: Ginseng + Retinal in the exact 30 ml size."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "30 ml",
+          "normalizedQuantity": 30,
+          "normalizedUnit": "ml",
+          "gtin": "8809738316146",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://kiyoko.ca/en-ca/collections/oily-skin/products/beauty-of-joseon-revive-eye-serum-ginseng-retinal-30ml?variant=43413982314732",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-08T23:54:28.000Z",
+            "verifiedAt": "2026-10-08T23:54:28.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact Kiyoko Beauty listing establishes the 30 ml variant and barcode 8809738316146."
+          },
+          "images": [
+            {
+              "url": "https://cdn.shopify.com/s/files/1/0515/4589/9157/files/Product_Images_10_0a47c571-5fa2-422c-954a-20786c470cb1.png?v=1791377411",
+              "altText": "Beauty of Joseon Revive Eye Serum: Ginseng + Retinal 30 ml",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "Kiyoko Beauty",
+              "sourcePageUrl": "https://kiyoko.ca/en-ca/collections/oily-skin/products/beauty-of-joseon-revive-eye-serum-ginseng-retinal-30ml?variant=43413982314732",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/collections/oily-skin/products/beauty-of-joseon-revive-eye-serum-ginseng-retinal-30ml?variant=43413982314732",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Primary image is served by the exact Kiyoko Beauty product listing."
+              }
+            }
+          ],
+          "benchmarks": [
+            {
+              "market": "US",
+              "type": "RETAIL_PRICE",
+              "amount": 17,
+              "nativeCurrency": "USD",
+              "sourceKey": "brand:beauty-of-joseon-us",
+              "sourceDisplayName": "Beauty of Joseon official store",
+              "sourceUrl": "https://beautyofjoseon.com/products/revive-eye-serum-ginseng-retinal",
+              "observedAt": "2026-10-08T23:54:28.000Z",
+              "verifiedAt": "2026-10-08T23:54:28.000Z",
+              "provenance": {
+                "sourceUrl": "https://beautyofjoseon.com/products/revive-eye-serum-ginseng-retinal",
+                "sourceType": "MANUFACTURER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Official Beauty of Joseon store lists the 30 ml product at US$17.00."
+              }
+            }
+          ],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:kiyoko-ca",
+                "name": "Kiyoko Beauty",
+                "country": "CA",
+                "websiteUrl": "https://kiyoko.ca"
+              },
+              "externalListingId": "43413982314732",
+              "listingUrl": "https://kiyoko.ca/en-ca/collections/oily-skin/products/beauty-of-joseon-revive-eye-serum-ginseng-retinal-30ml?variant=43413982314732",
+              "isActive": true,
+              "productPrice": 18.95,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-08T23:54:28.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/collections/oily-skin/products/beauty-of-joseon-revive-eye-serum-ginseng-retinal-30ml?variant=43413982314732",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 30 ml listing was available at CA$18.95."
+              }
+            },
+            {
+              "retailer": {
+                "sourceKey": "retailer:kbeauty-ca",
+                "name": "Kbeauty Canada",
+                "country": "CA",
+                "websiteUrl": "https://kbeauty.ca"
+              },
+              "externalListingId": null,
+              "listingUrl": "https://kbeauty.ca/collections/beauty-of-joseon/products/beauty-of-joseon-revive-eye-serum-ginseng-retinal",
+              "isActive": true,
+              "productPrice": 19.76,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-08T23:54:28.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://kbeauty.ca/collections/beauty-of-joseon/products/beauty-of-joseon-revive-eye-serum-ginseng-retinal",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 30 ml listing showed CA$19.76 and an active Add to Cart control."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "COSRX",
+        "slug": "cosrx",
+        "originMarket": "KR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "Advanced Snail Peptide Eye Cream",
+        "slug": "cosrx-advanced-snail-peptide-eye-cream",
+        "categorySlug": "eye-care",
+        "originMarket": "KR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://www.cosrx.com/products/advanced-snail-peptide-eye-cream",
+          "sourceType": "MANUFACTURER",
+          "retrievedAt": "2026-10-08T23:54:28.000Z",
+          "verifiedAt": "2026-10-08T23:54:28.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Source establishes COSRX Advanced Snail Peptide Eye Cream in the exact 25 ml size."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "25 ml",
+          "normalizedQuantity": 25,
+          "normalizedUnit": "ml",
+          "gtin": "8809598451070",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://kiyoko.ca/en-ca/collections/silicone-free/products/cosrx-advanced-snail-peptide-eye-cream-25ml?variant=42723313221868",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-08T23:54:28.000Z",
+            "verifiedAt": "2026-10-08T23:54:28.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact Kiyoko Beauty listing establishes the 25 ml variant and barcode 8809598451070."
+          },
+          "images": [
+            {
+              "url": "https://cdn.shopify.com/s/files/1/0515/4589/9157/files/Product_Images_-_2026-01-22T221256.538.png?v=1769091276",
+              "altText": "COSRX Advanced Snail Peptide Eye Cream 25 ml",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "Kiyoko Beauty",
+              "sourcePageUrl": "https://kiyoko.ca/en-ca/collections/silicone-free/products/cosrx-advanced-snail-peptide-eye-cream-25ml?variant=42723313221868",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/collections/silicone-free/products/cosrx-advanced-snail-peptide-eye-cream-25ml?variant=42723313221868",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Primary image is served by the exact Kiyoko Beauty product listing."
+              }
+            }
+          ],
+          "benchmarks": [
+            {
+              "market": "US",
+              "type": "RETAIL_PRICE",
+              "amount": 28,
+              "nativeCurrency": "USD",
+              "sourceKey": "brand:cosrx-us",
+              "sourceDisplayName": "COSRX official store",
+              "sourceUrl": "https://www.cosrx.com/products/advanced-snail-peptide-eye-cream",
+              "observedAt": "2026-10-08T23:54:28.000Z",
+              "verifiedAt": "2026-10-08T23:54:28.000Z",
+              "provenance": {
+                "sourceUrl": "https://www.cosrx.com/products/advanced-snail-peptide-eye-cream",
+                "sourceType": "MANUFACTURER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Official COSRX store lists the 25 ml product at US$28.00."
+              }
+            }
+          ],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:kiyoko-ca",
+                "name": "Kiyoko Beauty",
+                "country": "CA",
+                "websiteUrl": "https://kiyoko.ca"
+              },
+              "externalListingId": "42723313221868",
+              "listingUrl": "https://kiyoko.ca/en-ca/collections/silicone-free/products/cosrx-advanced-snail-peptide-eye-cream-25ml?variant=42723313221868",
+              "isActive": true,
+              "productPrice": 27.95,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-08T23:54:28.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/collections/silicone-free/products/cosrx-advanced-snail-peptide-eye-cream-25ml?variant=42723313221868",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 25 ml listing was available at CA$27.95."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "Haruharu Wonder",
+        "slug": "haruharu-wonder",
+        "originMarket": "KR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "Black Rice Bakuchiol Eye Cream",
+        "slug": "haruharu-wonder-black-rice-bakuchiol-eye-cream",
+        "categorySlug": "eye-care",
+        "originMarket": "KR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://kiyoko.ca/en-ca/products/haruharu-wonder-black-rice-bakuchiol-eye-cream-20ml",
+          "sourceType": "RETAILER",
+          "retrievedAt": "2026-10-08T23:54:28.000Z",
+          "verifiedAt": "2026-10-08T23:54:28.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Source establishes Haruharu Wonder Black Rice Bakuchiol Eye Cream in the exact 20 ml size."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "20 ml",
+          "normalizedQuantity": 20,
+          "normalizedUnit": "ml",
+          "gtin": "8809532221523",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://kiyoko.ca/en-ca/products/haruharu-wonder-black-rice-bakuchiol-eye-cream-20ml?variant=43889319280876",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-08T23:54:28.000Z",
+            "verifiedAt": "2026-10-08T23:54:28.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact Kiyoko Beauty listing establishes the 20 ml variant and barcode 8809532221523."
+          },
+          "images": [
+            {
+              "url": "https://cdn.shopify.com/s/files/1/0515/4589/9157/files/Product_Images_-_2026-01-22T214731.673.png?v=1769089704",
+              "altText": "Haruharu Wonder Black Rice Bakuchiol Eye Cream 20 ml",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "Kiyoko Beauty",
+              "sourcePageUrl": "https://kiyoko.ca/en-ca/products/haruharu-wonder-black-rice-bakuchiol-eye-cream-20ml?variant=43889319280876",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/products/haruharu-wonder-black-rice-bakuchiol-eye-cream-20ml?variant=43889319280876",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Primary image is served by the exact Kiyoko Beauty product listing."
+              }
+            }
+          ],
+          "benchmarks": [],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:kiyoko-ca",
+                "name": "Kiyoko Beauty",
+                "country": "CA",
+                "websiteUrl": "https://kiyoko.ca"
+              },
+              "externalListingId": "43889319280876",
+              "listingUrl": "https://kiyoko.ca/en-ca/products/haruharu-wonder-black-rice-bakuchiol-eye-cream-20ml?variant=43889319280876",
+              "isActive": true,
+              "productPrice": 19.95,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-08T23:54:28.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/products/haruharu-wonder-black-rice-bakuchiol-eye-cream-20ml?variant=43889319280876",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 20 ml listing was available at CA$19.95."
+              }
+            },
+            {
+              "retailer": {
+                "sourceKey": "retailer:t-and-t-ca",
+                "name": "T&T Supermarket",
+                "country": "CA",
+                "websiteUrl": "https://www.tntsupermarket.com"
+              },
+              "externalListingId": "60399810",
+              "listingUrl": "https://www.instacart.ca/products/60399810-haruharu-wonder-black-rice-bakuchiol-eye-cream-20-ml?retailerSlug=t-t",
+              "isActive": true,
+              "productPrice": 23.51,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "UNKNOWN",
+              "observedAt": "2026-10-08T23:54:28.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://www.instacart.ca/products/60399810-haruharu-wonder-black-rice-bakuchiol-eye-cream-20-ml?retailerSlug=t-t",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "T&T same-day listing showed a current CA$23.51 price for the exact 20 ml item; local availability varies."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "LANEIGE",
+        "slug": "laneige",
+        "originMarket": "KR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "Lip Glowy Balm Berry",
+        "slug": "laneige-lip-glowy-balm-berry",
+        "categorySlug": "lip-care",
+        "originMarket": "KR",
+        "commonEnglishAliases": [
+          "Lip Glowy Balm - Berry"
+        ]
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://kiyoko.ca/en-ca/collections/chapped-lips/products/laneige-lip-glowy-balm-10g?variant=67601187307756",
+          "sourceType": "RETAILER",
+          "retrievedAt": "2026-10-08T23:54:28.000Z",
+          "verifiedAt": "2026-10-08T23:54:28.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Source establishes LANEIGE Lip Glowy Balm Berry in the exact 10 g size."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "10 g",
+          "normalizedQuantity": 10,
+          "normalizedUnit": "g",
+          "gtin": "8809925198333",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://kiyoko.ca/en-ca/collections/chapped-lips/products/laneige-lip-glowy-balm-10g?variant=67601187307756",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-08T23:54:28.000Z",
+            "verifiedAt": "2026-10-08T23:54:28.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact Kiyoko Beauty listing establishes the 10 g variant and barcode 8809925198333."
+          },
+          "images": [
+            {
+              "url": "https://cdn.shopify.com/s/files/1/0515/4589/9157/files/8809925198333-large.png?v=1790778275",
+              "altText": "LANEIGE Lip Glowy Balm Berry 10 g",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "Kiyoko Beauty",
+              "sourcePageUrl": "https://kiyoko.ca/en-ca/collections/chapped-lips/products/laneige-lip-glowy-balm-10g?variant=67601187307756",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/collections/chapped-lips/products/laneige-lip-glowy-balm-10g?variant=67601187307756",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Primary image is served by the exact Kiyoko Beauty product listing."
+              }
+            }
+          ],
+          "benchmarks": [],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:kiyoko-ca",
+                "name": "Kiyoko Beauty",
+                "country": "CA",
+                "websiteUrl": "https://kiyoko.ca"
+              },
+              "externalListingId": "67601187307756",
+              "listingUrl": "https://kiyoko.ca/en-ca/collections/chapped-lips/products/laneige-lip-glowy-balm-10g?variant=67601187307756",
+              "isActive": true,
+              "productPrice": 22.95,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-08T23:54:28.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/collections/chapped-lips/products/laneige-lip-glowy-balm-10g?variant=67601187307756",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 10 g listing was available at CA$22.95."
+              }
+            },
+            {
+              "retailer": {
+                "sourceKey": "retailer:sephora-ca",
+                "name": "Sephora Canada",
+                "country": "CA",
+                "websiteUrl": "https://www.sephora.com/ca/en"
+              },
+              "externalListingId": "2743060",
+              "listingUrl": "https://www.sephora.com/ca/en/product/glowy-lip-balm-P443563?skuId=2743060",
+              "isActive": true,
+              "productPrice": 25.5,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "UNKNOWN",
+              "observedAt": "2026-10-08T23:54:28.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://www.sephora.com/ca/en/product/glowy-lip-balm-P443563?skuId=2743060",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact Berry 10 g Sephora listing showed CA$25.50; fulfillment availability is location-dependent."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "Torriden",
+        "slug": "torriden",
+        "originMarket": "KR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "SOLID-IN Ceramide Lip Essence",
+        "slug": "torriden-solid-in-ceramide-lip-essence",
+        "categorySlug": "lip-care",
+        "originMarket": "KR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://kiyoko.ca/en-ca/collections/lip-care/products/torriden-solid-in-ceramide-lip-essence-11ml?variant=47108201742572",
+          "sourceType": "RETAILER",
+          "retrievedAt": "2026-10-08T23:54:28.000Z",
+          "verifiedAt": "2026-10-08T23:54:28.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Source establishes Torriden SOLID-IN Ceramide Lip Essence in the exact 11 ml size."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "11 ml",
+          "normalizedQuantity": 11,
+          "normalizedUnit": "ml",
+          "gtin": "8809784600152",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://kiyoko.ca/en-ca/collections/lip-care/products/torriden-solid-in-ceramide-lip-essence-11ml?variant=47108201742572",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-08T23:54:28.000Z",
+            "verifiedAt": "2026-10-08T23:54:28.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact Kiyoko Beauty listing establishes the 11 ml variant and barcode 8809784600152."
+          },
+          "images": [
+            {
+              "url": "https://cdn.shopify.com/s/files/1/0515/4589/9157/files/Torriden_SOLID_IN_Ceramide_Lip_Essence-removebg-preview.png?v=1765831313",
+              "altText": "Torriden SOLID-IN Ceramide Lip Essence 11 ml",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "Kiyoko Beauty",
+              "sourcePageUrl": "https://kiyoko.ca/en-ca/collections/lip-care/products/torriden-solid-in-ceramide-lip-essence-11ml?variant=47108201742572",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/collections/lip-care/products/torriden-solid-in-ceramide-lip-essence-11ml?variant=47108201742572",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Primary image is served by the exact Kiyoko Beauty product listing."
+              }
+            }
+          ],
+          "benchmarks": [],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:kiyoko-ca",
+                "name": "Kiyoko Beauty",
+                "country": "CA",
+                "websiteUrl": "https://kiyoko.ca"
+              },
+              "externalListingId": "47108201742572",
+              "listingUrl": "https://kiyoko.ca/en-ca/collections/lip-care/products/torriden-solid-in-ceramide-lip-essence-11ml?variant=47108201742572",
+              "isActive": true,
+              "productPrice": 11,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-08T23:54:28.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/collections/lip-care/products/torriden-solid-in-ceramide-lip-essence-11ml?variant=47108201742572",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 11 ml listing was available at CA$11.00."
+              }
+            },
+            {
+              "retailer": {
+                "sourceKey": "retailer:shoppers-drug-mart-ca",
+                "name": "Shoppers Drug Mart",
+                "country": "CA",
+                "websiteUrl": "https://www.shoppersdrugmart.ca"
+              },
+              "externalListingId": "BB_8809784600152",
+              "listingUrl": "https://www.shoppersdrugmart.ca/torriden-solid-in-ceramide-lip/p/BB_8809784600152",
+              "isActive": true,
+              "productPrice": 7,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-08T23:54:28.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://www.shoppersdrugmart.ca/torriden-solid-in-ceramide-lip/p/BB_8809784600152",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-08T23:54:28.000Z",
+                "verifiedAt": "2026-10-08T23:54:28.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 11 ml listing showed CA$7.00 with an active Add to bag control."
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

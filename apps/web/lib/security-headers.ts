@@ -1,16 +1,23 @@
 /** Baseline CSP preserves Next's static shell and Clerk's CSS-in-JS/modal flow. */
 export const PRODUCT_IMAGE_HOSTS = [
+  "axiastation.ca",
   "beautyofjoseon.com",
+  "caudalie-americas.imgix.net",
   "cdn.shopify.com",
   "japanesetaste.ca",
   "kiyoko.ca",
   "koreanbeauty.ca",
   "roundlab.co.kr",
   "roundlab.com",
+  "sokoglam.com",
   "sv5-cdn.stylevana.com",
+  "sunskincare.ca",
   "thekshop.ca",
   "www.cosrx.com",
+  "www.kessence.ca",
+  "www.laroche-posay.ca",
   "www.matsukiyococokara-online.com",
+  "www.sephora.com",
   "www.shiseido.co.jp",
 ] as const;
 

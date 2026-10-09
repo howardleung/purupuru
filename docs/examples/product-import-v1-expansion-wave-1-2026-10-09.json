@@ -1,0 +1,2632 @@
+{
+  "schemaVersion": "1.0",
+  "idempotencyKey": "chatgpt-work:catalogue-expansion-wave-1:2026-10-09:03",
+  "source": {
+    "type": "CHATGPT_WORK",
+    "label": "PuruPuru catalogue expansion Wave 1 — fixed 20 products",
+    "url": null,
+    "retrievedAt": "2026-10-09T18:00:00.000Z",
+    "notes": "Targeted verification of the user-specified Wave 1 set. Production duplicate and GTIN preflight found no matching target families or supplied identifier collisions. Staging only; human review is required before commit."
+  },
+  "products": [
+    {
+      "brand": {
+        "name": "numbuzin",
+        "slug": "numbuzin",
+        "originMarket": "KR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "No.3 Super Glowing Essence Toner",
+        "slug": "numbuzin-no-3-super-glowing-essence-toner",
+        "categorySlug": "toner",
+        "originMarket": "KR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://www.kessence.ca/products/numbuzin-toner-korean-skincare-canada",
+          "sourceType": "RETAILER",
+          "retrievedAt": "2026-10-09T18:00:00.000Z",
+          "verifiedAt": "2026-10-09T18:00:00.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Exact 200 ml listing and supplied pre-verified EAN establish product identity."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "200 ml",
+          "normalizedQuantity": 200,
+          "normalizedUnit": "ml",
+          "gtin": "8809652580128",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://www.kessence.ca/products/numbuzin-toner-korean-skincare-canada",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-09T18:00:00.000Z",
+            "verifiedAt": "2026-10-09T18:00:00.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact 200 ml listing and supplied pre-verified EAN establish product identity."
+          },
+          "images": [
+            {
+              "url": "https://www.kessence.ca/cdn/shop/files/numbuzinNo.3SuperGlowingEssenceToner1.jpg?v=1742867560",
+              "altText": "numbuzin No.3 Super Glowing Essence Toner 200 ml",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "K-ESSENCE",
+              "sourcePageUrl": "https://www.kessence.ca/products/numbuzin-toner-korean-skincare-canada",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://www.kessence.ca/products/numbuzin-toner-korean-skincare-canada",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact numbuzin No.3 Super Glowing Essence Toner 200 ml image from K-ESSENCE."
+              }
+            }
+          ],
+          "benchmarks": [],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:k-essence-ca",
+                "name": "K-ESSENCE",
+                "country": "CA",
+                "websiteUrl": "https://www.kessence.ca"
+              },
+              "externalListingId": null,
+              "listingUrl": "https://www.kessence.ca/products/numbuzin-toner-korean-skincare-canada",
+              "isActive": true,
+              "productPrice": 24.88,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "OUT_OF_STOCK",
+              "observedAt": "2026-10-09T18:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://www.kessence.ca/products/numbuzin-toner-korean-skincare-canada",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 200 ml listing showed CA$24.88 and was sold out."
+              }
+            },
+            {
+              "retailer": {
+                "sourceKey": "retailer:walmart-ca",
+                "name": "Walmart Canada",
+                "country": "CA",
+                "websiteUrl": "https://www.walmart.ca"
+              },
+              "externalListingId": "32MS3CYPBRCG",
+              "listingUrl": "https://www.walmart.ca/en/ip/numbuzin-No-3-Super-Glowing-Essence-Toner-200ml/32MS3CYPBRCG",
+              "isActive": true,
+              "productPrice": 32.49,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T18:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://www.walmart.ca/en/ip/numbuzin-No-3-Super-Glowing-Essence-Toner-200ml/32MS3CYPBRCG",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 200 ml marketplace listing showed CA$32.49; seller was OCEANBUY."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "numbuzin",
+        "slug": "numbuzin",
+        "originMarket": "KR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "No.3 Skin Softening Serum",
+        "slug": "numbuzin-no-3-skin-softening-serum",
+        "categorySlug": "serum-ampoule",
+        "originMarket": "KR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://kiyoko.ca/en-ca/products/numbuzin-no-3-skin-softening-serum-50ml",
+          "sourceType": "RETAILER",
+          "retrievedAt": "2026-10-09T18:00:00.000Z",
+          "verifiedAt": "2026-10-09T18:00:00.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Exact 50 ml listing and supplied pre-verified EAN establish product identity."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "50 ml",
+          "normalizedQuantity": 50,
+          "normalizedUnit": "ml",
+          "gtin": "8809652580036",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://kiyoko.ca/en-ca/products/numbuzin-no-3-skin-softening-serum-50ml",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-09T18:00:00.000Z",
+            "verifiedAt": "2026-10-09T18:00:00.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact 50 ml listing and supplied pre-verified EAN establish product identity."
+          },
+          "images": [
+            {
+              "url": "https://kiyoko.ca/cdn/shop/files/numbuzin_No.3_Skin_Softening_Serum_50ml_59849d83-971c-4c85-b34c-09cddb0d268b.png?v=1771868001",
+              "altText": "numbuzin No.3 Skin Softening Serum 50 ml",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "Kiyoko Beauty",
+              "sourcePageUrl": "https://kiyoko.ca/en-ca/products/numbuzin-no-3-skin-softening-serum-50ml",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/products/numbuzin-no-3-skin-softening-serum-50ml",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact numbuzin No.3 Skin Softening Serum 50 ml image from Kiyoko Beauty."
+              }
+            }
+          ],
+          "benchmarks": [],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:walmart-ca",
+                "name": "Walmart Canada",
+                "country": "CA",
+                "websiteUrl": "https://www.walmart.ca"
+              },
+              "externalListingId": "613SLBESZ036",
+              "listingUrl": "https://www.walmart.ca/en/ip/numbuzin-No-3-Skin-Softening-Serum-50ml/613SLBESZ036",
+              "isActive": true,
+              "productPrice": 26.98,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T18:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://www.walmart.ca/en/ip/numbuzin-No-3-Skin-Softening-Serum-50ml/613SLBESZ036",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 50 ml listing showed CA$26.98 and was sold and shipped by Walmart."
+              }
+            },
+            {
+              "retailer": {
+                "sourceKey": "retailer:iherb-ca",
+                "name": "iHerb Canada",
+                "country": "CA",
+                "websiteUrl": "https://ca.iherb.com"
+              },
+              "externalListingId": "116646",
+              "listingUrl": "https://ca.iherb.com/pr/numbuzin-no-3-skin-softening-serum-1-69-fl-oz-50-ml/116646",
+              "isActive": true,
+              "productPrice": 35.17,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T18:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://ca.iherb.com/pr/numbuzin-no-3-skin-softening-serum-1-69-fl-oz-50-ml/116646",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 50 ml listing showed CA$35.17."
+              }
+            },
+            {
+              "retailer": {
+                "sourceKey": "retailer:kiyoko-ca",
+                "name": "Kiyoko Beauty",
+                "country": "CA",
+                "websiteUrl": "https://kiyoko.ca"
+              },
+              "externalListingId": null,
+              "listingUrl": "https://kiyoko.ca/en-ca/products/numbuzin-no-3-skin-softening-serum-50ml",
+              "isActive": true,
+              "productPrice": 28,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T18:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/products/numbuzin-no-3-skin-softening-serum-50ml",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 50 ml listing showed CA$28.00."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "numbuzin",
+        "slug": "numbuzin",
+        "originMarket": "KR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "No.5+ Glutathione Vitamin Concentrated Serum",
+        "slug": "numbuzin-no-5-plus-glutathione-vitamin-concentrated-serum",
+        "categorySlug": "serum-ampoule",
+        "originMarket": "KR",
+        "commonEnglishAliases": [
+          "No.5 Vitamin Concentrated Serum"
+        ]
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://kiyoko.ca/en-ca/products/numbuzin-no-5-vitamin-concentrated-serum-30ml",
+          "sourceType": "RETAILER",
+          "retrievedAt": "2026-10-09T18:00:00.000Z",
+          "verifiedAt": "2026-10-09T18:00:00.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Exact 30 ml listing and supplied pre-verified EAN support the No.5/No.5+ retailer-title alias."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "30 ml",
+          "normalizedQuantity": 30,
+          "normalizedUnit": "ml",
+          "gtin": "8809652581774",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://kiyoko.ca/en-ca/products/numbuzin-no-5-vitamin-concentrated-serum-30ml",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-09T18:00:00.000Z",
+            "verifiedAt": "2026-10-09T18:00:00.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact 30 ml listing and supplied pre-verified EAN support the No.5/No.5+ retailer-title alias."
+          },
+          "images": [
+            {
+              "url": "https://kiyoko.ca/cdn/shop/files/Product_Images_63_af02861e-7e9f-4d23-b89a-5957f9196a23.png?v=1791385776",
+              "altText": "numbuzin No.5+ Glutathione Vitamin Concentrated Serum 30 ml",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "Kiyoko Beauty",
+              "sourcePageUrl": "https://kiyoko.ca/en-ca/products/numbuzin-no-5-vitamin-concentrated-serum-30ml",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/products/numbuzin-no-5-vitamin-concentrated-serum-30ml",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact numbuzin No.5+ Glutathione Vitamin Concentrated Serum 30 ml image from Kiyoko Beauty."
+              }
+            }
+          ],
+          "benchmarks": [],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:kiyoko-ca",
+                "name": "Kiyoko Beauty",
+                "country": "CA",
+                "websiteUrl": "https://kiyoko.ca"
+              },
+              "externalListingId": null,
+              "listingUrl": "https://kiyoko.ca/en-ca/products/numbuzin-no-5-vitamin-concentrated-serum-30ml",
+              "isActive": true,
+              "productPrice": 28,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T18:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/products/numbuzin-no-5-vitamin-concentrated-serum-30ml",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 30 ml listing showed CA$28.00."
+              }
+            },
+            {
+              "retailer": {
+                "sourceKey": "retailer:sephora-ca",
+                "name": "Sephora Canada",
+                "country": "CA",
+                "websiteUrl": "https://www.sephora.com/ca/en"
+              },
+              "externalListingId": "P527074",
+              "listingUrl": "https://www.sephora.com/ca/en/product/numbuzin-no-5-glutathione-vitamin-concentrated-serum-P527074",
+              "isActive": true,
+              "productPrice": 31,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T18:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://www.sephora.com/ca/en/product/numbuzin-no-5-glutathione-vitamin-concentrated-serum-P527074",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 30 ml listing showed CA$31.00."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "AESTURA",
+        "slug": "aestura",
+        "originMarket": "KR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "ATOBARRIER365 Cream",
+        "slug": "aestura-atobarrier365-cream",
+        "categorySlug": "cream",
+        "originMarket": "KR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://kiyoko.ca/en-ca/products/aestura-atobarrier-365-cream-80ml-renewed",
+          "sourceType": "RETAILER",
+          "retrievedAt": "2026-10-09T18:00:00.000Z",
+          "verifiedAt": "2026-10-09T18:00:00.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Exact 80 ml current product listing; the supplied 14-digit identifier passes GTIN checksum validation."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "80 ml",
+          "normalizedQuantity": 80,
+          "normalizedUnit": "ml",
+          "gtin": "08809013345205",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://kiyoko.ca/en-ca/products/aestura-atobarrier-365-cream-80ml-renewed",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-09T18:00:00.000Z",
+            "verifiedAt": "2026-10-09T18:00:00.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact 80 ml current product listing; the supplied 14-digit identifier passes GTIN checksum validation."
+          },
+          "images": [
+            {
+              "url": "https://kiyoko.ca/cdn/shop/files/Product_Images_17_13a9a753-0db2-4618-bfd4-1ee350ef9175.png?v=1791378271",
+              "altText": "AESTURA ATOBARRIER365 Cream 80 ml",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "Kiyoko Beauty",
+              "sourcePageUrl": "https://kiyoko.ca/en-ca/products/aestura-atobarrier-365-cream-80ml-renewed",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/products/aestura-atobarrier-365-cream-80ml-renewed",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact AESTURA ATOBARRIER365 Cream 80 ml image from Kiyoko Beauty."
+              }
+            }
+          ],
+          "benchmarks": [],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:sephora-ca",
+                "name": "Sephora Canada",
+                "country": "CA",
+                "websiteUrl": "https://www.sephora.com/ca/en"
+              },
+              "externalListingId": "2844942",
+              "listingUrl": "https://www.sephora.com/ca/en/product/atobarrier365-cream-with-ceramides-niacinamide-for-skin-moisture-barrier-repair-P515494?skuId=2844942",
+              "isActive": true,
+              "productPrice": 44,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T18:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://www.sephora.com/ca/en/product/atobarrier365-cream-with-ceramides-niacinamide-for-skin-moisture-barrier-repair-P515494?skuId=2844942",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 80 ml listing showed CA$44.00."
+              }
+            },
+            {
+              "retailer": {
+                "sourceKey": "retailer:kiyoko-ca",
+                "name": "Kiyoko Beauty",
+                "country": "CA",
+                "websiteUrl": "https://kiyoko.ca"
+              },
+              "externalListingId": null,
+              "listingUrl": "https://kiyoko.ca/en-ca/products/aestura-atobarrier-365-cream-80ml-renewed",
+              "isActive": true,
+              "productPrice": 47.95,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T18:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/products/aestura-atobarrier-365-cream-80ml-renewed",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 80 ml listing showed CA$47.95."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "AESTURA",
+        "slug": "aestura",
+        "originMarket": "KR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "ATOBARRIER365 Lightweight Face Lotion",
+        "slug": "aestura-atobarrier365-lightweight-face-lotion",
+        "categorySlug": "lotion",
+        "originMarket": "KR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://www.sephora.com/ca/en/product/atobarrier365-lightweight-face-lotion-with-ceramides-niacinamide-for-skin-moisture-barrier-repair-P515497?skuId=2844926",
+          "sourceType": "RETAILER",
+          "retrievedAt": "2026-10-09T18:00:00.000Z",
+          "verifiedAt": "2026-10-09T18:00:00.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Exact 150 ml Sephora listing establishes product and size; the candidate GTIN was omitted because current exact-source verification was insufficient."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "150 ml",
+          "normalizedQuantity": 150,
+          "normalizedUnit": "ml",
+          "gtin": null,
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://www.sephora.com/ca/en/product/atobarrier365-lightweight-face-lotion-with-ceramides-niacinamide-for-skin-moisture-barrier-repair-P515497?skuId=2844926",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-09T18:00:00.000Z",
+            "verifiedAt": "2026-10-09T18:00:00.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact 150 ml Sephora listing establishes product and size; the candidate GTIN was omitted because current exact-source verification was insufficient."
+          },
+          "images": [
+            {
+              "url": "https://www.sephora.com/productimages/sku/s2844926-main-zoom.jpg",
+              "altText": "AESTURA ATOBARRIER365 Lightweight Face Lotion 150 ml",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "Sephora Canada",
+              "sourcePageUrl": "https://www.sephora.com/ca/en/product/atobarrier365-lightweight-face-lotion-with-ceramides-niacinamide-for-skin-moisture-barrier-repair-P515497?skuId=2844926",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://www.sephora.com/ca/en/product/atobarrier365-lightweight-face-lotion-with-ceramides-niacinamide-for-skin-moisture-barrier-repair-P515497?skuId=2844926",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact AESTURA ATOBARRIER365 Lightweight Face Lotion 150 ml image from Sephora Canada."
+              }
+            }
+          ],
+          "benchmarks": [],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:sephora-ca",
+                "name": "Sephora Canada",
+                "country": "CA",
+                "websiteUrl": "https://www.sephora.com/ca/en"
+              },
+              "externalListingId": "2844926",
+              "listingUrl": "https://www.sephora.com/ca/en/product/atobarrier365-lightweight-face-lotion-with-ceramides-niacinamide-for-skin-moisture-barrier-repair-P515497?skuId=2844926",
+              "isActive": true,
+              "productPrice": 44,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T18:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://www.sephora.com/ca/en/product/atobarrier365-lightweight-face-lotion-with-ceramides-niacinamide-for-skin-moisture-barrier-repair-P515497?skuId=2844926",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 150 ml listing showed CA$44.00."
+              }
+            },
+            {
+              "retailer": {
+                "sourceKey": "retailer:walmart-ca",
+                "name": "Walmart Canada",
+                "country": "CA",
+                "websiteUrl": "https://www.walmart.ca"
+              },
+              "externalListingId": "3Q4HISYZH9Q9",
+              "listingUrl": "https://www.walmart.ca/en/ip/AESTURA-ATOBARRIER365-Lightweight-Korean-Face-Moisturizer-Ceramides-Strengthens-Barrier-Fast-Absorbing-Hydration-Suitable-Dry-Normal-Sensitive-Skin-1/3Q4HISYZH9Q9",
+              "isActive": true,
+              "productPrice": 42.99,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "UNKNOWN",
+              "observedAt": "2026-10-09T18:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://www.walmart.ca/en/ip/AESTURA-ATOBARRIER365-Lightweight-Korean-Face-Moisturizer-Ceramides-Strengthens-Barrier-Fast-Absorbing-Hydration-Suitable-Dry-Normal-Sensitive-Skin-1/3Q4HISYZH9Q9",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 150 ml marketplace listing showed CA$42.99; current stock could not be established reliably."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "Real Barrier",
+        "slug": "real-barrier",
+        "originMarket": "KR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "Extreme Cream Original",
+        "slug": "real-barrier-extreme-cream-original",
+        "categorySlug": "cream",
+        "originMarket": "KR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": "Original cream; do not merge with Extreme Cream Light.",
+        "provenance": {
+          "sourceUrl": "https://ca.iherb.com/pr/real-barrier-extreme-cream-original-1-69-fl-oz-50-ml/107951",
+          "sourceType": "RETAILER",
+          "retrievedAt": "2026-10-09T18:00:00.000Z",
+          "verifiedAt": "2026-10-09T18:00:00.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Exact Original 50 ml listing distinguishes this product from Extreme Cream Light; no GTIN is asserted."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "50 ml",
+          "normalizedQuantity": 50,
+          "normalizedUnit": "ml",
+          "gtin": null,
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://ca.iherb.com/pr/real-barrier-extreme-cream-original-1-69-fl-oz-50-ml/107951",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-09T18:00:00.000Z",
+            "verifiedAt": "2026-10-09T18:00:00.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact Original 50 ml listing distinguishes this product from Extreme Cream Light; no GTIN is asserted."
+          },
+          "images": [
+            {
+              "url": "https://sokoglam.com/cdn/shop/files/Real-Barrier-Extreme-Cream-Original.jpg?v=1756221842",
+              "altText": "Real Barrier Extreme Cream Original 50 ml",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "Soko Glam",
+              "sourcePageUrl": "https://sokoglam.com/products/real-barrier-extreme-cream-original",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://sokoglam.com/products/real-barrier-extreme-cream-original",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact Real Barrier Extreme Cream Original 50 ml image from Soko Glam."
+              }
+            }
+          ],
+          "benchmarks": [],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:iherb-ca",
+                "name": "iHerb Canada",
+                "country": "CA",
+                "websiteUrl": "https://ca.iherb.com"
+              },
+              "externalListingId": "107951",
+              "listingUrl": "https://ca.iherb.com/pr/real-barrier-extreme-cream-original-1-69-fl-oz-50-ml/107951",
+              "isActive": true,
+              "productPrice": 43.18,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "UNKNOWN",
+              "observedAt": "2026-10-09T18:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://ca.iherb.com/pr/real-barrier-extreme-cream-original-1-69-fl-oz-50-ml/107951",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact Original 50 ml listing showed CA$43.18; current availability was not reliably exposed."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "Real Barrier",
+        "slug": "real-barrier",
+        "originMarket": "KR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "Extreme Cream Ampoule",
+        "slug": "real-barrier-extreme-cream-ampoule",
+        "categorySlug": "serum-ampoule",
+        "originMarket": "KR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://axiastation.ca/products/real-barrier-extreme-cream-ampoule-50ml",
+          "sourceType": "RETAILER",
+          "retrievedAt": "2026-10-09T18:00:00.000Z",
+          "verifiedAt": "2026-10-09T18:00:00.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Exact 50 ml ampoule listing establishes product and size; no GTIN is asserted."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "50 ml",
+          "normalizedQuantity": 50,
+          "normalizedUnit": "ml",
+          "gtin": null,
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://axiastation.ca/products/real-barrier-extreme-cream-ampoule-50ml",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-09T18:00:00.000Z",
+            "verifiedAt": "2026-10-09T18:00:00.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact 50 ml ampoule listing establishes product and size; no GTIN is asserted."
+          },
+          "images": [
+            {
+              "url": "https://axiastation.ca/cdn/shop/files/1473.webp?v=1760711277",
+              "altText": "Real Barrier Extreme Cream Ampoule 50 ml",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "Axia Station",
+              "sourcePageUrl": "https://axiastation.ca/products/real-barrier-extreme-cream-ampoule-50ml",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://axiastation.ca/products/real-barrier-extreme-cream-ampoule-50ml",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact Real Barrier Extreme Cream Ampoule 50 ml image from Axia Station."
+              }
+            }
+          ],
+          "benchmarks": [],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:axia-station-ca",
+                "name": "Axia Station",
+                "country": "CA",
+                "websiteUrl": "https://axiastation.ca"
+              },
+              "externalListingId": null,
+              "listingUrl": "https://axiastation.ca/products/real-barrier-extreme-cream-ampoule-50ml",
+              "isActive": true,
+              "productPrice": 28.99,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T18:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://axiastation.ca/products/real-barrier-extreme-cream-ampoule-50ml",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 50 ml listing showed CA$28.99."
+              }
+            },
+            {
+              "retailer": {
+                "sourceKey": "retailer:healthy-planet-ca",
+                "name": "Healthy Planet",
+                "country": "CA",
+                "websiteUrl": "https://www.healthyplanetcanada.com"
+              },
+              "externalListingId": null,
+              "listingUrl": "https://www.healthyplanetcanada.com/en/realbarrier-extreme-cream-ampoule-50ml.html",
+              "isActive": true,
+              "productPrice": 35.99,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "LOW_STOCK",
+              "observedAt": "2026-10-09T18:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://www.healthyplanetcanada.com/en/realbarrier-extreme-cream-ampoule-50ml.html",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 50 ml listing showed CA$35.99 and low stock."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "Hada Labo",
+        "slug": "hada-labo",
+        "originMarket": "JP",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "Gokujyun Hyaluronic Acid Lotion — Moist",
+        "slug": "hada-labo-gokujyun-hyaluronic-acid-lotion-moist",
+        "categorySlug": "toner",
+        "originMarket": "JP",
+        "commonEnglishAliases": [
+          "Gokujyun Hydrating Lotion Moist"
+        ]
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://kiyoko.ca/en-ca/collections/dry-skin/products/hada-labo-gokujyun-hydrating-lotion-170ml?variant=44618096869612",
+          "sourceType": "RETAILER",
+          "retrievedAt": "2026-10-09T18:00:00.000Z",
+          "verifiedAt": "2026-10-09T18:00:00.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Exact 170 ml Moist bottle variant; distinct from Premium, Light, and refill products."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "170 ml",
+          "normalizedQuantity": 170,
+          "normalizedUnit": "ml",
+          "gtin": null,
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://kiyoko.ca/en-ca/collections/dry-skin/products/hada-labo-gokujyun-hydrating-lotion-170ml?variant=44618096869612",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-09T18:00:00.000Z",
+            "verifiedAt": "2026-10-09T18:00:00.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact 170 ml Moist bottle variant; distinct from Premium, Light, and refill products."
+          },
+          "images": [
+            {
+              "url": "https://kiyoko.ca/cdn/shop/files/Hada-Labo_Gokujyun_Hydrating_Lotion__170ml_-removebg-preview.png?v=1766225483",
+              "altText": "Hada Labo Gokujyun Hyaluronic Acid Lotion Moist 170 ml",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "Kiyoko Beauty",
+              "sourcePageUrl": "https://kiyoko.ca/en-ca/collections/dry-skin/products/hada-labo-gokujyun-hydrating-lotion-170ml?variant=44618096869612",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/collections/dry-skin/products/hada-labo-gokujyun-hydrating-lotion-170ml?variant=44618096869612",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact Hada Labo Gokujyun Hyaluronic Acid Lotion Moist 170 ml image from Kiyoko Beauty."
+              }
+            }
+          ],
+          "benchmarks": [],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:kiyoko-ca",
+                "name": "Kiyoko Beauty",
+                "country": "CA",
+                "websiteUrl": "https://kiyoko.ca"
+              },
+              "externalListingId": "44618096869612",
+              "listingUrl": "https://kiyoko.ca/en-ca/collections/dry-skin/products/hada-labo-gokujyun-hydrating-lotion-170ml?variant=44618096869612",
+              "isActive": true,
+              "productPrice": 22,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T18:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/collections/dry-skin/products/hada-labo-gokujyun-hydrating-lotion-170ml?variant=44618096869612",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 170 ml Moist bottle variant showed CA$22.00."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "Hada Labo",
+        "slug": "hada-labo",
+        "originMarket": "JP",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "Shirojyun Premium Whitening Lotion — Moist",
+        "slug": "hada-labo-shirojyun-premium-whitening-lotion-moist",
+        "categorySlug": "toner",
+        "originMarket": "JP",
+        "commonEnglishAliases": [
+          "Shirojyun Premium Brightening Lotion — Moist",
+          "Shirojyun Premium Moisturizing Lotion"
+        ]
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://japanesetaste.ca/products/rohto-hada-labo-shirojyun-premium-moisturizing-lotion-170ml",
+          "sourceType": "RETAILER",
+          "retrievedAt": "2026-10-09T18:00:00.000Z",
+          "verifiedAt": "2026-10-09T18:00:00.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Exact 170 ml Moist lotion; Whitening, Brightening, and Moisturizing are supported retailer-title aliases."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "170 ml",
+          "normalizedQuantity": 170,
+          "normalizedUnit": "ml",
+          "gtin": null,
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://japanesetaste.ca/products/rohto-hada-labo-shirojyun-premium-moisturizing-lotion-170ml",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-09T18:00:00.000Z",
+            "verifiedAt": "2026-10-09T18:00:00.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact 170 ml Moist lotion; Whitening, Brightening, and Moisturizing are supported retailer-title aliases."
+          },
+          "images": [
+            {
+              "url": "https://japanesetaste.ca/cdn/shop/files/Rohto-Hada-Labo-Shirojyun-Premium-Moisturizing-Lotion-170ml-1-2024-06-14T03_11_09.225Z.jpg?crop=center&height=1200&v=1743421121&width=1200",
+              "altText": "Hada Labo Shirojyun Premium Whitening Lotion Moist 170 ml",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "Japanese Taste Canada",
+              "sourcePageUrl": "https://japanesetaste.ca/products/rohto-hada-labo-shirojyun-premium-moisturizing-lotion-170ml",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://japanesetaste.ca/products/rohto-hada-labo-shirojyun-premium-moisturizing-lotion-170ml",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact Hada Labo Shirojyun Premium Whitening Lotion Moist 170 ml image from Japanese Taste Canada."
+              }
+            }
+          ],
+          "benchmarks": [],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:stylevana-ca",
+                "name": "STYLEVANA Canada",
+                "country": "CA",
+                "websiteUrl": "https://www.stylevana.com/en_CA"
+              },
+              "externalListingId": null,
+              "listingUrl": "https://www.stylevana.com/en_CA/rohto-mentholatum-hada-labo-shirojyun-premium-whitening-lotion-170ml-moist-japan-version-170ml62556.html",
+              "isActive": true,
+              "productPrice": 22.84,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T18:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://www.stylevana.com/en_CA/rohto-mentholatum-hada-labo-shirojyun-premium-whitening-lotion-170ml-moist-japan-version-170ml62556.html",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 170 ml Moist listing showed CA$22.84."
+              }
+            },
+            {
+              "retailer": {
+                "sourceKey": "retailer:japanese-taste-ca",
+                "name": "Japanese Taste",
+                "country": "JP",
+                "websiteUrl": "https://japanesetaste.ca"
+              },
+              "externalListingId": null,
+              "listingUrl": "https://japanesetaste.ca/products/rohto-hada-labo-shirojyun-premium-moisturizing-lotion-170ml",
+              "isActive": true,
+              "productPrice": 25.13,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "UNKNOWN",
+              "observedAt": "2026-10-09T18:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://japanesetaste.ca/products/rohto-hada-labo-shirojyun-premium-moisturizing-lotion-170ml",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 170 ml product page showed CA$25.13; current availability was not reliably exposed."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "COSRX",
+        "slug": "cosrx",
+        "originMarket": "KR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "BHA Blackhead Power Liquid",
+        "slug": "cosrx-bha-blackhead-power-liquid",
+        "categorySlug": "exfoliant",
+        "originMarket": "KR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://kiyoko.ca/en-ca/products/cosrx-bha-blackhead-power-liquid-100ml",
+          "sourceType": "RETAILER",
+          "retrievedAt": "2026-10-09T18:00:00.000Z",
+          "verifiedAt": "2026-10-09T18:00:00.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Exact 100 ml product listing; identifier remains null because no exact reliable EAN was established."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "100 ml",
+          "normalizedQuantity": 100,
+          "normalizedUnit": "ml",
+          "gtin": null,
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://kiyoko.ca/en-ca/products/cosrx-bha-blackhead-power-liquid-100ml",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-09T18:00:00.000Z",
+            "verifiedAt": "2026-10-09T18:00:00.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact 100 ml product listing; identifier remains null because no exact reliable EAN was established."
+          },
+          "images": [
+            {
+              "url": "https://kiyoko.ca/cdn/shop/files/COSRX_BHA_Blackhead_Power_Liquid_100ml.png?v=1772994925",
+              "altText": "COSRX BHA Blackhead Power Liquid 100 ml",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "Kiyoko Beauty",
+              "sourcePageUrl": "https://kiyoko.ca/en-ca/products/cosrx-bha-blackhead-power-liquid-100ml",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/products/cosrx-bha-blackhead-power-liquid-100ml",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact COSRX BHA Blackhead Power Liquid 100 ml image from Kiyoko Beauty."
+              }
+            }
+          ],
+          "benchmarks": [],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:kiyoko-ca",
+                "name": "Kiyoko Beauty",
+                "country": "CA",
+                "websiteUrl": "https://kiyoko.ca"
+              },
+              "externalListingId": null,
+              "listingUrl": "https://kiyoko.ca/en-ca/products/cosrx-bha-blackhead-power-liquid-100ml",
+              "isActive": true,
+              "productPrice": 30,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T18:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/products/cosrx-bha-blackhead-power-liquid-100ml",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 100 ml listing showed CA$30.00."
+              }
+            },
+            {
+              "retailer": {
+                "sourceKey": "retailer:walmart-ca",
+                "name": "Walmart Canada",
+                "country": "CA",
+                "websiteUrl": "https://www.walmart.ca"
+              },
+              "externalListingId": "5KF7LL05JXD5",
+              "listingUrl": "https://www.walmart.ca/en/ip/cosrx-bha-blackhead-power-liquid-100ml-10/5KF7LL05JXD5",
+              "isActive": true,
+              "productPrice": 25.25,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T18:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://www.walmart.ca/en/ip/cosrx-bha-blackhead-power-liquid-100ml-10/5KF7LL05JXD5",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 100 ml marketplace listing showed CA$25.25; seller was Cintags."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "COSRX",
+        "slug": "cosrx",
+        "originMarket": "KR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "Acne Pimple Master Patch",
+        "slug": "cosrx-acne-pimple-master-patch",
+        "categorySlug": "pimple-patch",
+        "originMarket": "KR",
+        "commonEnglishAliases": [
+          "Acne Pimple Master Patch Original Fit"
+        ]
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://kiyoko.ca/en-ca/products/cosrx-acne-pimple-master-patch-24-patches",
+          "sourceType": "RETAILER",
+          "retrievedAt": "2026-10-09T18:00:00.000Z",
+          "verifiedAt": "2026-10-09T18:00:00.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Exact 24-patch single pack and supplied pre-verified EAN; Original Fit wording is treated as an alias."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "24 patches",
+          "normalizedQuantity": 24,
+          "normalizedUnit": "patches",
+          "gtin": "8809416470245",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://kiyoko.ca/en-ca/products/cosrx-acne-pimple-master-patch-24-patches",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-09T18:00:00.000Z",
+            "verifiedAt": "2026-10-09T18:00:00.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact 24-patch single pack and supplied pre-verified EAN; Original Fit wording is treated as an alias."
+          },
+          "images": [
+            {
+              "url": "https://kiyoko.ca/cdn/shop/files/COSRX_Acne_Pimple_Master_Patch_24_Patches.png?v=1772994529",
+              "altText": "COSRX Acne Pimple Master Patch 24 patches",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "Kiyoko Beauty",
+              "sourcePageUrl": "https://kiyoko.ca/en-ca/products/cosrx-acne-pimple-master-patch-24-patches",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/products/cosrx-acne-pimple-master-patch-24-patches",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact COSRX Acne Pimple Master Patch 24 patches image from Kiyoko Beauty."
+              }
+            }
+          ],
+          "benchmarks": [],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:kiyoko-ca",
+                "name": "Kiyoko Beauty",
+                "country": "CA",
+                "websiteUrl": "https://kiyoko.ca"
+              },
+              "externalListingId": null,
+              "listingUrl": "https://kiyoko.ca/en-ca/products/cosrx-acne-pimple-master-patch-24-patches",
+              "isActive": true,
+              "productPrice": 4.95,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T18:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/products/cosrx-acne-pimple-master-patch-24-patches",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 24-patch single pack showed CA$4.95."
+              }
+            },
+            {
+              "retailer": {
+                "sourceKey": "retailer:walmart-ca",
+                "name": "Walmart Canada",
+                "country": "CA",
+                "websiteUrl": "https://www.walmart.ca"
+              },
+              "externalListingId": "6000201630339",
+              "listingUrl": "https://www.walmart.ca/en/ip/cosrx-acne-pimple-master-patches-24/6000201630339?selectedSellerId=0",
+              "isActive": true,
+              "productPrice": 7.98,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T18:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://www.walmart.ca/en/ip/cosrx-acne-pimple-master-patches-24/6000201630339?selectedSellerId=0",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 24-patch single pack showed CA$7.98 and was sold by Walmart."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "La Roche-Posay",
+        "slug": "la-roche-posay",
+        "originMarket": "FR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "Cicaplast Baume B5 Soothing Relieving Balm",
+        "slug": "la-roche-posay-cicaplast-baume-b5-soothing-relieving-balm",
+        "categorySlug": "cream",
+        "originMarket": "FR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://www.laroche-posay.ca/en_CA/face-care/face-product-type/face-moisturizers/cicaplast-baume-b5-soothing-relieving-balm/3337875844413.html",
+          "sourceType": "MANUFACTURER",
+          "retrievedAt": "2026-10-09T18:00:00.000Z",
+          "verifiedAt": "2026-10-09T18:00:00.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Official Canadian manufacturer page establishes the exact 40 ml product, identifier, and current retail price."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "40 ml",
+          "normalizedQuantity": 40,
+          "normalizedUnit": "ml",
+          "gtin": "3337875844413",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://www.laroche-posay.ca/en_CA/face-care/face-product-type/face-moisturizers/cicaplast-baume-b5-soothing-relieving-balm/3337875844413.html",
+            "sourceType": "MANUFACTURER",
+            "retrievedAt": "2026-10-09T18:00:00.000Z",
+            "verifiedAt": "2026-10-09T18:00:00.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Official Canadian manufacturer page establishes the exact 40 ml product, identifier, and current retail price."
+          },
+          "images": [
+            {
+              "url": "https://www.laroche-posay.ca/dw/image/v2/AATL_PRD/on/demandware.static/-/Sites-larocheposay-master-catalog/default/dwdae1bbc9/2024/cicaplast-baume-b5/cicaplast-1.jpg",
+              "altText": "La Roche-Posay Cicaplast Baume B5 40 ml",
+              "sourceType": "BRAND_APPROVED",
+              "sourceName": "La Roche-Posay Canada",
+              "sourcePageUrl": "https://www.laroche-posay.ca/en_CA/face-care/face-product-type/face-moisturizers/cicaplast-baume-b5-soothing-relieving-balm/3337875844413.html",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://www.laroche-posay.ca/en_CA/face-care/face-product-type/face-moisturizers/cicaplast-baume-b5-soothing-relieving-balm/3337875844413.html",
+                "sourceType": "MANUFACTURER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact La Roche-Posay Cicaplast Baume B5 40 ml image from La Roche-Posay Canada."
+              }
+            }
+          ],
+          "benchmarks": [
+            {
+              "market": "CA",
+              "type": "RETAIL_PRICE",
+              "amount": 19.95,
+              "nativeCurrency": "CAD",
+              "sourceKey": "brand:la-roche-posay-ca",
+              "sourceDisplayName": "La Roche-Posay Canada",
+              "sourceUrl": "https://www.laroche-posay.ca/en_CA/face-care/face-product-type/face-moisturizers/cicaplast-baume-b5-soothing-relieving-balm/3337875844413.html",
+              "observedAt": "2026-10-09T18:00:00.000Z",
+              "verifiedAt": "2026-10-09T18:00:00.000Z",
+              "provenance": {
+                "sourceUrl": "https://www.laroche-posay.ca/en_CA/face-care/face-product-type/face-moisturizers/cicaplast-baume-b5-soothing-relieving-balm/3337875844413.html",
+                "sourceType": "MANUFACTURER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Official Canadian manufacturer retail price for the exact 40 ml product."
+              }
+            }
+          ],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:la-roche-posay-ca",
+                "name": "La Roche-Posay Canada",
+                "country": "CA",
+                "websiteUrl": "https://www.laroche-posay.ca"
+              },
+              "externalListingId": "3337875844413",
+              "listingUrl": "https://www.laroche-posay.ca/en_CA/face-care/face-product-type/face-moisturizers/cicaplast-baume-b5-soothing-relieving-balm/3337875844413.html",
+              "isActive": true,
+              "productPrice": 19.95,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T18:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://www.laroche-posay.ca/en_CA/face-care/face-product-type/face-moisturizers/cicaplast-baume-b5-soothing-relieving-balm/3337875844413.html",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Official exact 40 ml listing showed CA$19.95."
+              }
+            },
+            {
+              "retailer": {
+                "sourceKey": "retailer:shoppers-drug-mart-ca",
+                "name": "Shoppers Drug Mart",
+                "country": "CA",
+                "websiteUrl": "https://www.shoppersdrugmart.ca"
+              },
+              "externalListingId": "3337875844413",
+              "listingUrl": "https://www.shoppersdrugmart.ca/cicaplast-baume/p/BB_3337875844413?variantCode=3337875844413",
+              "isActive": true,
+              "productPrice": 19.95,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "UNKNOWN",
+              "observedAt": "2026-10-09T18:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://www.shoppersdrugmart.ca/cicaplast-baume/p/BB_3337875844413?variantCode=3337875844413",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact identifier listing showed CA$19.95; local availability varies."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "La Roche-Posay",
+        "slug": "la-roche-posay",
+        "originMarket": "FR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "Effaclar Duo+M Cream",
+        "slug": "la-roche-posay-effaclar-duo-m-cream",
+        "categorySlug": "spot-treatment",
+        "originMarket": "FR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://www.laroche-posay.ca/en_CA/face-care/effaclar-duom-cream/3337875872034.html",
+          "sourceType": "MANUFACTURER",
+          "retrievedAt": "2026-10-09T18:00:00.000Z",
+          "verifiedAt": "2026-10-09T18:00:00.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Official Canadian manufacturer page establishes the exact 40 ml product, identifier, and current retail price."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "40 ml",
+          "normalizedQuantity": 40,
+          "normalizedUnit": "ml",
+          "gtin": "3337875872034",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://www.laroche-posay.ca/en_CA/face-care/effaclar-duom-cream/3337875872034.html",
+            "sourceType": "MANUFACTURER",
+            "retrievedAt": "2026-10-09T18:00:00.000Z",
+            "verifiedAt": "2026-10-09T18:00:00.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Official Canadian manufacturer page establishes the exact 40 ml product, identifier, and current retail price."
+          },
+          "images": [
+            {
+              "url": "https://www.laroche-posay.ca/dw/image/v2/AATL_PRD/on/demandware.static/-/Sites-larocheposay-master-catalog/default/dw8a0b73df/2025/3337875872034/14.png",
+              "altText": "La Roche-Posay Effaclar Duo+M Cream 40 ml",
+              "sourceType": "BRAND_APPROVED",
+              "sourceName": "La Roche-Posay Canada",
+              "sourcePageUrl": "https://www.laroche-posay.ca/en_CA/face-care/effaclar-duom-cream/3337875872034.html",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://www.laroche-posay.ca/en_CA/face-care/effaclar-duom-cream/3337875872034.html",
+                "sourceType": "MANUFACTURER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact La Roche-Posay Effaclar Duo+M Cream 40 ml image from La Roche-Posay Canada."
+              }
+            }
+          ],
+          "benchmarks": [
+            {
+              "market": "CA",
+              "type": "RETAIL_PRICE",
+              "amount": 33,
+              "nativeCurrency": "CAD",
+              "sourceKey": "brand:la-roche-posay-ca",
+              "sourceDisplayName": "La Roche-Posay Canada",
+              "sourceUrl": "https://www.laroche-posay.ca/en_CA/face-care/effaclar-duom-cream/3337875872034.html",
+              "observedAt": "2026-10-09T18:00:00.000Z",
+              "verifiedAt": "2026-10-09T18:00:00.000Z",
+              "provenance": {
+                "sourceUrl": "https://www.laroche-posay.ca/en_CA/face-care/effaclar-duom-cream/3337875872034.html",
+                "sourceType": "MANUFACTURER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Official Canadian manufacturer retail price for the exact 40 ml product."
+              }
+            }
+          ],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:la-roche-posay-ca",
+                "name": "La Roche-Posay Canada",
+                "country": "CA",
+                "websiteUrl": "https://www.laroche-posay.ca"
+              },
+              "externalListingId": "3337875872034",
+              "listingUrl": "https://www.laroche-posay.ca/en_CA/face-care/effaclar-duom-cream/3337875872034.html",
+              "isActive": true,
+              "productPrice": 33,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T18:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://www.laroche-posay.ca/en_CA/face-care/effaclar-duom-cream/3337875872034.html",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Official exact 40 ml listing showed CA$33.00."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "La Roche-Posay",
+        "slug": "la-roche-posay",
+        "originMarket": "FR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "Toleriane Dermallergo Cream",
+        "slug": "la-roche-posay-toleriane-dermallergo-cream",
+        "categorySlug": "cream",
+        "originMarket": "FR",
+        "commonEnglishAliases": [
+          "Toleriane Ultra Cream"
+        ]
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://www.laroche-posay.ca/en_CA/face-care/toleriane-dermallergo-cream/3337875757614.html",
+          "sourceType": "MANUFACTURER",
+          "retrievedAt": "2026-10-09T18:00:00.000Z",
+          "verifiedAt": "2026-10-09T18:00:00.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Official Canadian manufacturer page establishes the exact 40 ml product and identifier; legacy Toleriane Ultra naming is retained as an alias."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "40 ml",
+          "normalizedQuantity": 40,
+          "normalizedUnit": "ml",
+          "gtin": "3337875757614",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://www.laroche-posay.ca/en_CA/face-care/toleriane-dermallergo-cream/3337875757614.html",
+            "sourceType": "MANUFACTURER",
+            "retrievedAt": "2026-10-09T18:00:00.000Z",
+            "verifiedAt": "2026-10-09T18:00:00.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Official Canadian manufacturer page establishes the exact 40 ml product and identifier; legacy Toleriane Ultra naming is retained as an alias."
+          },
+          "images": [
+            {
+              "url": "https://www.laroche-posay.ca/dw/image/v2/AATL_PRD/on/demandware.static/-/Sites-larocheposay-master-catalog/default/dwd933c2a9/2024/3337875757614/3337875757614-PACKSHOT.jpg",
+              "altText": "La Roche-Posay Toleriane Dermallergo Cream 40 ml",
+              "sourceType": "BRAND_APPROVED",
+              "sourceName": "La Roche-Posay Canada",
+              "sourcePageUrl": "https://www.laroche-posay.ca/en_CA/face-care/toleriane-dermallergo-cream/3337875757614.html",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://www.laroche-posay.ca/en_CA/face-care/toleriane-dermallergo-cream/3337875757614.html",
+                "sourceType": "MANUFACTURER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact La Roche-Posay Toleriane Dermallergo Cream 40 ml image from La Roche-Posay Canada."
+              }
+            }
+          ],
+          "benchmarks": [
+            {
+              "market": "CA",
+              "type": "RETAIL_PRICE",
+              "amount": 41,
+              "nativeCurrency": "CAD",
+              "sourceKey": "brand:la-roche-posay-ca",
+              "sourceDisplayName": "La Roche-Posay Canada",
+              "sourceUrl": "https://www.laroche-posay.ca/en_CA/face-care/toleriane-dermallergo-cream/3337875757614.html",
+              "observedAt": "2026-10-09T18:00:00.000Z",
+              "verifiedAt": "2026-10-09T18:00:00.000Z",
+              "provenance": {
+                "sourceUrl": "https://www.laroche-posay.ca/en_CA/face-care/toleriane-dermallergo-cream/3337875757614.html",
+                "sourceType": "MANUFACTURER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Official Canadian manufacturer retail price for the exact 40 ml product."
+              }
+            }
+          ],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:la-roche-posay-ca",
+                "name": "La Roche-Posay Canada",
+                "country": "CA",
+                "websiteUrl": "https://www.laroche-posay.ca"
+              },
+              "externalListingId": "3337875757614",
+              "listingUrl": "https://www.laroche-posay.ca/en_CA/face-care/toleriane-dermallergo-cream/3337875757614.html",
+              "isActive": true,
+              "productPrice": 41,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T18:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://www.laroche-posay.ca/en_CA/face-care/toleriane-dermallergo-cream/3337875757614.html",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Official exact 40 ml listing showed CA$41.00."
+              }
+            },
+            {
+              "retailer": {
+                "sourceKey": "retailer:walmart-ca",
+                "name": "Walmart Canada",
+                "country": "CA",
+                "websiteUrl": "https://www.walmart.ca"
+              },
+              "externalListingId": "49PAQDJBCY0W",
+              "listingUrl": "https://www.walmart.ca/en/ip/La-Roche-Posay-Toleriane-Dermallergo-Cream-Sensitive-Skin-Face-Intense-Soothing-Care-Anti-Redness-Anti-Relapse-Allergy-Tested-Fragrance-Free-40mL/49PAQDJBCY0W?classType=REGULAR",
+              "isActive": true,
+              "productPrice": 41,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T18:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://www.walmart.ca/en/ip/La-Roche-Posay-Toleriane-Dermallergo-Cream-Sensitive-Skin-Face-Intense-Soothing-Care-Anti-Redness-Anti-Relapse-Allergy-Tested-Fragrance-Free-40mL/49PAQDJBCY0W?classType=REGULAR",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 40 ml marketplace listing showed CA$41.00; seller was Front Row Group CA and fulfillment was by Walmart."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "Caudalie",
+        "slug": "caudalie",
+        "originMarket": "FR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "Vinoperfect Radiance Serum",
+        "slug": "caudalie-vinoperfect-radiance-serum",
+        "categorySlug": "serum-ampoule",
+        "originMarket": "FR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://www.sephora.com/ca/en/product/caudalie-vinoperfect-radiance-serum-vitamin-c-alternative-P510584",
+          "sourceType": "RETAILER",
+          "retrievedAt": "2026-10-09T18:00:00.000Z",
+          "verifiedAt": "2026-10-09T18:00:00.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Exact Sephora 30 ml listing establishes product and size; manufacturer benchmark is intentionally omitted because selected-size pricing was not unambiguous."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "30 ml",
+          "normalizedQuantity": 30,
+          "normalizedUnit": "ml",
+          "gtin": null,
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://www.sephora.com/ca/en/product/caudalie-vinoperfect-radiance-serum-vitamin-c-alternative-P510584",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-09T18:00:00.000Z",
+            "verifiedAt": "2026-10-09T18:00:00.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact Sephora 30 ml listing establishes product and size; manufacturer benchmark is intentionally omitted because selected-size pricing was not unambiguous."
+          },
+          "images": [
+            {
+              "url": "https://caudalie-americas.imgix.net/media/catalog/product/4/3/432na_1.jpg?auto=format,compress&cs=srgb&fm=auto&w=1200",
+              "altText": "Caudalie Vinoperfect Radiance Serum 30 ml",
+              "sourceType": "BRAND_APPROVED",
+              "sourceName": "Caudalie Canada",
+              "sourcePageUrl": "https://ca-en.caudalie.com/p/432NAC/432nac.html",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://ca-en.caudalie.com/p/432NAC/432nac.html",
+                "sourceType": "MANUFACTURER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Official Caudalie Canada product image for Vinoperfect Radiance Serum."
+              }
+            }
+          ],
+          "benchmarks": [],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:sephora-ca",
+                "name": "Sephora Canada",
+                "country": "CA",
+                "websiteUrl": "https://www.sephora.com/ca/en"
+              },
+              "externalListingId": "P510584",
+              "listingUrl": "https://www.sephora.com/ca/en/product/caudalie-vinoperfect-radiance-serum-vitamin-c-alternative-P510584",
+              "isActive": true,
+              "productPrice": 110,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T18:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://www.sephora.com/ca/en/product/caudalie-vinoperfect-radiance-serum-vitamin-c-alternative-P510584",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 30 ml listing showed CA$110.00."
+              }
+            },
+            {
+              "retailer": {
+                "sourceKey": "retailer:jean-coutu-ca",
+                "name": "Jean Coutu",
+                "country": "CA",
+                "websiteUrl": "https://www.jeancoutu.com"
+              },
+              "externalListingId": "3522931004324",
+              "listingUrl": "https://www.jeancoutu.com/en/shop/categories/beauty/skincare/serums/serums/vinoperfect-radiance-serum-complexion-enhancing/p/3522931004324",
+              "isActive": true,
+              "productPrice": 110,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "OUT_OF_STOCK",
+              "observedAt": "2026-10-09T18:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://www.jeancoutu.com/en/shop/categories/beauty/skincare/serums/serums/vinoperfect-radiance-serum-complexion-enhancing/p/3522931004324",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 30 ml listing showed CA$110.00 and was out of stock."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "Caudalie",
+        "slug": "caudalie",
+        "originMarket": "FR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "VinoHydra Deep Hydration Moisturizer",
+        "slug": "caudalie-vinohydra-deep-hydration-moisturizer",
+        "categorySlug": "cream",
+        "originMarket": "FR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://ca-en.caudalie.com/p/435/435.html",
+          "sourceType": "MANUFACTURER",
+          "retrievedAt": "2026-10-09T18:00:00.000Z",
+          "verifiedAt": "2026-10-09T18:00:00.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Official Canadian manufacturer page establishes the exact 50 ml product and current retail price."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "50 ml",
+          "normalizedQuantity": 50,
+          "normalizedUnit": "ml",
+          "gtin": null,
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://ca-en.caudalie.com/p/435/435.html",
+            "sourceType": "MANUFACTURER",
+            "retrievedAt": "2026-10-09T18:00:00.000Z",
+            "verifiedAt": "2026-10-09T18:00:00.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Official Canadian manufacturer page establishes the exact 50 ml product and current retail price."
+          },
+          "images": [
+            {
+              "url": "https://caudalie-americas.imgix.net/media/catalog/product/1/_/1_vinohydra_cre_me_intense_pot_packshot_caudalie_copy.jpg?auto=format,compress&cs=srgb&fm=auto&w=1200",
+              "altText": "Caudalie VinoHydra Deep Hydration Moisturizer 50 ml",
+              "sourceType": "BRAND_APPROVED",
+              "sourceName": "Caudalie Canada",
+              "sourcePageUrl": "https://ca-en.caudalie.com/p/435/435.html",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://ca-en.caudalie.com/p/435/435.html",
+                "sourceType": "MANUFACTURER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact Caudalie VinoHydra Deep Hydration Moisturizer 50 ml image from Caudalie Canada."
+              }
+            }
+          ],
+          "benchmarks": [
+            {
+              "market": "CA",
+              "type": "RETAIL_PRICE",
+              "amount": 51,
+              "nativeCurrency": "CAD",
+              "sourceKey": "brand:caudalie-ca",
+              "sourceDisplayName": "Caudalie Canada",
+              "sourceUrl": "https://ca-en.caudalie.com/p/435/435.html",
+              "observedAt": "2026-10-09T18:00:00.000Z",
+              "verifiedAt": "2026-10-09T18:00:00.000Z",
+              "provenance": {
+                "sourceUrl": "https://ca-en.caudalie.com/p/435/435.html",
+                "sourceType": "MANUFACTURER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Official Canadian manufacturer retail price for the exact 50 ml product."
+              }
+            }
+          ],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:caudalie-ca",
+                "name": "Caudalie Canada",
+                "country": "CA",
+                "websiteUrl": "https://ca-en.caudalie.com"
+              },
+              "externalListingId": "435",
+              "listingUrl": "https://ca-en.caudalie.com/p/435/435.html",
+              "isActive": true,
+              "productPrice": 51,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T18:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://ca-en.caudalie.com/p/435/435.html",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Official exact 50 ml listing showed CA$51.00."
+              }
+            },
+            {
+              "retailer": {
+                "sourceKey": "retailer:sephora-ca",
+                "name": "Sephora Canada",
+                "country": "CA",
+                "websiteUrl": "https://www.sephora.com/ca/en"
+              },
+              "externalListingId": "P511726",
+              "listingUrl": "https://www.sephora.com/ca/en/product/caudalie-vinohydra-deep-hydration-moisturizer-P511726",
+              "isActive": true,
+              "productPrice": 51,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T18:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://www.sephora.com/ca/en/product/caudalie-vinohydra-deep-hydration-moisturizer-P511726",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact refreshed 50 ml listing showed CA$51.00; the older CA$38 result was not carried forward."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "Abib",
+        "slug": "abib",
+        "originMarket": "KR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "Heartleaf Spot Pad Calming Touch",
+        "slug": "abib-heartleaf-spot-pad-calming-touch",
+        "categorySlug": "toner-pads",
+        "originMarket": "KR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://sunskincare.ca/products/abib-heartleaf-spot-pad-calming-touch",
+          "sourceType": "RETAILER",
+          "retrievedAt": "2026-10-09T18:00:00.000Z",
+          "verifiedAt": "2026-10-09T18:00:00.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Exact 80-pad/150 ml listing and supplied pre-verified EAN; renewal wording does not create a separate version."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "80 pads / 150 ml",
+          "normalizedQuantity": 80,
+          "normalizedUnit": "pads",
+          "gtin": "8809864762398",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://sunskincare.ca/products/abib-heartleaf-spot-pad-calming-touch",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-09T18:00:00.000Z",
+            "verifiedAt": "2026-10-09T18:00:00.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact 80-pad/150 ml listing and supplied pre-verified EAN; renewal wording does not create a separate version."
+          },
+          "images": [
+            {
+              "url": "https://sunskincare.ca/cdn/shop/files/Abib-Heartleaf_Spot_Pad_Calming_Touch-_SunSkincare.jpg?v=1730747393",
+              "altText": "Abib Heartleaf Spot Pad Calming Touch 80 pads",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "Sun Skincare",
+              "sourcePageUrl": "https://sunskincare.ca/products/abib-heartleaf-spot-pad-calming-touch",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://sunskincare.ca/products/abib-heartleaf-spot-pad-calming-touch",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact Abib Heartleaf Spot Pad Calming Touch 80 pads image from Sun Skincare."
+              }
+            }
+          ],
+          "benchmarks": [],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:sunskincare-ca",
+                "name": "Sun Skincare",
+                "country": "CA",
+                "websiteUrl": "https://sunskincare.ca"
+              },
+              "externalListingId": null,
+              "listingUrl": "https://sunskincare.ca/products/abib-heartleaf-spot-pad-calming-touch",
+              "isActive": true,
+              "productPrice": 24.79,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "OUT_OF_STOCK",
+              "observedAt": "2026-10-09T18:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://sunskincare.ca/products/abib-heartleaf-spot-pad-calming-touch",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 80-pad/150 ml listing showed CA$24.79 and was sold out."
+              }
+            },
+            {
+              "retailer": {
+                "sourceKey": "retailer:kbeauty-ca",
+                "name": "Kbeauty Canada",
+                "country": "CA",
+                "websiteUrl": "https://kbeauty.ca"
+              },
+              "externalListingId": null,
+              "listingUrl": "https://kbeauty.ca/products/abib-heartleaf-spot-pad-calming-touch-80-pads",
+              "isActive": true,
+              "productPrice": 27.85,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "OUT_OF_STOCK",
+              "observedAt": "2026-10-09T18:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://kbeauty.ca/products/abib-heartleaf-spot-pad-calming-touch-80-pads",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 80-pad/150 ml listing showed CA$27.85 and was sold out."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "Abib",
+        "slug": "abib",
+        "originMarket": "KR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "Rice Probiotics Overnight Mask Barrier Jelly",
+        "slug": "abib-rice-probiotics-overnight-mask-barrier-jelly",
+        "categorySlug": "wash-off-mask",
+        "originMarket": "KR",
+        "commonEnglishAliases": [
+          "Rice Probiotics Overnight Mask"
+        ]
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://kiyoko.ca/en-ca/products/abib-rice-probiotics-overnight-mask-barrier-jelly-80ml",
+          "sourceType": "RETAILER",
+          "retrievedAt": "2026-10-09T18:00:00.000Z",
+          "verifiedAt": "2026-10-09T18:00:00.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Exact 80 ml overnight mask; mapped to the nearest existing mask leaf because no sleeping-mask leaf exists."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "80 ml",
+          "normalizedQuantity": 80,
+          "normalizedUnit": "ml",
+          "gtin": null,
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://kiyoko.ca/en-ca/products/abib-rice-probiotics-overnight-mask-barrier-jelly-80ml",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-09T18:00:00.000Z",
+            "verifiedAt": "2026-10-09T18:00:00.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact 80 ml overnight mask; mapped to the nearest existing mask leaf because no sleeping-mask leaf exists."
+          },
+          "images": [
+            {
+              "url": "https://kiyoko.ca/cdn/shop/files/abib-rice-probiotics-overnight-mask-barrier-jelly-80ml-2.webp?v=1766005326",
+              "altText": "Abib Rice Probiotics Overnight Mask Barrier Jelly 80 ml",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "Kiyoko Beauty",
+              "sourcePageUrl": "https://kiyoko.ca/en-ca/products/abib-rice-probiotics-overnight-mask-barrier-jelly-80ml",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/products/abib-rice-probiotics-overnight-mask-barrier-jelly-80ml",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact Abib Rice Probiotics Overnight Mask Barrier Jelly 80 ml image from Kiyoko Beauty."
+              }
+            }
+          ],
+          "benchmarks": [],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:kiyoko-ca",
+                "name": "Kiyoko Beauty",
+                "country": "CA",
+                "websiteUrl": "https://kiyoko.ca"
+              },
+              "externalListingId": null,
+              "listingUrl": "https://kiyoko.ca/en-ca/products/abib-rice-probiotics-overnight-mask-barrier-jelly-80ml",
+              "isActive": true,
+              "productPrice": 24,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T18:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/products/abib-rice-probiotics-overnight-mask-barrier-jelly-80ml",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 80 ml listing showed CA$24.00."
+              }
+            },
+            {
+              "retailer": {
+                "sourceKey": "retailer:abib-ca",
+                "name": "Abib Canada",
+                "country": "CA",
+                "websiteUrl": "https://abib.ca"
+              },
+              "externalListingId": null,
+              "listingUrl": "https://abib.ca/products/abib-rice-probiotics-overnight-mask-barrier-jelly",
+              "isActive": true,
+              "productPrice": 27,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T18:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://abib.ca/products/abib-rice-probiotics-overnight-mask-barrier-jelly",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 80 ml official Canadian storefront listing showed CA$27.00."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "MEDIHEAL",
+        "slug": "mediheal",
+        "originMarket": "KR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "Teatree Trouble Pad",
+        "slug": "mediheal-teatree-trouble-pad",
+        "categorySlug": "toner-pads",
+        "originMarket": "KR",
+        "commonEnglishAliases": []
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://kiyoko.ca/en-ca/products/mediheal-teatree-trouble-pad-100pcs",
+          "sourceType": "RETAILER",
+          "retrievedAt": "2026-10-09T18:00:00.000Z",
+          "verifiedAt": "2026-10-09T18:00:00.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Exact 100-pad/170 ml listing and supplied pre-verified EAN; clearance/near-expiry offers were excluded."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "100 pads / 170 ml",
+          "normalizedQuantity": 100,
+          "normalizedUnit": "pads",
+          "gtin": "8809615058671",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://kiyoko.ca/en-ca/products/mediheal-teatree-trouble-pad-100pcs",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-09T18:00:00.000Z",
+            "verifiedAt": "2026-10-09T18:00:00.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact 100-pad/170 ml listing and supplied pre-verified EAN; clearance/near-expiry offers were excluded."
+          },
+          "images": [
+            {
+              "url": "https://kiyoko.ca/cdn/shop/files/Image_MedihealTroublePad_600x_687fce59-7a13-4d05-ad8d-e65c1b6223ed.png?v=1685994972",
+              "altText": "MEDIHEAL Teatree Trouble Pad 100 pads",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "Kiyoko Beauty",
+              "sourcePageUrl": "https://kiyoko.ca/en-ca/products/mediheal-teatree-trouble-pad-100pcs",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/products/mediheal-teatree-trouble-pad-100pcs",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact MEDIHEAL Teatree Trouble Pad 100 pads image from Kiyoko Beauty."
+              }
+            }
+          ],
+          "benchmarks": [],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:kiyoko-ca",
+                "name": "Kiyoko Beauty",
+                "country": "CA",
+                "websiteUrl": "https://kiyoko.ca"
+              },
+              "externalListingId": null,
+              "listingUrl": "https://kiyoko.ca/en-ca/products/mediheal-teatree-trouble-pad-100pcs",
+              "isActive": true,
+              "productPrice": 23.99,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T18:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/products/mediheal-teatree-trouble-pad-100pcs",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 100-pad/170 ml listing showed CA$23.99."
+              }
+            },
+            {
+              "retailer": {
+                "sourceKey": "retailer:seoulistic-ca",
+                "name": "Seoulistic",
+                "country": "CA",
+                "websiteUrl": "https://seoulistic.ca"
+              },
+              "externalListingId": null,
+              "listingUrl": "https://seoulistic.ca/products/mediheal-teatree-trouble-pad-100-pads",
+              "isActive": true,
+              "productPrice": 23.99,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T18:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://seoulistic.ca/products/mediheal-teatree-trouble-pad-100-pads",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 100-pad listing showed CA$23.99."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "brand": {
+        "name": "MEDIHEAL",
+        "slug": "mediheal",
+        "originMarket": "KR",
+        "aliases": []
+      },
+      "family": {
+        "canonicalName": "Watermide Moisture Pad",
+        "slug": "mediheal-watermide-moisture-pad",
+        "categorySlug": "toner-pads",
+        "originMarket": "KR",
+        "commonEnglishAliases": [
+          "Watermide Toner Pad"
+        ]
+      },
+      "version": {
+        "versionName": "Current formulation",
+        "versionCode": "current",
+        "releaseDate": null,
+        "status": "CURRENT",
+        "manufacturerVersionCode": null,
+        "formulationFingerprint": null,
+        "packagingDescription": null,
+        "provenance": {
+          "sourceUrl": "https://kiyoko.ca/en-ca/products/mediheal-watermide-toner-pad-100pcs",
+          "sourceType": "RETAILER",
+          "retrievedAt": "2026-10-09T18:00:00.000Z",
+          "verifiedAt": "2026-10-09T18:00:00.000Z",
+          "verificationStatus": "VERIFIED",
+          "notes": "Exact 100-pad/150 ml product and supplied pre-verified EAN support Toner Pad and Moisture Pad title aliases."
+        },
+        "images": []
+      },
+      "variants": [
+        {
+          "displaySize": "100 pads / 150 ml",
+          "normalizedQuantity": 100,
+          "normalizedUnit": "pads",
+          "gtin": "8809615058695",
+          "manufacturerSku": null,
+          "isDefault": true,
+          "provenance": {
+            "sourceUrl": "https://kiyoko.ca/en-ca/products/mediheal-watermide-toner-pad-100pcs",
+            "sourceType": "RETAILER",
+            "retrievedAt": "2026-10-09T18:00:00.000Z",
+            "verifiedAt": "2026-10-09T18:00:00.000Z",
+            "verificationStatus": "VERIFIED",
+            "notes": "Exact 100-pad/150 ml product and supplied pre-verified EAN support Toner Pad and Moisture Pad title aliases."
+          },
+          "images": [
+            {
+              "url": "https://kiyoko.ca/cdn/shop/files/Image_MedihealTonerPad_1200x_dc01b6b2-37ae-4b58-88f9-88aaea01ea0e.png?v=1686026891",
+              "altText": "MEDIHEAL Watermide Moisture Pad 100 pads",
+              "sourceType": "RETAILER_APPROVED",
+              "sourceName": "Kiyoko Beauty",
+              "sourcePageUrl": "https://kiyoko.ca/en-ca/products/mediheal-watermide-toner-pad-100pcs",
+              "isPrimary": true,
+              "sortOrder": 0,
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/products/mediheal-watermide-toner-pad-100pcs",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact MEDIHEAL Watermide Moisture Pad 100 pads image from Kiyoko Beauty."
+              }
+            }
+          ],
+          "benchmarks": [],
+          "offers": [
+            {
+              "retailer": {
+                "sourceKey": "retailer:kiyoko-ca",
+                "name": "Kiyoko Beauty",
+                "country": "CA",
+                "websiteUrl": "https://kiyoko.ca"
+              },
+              "externalListingId": null,
+              "listingUrl": "https://kiyoko.ca/en-ca/products/mediheal-watermide-toner-pad-100pcs",
+              "isActive": true,
+              "productPrice": 24.99,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "IN_STOCK",
+              "observedAt": "2026-10-09T18:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://kiyoko.ca/en-ca/products/mediheal-watermide-toner-pad-100pcs",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact 100-pad/150 ml listing showed CA$24.99."
+              }
+            },
+            {
+              "retailer": {
+                "sourceKey": "retailer:shoppers-drug-mart-ca",
+                "name": "Shoppers Drug Mart",
+                "country": "CA",
+                "websiteUrl": "https://www.shoppersdrugmart.ca"
+              },
+              "externalListingId": "8809615058695",
+              "listingUrl": "https://www.shoppersdrugmart.ca/mediheal-watermide-moisture-pad-100-pcs/p/BB_8809615058695?variantCode=8809615058695",
+              "isActive": true,
+              "productPrice": 34,
+              "nativeCurrency": "CAD",
+              "availableMarkets": [
+                "CA"
+              ],
+              "availabilityState": "UNKNOWN",
+              "observedAt": "2026-10-09T18:00:00.000Z",
+              "shipping": null,
+              "items": [],
+              "provenance": {
+                "sourceUrl": "https://www.shoppersdrugmart.ca/mediheal-watermide-moisture-pad-100-pcs/p/BB_8809615058695?variantCode=8809615058695",
+                "sourceType": "RETAILER",
+                "retrievedAt": "2026-10-09T18:00:00.000Z",
+                "verifiedAt": "2026-10-09T18:00:00.000Z",
+                "verificationStatus": "VERIFIED",
+                "notes": "Exact EAN and 100-pad/150 ml listing showed CA$34.00; local availability varies."
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
