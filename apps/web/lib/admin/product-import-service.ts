@@ -12,6 +12,13 @@ import {
   type ProductImportPayload,
 } from "@beauty-platform/domain/product-import";
 import { runSerializable } from "../transactions";
+import {
+  classifyProductImportCommitFailure,
+  isRetryableProductImportCommitFailure,
+  productImportCommitFailureMessage,
+} from "./product-import-errors";
+
+const PRODUCT_IMPORT_COMMIT_TIMEOUT_MS = 30_000;
 
 export type ImportPlanAction = "CREATE" | "REUSE" | "UPDATE" | "DEACTIVATE" | "REACTIVATE" | "CONFLICT" | "AMBIGUOUS";
 export type ImportPlanStep = {
@@ -484,16 +491,26 @@ export async function commitProductImport(batchId: string, clerkUserId: string) 
       const committed = await tx.importBatch.update({ where: { id: batch.id }, data: { status: "COMMITTED",
         committedAt: new Date(), commitResult: jsonValue(result), failureReason: null }, select: batchSelect });
       return { status: "COMMITTED" as const, batch: committed };
-    });
+    }, { timeout: PRODUCT_IMPORT_COMMIT_TIMEOUT_MS });
   } catch (error) {
     if (error instanceof ImportConflictError) {
       const batch = await prisma.importBatch.update({ where: { id: batchId }, data: { status: "NEEDS_REVIEW",
         failureReason: error.message }, select: batchSelect });
       return { status: "CONFLICT" as const, batch };
     }
-    await prisma.importBatch.update({ where: { id: batchId }, data: { status: "FAILED",
-      failureReason: "Commit failed without persisting catalogue changes." } }).catch(() => undefined);
-    throw error;
+    const failureKind = classifyProductImportCommitFailure(error);
+    const failureReason = productImportCommitFailureMessage(failureKind);
+    console.error("Product import commit failed", {
+      batchId,
+      failureKind,
+      errorName: error instanceof Error ? error.name : "UnknownError",
+      prismaCode: typeof error === "object" && error !== null && "code" in error && typeof error.code === "string" ? error.code : null,
+    });
+    const batch = await prisma.importBatch.update({ where: { id: batchId }, data: {
+      status: isRetryableProductImportCommitFailure(failureKind) ? "VALIDATED" : "FAILED",
+      failureReason,
+    }, select: batchSelect }).catch(() => null);
+    return { status: "FAILED" as const, batch, failureKind };
   }
 }
 

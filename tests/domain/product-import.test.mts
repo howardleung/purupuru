@@ -181,15 +181,26 @@ test("admin endpoint authenticates before staging and commits are transaction-bo
   const route = readFileSync(new URL("../../apps/web/app/api/admin/ingestion/products/route.ts", import.meta.url), "utf8");
   const actions = readFileSync(new URL("../../apps/web/app/admin/imports/actions.ts", import.meta.url), "utf8");
   const reviewPage = readFileSync(new URL("../../apps/web/app/admin/imports/[id]/page.tsx", import.meta.url), "utf8");
+  const reviewActions = readFileSync(new URL("../../apps/web/app/admin/imports/[id]/import-batch-actions.tsx", import.meta.url), "utf8");
   const service = readFileSync(new URL("../../apps/web/lib/admin/product-import-service.ts", import.meta.url), "utf8");
   assert.ok(route.indexOf("getAdminAccess({ mutation: true })") < route.indexOf("stageProductImport(payload"));
   assert.match(route, /"Retry-After": String\(error\.result\.retryAfter\)/);
   assert.match(actions, /RateLimitError[\s\S]*notice=rate-limited/);
   assert.match(reviewPage, /Too many admin changes were submitted at once/);
   assert.match(service, /commitProductImport[\s\S]*runSerializable\(async \(tx\)/);
+  assert.match(service, /PRODUCT_IMPORT_COMMIT_TIMEOUT_MS = 30_000/);
+  assert.match(service, /\}, \{ timeout: PRODUCT_IMPORT_COMMIT_TIMEOUT_MS \}\)/);
   assert.match(service, /const result = await commitValidatedProductImportGraph\(tx, validation\.value\)/);
   assert.match(service, /status: "COMMITTED"/);
-  assert.match(service, /Commit failed without persisting catalogue changes/);
+  assert.match(service, /classifyProductImportCommitFailure/);
+  assert.match(service, /status: isRetryableProductImportCommitFailure\(failureKind\) \? "VALIDATED" : "FAILED"/);
+  assert.match(reviewActions, /useFormStatus/);
+  assert.match(reviewActions, /disabled=\{pending\}/);
+  assert.match(reviewActions, /animate-spin/);
+  assert.match(reviewActions, /Committing…/);
+  assert.match(reviewActions, /formAction=\{commitAction\}/);
+  assert.match(reviewActions, /formAction=\{rejectAction\}/);
+  assert.match(reviewPage, /role="alert"/);
 });
 
 test("the published machine schema is parseable and pinned to version 1.0", () => {

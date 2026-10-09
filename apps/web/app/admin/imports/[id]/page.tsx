@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { getAdminAccess } from "../../../../lib/admin-auth";
 import { getProductImport } from "../../../../lib/admin/product-import-service";
 import { safeExternalUrl } from "../../../../lib/external-url";
-import { commitImportAction, rejectImportAction } from "../actions";
+import { ImportBatchActions } from "./import-batch-actions";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "Review product import" };
@@ -55,12 +55,9 @@ export default async function ImportBatchPage({
     <div className="mt-5 flex flex-wrap items-start justify-between gap-4">
       <div><h1 className="text-3xl font-semibold">{batch.sourceLabel}</h1>
         <p className="mt-2 text-sm text-slate-600">{batch.status.replaceAll("_", " ")} · schema {batch.schemaVersion} · retrieved {batch.retrievedAt.toLocaleString("en-CA")}</p></div>
-      {canReject ? <div className="flex gap-2">
-        {canCommit ? <form action={commitImportAction.bind(null, batch.id)}><button className="ui-button ui-button--primary" type="submit">Approve and commit batch</button></form> : null}
-        <form action={rejectImportAction.bind(null, batch.id)}><button className="ui-button ui-button--ghost" type="submit">Reject</button></form>
-      </div> : null}
+      {canReject ? <ImportBatchActions batchId={batch.id} canCommit={canCommit} /> : null}
     </div>
-    {batch.failureReason ? <p className="mt-5 rounded-lg border border-rose-200 bg-rose-50 p-4 text-sm text-rose-800">{batch.failureReason}</p> : null}
+    {batch.failureReason ? <p aria-live="assertive" className="mt-5 rounded-lg border border-rose-200 bg-rose-50 p-4 text-sm text-rose-800" role="alert">{batch.failureReason}</p> : null}
     {links.length ? <section className="mt-6 rounded-xl border border-slate-200 p-5"><h2 className="font-semibold">Source and provenance links</h2>
       <ul className="mt-3 grid gap-2 text-sm">{links.map((url) => <li className="truncate" key={url}><a className="underline" href={url} rel="noreferrer" target="_blank">{url}</a></li>)}</ul>
     </section> : null}
