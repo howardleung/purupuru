@@ -2,24 +2,42 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import {
-  expandCatalogueVariants,
   filterCatalogueCapacity,
   filterCataloguePrice,
   getCatalogueCapacityRanges,
   normalizeCatalogueCapacity,
+  selectCatalogueFamilyVariant,
   selectLowestMarketOffer,
   sortCatalogueItems,
 } from "../../packages/domain/src/catalogue.ts";
 import { catalogueProductHref } from "../../apps/web/lib/product-links.ts";
 
-test("one product family produces one catalogue row per current exact variant", () => {
-  const rows = expandCatalogueVariants([{ family: { id: "dokdo", brand: "Round Lab" }, variants: [
-    { id: "200", displaySize: "200 mL", offers: [{ id: "offer-a" }, { id: "offer-b" }] },
-    { id: "500", displaySize: "500 mL", offers: [{ id: "offer-c" }] },
-  ] }]);
+test("one product family selects the exact variant behind its lowest comparable price", () => {
+  const selected = selectCatalogueFamilyVariant([
+    { id: "200", lowestPriceCad: 22, normalizedQuantity: 200, normalizedUnit: "mL" },
+    { id: "500", lowestPriceCad: 18, normalizedQuantity: 500, normalizedUnit: "mL" },
+  ], "200");
 
-  assert.deepEqual(rows.map(({ variant }) => variant.id), ["200", "500"]);
-  assert.equal(rows.length, 2, "multiple offers must not multiply variant rows");
+  assert.equal(selected?.id, "500");
+});
+
+test("a family without comparable prices falls back to its default exact variant", () => {
+  const selected = selectCatalogueFamilyVariant([
+    { id: "200", lowestPriceCad: null, normalizedQuantity: 200, normalizedUnit: "mL" },
+    { id: "500", lowestPriceCad: null, normalizedQuantity: 500, normalizedUnit: "mL" },
+  ], "500");
+
+  assert.equal(selected?.id, "500");
+});
+
+test("family price filtering selects a matching exact size before collapsing to one card", () => {
+  const variants = [
+    { id: "50", lowestPriceCad: 12, normalizedQuantity: 50, normalizedUnit: "mL", productName: "Serum", brandName: "Brand" },
+    { id: "100", lowestPriceCad: 24, normalizedQuantity: 100, normalizedUnit: "mL", productName: "Serum", brandName: "Brand" },
+  ];
+  const eligible = filterCataloguePrice(variants, 20, null, false);
+
+  assert.equal(selectCatalogueFamilyVariant(eligible, "50")?.id, "100");
 });
 
 test("capacity filtering converts compatible volume units and excludes incompatible mass", () => {
@@ -41,7 +59,7 @@ test("capacity filtering converts compatible volume units and excludes incompati
   ]);
 });
 
-test("catalogue links preserve the exact row variant", () => {
+test("catalogue links preserve the exact displayed-price variant", () => {
   assert.equal(catalogueProductHref({
     slug: "round-lab-1025-dokdo-toner",
     currentVersion: { id: "version", versionCode: "current", variant: { id: "variant-500" } },

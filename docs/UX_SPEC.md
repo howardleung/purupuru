@@ -1,20 +1,21 @@
 # PuruPuru Structural UX Specification
 
-**Status:** Canonical specification for the next structural UX redesign  
+**Status:** Canonical structural UX specification; product strategy lives in [`PRODUCT_VISION.md`](PRODUCT_VISION.md)
+
 **Scope:** Information architecture, interaction hierarchy, responsive behavior, and data-presentation rules  
 **Not in scope:** Final branding, visual identity, or implementation in this document  
-**Last updated:** 2026-10-01
+**Last updated:** 2026-10-11
 
 ## 1. Purpose
 
-This document is the canonical source of truth for PuruPuru's next structural UX redesign. It translates settled product decisions into an implementation-ready interaction model while preserving the existing domain model and trust rules.
+This document is the canonical source of truth for PuruPuru's structural UX. It translates the strategy in [`PRODUCT_VISION.md`](PRODUCT_VISION.md) into an implementation-ready interaction model while preserving the existing domain model and trust rules.
 
 This is a structural UX specification, not a claim that every specified capability is implemented. The application has a structural implementation and an initial shared visual pass; future coding and design agents must compare existing behavior with this document before changing components or routes. Durable visual-system decisions live in [DESIGN_PRINCIPLES.md](DESIGN_PRINCIPLES.md#16-purupuru-visual-system); the visual pass does not supersede these interaction or data rules.
 
 The supplied Sukoshi and PCPartPicker screenshots are references for information architecture and interaction patterns only:
 
 - Sukoshi inspires the clean header, image-forward discovery, approachable search suggestions, and beauty-oriented personal surfaces.
-- PCPartPicker inspires the product-category mega-menu, dense catalogue research tools, filtering, sorting, and side-by-side comparison behavior.
+- PCPartPicker remains a historical reference for explicit filtering, sorting, factual price comparison, and side-by-side comparison behavior; it does not define the storefront, navigation, or default catalogue experience.
 - PuruPuru must not copy either product's branding, assets, exact layout, typography, or visual identity.
 
 ## 2. Core design philosophy
@@ -23,9 +24,9 @@ PuruPuru should look and feel like a beauty product while behaving like a seriou
 
 | Surface type | Primary character | Examples | Default density |
 |---|---|---|---|
-| Discovery | Attractive, approachable, image-forward | Home, search suggestions | Low to medium |
+| Discovery | Attractive, approachable, image-forward | Home, search suggestions, catalogue | Low to medium |
 | Personal | Image-first, emotionally legible, progressively disclosed | My Collection, collection quick view | Low to medium |
-| Research | Explicit, sortable, filterable, factual | Catalogue, comparison, offer sections | Medium to high |
+| Research | Explicit, sortable, filterable, factual | Comparison, offer sections | Medium to high |
 | Bridge | Product identity first, shopping intelligence immediately useful | Product page | Mixed |
 
 Global principles:
@@ -63,8 +64,8 @@ Progressive disclosure must not hide:
 
 ### 3.3 Navigation and selection
 
-- Row, image, and product-name activation opens the full product page unless the element is an explicit control such as a checkbox.
-- Checkboxes and inline controls must not trigger row navigation.
+- Card/row image and product-name activation opens the full product page unless the element is an explicit control such as a checkbox.
+- Checkboxes and inline controls must not trigger surrounding card/row navigation.
 - Known version and exact-size context survives navigation from catalogue, comparison, collection, and shopping lists.
 - Browser back/forward should retain meaningful query, filter, sort, version, and variant state where practical.
 
@@ -240,34 +241,26 @@ Product/card activation opens the product page; category activation opens canoni
 
 ### Purpose
 
-Answer practical shopping questions quickly:
+Support enjoyable skincare discovery while answering practical shopping questions quickly:
 
-- What is the best tracked retailer price for this exact product and size?
-- Which tracked products and sizes have offers available to the user's market?
-- What are the highest-rated supported options?
+- What products and brands are worth exploring?
+- What is the best tracked retailer price, and which exact size does it apply to?
+- How do shoppers rate this product family?
 - Which products contain desired structured actives once verified data exists?
 
-This surface leans most toward PCPartPicker in behavior, never branding.
+This surface uses a modern skincare-storefront hierarchy while retaining independent, exact-variant price comparison underneath.
 
 ### Desktop structure
 
-- left filter rail;
-- result count and active-filter summary;
-- dense readable one-current-variant-per-row results, with each exact size independently price-comparable;
-- sortable column headers;
-- optional comparison checkboxes.
+- shopper-friendly entry points for Shop All, Shop by Category, and Shop by Brand;
+- left filter rail plus result count and active-filter summary;
+- a responsive, consistently sized, image-first product grid;
+- one card per ProductFamily, not one card per size;
+- brand, product name, family-level public rating when available, available-size context, and the lowest tracked Canadian price;
+- the exact size and retailer behind the displayed price;
+- an accessible sort control and optional comparison selection.
 
-Limit main visible columns to:
-
-1. Image
-2. Product name
-3. Brand
-4. Category
-5. Size
-6. Rating
-7. Lowest tracked price
-
-Actives are filters, not a permanent column.
+Active ingredients are future filters, not permanent card content.
 
 ### Catalogue price
 
@@ -285,9 +278,7 @@ The exact placement of native-only non-comparable prices within price sorts is u
 
 ### Sorts
 
-At minimum: price low/high, price high/low, rating high/low, rating low/high, and useful product/brand alphabetical orders.
-
-Do not implement rating sorting until a public catalogue rating source, cross-scale normalization, and tie-break policy are selected. Private personal ratings must not silently become public catalogue ratings.
+At minimum: price low/high, price high/low, and useful product/brand alphabetical orders. Family-level PuruPuru review averages may appear on cards. Rating sorting can be added when its empty-state and tie-break behavior are explicitly chosen; private personal ratings must never silently become public catalogue ratings.
 
 ### Filters
 
@@ -295,16 +286,16 @@ Initial concepts: Category, Brand, Capacity, Price, Rating, Active ingredients, 
 
 Active-ingredient filtering reserves the correct structural location; it does not authorize invented ingredient data. Hide, honestly disable, or defer it until a verified taxonomy and populated records exist.
 
-### Row behavior
+### Card behavior
 
-- Row, image, or name opens the full product page, not a quick view.
+- Card image, name, or explicit price-comparison link opens the full product page, not a quick view.
 - Comparison checkbox toggles without navigation.
-- Preserve the row's current version and exact variant in the URL.
-- Personal state may remain compact; do not turn research rows into collection cards.
+- Preserve the current version and exact variant associated with the card's displayed price in the URL.
+- Personal state may remain compact; do not turn storefront cards into collection cards.
 
 ### Mobile
 
-Use stacked rows/cards, never a squeezed desktop table. Show image, product/brand, exact size, one identity cue, defined rating, lowest eligible price, and comparison selection. Filters use a drawer/sheet; sorting remains accessible. Underlying results/capability match desktop.
+Use a two-column image-first grid where space permits and a single column only when needed for legibility. Show image, product/brand, rating, available-size context, the exact size behind the lowest eligible price, and comparison selection. Filters use a disclosure/drawer pattern; sorting remains accessible. Underlying results and capabilities match desktop.
 
 ## 10. Product comparison
 
@@ -487,11 +478,13 @@ Reuse the same collection actions as the product `+` overlay; create no modal-sp
 
 The structure may later hold more private metadata, but does not imply public sharing, community activity, or review text.
 
-## 16. Shopping Lists
+## 16. Shopping Lists (current implementation)
+
+Shopping Lists are implemented and must remain usable and data-safe. Their travel-oriented framing below documents current behavior, not the future strategic destination. Travel planning is no longer a flagship priority; the planned persistent smart cart may reuse or migrate this capability only through a separately specified change that preserves existing user data.
 
 ### Purpose
 
-Behave like a practical shopping cart/checklist for a real trip, with analysis available on demand.
+Behave like a practical checklist for the list's target market, with analysis available on demand.
 
 ### List summary
 
@@ -562,6 +555,12 @@ Until actual price is reliable, use documented estimated-savings logic. Receipt 
 
 Rows stack cleanly; check/quantity controls remain tappable; summaries remain readable; expanded detail uses accordions/sheets. Filters and retailer selection remain available without reproducing a spreadsheet.
 
+### Planned smart-cart successor
+
+The strategic shopping surface is a persistent exact-variant cart. It should default each item to its lowest eligible tracked offer, allow a shopper to override the retailer per item, group selected items by retailer, and recalculate item subtotals and a CAD basket total. It must show price changes and unavailable offers on return and keep item subtotal separate from shipping and tax. Adding to cart is neither a purchase nor a retailer reservation, and the initial cart has no PuruPuru-hosted checkout.
+
+Shipping thresholds, delivered-basket optimization, saved baskets, alternatives, price alerts, and unified checkout remain future work. Do not retrofit those semantics into current `ShoppingListItem` behavior without an explicit product/data migration decision.
+
 ## 17. Data semantics the UX must preserve
 
 | Domain truth | UX requirement |
@@ -588,24 +587,24 @@ Rows stack cleanly; check/quantity controls remain tappable; summaries remain re
 
 ### Settled structural direction
 
-- Beauty-first discovery/personal surfaces and research-first catalogue/comparison surfaces.
+- Beauty-first discovery and personal surfaces, with research density reserved for comparison surfaces where it helps.
 - Minimal two-row desktop header with left search, centred wordmark, right account, nav below.
 - Products mega-menu derived from canonical categories.
 - Immediate grouped autocomplete for products, brands, categories.
-- Desktop catalogue with filter rail, sortable rows, and limited factual columns.
-- Mobile catalogue with compact rows/cards, filter drawer, accessible sorting.
+- Desktop catalogue with an image-first family grid, clean discovery filters, and accessible sorting.
+- Mobile catalogue with responsive product cards, filter controls, and accessible sorting.
 - Small-set factual product comparison architecture.
 - Product page prioritizes identity/buying; personal tools move behind compact `+`.
 - Five-star half-step rating with touch/keyboard equivalents.
 - My Collection becomes an image-first shelf with private quick view.
-- Shopping Lists become checklist/cart-like with progressive analytical detail.
+- Existing Shopping Lists remain checklist-like with progressive analytical detail; a persistent smart cart is the planned successor direction.
 - Click/tap is authoritative; hover only enhances.
 - Full core mobile functionality is required.
 - Existing domain, auth, pricing, savings, and trust rules remain canonical.
 
 ### Deliberately unresolved or future
 
-- Final Home and Shopping List composition.
+- Final Home and smart-cart composition, including any migration/reuse of Shopping Lists.
 - Final typography, colours, logo/wordmark, animation, microinteractions, decorative art direction, mobile art direction.
 - Exact nav labels and whether Brands initially has a dedicated route.
 - Mega-menu imagery and licensing.
@@ -614,7 +613,7 @@ Rows stack cleanly; check/quantity controls remain tappable; summaries remain re
 - Placement of native-only non-comparable prices during cross-currency sorts.
 - Comparison selection limit, URL/persistence, first dimensions, and milestone timing.
 - Active-ingredient taxonomy/data population.
-- Persistence of list offer overrides.
+- Cart persistence, retailer-override storage, and Shopping List migration/reuse.
 - Manual actual-price flow and per-unit versus transaction-total meaning.
 - Richer comparison attributes.
 - Community reviews, public profiles/lists, creator lists, user-curated discovery.
@@ -675,7 +674,7 @@ Each milestone preserves domain tests and adds focused behavior tests; styling s
 | Personal `+` | Save/plan | Current state/actions | Purchase/list detail | Commit action | Rating preview | Bottom sheet/modal |
 | Collection | Personal shelf | Image, identity, rating | Quick view | Open quick view | Card emphasis | Image grid |
 | Collection quick view | State editing | Image, rating, state, summary | Future private metadata | Mutate/View Product | Rating preview | Bottom sheet/modal |
-| Shopping List | Trip checklist | Progress, totals, clean rows | Offer/benchmark/savings | Check/expand/filter | Row emphasis | Stacked checklist/sheets |
+| Shopping List | Current target-market checklist | Progress, totals, clean rows | Offer/benchmark/savings | Check/expand/filter | Row emphasis | Stacked checklist/sheets |
 
 ---
 

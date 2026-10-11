@@ -1,8 +1,22 @@
 # Roadmap V0
 
-The roadmap protects focus. Items listed later are not promises or requirements for the current build.
+The roadmap protects focus. Items listed later are not promises or requirements for the current build. [`PRODUCT_VISION.md`](PRODUCT_VISION.md) is authoritative for product strategy; this file sequences that direction while retaining completed implementation history.
 
-Across phases, PuruPuru's primary outcome is helping shoppers compare available retailer prices for the exact skincare product and size they want, choose the best tracked buying option, and save money. Product identity, provenance, benchmarks, price history, collections, and planning features support that outcome rather than replacing it.
+Across phases, PuruPuru should become an enjoyable skincare storefront with independent exact-size retailer comparison underneath. Product identity, provenance, benchmarks, price history, collections, and personal tools support discovery and smarter purchasing rather than replacing them.
+
+## Current strategic priorities
+
+1. Complete the storefront Browse and navigation direction.
+2. Add privacy-conscious basic analytics instrumentation, including impressions alongside interactions.
+3. Build a persistent smart cart with exact variants and per-item retailer selection.
+4. Add an internal analytics dashboard.
+5. Improve price coverage, freshness, and honest sale/price-drop presentation.
+6. Enhance product galleries and details.
+7. Introduce data-supported recommendations, curated collections, and discovery.
+8. Add shipping-aware basket optimization and price alerts only when data quality supports them.
+9. Continue targeted catalogue expansion where it materially improves useful coverage.
+
+Travel-shopping workflows are no longer an active strategic priority. Existing Shopping Lists remain implemented and supported until a separate, data-safe cart migration or reuse decision is made.
 
 ## Phase 0 — Feasibility and product definition
 
@@ -74,20 +88,23 @@ Deliver:
 - shopping-list quantities and estimate coverage warnings
 - collection statistics basics
 
-## Phase 3 — MVP launch / validation
+## Phase 3 — Storefront validation and instrumentation
 
 Goals:
 - public anonymous browse
 - real users
-- instrument core behavior
-- identify whether people return before purchases
+- complete the image-first storefront and shopper-friendly navigation direction
+- instrument core behavior with appropriate privacy, consent, and retention
+- identify whether people enjoy browsing and return before purchases
 
 Track:
-- product searches/session
+- product impressions and detail views
+- product searches/session and searches with no results
+- filter usage
 - product-page depth
-- offer click-through
+- offer impressions and click-through
 - Want additions
-- shopping-list additions
+- cart/list additions and revisits
 - account conversion after gated actions
 - return visits
 - collection completion behavior
@@ -95,7 +112,13 @@ Track:
 
 Do not optimize vanity metrics at the expense of trust.
 
-## Phase 4 — Early community/data contribution
+## Phase 4 — Smart cart and internal analytics
+
+Build a persistent exact-variant cart that defaults each item to the lowest eligible tracked offer, permits retailer overrides, groups selections by retailer, and shows CAD item/basket totals. Price changes and unavailable offers must remain explicit; item subtotals stay separate from shipping and tax. There is no PuruPuru-hosted checkout in this phase.
+
+Add an internal dashboard for traffic, discovery, cart, outbound-click, product, brand, category, and retailer-offer performance. Measure impressions alongside clicks so placement does not masquerade as preference, and never interpret an outbound click as a completed purchase.
+
+## Later — Community/data contribution
 
 Potential features after core usage is proven:
 - review reporting, moderation, helpful votes, media, and replies
@@ -110,7 +133,7 @@ Potential features after core usage is proven:
 
 No cash-per-submission system initially; avoid creating fraud incentives.
 
-## Phase 5 — Receipt intelligence
+## Later — Receipt intelligence
 
 Future high-value loop:
 - upload receipt
@@ -118,14 +141,14 @@ Future high-value loop:
 - product/variant matching
 - confirmation UI with detected items checked
 - user corrections before commit
-- check shopping-list quantities as purchased
+- reconcile a cart or retained planning list where appropriate
 - create PurchaseInstances
 - update collection
 - contribute verified PriceObservations
 
 The feature should save the user work first; community data is a secondary benefit.
 
-## Phase 6 — Shopping intelligence expansion
+## Later — Shopping intelligence expansion
 
 Potential:
 - broader trustworthy retailer coverage for more useful best-tracked-price comparisons
@@ -138,15 +161,15 @@ Potential:
 - price alerts
 - richer shipping information
 - better local-market reference coverage
-- travel-mode summaries
+- shipping-threshold and delivered-basket optimization
 
 Avoid promising universal landed-cost/tax calculations until data quality supports it.
 
-## Phase 7 — Personalization and discovery
+## Later — Personalization and discovery
 
 Potential:
 - stronger interest-based home feed
-- list recommendations
+- cart, product, and routine recommendations
 - similarity/taste profiles
 - local-market trending when legitimate repeatable data exists
 - active-ingredient taxonomy
@@ -155,7 +178,7 @@ Potential:
 
 Skin type may support non-medical discovery context; avoid diagnostic claims.
 
-## Phase 8 — Monetization refinement
+## Later — Monetization refinement
 
 Likely first path:
 - affiliate commerce revenue
@@ -163,12 +186,13 @@ Likely first path:
 Possible premium later, only after observing willingness to pay:
 - unlimited/high-volume receipt imports
 - advanced price alerts/history
-- deeper trip analytics
 - advanced collection analytics
 - power-user organization
 - premium cosmetics/profile customization
 
 Core participation, collection, standard comparison, and contribution should remain broadly accessible.
+
+Affiliate referrals, retailer partnerships, and better product feeds must preserve independent price ranking. A unified multi-retailer checkout is a separate long-term business possibility requiring merchant agreements and substantial payment/order infrastructure; it is not an MVP feature or a commitment in this roadmap.
 
 ## Very-late expansion
 

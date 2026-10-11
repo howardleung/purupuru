@@ -38,12 +38,46 @@ export type CatalogueCapacityRange = {
   unit: CatalogueCapacity["unit"];
 };
 
+export type CatalogueVariantChoice = {
+  id: string;
+  lowestPriceCad: number | null;
+  normalizedQuantity: number;
+  normalizedUnit: string;
+};
+
 export function expandCatalogueVariants<TFamily, TVariant>(
   families: readonly { family: TFamily; variants: readonly TVariant[] }[],
 ): Array<{ family: TFamily; variant: TVariant }> {
   return families.flatMap(({ family, variants }) =>
     variants.map((variant) => ({ family, variant })),
   );
+}
+
+export function selectCatalogueFamilyVariant<T extends CatalogueVariantChoice>(
+  variants: readonly T[],
+  defaultVariantId: string | null,
+): T | null {
+  return [...variants].sort((a, b) => {
+    if (a.lowestPriceCad !== null && b.lowestPriceCad !== null) {
+      const priceDifference = a.lowestPriceCad - b.lowestPriceCad;
+      if (priceDifference !== 0) return priceDifference;
+    } else if (a.lowestPriceCad !== null) {
+      return -1;
+    } else if (b.lowestPriceCad !== null) {
+      return 1;
+    }
+
+    if (a.id === defaultVariantId) return -1;
+    if (b.id === defaultVariantId) return 1;
+
+    const aCapacity = normalizeCatalogueCapacity(a.normalizedQuantity, a.normalizedUnit);
+    const bCapacity = normalizeCatalogueCapacity(b.normalizedQuantity, b.normalizedUnit);
+    return (
+      (aCapacity?.amount ?? a.normalizedQuantity) -
+        (bCapacity?.amount ?? b.normalizedQuantity) ||
+      a.id.localeCompare(b.id)
+    );
+  })[0] ?? null;
 }
 
 export function normalizeCatalogueCapacity(

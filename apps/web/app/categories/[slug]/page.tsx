@@ -67,7 +67,7 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
       breadcrumbs={catalogue.breadcrumbs}
       brands={catalogue.brands}
       categories={catalogue.categories}
-      description={`Find the ${catalogue.selectedCategory.displayName.toLowerCase()} product and size you want, then compare available retailer prices.`}
+      description={`Explore ${catalogue.selectedCategory.displayName.toLowerCase()}, discover available sizes, and compare tracked Canadian retailer prices.`}
       personalItems={personalItems}
       products={catalogue.products}
       filters={catalogue.filters}

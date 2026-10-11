@@ -4,13 +4,15 @@
 
 ### Working Product Description
 
-A global beauty discovery, collection, and shopping-intelligence platform that helps users understand what products are genuinely popular in different beauty markets, compare trusted buying options, and organize the products they own, want, tried, finished, and plan to purchase.
+PuruPuru is a skincare shopping, discovery, and independent price-comparison platform for Canadian shoppers. It aims to become a place people enjoy browsing even when they are not ready to buy, while helping them compare tracked retailer prices for the exact product and size they want.
+
+The canonical long-term strategy, priority order, and capability status live in [`docs/PRODUCT_VISION.md`](docs/PRODUCT_VISION.md). This specification retains detailed current behavior and domain requirements.
 
 The current working product name is `PuruPuru`. Domain and trademark clearance remain pending; the identity change does not alter product scope or domain behavior.
 
-The initial focus is skincare, with particular emphasis on Korean, Japanese, and selected European skincare markets.
+The initial specialization is skincare, with strong Korean, Japanese, French pharmacy and prestige representation plus other relevant international and domestic brands.
 
-The product is not intended to replace local review platforms such as @cosme or Olive Young. Instead, it acts as a global layer that helps users understand how products are perceived and sold across different markets.
+The default experience should feel like a modern skincare storefront, not a technical database. Local ratings, market signals, collection features, and product evidence support discovery and purchase confidence without displacing the primary browse-and-compare experience.
 
 ---
 
@@ -34,20 +36,11 @@ A user researching a skincare product may currently need to check:
 
 This creates several problems.
 
-### 2.1 Local popularity is difficult to understand globally
+### 2.1 Skincare discovery and shopping are fragmented
 
-Products that are popular internationally are not always the products currently popular within their country of origin.
+Retailer sites, social channels, regional beauty platforms, and search results each expose only part of the market. Shoppers lack one enjoyable, skincare-first place to discover products and then compare independent buying options without repeating the same research across several stores.
 
-Likewise, products that are highly rated or trending locally in Japan or Korea may have relatively little international visibility.
-
-Users outside those markets often lack an easy way to answer questions such as:
-
-- What sunscreens are actually popular in Japan right now?
-- Is this product highly rated in Korea, or is it mainly popular internationally?
-- Is this older formulation still being sold abroad?
-- Are there products locals love that I would otherwise never discover?
-
-Local beauty platforms contain valuable information, but language, regional access, and fragmented ecosystems make that information difficult for international users to use effectively.
+Reliable local ratings, rankings, ingredients, skin concerns, and behavioral signals may eventually improve discovery. They must be attributable and structured; PuruPuru must not invent popularity or recommendations before supporting data exists.
 
 ### 2.2 Shopping options are fragmented
 
@@ -59,14 +52,12 @@ A Canadian user may need to compare:
 - large Canadian retailers
 - Amazon
 - international retailers shipping to Canada
-- pricing in Korea or Japan
-- local prices they may encounter while travelling
+- international retailers known to deliver to Canada
+- authoritative domestic-market reference prices
 
 This process is repetitive and often requires manual currency conversion.
 
-Even when a product is cheaper abroad, users may not know whether the difference is meaningful enough to wait until a future trip.
-
-Conversely, a product may be difficult or impossible to find through tracked Canadian retailers, making it valuable to prioritize while travelling.
+An authoritative Korean, Japanese, French, or other domestic-market reference price can still help a Canadian shopper recognize an import markup or unusually strong local offer. It remains informational context rather than a currently available delivered price.
 
 ### 2.3 Product versions, variants, and bundles are confusing
 
@@ -120,7 +111,7 @@ The initial target user is a skincare enthusiast in Canada who:
 - shops from both Canadian and international retailers
 - compares prices
 - creates wishlists or shopping lists
-- may travel to destinations such as Korea or Japan and purchase skincare while there
+- enjoys discovering products even without immediate purchase intent
 
 The user does not need to be an expert.
 
@@ -128,26 +119,11 @@ The product should work for someone who is deeply knowledgeable about skincare a
 
 ### 3.2 Example Primary User Behaviours
 
-A typical user might:
-
-- see a sunscreen on TikTok
-- search for it on the platform
-- discover that it is currently highly ranked in Japan
-- compare the Japanese reference price against Canadian buying options
-- notice that the Canadian listings are an older formulation
-- add the latest version to a Japan shopping list
-- purchase it during a trip
-- later record where and when it was purchased
-- rate it after using it
-- include it in a collection of favourite sunscreens (with public sharing as a post-MVP capability)
+A typical user might browse sunscreen, discover a promising product, choose the exact size, compare tracked Canadian-accessible retailer offers, use an authoritative Japanese reference price and price history as context, save it for later, follow the selected listing when ready, and review or record it after use.
 
 ### 3.3 Secondary Users
 
 Potential secondary users include:
-
-#### Travellers
-
-People planning shopping while visiting Korea, Japan, France, or other major beauty markets.
 
 #### Beauty Enthusiasts
 
@@ -165,21 +141,21 @@ Beauty creators who may eventually build public collections, shopping guides, ro
 
 ## 4. Core Value Proposition
 
-PuruPuru is primarily a skincare price-comparison and shopping-intelligence product. Its core job is to help shoppers compare available retailer prices for the exact product and size they want, identify the best tracked buying option, and save money. The normal shopper-facing identity is brand + product name + size.
+PuruPuru combines an exceptional skincare browsing experience with independent price comparison. Its core jobs are to make skincare discovery enjoyable and to help shoppers compare available retailer prices for the exact product and size they want, identify the best tracked buying option, and save money. The normal shopper-facing identity is brand + product name + size.
 
 ProductVersion, identifiers, provenance, benchmarks, availability, and price history exist to make the comparison trustworthy. Keep that complexity out of the main value proposition unless it materially changes a buying decision.
 
 The product should help users answer four questions, in this priority order:
+
+### What should I discover?
+
+Make skincare exploration enjoyable through image-first product, category, and brand browsing that leads naturally into exact-size retailer comparison. Popularity, recommendation, skin concern, ingredient, or personalization features may support discovery only when reliable structured evidence exists.
 
 ### Where should I buy it?
 
 Compare tracked local and international retailer offers for the exact product and size, clearly distinguishing eligible purchasing markets and current availability. Make the lowest comparable tracked product price easy to find without implying that every retailer on the internet has been checked.
 
 Help users quickly understand which tracked retailer appears cheaper and whether purchasing abroad may be worthwhile. Default ordering remains affiliate-neutral and based on product price rather than an opaque deal score.
-
-### What should I discover?
-
-Show useful skincare products and categories that lead naturally into exact-size retailer comparison. Popular or highly regarded products from different beauty markets may support discovery only when legitimate evidence exists.
 
 ### What does the world think about it?
 
@@ -198,7 +174,7 @@ The core loop is:
 1. Discover a product.
 2. Understand its reputation across relevant beauty markets.
 3. Compare tracked retailer prices and availability for the exact size; expose a version/formula distinction only when it materially affects the purchase.
-4. Save the product to a personal collection or shopping list.
+4. Save the product to a personal collection or the current Shopping Lists; a persistent smart cart is the planned successor shopping surface.
 5. Purchase the product.
 6. Record the purchase.
 7. Use and eventually rate or review the product.
@@ -219,18 +195,16 @@ Canada.
 
 The initial product should optimize price comparison and purchasing decisions for Canadian users.
 
-### Initial Beauty Markets
+### Initial Catalogue Focus
 
-Primary:
+Build useful Canadian shopping coverage across:
 
-- South Korea
-- Japan
+- Korean skincare
+- Japanese skincare
+- French pharmacy and prestige skincare
+- other relevant international and domestic brands
 
-Selected support:
-
-- France and other relevant European skincare brands where feasible
-
-The European category should initially be selective rather than attempting comprehensive coverage across all European beauty products.
+Breadth should follow shopper demand and trustworthy offer coverage rather than an arbitrary country quota.
 
 ### Initial Product Categories
 
@@ -353,20 +327,26 @@ Users may also record optional information such as:
 - personal notes
 - personal rating
 
-### Shopping Lists
+### Shopping Lists (current, strategically superseded)
 
-Users can create lists such as:
+The implemented application supports target-market shopping lists such as:
 
 - Japan Trip
 - Korea Trip
 - Products to Buy
 - Upcoming Haul
 
-A product can be added directly to a shopping list from its product page.
+A product can be added directly to a shopping list from its product page. Preserve this current behavior and existing user data.
 
 The shopping-list item should represent the user's intent to purchase a product variant rather than permanently storing one retailer's current offer.
 
-Price information can therefore update independently between the time the product is added and the time the user shops.
+Price information can therefore update independently between the time the product is added and the time the user shops. Travel-oriented lists are no longer a flagship strategic priority; the planned persistent smart cart may reuse or migrate this capability only through a future explicit, data-safe decision.
+
+### Planned Smart Shopping Cart
+
+The strategic successor is a persistent exact-variant cart with a default lowest eligible tracked offer and a shopper-selectable retailer per item. It should recalculate CAD item and basket totals, group selections by retailer, retain exact outbound links, and surface changed or unavailable prices when the shopper returns. Item subtotal remains distinct from shipping and tax. Adding to cart is not a purchase or reservation, and PuruPuru-hosted checkout is not part of the initial cart.
+
+This is planned behavior, not current MVP functionality. Existing Shopping Lists and user data remain intact until a separate migration/reuse decision is designed.
 
 ### Versions and Variants
 
@@ -576,14 +556,14 @@ MVP should support:
 - common English aliases
 - canonical category
 
-Autocomplete results should remain consolidated at the product-family level rather than repeating every size. The submitted catalogue and category browse surfaces represent each purchasable current `ProductVariant` as its own result so exact sizes and their eligible offers can be compared honestly; shopper-relevant version selection remains available on the product page.
-For signed-in users, catalogue rows may add compact personal-state context for the family’s current `ProductVersion`, including Want, Tried, derived Owned, Holy Grail, Would Repurchase, and the private rating. This enrichment must reuse the normalized collection model, avoid per-row queries, remain absent for anonymous users, and label its current-version scope. Catalogue links must preserve the displayed current version and exact variant so the product page opens in the expected context.
+Autocomplete, catalogue, and category browse results remain consolidated at the product-family level rather than repeating every size. Each image-first catalogue card lists available sizes and associates its displayed lowest tracked Canadian price with the exact active current `ProductVariant` that produced it. The card link preserves that current version and priced variant so the product page opens in the expected context; shopper-relevant size and exceptional version selection remain available there.
+For signed-in users, catalogue cards may add compact personal-state context for the family’s current `ProductVersion`, including Want, Tried, derived Owned, Holy Grail, Would Repurchase, and the private rating. This enrichment must reuse the normalized collection model, avoid per-card queries, remain absent for anonymous users, and label its current-version scope. Family-level public review aggregates may be shown separately from private ratings.
 
 Autocomplete may show a matching brand result followed by matching products. For product matches, simple MVP ordering may use available popularity signals where trustworthy, otherwise alphabetical order.
 
 Local-language names, deeper origin filtering, and version-specific search are post-MVP considerations.
 
-MVP browse/discovery includes canonical category navigation, simple category-filtered browse views, and capacity filtering within compatible measurement dimensions, alongside curated/editorial sections and simple platform-derived sections such as Most Wanted and Newly Added. Capacity comparisons normalize volume to mL, mass to g, and discrete quantities to count; incompatible dimensions are never compared as though equivalent. Category browse pages and product pages show compact, clickable breadcrumbs derived from the canonical category path (for example, `Skincare > Toners > Toner`) for orientation and back-navigation. Breadcrumb labels and routes use canonical taxonomy data, never retailer-specific categories, and should remain compatible with SEO-friendly web routes. It may include destination-market shopping-list price estimates where the required comparison data exists.
+MVP browse/discovery includes canonical category navigation, simple category-filtered browse views, and capacity filtering within compatible measurement dimensions, alongside curated/editorial sections and simple platform-derived sections such as Most Wanted and Newly Added. Capacity comparisons normalize volume to mL, mass to g, and discrete quantities to count; incompatible dimensions are never compared as though equivalent. Category browse pages and product pages show compact, clickable breadcrumbs derived from the canonical category path (for example, `Skincare > Toners > Toner`) for orientation and back-navigation. Breadcrumb labels and routes use canonical taxonomy data, never retailer-specific categories, and should remain compatible with SEO-friendly web routes. The current implementation may include target-market Shopping List estimates where the required comparison data exists; these are retained behavior rather than the future discovery priority.
 
 Do not claim local Trending rankings until a legitimate repeatable data source exists. No giant filter builder yet.
 
@@ -900,7 +880,7 @@ When multiple meaningful formulas exist, use compact pill/button controls when f
 
 External ratings should be shown as polished compact source signals, using the source/platform logo where permitted alongside its rating and relevant review count or ranking. They should not require separate full-size cards for every source.
 
-Price comparison should be visible in one continuous view rather than hidden behind market tabs. For the Canadian MVP, all tracked offers known to serve Canada should appear together under `Buy in Canada`, regardless of the retailer's home or storefront country. `Offer.availableMarkets` represents known customer/delivery markets for the specific offer; it is not the retailer's country. Retailer storefronts with materially different catalogue, inventory, pricing, or currency—such as `Amazon.ca` and `Amazon.jp`—remain distinct retailer records. The Canadian product page does not add a separate foreign-market buying table; the verified benchmark supplies compact native-market context, while foreign offer data remains available for future market-specific and travel-planning flows. A normalized offer-market availability model is deferred until market-specific attributes such as shipping or availability justify it.
+Price comparison should be visible in one continuous view rather than hidden behind market tabs. For the Canadian MVP, all tracked offers known to serve Canada should appear together under `Buy in Canada`, regardless of the retailer's home or storefront country. `Offer.availableMarkets` represents known customer/delivery markets for the specific offer; it is not the retailer's country. Retailer storefronts with materially different catalogue, inventory, pricing, or currency—such as `Amazon.ca` and `Amazon.jp`—remain distinct retailer records. The Canadian product page does not add a separate foreign-market buying table; the verified benchmark supplies compact native-market context, while foreign offer data remains available for future market-specific comparison features. A normalized offer-market availability model is deferred until market-specific attributes such as shipping or availability justify it.
 
 The product's strongest available local benchmark—official `MSRP`, official or trusted local `Retail Price`, or trusted `Reference Price`—should appear prominently in the main product details rather than being buried as merely another retailer row. Keep the compact summary focused on benchmark type and market, approximate CAD when available, and the authoritative native amount; keep source and last-verified details in an accessible disclosure. This benchmark is a core shopping-intelligence feature because it gives users context for what the product is normally intended to cost in its local market.
 

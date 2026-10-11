@@ -4,11 +4,12 @@ This file is the primary operational instruction for coding agents. The reposito
 
 ## Read before non-trivial work
 
-1. `PRODUCT_SPEC_V0.md` for scope.
-2. `docs/DECISIONS.md` for settled choices.
-3. `docs/DESIGN_PRINCIPLES.md` and `docs/DATA_MODEL.md` for UX and domain invariants.
-4. The task-specific references: `docs/ARCHITECTURE.md`, `docs/TESTING.md`, `docs/INGESTION.md`, `docs/USER_FLOWS.md`, `docs/ROADMAP.md`, and `docs/PROJECT_CONTEXT.md` as relevant.
-5. `README.md` for commands and current status, then the existing code, schema, migrations, and tests that the change touches.
+1. `docs/PRODUCT_VISION.md` for strategy and priorities.
+2. `PRODUCT_SPEC_V0.md` for scope.
+3. `docs/DECISIONS.md` for settled choices.
+4. `docs/DESIGN_PRINCIPLES.md` and `docs/DATA_MODEL.md` for UX and domain invariants.
+5. The task-specific references: `docs/ARCHITECTURE.md`, `docs/TESTING.md`, `docs/INGESTION.md`, `docs/USER_FLOWS.md`, `docs/ROADMAP.md`, and `docs/PROJECT_CONTEXT.md` as relevant.
+6. `README.md` for commands and current status, then the existing code, schema, migrations, and tests that the change touches.
 
 If a request conflicts with these documents, flag it before choosing a direction. Validate assumptions against the codebase; never fabricate missing data or infer business facts from absent values.
 
@@ -29,7 +30,8 @@ If a request conflicts with these documents, flag it before choosing a direction
 
 ## PuruPuru invariants
 
-- Treat PuruPuru primarily as a skincare price-comparison and shopping-intelligence product: help shoppers compare available retailer prices for the exact product and size they want, identify the best tracked buying option, and save money. Keep versioning, identifiers, provenance, and other data-model complexity out of shopper-facing hierarchy unless they materially affect a purchase.
+- Follow `docs/PRODUCT_VISION.md`: PuruPuru is a skincare shopping, discovery, and independent price-comparison platform. Build an enjoyable image-first storefront and trustworthy exact-size retailer comparison; keep versioning, identifiers, provenance, and other data-model complexity out of shopper-facing hierarchy unless they materially affect a purchase.
+- Treat the persistent smart cart, analytics, recommendations, and unified checkout according to their documented status. Do not present planned capabilities as implemented, and do not revive travel shopping lists or a PCPartPicker-style database interface as the primary strategic direction.
 - Preserve `ProductFamily → ProductVersion → ProductVariant → Offer`; never silently merge ambiguous versions, variants, or retailer listings.
 - Treat `ProductVersion` as an exception for meaningful shopper-facing differences, not every barcode, release-year, wording, or minor packaging revision. A unique uncontradicted brand/product/exact-size match may associate an offer without exact release proof; contradictory evidence still requires review.
 - Retailer data must pass normalization and conservative identity matching before it affects canonical catalogue data. `Offer.availableMarkets` means customer/delivery markets, not retailer location.

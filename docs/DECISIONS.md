@@ -449,3 +449,23 @@ This file records settled choices and the rationale behind them. New decisions s
 **Why:** A single Next.js navigation can issue several framework requests, so a blanket per-IP middleware budget can throttle legitimate browsing, especially behind shared networks or when an ingress identity falls back to one bucket. Explicit expensive reads and authenticated writes remain the correct abuse-control boundaries.
 
 **Implications:** Ordinary browsing cannot return a middleware-generated raw JSON 429. The live-search API may still return HTTP 429 with `Retry-After`, while search UI presents a friendly retry message. Mutation protections remain fail-closed and user-keyed; no schema or migration change is required.
+
+### 2026-10-11 — Catalogue browse is a family-level skincare storefront
+
+**Status:** Accepted
+
+**Decision:** Present catalogue and category browse as a responsive, image-first storefront with one card per `ProductFamily`. A card shows all available current sizes as context and selects one exact active `ProductVariant` for its displayed lowest tracked available Canadian price, image priority, product link, and optional comparison selection. Family-level PuruPuru review aggregates may appear on the card.
+
+**Why:** Repeating every size as a dense database row made discovery feel like inventory research rather than skincare shopping. Family-level cards improve visual browsing without weakening the exact size and offer identity required for trustworthy price comparison.
+
+**Implications:** Capacity filters first narrow eligible variants, then the lowest comparable in-stock Canadian offer selects the card's exact variant; without a comparable price, the default or deterministic active size is used. Links preserve that version and variant, cards label the price's size and retailer, and available sizes remain visible. Search, category/brand filters, price sorting, comparison, product pages, offer semantics, and schema remain intact. This supersedes the one-result-per-variant catalogue presentation decisions from 2026-09-14, 2026-10-01, and the dense-catalogue portion of 2026-10-07; it does not change exact-variant product or offer identity.
+
+### 2026-10-11 — Product strategy centers storefront discovery, independent comparison, and a future smart cart
+
+**Status:** Accepted
+
+**Decision:** Treat [`PRODUCT_VISION.md`](PRODUCT_VISION.md) as the canonical product-strategy source. PuruPuru is a skincare shopping, discovery, and independent price-comparison platform: an enjoyable image-first storefront paired with trustworthy exact-size retailer comparison. Make privacy-conscious analytics and a persistent exact-variant smart cart the next major strategic capabilities. Retain existing Shopping Lists, but supersede travel shopping and PCPartPicker-style table-first browsing as flagship directions.
+
+**Why:** Shoppers should have a reason to browse PuruPuru before they have a purchase in mind, then avoid repeating price research across retailers when they are ready to buy. Exact product identity and evidence remain critical trust infrastructure, but a database-like interface and trip-planning emphasis narrow the audience and obscure the broader shopping value.
+
+**Implications:** Family-level discovery, category/brand navigation, mobile usability, price coverage/freshness, and retailer alternatives lead the experience. The planned cart defaults exact variants to eligible tracked offers, allows per-item retailer selection, and keeps item price separate from shipping/tax; it does not imply purchase or add a PuruPuru checkout. Analytics must measure impressions alongside interactions and use privacy-conscious consent/retention. International benchmarks remain valuable Canadian price context rather than a travel-only feature. Existing Shopping List code/data and all domain, provenance, ingestion, native-currency, affiliate-neutral ranking, review/profile, auth, and privacy invariants remain unchanged. Unified checkout, recommendation systems, popularity labels, and shipping-aware basket optimization remain future or unresolved and must not be described as implemented.

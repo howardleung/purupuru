@@ -101,8 +101,8 @@ test("catalogue personalization is optional and limited to visible current versi
   assert.doesNotMatch(catalogueCard, /prisma\./);
 });
 
-test("catalogue renders one exact variant per row with capacity controls and variant-scoped pricing", () => {
-  assert.match(catalogueQuery, /expandCatalogueVariants/);
+test("catalogue renders one storefront card per family with exact price and size context", () => {
+  assert.match(catalogueQuery, /selectCatalogueFamilyVariant/);
   assert.match(catalogueQuery, /currentVersion:[\s\S]*variants:/);
   assert.match(catalogueQuery, /variant\.offers/);
   assert.match(catalogueQuery, /filterCatalogueCapacity/);
@@ -114,14 +114,19 @@ test("catalogue renders one exact variant per row with capacity controls and var
   assert.match(catalogueBrowser, /aria-expanded=\{expanded\}/);
   assert.match(catalogueBrowser, /onClick=\{\(\) => setExpanded\(\(current\) => !current\)\}/);
   assert.match(catalogueBrowser, /onChange=\{\(event\) => setSelectedSlugs\(setCategorySelection/);
-  assert.match(catalogueBrowser, /aria-sort=\{direction \?\? "none"\}/);
-  assert.match(catalogueBrowser, /sizes="72px"/);
   assert.match(catalogueBrowser, /name="capacity"/);
   assert.match(catalogueBrowser, /name="minCapacity"/);
   assert.match(catalogueBrowser, /name="maxCapacity"/);
-  assert.match(catalogueBrowser, />Size<\/th>/);
-  assert.match(catalogueBrowser, /product\.currentVersion\?\.variant\.displaySize/);
-  assert.match(catalogueBrowser, /lg:hidden[\s\S]*uppercase tracking-wide text-slate-500">Size/);
+  assert.match(catalogueBrowser, /grid-cols-2[\s\S]*md:grid-cols-3[\s\S]*xl:grid-cols-4/);
+  assert.match(catalogueBrowser, /<ProductCard personalState=\{personal\} product=\{product\}/);
+  assert.match(catalogueBrowser, /Shop all/);
+  assert.match(catalogueBrowser, /Shop by category/);
+  assert.match(catalogueBrowser, /Shop by brand/);
+  assert.match(catalogueCard, /currentVersion\?\.variants\.length/);
+  assert.match(catalogueCard, /lowestCanadianPrice\.retailerName/);
+  assert.match(catalogueCard, /reviewSummary/);
+  assert.match(catalogueQuery, /prisma\.review\.groupBy/);
+  assert.match(catalogueQuery, /_avg: \{ rating: true \}/);
 });
 
 test("public homepage is database-backed and does not require authentication", () => {

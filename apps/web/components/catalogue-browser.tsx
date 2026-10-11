@@ -1,7 +1,7 @@
 "use client";
 
 import type { MyCollectionItem } from "@beauty-platform/domain/my-collection";
-import { ArrowDown, ArrowDownUp, ArrowUp, Check, ChevronDown, ChevronRight, SlidersHorizontal, X } from "lucide-react";
+import { ArrowDownUp, Check, ChevronDown, ChevronRight, SlidersHorizontal, X } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -9,8 +9,6 @@ import { useEffect, useRef, useState } from "react";
 import type { CategoryRecord } from "../lib/catalogue";
 import {
   catalogueSorts,
-  getCatalogueSortDirection,
-  getNextCatalogueSort,
   type CatalogueFilters,
   type CatalogueProduct,
 } from "../lib/catalogue-contract";
@@ -19,10 +17,9 @@ import {
   getCategorySelectionState,
   setCategorySelection,
 } from "../lib/catalogue-filter-state";
-import { catalogueProductHref } from "../lib/product-links";
 import { Breadcrumbs } from "./breadcrumbs";
-import { formatCataloguePrice } from "./product-card";
-import { ProductImage } from "./product-image";
+import { CategorySymbol, categoryTone } from "./category-symbol";
+import { ProductCard } from "./product-card";
 
 type Brand = { id: string; name: string; slug: string };
 
@@ -260,7 +257,7 @@ export function CatalogueBrowser({
         </select>
       </label>
       <div className="rounded-lg bg-slate-50 p-3 text-xs leading-5 text-slate-500">
-        Public ratings and ingredient filters will appear after verified, normalized source data exists.
+        Ingredient and skin-concern filters will appear only after reliable structured data exists.
       </div>
       <button className="ui-button ui-button--primary" type="submit">Apply filters</button>
       {filterCount(filters) > 0 ? <Link className="text-center text-sm font-medium underline" href="/catalogue">Clear all filters</Link> : null}
@@ -271,10 +268,38 @@ export function CatalogueBrowser({
     <main className="page-container py-8 sm:py-10">
       <Breadcrumbs items={breadcrumbs} />
       <div className="mt-5 max-w-3xl">
-        <p className="text-sm font-medium text-slate-500">Compare skincare prices</p>
+        <p className="eyebrow">Skincare to discover</p>
         <h1 className="mt-2 text-3xl font-extrabold tracking-tight">{title}</h1>
         <p className="mt-3 text-slate-600">{description}</p>
       </div>
+
+      <nav aria-label="Shop skincare" className="mt-6 flex flex-wrap gap-2 pb-1">
+        <Link className="shrink-0 rounded-full bg-brand-ink px-4 py-2.5 text-sm font-bold text-white" href="/catalogue">Shop all</Link>
+        <Link className="shrink-0 rounded-full border border-slate-200 bg-white px-4 py-2.5 text-sm font-bold text-brand-ink transition hover:border-slate-400" href="/categories">Shop by category</Link>
+        <Link className="shrink-0 rounded-full border border-slate-200 bg-white px-4 py-2.5 text-sm font-bold text-brand-ink transition hover:border-slate-400" href="/brands">Shop by brand</Link>
+      </nav>
+
+      {topCategories.length > 0 ? (
+        <section aria-labelledby="browse-categories-title" className="mt-7">
+          <div className="flex items-center justify-between gap-3">
+            <h2 className="text-sm font-extrabold text-brand-ink" id="browse-categories-title">Shop by category</h2>
+            <Link className="text-xs font-bold text-brand-action underline underline-offset-4" href="/categories">View all</Link>
+          </div>
+          <div className="scrollbar-hidden mt-3 flex snap-x gap-3 overflow-x-auto pb-2">
+            {topCategories.slice(0, 8).map((category) => (
+              <Link
+                className="category-tile min-w-28 shrink-0 snap-start px-3 py-4 sm:min-w-32"
+                data-tone={categoryTone(category.slug)}
+                href={`/categories/${category.slug}`}
+                key={category.id}
+              >
+                <CategorySymbol className="h-7 w-7 text-brand-action" slug={category.slug} />
+                <span className="text-xs font-bold">{category.displayName}</span>
+              </Link>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       <details className="mt-6 surface-card p-4 lg:hidden">
         <summary className="flex cursor-pointer list-none items-center justify-between font-medium">
@@ -284,86 +309,44 @@ export function CatalogueBrowser({
         <div className="mt-5 border-t border-slate-100 pt-5">{filterPanel}</div>
       </details>
 
-      <div className="mt-8 grid gap-8 lg:grid-cols-[16rem_minmax(0,1fr)]">
+      <div className="mt-8 grid gap-8 lg:grid-cols-[15rem_minmax(0,1fr)]">
         <aside className="surface-card hidden self-start p-5 lg:block lg:sticky lg:top-4" aria-label="Catalogue filters">
           <h2 className="mb-5 flex items-center gap-2 font-semibold"><SlidersHorizontal aria-hidden className="h-4 w-4" /> Filters</h2>
           {filterPanel}
         </aside>
 
         <section>
-          <div className="flex flex-wrap items-end justify-between gap-3">
+          <div className="flex flex-wrap items-end justify-between gap-4 border-b border-slate-200 pb-4">
             <div>
-              <h2 className="text-xl font-semibold">Products</h2>
-              <p aria-live="polite" className="mt-1 text-sm text-slate-500">{products.length} {products.length === 1 ? "result" : "results"}{filterCount(filters) > 0 ? ` · ${filterCount(filters)} active filters` : ""}</p>
+              <h2 className="text-xl font-extrabold text-brand-ink">Products</h2>
+              <p aria-live="polite" className="mt-1 text-sm text-slate-500">{products.length} {products.length === 1 ? "product" : "products"}{filterCount(filters) > 0 ? ` · ${filterCount(filters)} active filters` : ""}</p>
             </div>
-            <label className="flex items-center gap-2 text-sm lg:hidden"><ArrowDownUp aria-hidden className="h-4 w-4" /><select aria-label="Sort catalogue" className="ui-input" onChange={(event) => router.push(sortHref(event.target.value))} value={filters.sort}>{catalogueSorts.map((sort) => <option key={sort.value} value={sort.value}>{sort.label}</option>)}</select></label>
+            <label className="flex items-center gap-2 text-sm"><ArrowDownUp aria-hidden className="h-4 w-4 text-slate-500" /><span className="sr-only sm:not-sr-only">Sort</span><select aria-label="Sort catalogue" className="ui-input min-w-44" onChange={(event) => router.push(sortHref(event.target.value))} value={filters.sort}>{catalogueSorts.map((sort) => <option key={sort.value} value={sort.value}>{sort.label}</option>)}</select></label>
           </div>
 
           {products.length > 0 ? (
-            <>
-              <div className="mt-4 hidden overflow-hidden rounded-xl border border-slate-200 lg:block">
-                <table className="w-full table-fixed text-left text-sm">
-                  <thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
-                    <tr>
-                      <th className="w-12 px-3 py-3"><span className="sr-only">Compare</span></th>
-                      <th className="w-24 px-3 py-3">Image</th>
-                      <SortableHeader direction={getCatalogueSortDirection(filters.sort, "PRODUCT")} href={sortHref(getNextCatalogueSort(filters.sort, "PRODUCT"))} label="Product" />
-                      <th className="w-24 px-3 py-3 font-medium">Size</th>
-                      <SortableHeader direction={getCatalogueSortDirection(filters.sort, "BRAND")} href={sortHref(getNextCatalogueSort(filters.sort, "BRAND"))} label="Brand" />
-                      <th className="px-3 py-3 font-medium">Category</th>
-                      <th className="w-24 px-3 py-3 font-medium">Rating</th>
-                      <SortableHeader className="w-40" direction={getCatalogueSortDirection(filters.sort, "PRICE")} href={sortHref(getNextCatalogueSort(filters.sort, "PRICE"))} label="Lowest tracked price" />
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-200">
-                    {products.map((product) => {
-                      const href = catalogueProductHref(product);
-                      const checked = selectedIds.includes(product.id);
-                      const personal = product.currentVersion ? personalByVersion.get(product.currentVersion.id) : null;
-                      return (
-                        <tr
-                          aria-label={`View ${product.brand.name} ${product.canonicalName} ${product.currentVersion?.variant.displaySize ?? ""}`}
-                          className="cursor-pointer transition hover:bg-slate-50 focus:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-slate-500"
-                          key={product.id}
-                          onClick={(event) => { if (!(event.target as HTMLElement).closest("a,button,input,label")) router.push(href); }}
-                          onKeyDown={(event) => { if (event.key === "Enter") router.push(href); }}
-                          tabIndex={0}
-                        >
-                          <td className="px-3 py-4 align-middle"><input aria-label={`Compare ${product.brand.name} ${product.canonicalName} ${product.currentVersion?.variant.displaySize ?? ""}`} checked={checked} className="h-4 w-4" onChange={() => toggleComparison(product.id)} type="checkbox" /></td>
-                          <td className="px-3 py-3"><Link href={href}><ProductImage className="h-[4.5rem] min-h-[4.5rem] rounded-lg" image={product.currentVersion?.image ?? null} productName={product.canonicalName} sizes="72px" /></Link></td>
-                          <td className="px-3 py-4"><Link className="font-semibold hover:underline" href={href}>{product.canonicalName}</Link></td>
-                          <td className="px-3 py-4 font-medium text-slate-700">{product.currentVersion?.variant.displaySize ?? "Not recorded"}</td>
-                          <td className="px-3 py-4 text-slate-700">{product.brand.name}</td>
-                          <td className="px-3 py-4 text-slate-700">{product.primaryCanonicalCategory.displayName}</td>
-                          <td className="px-3 py-4 text-slate-500" title="A normalized public rating source is not yet defined">{personal?.ratingHalfSteps ? <span title="Your private rating">Your {(personal.ratingHalfSteps / 2).toFixed(1)}</span> : "—"}</td>
-                          <td className="px-3 py-4 font-semibold">{formatCataloguePrice(product) ?? <span className="font-normal text-slate-500">Not tracked</span>}</td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-
-              <div className="mt-4 grid gap-3 lg:hidden">
-                {products.map((product) => {
-                  const href = catalogueProductHref(product);
-                  return (
-                    <article className="grid grid-cols-[5.5rem_1fr] gap-4 rounded-xl border border-slate-200 p-3" key={product.id}>
-                      <Link href={href}><ProductImage className="h-24" image={product.currentVersion?.image ?? null} productName={product.canonicalName} sizes="88px" /></Link>
-                      <div className="min-w-0">
-                        <div className="flex items-start justify-between gap-2"><p className="text-xs font-medium uppercase tracking-wide text-slate-500">{product.brand.name}</p><label className="flex items-center gap-1.5 text-xs text-slate-600"><input checked={selectedIds.includes(product.id)} className="h-4 w-4" onChange={() => toggleComparison(product.id)} type="checkbox" /> Compare</label></div>
-                        <h3 className="mt-1 font-semibold"><Link href={href}>{product.canonicalName}</Link></h3>
-                        <p className="mt-1 text-xs text-slate-500">{product.primaryCanonicalCategory.displayName}</p>
-                        <p className="mt-2 text-sm font-medium text-slate-700"><span className="text-xs uppercase tracking-wide text-slate-500">Size</span> · {product.currentVersion?.variant.displaySize ?? "Not recorded"}</p>
-                        <p className="mt-3 text-sm font-semibold">{formatCataloguePrice(product) ?? "No Canada price tracked"}</p>
-                      </div>
-                    </article>
-                  );
-                })}
-              </div>
-            </>
+            <div className="mt-5 grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3 xl:grid-cols-4">
+              {products.map((product) => {
+                const personal = product.currentVersion ? personalByVersion.get(product.currentVersion.id) : null;
+                return (
+                  <div className="relative min-w-0" key={product.productFamilyId}>
+                    <ProductCard personalState={personal} product={product} />
+                    <label className="absolute right-2.5 top-2.5 flex min-h-9 cursor-pointer items-center gap-1.5 rounded-full border border-white/80 bg-white/95 px-2.5 text-[0.7rem] font-bold text-slate-700 shadow-sm backdrop-blur-sm focus-within:ring-2 focus-within:ring-brand-action">
+                      <input
+                        aria-label={`Compare ${product.brand.name} ${product.canonicalName} ${product.currentVersion?.variant.displaySize ?? ""}`}
+                        checked={selectedIds.includes(product.id)}
+                        className="h-3.5 w-3.5 rounded border-slate-300"
+                        onChange={() => toggleComparison(product.id)}
+                        type="checkbox"
+                      />
+                      Compare
+                    </label>
+                  </div>
+                );
+              })}
+            </div>
           ) : (
-            <div className="mt-4 rounded-xl border border-dashed border-slate-300 p-8 text-center text-slate-600"><p>No catalogue products match these filters.</p><Link className="mt-4 inline-block text-sm font-medium text-slate-900 underline" href="/catalogue">Clear filters and browse all skincare</Link></div>
+            <div className="empty-state mt-5"><p className="font-bold text-brand-ink">No products match these filters</p><p className="mt-2 text-sm">Try widening your price or size range, or clear the filters to keep browsing.</p><Link className="ui-link mt-4" href="/catalogue">Clear filters and browse all skincare</Link></div>
           )}
         </section>
       </div>
@@ -375,26 +358,5 @@ export function CatalogueBrowser({
         </aside>
       ) : null}
     </main>
-  );
-}
-
-function SortableHeader({
-  href,
-  label,
-  direction,
-  className = "",
-}: {
-  href: string;
-  label: string;
-  direction: ReturnType<typeof getCatalogueSortDirection>;
-  className?: string;
-}) {
-  const SortIcon = direction === "ascending" ? ArrowUp : direction === "descending" ? ArrowDown : ArrowDownUp;
-  return (
-    <th aria-sort={direction ?? "none"} className={`px-3 py-3 font-medium ${className}`}>
-      <Link className={`inline-flex items-center gap-1 hover:text-slate-950 ${direction ? "text-slate-950" : ""}`} href={href}>
-        {label}<SortIcon aria-hidden className={`h-3 w-3 ${direction ? "" : "opacity-50"}`} />
-      </Link>
-    </th>
   );
 }

@@ -3,11 +3,11 @@ import "server-only";
 import { prisma } from "@beauty-platform/database";
 import type { Prisma } from "@beauty-platform/database";
 import {
-  expandCatalogueVariants,
   filterCatalogueCapacity,
   filterCataloguePrice,
   getCatalogueCapacityRanges,
   normalizeCatalogueCapacity,
+  selectCatalogueFamilyVariant,
   selectLowestMarketOffer,
   sortCatalogueItems,
   type CatalogueCapacityDimension,
@@ -175,7 +175,10 @@ export async function getCatalogue(options: {
             where: { isActive: true },
             orderBy: [{ normalizedQuantity: "asc" }, { id: "asc" }],
             include: {
-              offers: { where: { isActive: true, availableMarkets: { has: "CA" } } },
+              offers: {
+                where: { isActive: true, availableMarkets: { has: "CA" } },
+                include: { retailer: { select: { name: true } } },
+              },
               benchmarkPrices: { orderBy: { verifiedAt: "desc" } },
             },
           },
@@ -184,25 +187,79 @@ export async function getCatalogue(options: {
     },
     orderBy: [{ canonicalName: "asc" }],
   });
+  const reviewGroups = productRecords.length > 0
+    ? await prisma.review.groupBy({
+        by: ["productFamilyId"],
+        where: { productFamilyId: { in: productRecords.map((product) => product.id) } },
+        _avg: { rating: true },
+        _count: { _all: true },
+      })
+    : [];
+  const reviewsByFamily = new Map(reviewGroups.map((group) => [group.productFamilyId, {
+    average: group._avg.rating,
+    count: group._count._all,
+  }]));
 
-  const variantRecords = expandCatalogueVariants(productRecords.map((product) => ({
-    family: product,
-    variants: product.currentVersion?.variants ?? [],
-  })));
-  const products: CatalogueProduct[] = variantRecords.map(({ family: product, variant }) => {
-    const version = product.currentVersion!;
-    const lowestOffer = variant
-      ? selectLowestMarketOffer(
-          variant.offers.map((offer) => ({
+  const minimumCad = finiteNonNegative(options.minimumCad);
+  const maximumCad = finiteNonNegative(options.maximumCad);
+  const capacityDimension = isCapacityDimension(options.capacityDimension)
+    ? options.capacityDimension
+    : null;
+  const minimumCapacity = capacityDimension ? finiteNonNegative(options.minimumCapacity) : null;
+  const maximumCapacity = capacityDimension ? finiteNonNegative(options.maximumCapacity) : null;
+  const capacityRanges = getCatalogueCapacityRanges(productRecords.flatMap((product) =>
+    product.currentVersion?.variants.map((variant) => ({
+      normalizedQuantity: Number(variant.normalizedQuantity),
+      normalizedUnit: variant.normalizedUnit,
+    })) ?? [],
+  ));
+  const sort: CatalogueSort = isCatalogueSort(options.sort) ? options.sort : "PRICE_ASC";
+  const products = productRecords.flatMap((product): CatalogueProduct[] => {
+    const version = product.currentVersion;
+    if (!version) return [];
+
+    const variantChoices = version.variants.map((variant) => {
+      const lowestOffer = selectLowestMarketOffer(
+        variant.offers
+          .filter((offer) => offer.availabilityState !== "OUT_OF_STOCK")
+          .map((offer) => ({
+            ...offer,
             productPrice: Number(offer.productPrice),
-            nativeCurrency: offer.nativeCurrency,
             cadConvertedPrice: offer.cadConvertedPrice === null ? null : Number(offer.cadConvertedPrice),
-            availableMarkets: offer.availableMarkets,
           })),
-          "CA",
-        )
-      : null;
-    return {
+        "CA",
+      );
+      return {
+        id: variant.id,
+        variant,
+        lowestOffer,
+        lowestPriceCad: lowestOffer
+          ? lowestOffer.nativeCurrency === "CAD"
+            ? lowestOffer.productPrice
+            : lowestOffer.cadConvertedPrice
+          : null,
+        normalizedQuantity: Number(variant.normalizedQuantity),
+        normalizedUnit: variant.normalizedUnit,
+      };
+    });
+    const matchingChoices = filterCatalogueCapacity(
+      variantChoices,
+      capacityDimension,
+      minimumCapacity,
+      maximumCapacity,
+    );
+    const eligibleChoices = filterCataloguePrice(matchingChoices.map((choice) => ({
+      ...choice,
+      productName: product.canonicalName,
+      brandName: product.brand.name,
+    })), minimumCad, maximumCad, Boolean(options.trackedOnly));
+    const selected = selectCatalogueFamilyVariant(eligibleChoices, version.defaultVariantId);
+    if (!selected) return [];
+
+    const reviewSummary = reviewsByFamily.get(product.id) ?? { average: null, count: 0 };
+    const { variant, lowestOffer } = selected;
+
+    return [{
       id: variant.id,
       productFamilyId: product.id,
       slug: product.slug,
@@ -214,6 +271,7 @@ export async function getCatalogue(options: {
         displayName: product.primaryCanonicalCategory.displayName,
         slug: product.primaryCanonicalCategory.slug,
       },
+      reviewSummary,
       currentVersion: {
         id: version.id,
         versionCode: version.versionCode,
@@ -225,6 +283,12 @@ export async function getCatalogue(options: {
           normalizedQuantity: Number(variant.normalizedQuantity),
           normalizedUnit: variant.normalizedUnit,
         },
+        variants: version.variants.map((availableVariant) => ({
+          id: availableVariant.id,
+          displaySize: availableVariant.displaySize,
+          normalizedQuantity: Number(availableVariant.normalizedQuantity),
+          normalizedUnit: availableVariant.normalizedUnit,
+        })),
         benchmarks: variant.benchmarkPrices.map((benchmark) => ({
           id: benchmark.id,
           type: benchmark.type,
@@ -239,46 +303,27 @@ export async function getCatalogue(options: {
           ? {
               nativeAmount: lowestOffer.productPrice,
               nativeCurrency: lowestOffer.nativeCurrency,
-              amountCad: lowestOffer.nativeCurrency === "CAD" ? lowestOffer.productPrice : lowestOffer.cadConvertedPrice,
+              amountCad: selected.lowestPriceCad,
+              retailerName: lowestOffer.retailer.name,
             }
           : null,
       },
-    };
+    }];
   });
 
-  const minimumCad = finiteNonNegative(options.minimumCad);
-  const maximumCad = finiteNonNegative(options.maximumCad);
-  const capacityDimension = isCapacityDimension(options.capacityDimension)
-    ? options.capacityDimension
-    : null;
-  const minimumCapacity = capacityDimension ? finiteNonNegative(options.minimumCapacity) : null;
-  const maximumCapacity = capacityDimension ? finiteNonNegative(options.maximumCapacity) : null;
-  const capacityRanges = getCatalogueCapacityRanges(products.map((product) => ({
-    normalizedQuantity: product.currentVersion!.variant.normalizedQuantity,
-    normalizedUnit: product.currentVersion!.variant.normalizedUnit,
-  })));
-  const sort: CatalogueSort = isCatalogueSort(options.sort) ? options.sort : "PRICE_ASC";
-  const productsById = new Map(products.map((product) => [product.id, product]));
   const visibleProducts = sortCatalogueItems(
-    filterCataloguePrice(
-      filterCatalogueCapacity(products.map((product) => ({
-        ...product,
-        productName: product.canonicalName,
-        brandName: product.brand.name,
-        lowestPriceCad: product.currentVersion!.lowestCanadianPrice?.amountCad ?? null,
-        normalizedQuantity: product.currentVersion!.variant.normalizedQuantity,
-        normalizedUnit: product.currentVersion!.variant.normalizedUnit,
-        sizeSort: normalizeCatalogueCapacity(
-          product.currentVersion!.variant.normalizedQuantity,
-          product.currentVersion!.variant.normalizedUnit,
-        )?.amount ?? product.currentVersion!.variant.normalizedQuantity,
-      })), capacityDimension, minimumCapacity, maximumCapacity),
-      minimumCad,
-      maximumCad,
-      Boolean(options.trackedOnly),
-    ),
+    products.map((product) => ({
+      ...product,
+      productName: product.canonicalName,
+      brandName: product.brand.name,
+      lowestPriceCad: product.currentVersion!.lowestCanadianPrice?.amountCad ?? null,
+      sizeSort: normalizeCatalogueCapacity(
+        product.currentVersion!.variant.normalizedQuantity,
+        product.currentVersion!.variant.normalizedUnit,
+      )?.amount ?? product.currentVersion!.variant.normalizedQuantity,
+    })),
     sort,
-  ).map((product) => productsById.get(product.id)!);
+  );
 
   const filters: CatalogueFilters = {
     query,

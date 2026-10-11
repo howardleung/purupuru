@@ -62,11 +62,11 @@ export default async function CataloguePage({ searchParams }: { searchParams: Se
       breadcrumbs={catalogue.breadcrumbs}
       brands={catalogue.brands}
       categories={catalogue.categories}
-      description="Find the product and size you want, then compare the retailer prices PuruPuru currently tracks."
+      description="Discover skincare by category or brand, see what shoppers think, and compare the best Canadian prices PuruPuru currently tracks."
       personalItems={personalItems}
       products={catalogue.products}
       filters={catalogue.filters}
-      title={catalogue.selectedCategory?.displayName ?? "Browse skincare"}
+      title={catalogue.selectedCategory?.displayName ?? "Shop skincare"}
     />
   );
 }

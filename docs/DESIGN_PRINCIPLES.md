@@ -1,6 +1,6 @@
 # Design Principles
 
-> **Canonical structural UX:** [`docs/UX_SPEC.md`](UX_SPEC.md) governs the next information-architecture and interaction redesign. This document continues to govern enduring quality principles; product scope and domain semantics remain governed by their respective canonical documents.
+> **Canonical direction:** [`PRODUCT_VISION.md`](PRODUCT_VISION.md) governs product strategy and priorities; [`UX_SPEC.md`](UX_SPEC.md) governs structural interaction details. This document continues to govern enduring quality principles; product scope and domain semantics remain governed by their respective canonical documents.
 
 ## 1. Complex backend, simple frontend
 
@@ -28,7 +28,7 @@ Verified price/benchmark data should carry a subtle verification indicator and d
 
 ## 3. Provide information; do not make every decision
 
-The product is closer to PCPartPicker than an opaque recommendation engine.
+PuruPuru should feel like a premium skincare storefront while making comparison evidence as explicit as a serious shopping tool. The default browse experience is not a PCPartPicker-style product database, and recommendations must not become an opaque substitute for factual price comparison.
 
 Default offer ordering is lowest product price first. Shipping/delivery, when sufficiently reliable for a specific offer, may appear as supporting information and does not alter the default order. Users can make their own tradeoff between price, shipping, retailer preference, availability, and extras.
 
@@ -132,7 +132,7 @@ Stale data: keep it when useful, but make age visible.
 
 ## 13. Visual character
 
-The target feeling is premium, calm, modern, and beauty-aware—not a discount marketplace.
+The target feeling is premium, calm, modern, beauty-aware, and enjoyable for casual exploration—not a discount marketplace or technical database.
 
 Prefer:
 
@@ -163,7 +163,7 @@ Every image needs useful alt text and provenance. A missing or failed asset rend
 
 The first visual pass layers a friendly consumer beauty identity over the existing research tools. White and near-white dominate; Nordic blue (`#67869A`), mist (`#C6D1D9`), oak (`#E7E0D8`), light grey, and sparse pale blush (`#F4EBE9`) provide restrained accents. Functional text, actions, and focus use darker accessible variants, including action blue `#47677D` and ink `#253442`; pastel brand colors are not substitutes for readable foregrounds.
 
-`apps/web/app/globals.css` and `apps/web/tailwind.config.ts` are the shared token/recipe sources: page containers, surface cards, section headings, buttons, inputs, links, chips, and empty states. Rounded controls, soft borders/shadows, consistent spacing, visible keyboard focus, and reduced-motion support should be extended rather than replaced with page-specific design systems. Existing dense tables remain dense; mobile reflow and contained table scrolling remain intentional.
+`apps/web/app/globals.css` and `apps/web/tailwind.config.ts` are the shared token/recipe sources: page containers, surface cards, section headings, buttons, inputs, links, chips, and empty states. Rounded controls, soft borders/shadows, consistent spacing, visible keyboard focus, and reduced-motion support should be extended rather than replaced with page-specific design systems. Discovery and catalogue browse use responsive image-first cards; factual offer and comparison tables may remain dense, with mobile reflow or contained scrolling where appropriate.
 
 Typography is locally hosted Nunito variable, with system fallbacks and tabular numerals for research UI. The font comes from the [Google Fonts Nunito repository](https://github.com/google/fonts/tree/main/ofl/nunito), under the included SIL Open Font License (`apps/web/app/fonts/OFL.txt`). No external font service is required.
 

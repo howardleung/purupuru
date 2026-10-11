@@ -14,7 +14,7 @@ These flows describe intended product behavior. Exact visual design is not fixed
 
 1. User lands on the responsive website without an account.
 2. They can browse/search by product, brand, category, size, and tracked price. Benchmarks, history, and external signals provide supporting buying context rather than replacing the retailer comparison.
-3. Catalogue results show each active size in the current shopper-facing version as a distinct row/card. Clicking one navigates to its ProductFamily page with that current version and exact variant preserved.
+3. Catalogue results show one image-first card per ProductFamily. Each card identifies available sizes and associates its displayed lowest tracked Canadian price with the exact current variant behind that price. Clicking it opens the ProductFamily page with that version and variant preserved.
 4. No authentication is required until the user attempts a personal action.
 5. When signed in, the same catalogue may add compact private state for the current version; anonymous cards remain catalogue-only.
 
@@ -24,7 +24,7 @@ These flows describe intended product behavior. Exact visual design is not fixed
 2. Show a simple category-filtered product browse view for that category.
 3. Show compact, clickable breadcrumbs for the category's canonical path, for example `Skincare > Cleansers > Oil Cleanser`.
 4. Breadcrumb links support orientation and back-navigation and use SEO-friendly category routes.
-5. Each result represents one exact current `ProductVariant`; its link leads to the `ProductFamily` page with that variant selected.
+5. Each result represents one `ProductFamily`; its price and link retain the exact current `ProductVariant` selected from the active sizes for the current filters.
 6. Browse behavior uses each family's required primary canonical category; retailer/source category labels do not determine placement.
 7. Capacity filters compare only compatible normalized dimensions: volume in mL, mass in g, or discrete count. Selecting a dimension excludes incompatible units.
 
@@ -201,7 +201,9 @@ Intended for a Tried product. If not Tried, ask whether to mark Tried + Would Re
 6. Deletion requires explicit confirmation and removes only the authenticated owner's review. Account deletion removes all reviews owned by that user while preserving the catalogue and other users' reviews.
 7. The initial feed is bounded and newest-first. Rating-only reviews remain valid; an empty family shows `No ratings yet` rather than a zero score.
 
-## 8. Add to shopping list
+## 8. Add to shopping list (current implementation)
+
+This flow remains supported, but travel-oriented Shopping Lists are no longer the flagship strategic direction. See [`PRODUCT_VISION.md`](PRODUCT_VISION.md) for the planned persistent smart cart. Any reuse or migration must preserve existing user data and exact-variant context.
 
 From product page:
 1. User clicks Add to Shopping List.
@@ -329,10 +331,21 @@ The private authenticated `/profile` route is the owner-facing home for PuruPuru
 
 The page does not expose a public profile route, avatar uploads, review history, ratings history, contributions, rewards, or social features. First-party display name and avatar provide a future reusable identity foundation, but public surfaces remain out of scope until explicitly designed.
 
-## 14. Destination shopping continuity
+## 14. Destination shopping continuity (legacy supported flow)
 
 1. User opens a product and chooses an exact version and size.
 2. The product page shows that exact selection’s destination-market benchmark, offers, and native currency first.
 3. User adds the exact variant to a shopping list whose target market matches the trip.
 4. The list calculates quantity-aware planned spend and savings only where a trustworthy target-market exact-variant benchmark and eligible Canadian comparison offer exist.
 5. Links from the list return to the same product version and variant; approximate CAD remains secondary and excluded products stay explicit.
+
+## 15. Planned smart-cart continuity
+
+1. User chooses an exact size while browsing or on a product page.
+2. Add to cart retains the exact `ProductVariant` and defaults to its lowest eligible tracked offer.
+3. User may choose another eligible retailer for that item without changing product identity.
+4. Cart recalculates item subtotals, retailer groupings, and the CAD basket total while keeping unsupported shipping and tax separate.
+5. Returning users see honest price changes or unavailable selections and can follow exact retailer listing links.
+6. Cart state does not imply purchase, reservation, ownership, or a `PurchaseInstance`.
+
+This is a planned flow, not current application behavior.

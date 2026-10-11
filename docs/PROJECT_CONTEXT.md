@@ -2,45 +2,45 @@
 
 ## What this product is
 
-PuruPuru is primarily a skincare price-comparison and shopping-intelligence product. It helps shoppers compare available retailer prices for the exact product and size they want, identify the best tracked buying option, and save money. The initial focus is Korean and Japanese skincare for Canadian shoppers, with selective French/European support.
+PuruPuru is a skincare shopping, discovery, and independent price-comparison platform. It should become a place Canadian shoppers enjoy exploring even when they are not ready to buy, while helping them compare tracked retailer prices for the exact product and size they want. The canonical strategy and capability status live in [`PRODUCT_VISION.md`](PRODUCT_VISION.md).
 
 The current working product name is `PuruPuru`. Domain, trademark, and final visual-brand review remain pending. Generic technical identifiers and existing infrastructure identities remain unchanged.
 
-The product emerged from a real shopping workflow problem: international beauty research is fragmented across Reddit, YouTube, TikTok, Google, @cosme, Olive Young, Amazon, Canadian specialty retailers, international retailers, currency conversion, notes, and travel shopping lists.
+The product emerged from a real shopping workflow problem: skincare discovery and buying research are fragmented across social media, regional beauty platforms, brand sites, Canadian specialty retailers, international retailers, currency conversion, and personal notes.
 
-The product should become the place a user checks before buying skincare, not another daily habit tracker or ingredient-analysis clone.
+The product should become both the place a user enjoys browsing skincare and the place they check before buying. It is not a technical database, daily habit tracker, or ingredient-analysis clone.
 
 A useful shorthand is:
 
-> Letterboxd/Fragrantica-style personal collection and discovery, with PCPartPicker-style shopping intelligence for beauty.
+> A premium skincare storefront with independent, exact-size retailer comparison underneath.
 
-That analogy describes the interaction model, not a request to copy those products visually or functionally.
+Retailer and comparison tools may remain factual and information-dense where useful, but PCPartPicker-style table-first browsing no longer defines the main discovery experience.
 
 ## Core user value
 
-The platform's first job is to answer:
+The platform's first jobs are to make product discovery enjoyable and answer:
 
 1. Which tracked retailer has the best price for this exact product and size?
-2. What is the product intended to cost in its local market?
-3. Which buying options are available to me in Canada or while travelling?
+2. Which other reputable buying options are available to me in Canada?
+3. What authoritative reference-price context helps me judge that offer?
 4. How has the tracked price changed over time?
-5. What have I wanted, owned, tried, loved, or planned to buy?
+5. Which products, brands, and categories are worth exploring?
 
 ## Initial wedge
 
 - Home market: Canada.
-- Beauty markets: South Korea and Japan first; selective French/European skincare where feasible.
+- Catalogue focus: Korean, Japanese, French pharmacy and prestige skincare, plus other relevant international and domestic brands.
 - Catalogue target: approximately 100 carefully curated products.
 - Price coverage target: approximately 3–5 legitimate retailer/data sources plus local-market benchmark prices where available.
 - Web-first responsive product. Native app is later, only if camera, barcode, push, offline, or location workflows justify it.
 
 ## Key differentiators
 
-### Local-to-global context
-A product can be extremely important in Japan or Korea without being internationally viral. The platform should surface local rankings/ratings/signals where legitimately obtainable and link back to original sources.
+### Skincare-first discovery
+Browsing should be image-first, fast, mobile-friendly, and intuitive by product family, category, and brand. Recommendations, popularity labels, and curated collections require reliable supporting data and must not be invented to make a surface look complete.
 
 ### Cross-market shopping intelligence
-Users should see buying options in their home market, international sellers that ship to them, and local destination-market benchmarks for travel planning.
+Users should see Canadian and international sellers known to serve Canada, plus authoritative domestic-market benchmarks that provide import-markup and value context. A foreign reference price is informational; it is not a delivered Canadian offer or a separate travel product.
 
 ### Trustworthy product identity
 Shopper-facing identity is normally brand, product name, and exact size. Internal version and identifier evidence prevents materially different products or formulations from being silently merged, but stays out of the interface unless the distinction affects a buying decision.
@@ -57,7 +57,9 @@ PuruPuru owns the user's in-product display name, curated avatar, and optional p
 
 Affiliate commerce is a plausible monetization path, but it must never compromise ranking integrity. A lower commission cannot make a cheaper retailer less visible; a higher commission cannot make an offer rank higher.
 
-The first business milestone is sustainability, not founder salary. The product should first prove that users find it useful enough to revisit before purchases.
+The first business milestone is proving that users enjoy browsing and find the comparison useful enough to revisit before purchases. Affiliate referrals, retailer relationships, and better product feeds may support sustainability, but commercial relationships never affect price ranking.
+
+A unified multi-retailer PuruPuru checkout is a possible long-term business direction, not current functionality or an MVP commitment. It would require participating-retailer agreements, payment and order infrastructure, inventory synchronization, and clear fulfillment/returns responsibilities.
 
 ## Data philosophy
 
@@ -65,16 +67,16 @@ The product should aggregate signals rather than copy third-party review databas
 
 Third-party review text should not be scraped and republished as a foundation of the product. External ratings/rankings/review counts may be displayed only when legitimately obtainable and should link back to the source.
 
-## Future community loop
+## Future data contribution loop
 
 A future receipt workflow could:
 
 1. Scan/upload a receipt.
 2. Detect retailer, products, variants, quantities, and paid prices.
-3. Match items against a shopping list.
+3. Match items against a cart or retained planning list.
 4. Let the user confirm/correct all matches.
-5. Mark shopping-list quantities purchased.
-6. Only after separate confirmation that these are personal acquisitions, create purchase instances and update the user's collection. Shopping-list Purchased alone must not imply ownership.
+5. Update the relevant shopping state.
+6. Only after separate confirmation that these are personal acquisitions, create purchase instances and update the user's collection. Cart/list state alone must not imply ownership.
 7. Contribute verified price observations to the platform.
 
 This is intentionally post-MVP, but the data model should not make it difficult later.

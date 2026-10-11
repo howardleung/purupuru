@@ -1,6 +1,6 @@
 # PuruPuru
 
-PuruPuru is a skincare price-comparison platform that helps shoppers compare retailer prices for the exact product and size they want, identify the best tracked buying option, and save money.
+PuruPuru is a skincare shopping, discovery, and independent price-comparison platform for Canadian shoppers. It combines an image-first storefront with trustworthy retailer comparison for the exact product and size someone wants.
 
 **Live application:** [purupuru.ca](https://www.purupuru.ca/)
 
@@ -19,7 +19,7 @@ PuruPuru is a skincare price-comparison platform that helps shoppers compare ret
 
 ## Engineering highlights
 
-- **Variant-level catalogue:** each purchasable size is independently browsable, filterable, linkable, and price-comparable without duplicating product identity.
+- **Family-level storefront, exact-size prices:** discovery uses one image-first card per product family while every displayed price and outbound link remains tied to its actual purchasable size.
 - **Normalized capacity filtering:** compatible volume or mass units are normalized for filtering while incompatible dimensions remain separate.
 - **Market-aware price comparison:** offers retain native currency, availability, and explicit customer markets; Canadian shoppers receive approximate CAD presentation without replacing the source price.
 - **Structured commerce model:** PostgreSQL and Prisma model product families, meaningful versions, exact-size variants, retailers, offers, benchmark prices, and historical observations separately.
@@ -81,7 +81,7 @@ Import submissions never publish automatically. Ambiguous identity remains visib
 
 ## Interesting engineering decisions
 
-- **Browse variants, search families:** catalogue rows represent exact purchasable variants, while search and autocomplete avoid flooding results with every size.
+- **Browse families, price exact variants:** discovery avoids repeating every size while retaining explicit variant context for prices, filtering, comparison, and product links.
 - **Size is the normal shopper-facing distinction:** `ProductVersion` remains an internal exception for formula or release differences that materially affect a purchase.
 - **Native currency is authoritative:** CAD conversion is presentation-only and can fail without hiding or rewriting the original price.
 - **Ranking is affiliate-neutral:** tracked product price determines default ordering; commissions and opaque “best deal” scores do not.
@@ -93,7 +93,7 @@ The repository currently has **159 automated tests** covering pure domain rules,
 
 The suite is intentionally strongest around invariants and failure cases. Source-contract tests and narrow DOM stand-ins are not presented as comprehensive browser E2E or accessibility certification.
 
-For implementation detail, see the [architecture](docs/ARCHITECTURE.md), [data model](docs/DATA_MODEL.md), [ingestion design](docs/INGESTION.md), and [testing approach](docs/TESTING.md).
+For strategy and priorities, see the [product vision](docs/PRODUCT_VISION.md). For implementation detail, see the [architecture](docs/ARCHITECTURE.md), [data model](docs/DATA_MODEL.md), [ingestion design](docs/INGESTION.md), and [testing approach](docs/TESTING.md).
 
 ---
 

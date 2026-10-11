@@ -12,6 +12,7 @@ export type CatalogueProduct = {
   originMarket: string | null;
   brand: { name: string; slug: string };
   primaryCanonicalCategory: { id: string; displayName: string; slug: string };
+  reviewSummary: { average: number | null; count: number };
   currentVersion: {
     id: string;
     versionCode: string | null;
@@ -31,6 +32,12 @@ export type CatalogueProduct = {
       normalizedQuantity: number;
       normalizedUnit: string;
     };
+    variants: Array<{
+      id: string;
+      displaySize: string;
+      normalizedQuantity: number;
+      normalizedUnit: string;
+    }>;
     benchmarks: Array<{
       id: string;
       type: string;
@@ -45,6 +52,7 @@ export type CatalogueProduct = {
       nativeAmount: number;
       nativeCurrency: string;
       amountCad: number | null;
+      retailerName: string;
     } | null;
   } | null;
 };
