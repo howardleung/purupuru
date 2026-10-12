@@ -2,7 +2,7 @@
 
 **Status:** Canonical product strategy and priority source
 
-**Last updated:** 2026-10-11
+**Last updated:** 2026-10-12
 
 ## Purpose
 
@@ -32,6 +32,22 @@ The desired experience is a modern skincare storefront, not a technical product 
 Skin-concern, skin-type, ingredient, popularity, and personalized discovery may follow only when reliable structured or behavioral data supports them.
 
 Product pages should progressively become premium shopping pages with curated imagery, product details, ratings and reviews, exact sizes, prominent tracked pricing, retailer alternatives, price history, reference-price context, and easy cart addition. A larger gallery remains valuable but is not the immediate priority.
+
+## Guided discovery and product intelligence
+
+**Planned; not current functionality.**
+
+PuruPuru should offer a lightweight `Help Me Choose` flow that does not require an account or AI chatbot. A shopper may answer a few optional questions about product type, skin concerns, preferences, and budget, then receive a small set of relevant products with understandable reasons for each result.
+
+Recommendations must be deterministic and explainable from reliable structured product information. Planned metadata includes multiple applicable skin concerns and skin types, texture, key ingredients, benefits, and fragrance information. Every value retains source/provenance and distinguishes manufacturer claims from independently verified facts. Metadata and recommendations must respect meaningful `ProductVersion` formulation differences.
+
+Reuse the existing catalogue, version, provenance, ingestion, and read-model boundaries. Exact persistence and schema design are deferred until implementation; do not pre-commit to a generalized recommendation engine or infer absent attributes.
+
+Product pages should also offer explainable similar products and alternatives based initially on function, concern, texture, and price. Never call products equivalent without sufficient evidence, and explain the dimensions that made a suggestion relevant.
+
+Dynamic shopping collections should prioritize useful discovery such as `Skincare Under $20`, `Best Deals Right Now`, `Popular Products`, and country/region-based exploration. They must use actual eligible tracked prices, reliable sale/history evidence, and attributable popularity signals. Brand origin is not evidence of popularity in that country or region.
+
+Personal shelves such as Favourites, Want to Try, and Currently Using remain useful secondary experiences. They must not displace storefront discovery or the smart cart. Purchase verification, manual purchase-history analytics, and annual Wrapped-style summaries are not active priorities.
 
 ## Price intelligence and trust
 
@@ -102,14 +118,15 @@ A unified multi-retailer checkout—where participating retailers fulfill their 
 ### Planned priorities
 
 1. Storefront Browse and navigation redesign.
-2. Basic analytics instrumentation.
-3. Persistent smart cart with per-item retailer selection.
-4. Internal analytics dashboard.
-5. Better price coverage, freshness, and sale/price-drop presentation.
-6. Enhanced product galleries and details.
-7. Data-driven discovery, recommendations, and curated collections.
-8. Shipping-aware basket optimization and price alerts.
-9. Ongoing catalogue expansion where it materially improves coverage.
+2. Structured product intelligence with provenance-aware ingestion.
+3. Guided `Help Me Choose`, explainable similar products, and trustworthy dynamic collections.
+4. Basic analytics instrumentation.
+5. Persistent smart cart with per-item retailer selection.
+6. Internal analytics dashboard.
+7. Better online retailer coverage, offer freshness, availability, and sale/price-drop presentation.
+8. Enhanced product galleries and details.
+9. Shipping-aware basket optimization and price alerts.
+10. Ongoing catalogue expansion where it materially improves coverage.
 
 These priorities are directional rather than a promise to implement each in isolation or in exact sequence.
 
@@ -118,6 +135,7 @@ These priorities are directional rather than a promise to implement each in isol
 - Unified PuruPuru checkout and direct retail.
 - Shipping-aware basket optimization until data quality supports it.
 - Personalized recommendations before sufficient behavioral data exists.
+- Exact product-intelligence schema and metadata verification workflow.
 - `PuruPuru Choice` rules and meaning.
 - Makeup, fragrance, and other category expansion.
 
@@ -126,6 +144,7 @@ These priorities are directional rather than a promise to implement each in isol
 - PCPartPicker-style table-first catalogue browsing as the default experience.
 - Travel shopping lists and Japan/Korea trip workflows as flagship priorities.
 - Treating international reference prices as a travel-only feature.
+- Receipt scanning/OCR, purchase verification, and manual purchase-history analytics as active product priorities.
 
 Historical implementation notes remain valid records of what was built and why. Superseding a strategy does not delete current functionality, user data, technical invariants, or past decisions.
 

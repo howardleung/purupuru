@@ -175,15 +175,11 @@ The core loop is:
 2. Understand its reputation across relevant beauty markets.
 3. Compare tracked retailer prices and availability for the exact size; expose a version/formula distinction only when it materially affects the purchase.
 4. Save the product to a personal collection or the current Shopping Lists; a persistent smart cart is the planned successor shopping surface.
-5. Purchase the product.
-6. Record the purchase.
-7. Use and eventually rate or review the product.
-8. Contribute useful information back to the platform over time.
-9. Improved platform data helps the next user make a better purchasing decision.
+5. Follow the selected retailer listing and purchase outside PuruPuru when ready.
+6. Use and optionally rate, review, or organize the product on a personal shelf.
+7. Improved retailer, offer, and product intelligence helps the next user make a better purchasing decision.
 
-The platform should make user contributions beneficial to the contributor rather than feeling like unpaid database maintenance.
-
-For example, a future receipt-import feature may automatically update a user's collection and shopping list while simultaneously producing verified price observations.
+The platform should make user contributions beneficial to the contributor rather than feeling like unpaid database maintenance. Receipt scanning, purchase verification, and manual purchase-history analytics are not active product priorities; preserve existing purchase records and behavior without expanding that workflow implicitly.
 
 ---
 
@@ -545,7 +541,7 @@ Sign-in is required for:
 
 Google + email magic link first. Apple later if needed.
 
-Receipt import is post-MVP. Future receipt imports will require sign-in. Keep the domain model extensible for future receipts, but do not include OCR/import functionality in MVP.
+Receipt scanning/OCR and purchase verification are retired from active planning. Existing purchase-related schema, records, and behavior remain intact; new data investment should prioritize online retailer feeds, offer freshness, availability, and trustworthy structured product information.
 
 ### Search and Discovery
 

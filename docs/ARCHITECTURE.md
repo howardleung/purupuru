@@ -35,3 +35,13 @@ Mutation DTOs are untrusted at runtime: `apps/web/lib/input-validation.ts` check
 ## Practical placement
 
 Before adding a helper, look for an existing domain module or server helper. Put a stable, pure rule in `packages/domain`; keep Prisma query composition in server-only code; keep request/session handling and revalidation at the Next.js boundary; keep rendering and transient interaction in components. Introduce a new package, layer, or repository abstraction only when an existing boundary cannot express the need clearly.
+
+## Planned discovery architecture
+
+Guided discovery, similar products, and dynamic collections should extend the existing boundaries rather than introduce a separate AI or recommendation platform. Structured product intelligence enters through the versioned, provenance-aware ingestion path; stable matching/scoring rules belong in the domain layer; server reads assemble bounded result models; UI explains why each product matched.
+
+Planned attributes include multiple skin concerns and skin types, texture, key ingredients, benefits, and fragrance information. Store manufacturer claims distinctly from independently verified facts and retain meaningful `ProductVersion` formulation context. Exact schema, taxonomy, confidence, and source-shape decisions are deferred until implementation and migration review.
+
+Initial recommendations should be deterministic and explainable. `Help Me Choose` must work without authentication or a chatbot. Similar-product matching may consider function, concern, texture, and price, but cannot claim equivalence without supporting evidence. Dynamic deal and popularity collections must derive from eligible tracked prices, trustworthy price/sale history, or attributable behavior/market signals—not static labels or brand origin.
+
+Receipt scanning/OCR and purchase-verification pipelines are not active architectural priorities. Preserve current purchase-related records and behavior, but invest new data work in online retailer feeds, offer freshness, availability, and trustworthy product metadata.

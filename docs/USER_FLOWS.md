@@ -251,7 +251,7 @@ Example:
 
 If the user separately chooses Owned or a current/future `Add to My Collection` action, apply the normal personal Collection flow: create the appropriate `PurchaseInstance`, derive Owned, and remove Want according to existing Collection semantics. That explicit action—not list completion—is the boundary into personal history.
 
-Future receipt import may update list completion, but any personal Collection or purchase-history import must preserve this explicit boundary; receipt import is not MVP.
+Receipt scanning/import is retired from active planning. Preserve the explicit boundary between reversible list completion and personal Collection history in all future shopping flows.
 
 ## 10. Collection page
 

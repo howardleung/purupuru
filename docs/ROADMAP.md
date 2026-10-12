@@ -7,14 +7,15 @@ Across phases, PuruPuru should become an enjoyable skincare storefront with inde
 ## Current strategic priorities
 
 1. Complete the storefront Browse and navigation direction.
-2. Add privacy-conscious basic analytics instrumentation, including impressions alongside interactions.
-3. Build a persistent smart cart with exact variants and per-item retailer selection.
-4. Add an internal analytics dashboard.
-5. Improve price coverage, freshness, and honest sale/price-drop presentation.
-6. Enhance product galleries and details.
-7. Introduce data-supported recommendations, curated collections, and discovery.
-8. Add shipping-aware basket optimization and price alerts only when data quality supports them.
-9. Continue targeted catalogue expansion where it materially improves useful coverage.
+2. Add provenance-aware structured product intelligence for concerns, skin types, texture, ingredients, benefits, and fragrance.
+3. Add guided `Help Me Choose`, explainable similar products, and trustworthy dynamic discovery collections.
+4. Add privacy-conscious basic analytics instrumentation, including impressions alongside interactions.
+5. Build a persistent smart cart with exact variants and per-item retailer selection.
+6. Add an internal analytics dashboard.
+7. Improve online retailer coverage, offer freshness, availability, and honest sale/price-drop presentation.
+8. Enhance product galleries and details.
+9. Add shipping-aware basket optimization and price alerts only when data quality supports them.
+10. Continue targeted catalogue expansion where it materially improves useful coverage.
 
 Travel-shopping workflows are no longer an active strategic priority. Existing Shopping Lists remain implemented and supported until a separate, data-safe cart migration or reuse decision is made.
 
@@ -123,7 +124,6 @@ Add an internal dashboard for traffic, discovery, cart, outbound-click, product,
 Potential features after core usage is proven:
 - review reporting, moderation, helpful votes, media, and replies
 - community price submissions
-- receipt-photo proof submissions
 - verification/moderation workflow
 - contributor reputation/badges
 - Founding Contributor status
@@ -132,21 +132,6 @@ Potential features after core usage is proven:
 - profile showcases
 
 No cash-per-submission system initially; avoid creating fraud incentives.
-
-## Later — Receipt intelligence
-
-Future high-value loop:
-- upload receipt
-- OCR/extract retailer/date/line items/prices
-- product/variant matching
-- confirmation UI with detected items checked
-- user corrections before commit
-- reconcile a cart or retained planning list where appropriate
-- create PurchaseInstances
-- update collection
-- contribute verified PriceObservations
-
-The feature should save the user work first; community data is a secondary benefit.
 
 ## Later — Shopping intelligence expansion
 
@@ -158,6 +143,7 @@ Potential:
 - retailer partnerships/direct feeds
 - production source adapters/authorized feeds and scheduled ingestion
 - expanded and automated historical observed prices
+- fresher offer availability and price verification
 - price alerts
 - richer shipping information
 - better local-market reference coverage
@@ -165,16 +151,21 @@ Potential:
 
 Avoid promising universal landed-cost/tax calculations until data quality supports it.
 
-## Later — Personalization and discovery
+## Planned — Guided discovery and product intelligence
 
-Potential:
-- stronger interest-based home feed
-- cart, product, and routine recommendations
-- similarity/taste profiles
-- local-market trending when legitimate repeatable data exists
-- active-ingredient taxonomy
-- browse/filter by actives
-- beauty annual recap / “Beauty Wrapped”
+Build on the existing catalogue and ingestion boundaries without choosing the database design prematurely:
+
+- provenance-aware structured metadata for concerns, skin types, texture, key ingredients, benefits, and fragrance;
+- multiple concerns and skin types per product, with meaningful formulation differences retained at `ProductVersion`;
+- a no-account, non-chatbot `Help Me Choose` questionnaire with optional product-type, concern, preference, and budget inputs;
+- a small explainable result set based only on populated reliable metadata;
+- product-page similar products and alternatives matched initially by function, concern, texture, and price;
+- dynamic collections such as Skincare Under $20, Best Deals Right Now, Popular Products, and regional discovery;
+- explicit separation of regional popularity evidence from brand origin.
+
+Do not claim equivalence, popularity, a sale, or a deal without sufficient evidence. Skin type and concerns provide non-medical shopping context only.
+
+Personal shelves such as Favourites, Want to Try, and Currently Using remain secondary to storefront discovery and the smart cart. Purchase verification, manual purchase-history analytics, receipt scanning/OCR, and annual Wrapped features are retired from active planning. Preserve existing code and data until separately changed.
 
 Skin type may support non-medical discovery context; avoid diagnostic claims.
 
@@ -184,9 +175,7 @@ Likely first path:
 - affiliate commerce revenue
 
 Possible premium later, only after observing willingness to pay:
-- unlimited/high-volume receipt imports
 - advanced price alerts/history
-- advanced collection analytics
 - power-user organization
 - premium cosmetics/profile customization
 

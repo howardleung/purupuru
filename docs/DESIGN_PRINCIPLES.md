@@ -99,7 +99,7 @@ The action depends on the destination:
 
 ## 9. Profile and collection should feel personal
 
-The product is not merely a price engine. Collection statistics, product showcases, lists/collections, and eventually annual summaries give users a reason to maintain accurate history.
+The product is not merely a price engine. Personal shelves such as Favourites, Want to Try, and Currently Using can make the experience feel personal, but remain secondary to storefront discovery and the smart cart. Purchase verification, detailed purchase-history analytics, and annual summaries are not active priorities.
 
 MVP skin type is private profile metadata. Public profiles/social sharing come later.
 
@@ -132,20 +132,21 @@ Stale data: keep it when useful, but make age visible.
 
 ## 13. Visual character
 
-The target feeling is premium, calm, modern, beauty-aware, and enjoyable for casual exploration—not a discount marketplace or technical database.
+The target feeling is cute, friendly, playful, and gender-neutral while remaining clean, modern, and trustworthy. Large product photography, clear grids, and intuitive navigation should make casual exploration enjoyable without turning the site into a discount marketplace or technical database. Skincare storefronts may inspire interaction quality and hierarchy, but PuruPuru should not copy their layouts.
 
 Prefer:
 
 - strong whitespace
 - clear hierarchy
+- large product photography and clean product grids
 - restrained badges
 - high-quality product imagery
-- smooth micro-interactions
+- subtle personality through purposeful micro-interactions and visual details
 - minimal modal interruption
 - consistent cards/tables
 - logos for external rating signals where permitted
 
-Avoid clutter, aggressive sale language, excessive gamification, and feed-like noise.
+Avoid clutter, aggressive sale language, excessive gamification, decorative complexity, and feed-like noise. The final visual design remains open to UX/UI exploration.
 
 ## 14. Public orientation before authentication
 

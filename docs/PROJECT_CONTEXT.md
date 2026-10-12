@@ -67,19 +67,9 @@ The product should aggregate signals rather than copy third-party review databas
 
 Third-party review text should not be scraped and republished as a foundation of the product. External ratings/rankings/review counts may be displayed only when legitimately obtainable and should link back to the source.
 
-## Future data contribution loop
+## Data-investment priority
 
-A future receipt workflow could:
-
-1. Scan/upload a receipt.
-2. Detect retailer, products, variants, quantities, and paid prices.
-3. Match items against a cart or retained planning list.
-4. Let the user confirm/correct all matches.
-5. Update the relevant shopping state.
-6. Only after separate confirmation that these are personal acquisitions, create purchase instances and update the user's collection. Cart/list state alone must not imply ownership.
-7. Contribute verified price observations to the platform.
-
-This is intentionally post-MVP, but the data model should not make it difficult later.
+Receipt scanning/OCR, purchase verification, and manual purchase-history analytics are retired from active planning. Preserve existing purchase-related code and data, including the boundary that cart/list state does not imply ownership, but prioritize authorized online retailer feeds, offer freshness, availability, and provenance-aware structured product information.
 
 ## Product-quality philosophy
 

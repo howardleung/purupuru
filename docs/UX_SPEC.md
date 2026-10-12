@@ -215,11 +215,15 @@ Introduce PuruPuru as an attractive skincare price-comparison product and guide 
 
 ### Discovery sections
 
-Desired future directions include Trending in Korea, Trending in Japan, Trending in France, Shop/Browse by Category, and other factual discovery sections.
+Prioritize useful future collections such as Skincare Under $20, Best Deals Right Now, Popular Products, country/region-based exploration, Shop/Browse by Category, and other factual discovery sections.
 
-`Trending` or `Popular` requires current, attributable ranking/external-signal evidence for that market. If evidence is insufficient, omit the section or use an honest name such as `Curated products`, `Explore Japanese skincare`, or `Recently added` when factually supported.
+`Trending` or `Popular` requires current, attributable behavioral or external-signal evidence. Country/region popularity must not be inferred from brand origin. Under-price and deal collections use actual eligible tracked prices and reliable sale/history evidence. If evidence is insufficient, omit the section or use an honest name such as `Curated products`, `Explore Japanese skincare`, or `Recently added` when factually supported.
 
 Demo price-history observations never produce deal, trending, lowest-ever, or popularity claims.
+
+### Help Me Choose
+
+A planned lightweight guided flow may ask optional questions about product type, skin concerns, preferences, and budget. It requires neither an account nor an AI chatbot. Return a small, understandable selection and explain the structured attributes that made each result relevant. Missing attributes must reduce confidence or eligibility rather than being inferred.
 
 ### Personalization
 
@@ -285,6 +289,8 @@ At minimum: price low/high, price high/low, and useful product/brand alphabetica
 Initial concepts: Category, Brand, Capacity, Price, Rating, Active ingredients, and Market/availability where useful. Capacity uses normalized compatible dimensions—volume in mL, mass in g, and discrete count—and never compares unlike units. When results contain multiple dimensions, the shopper chooses the dimension before setting a range.
 
 Active-ingredient filtering reserves the correct structural location; it does not authorize invented ingredient data. Hide, honestly disable, or defer it until a verified taxonomy and populated records exist.
+
+Planned structured discovery may also use multiple concerns and skin types, texture, benefits, and fragrance information. Manufacturer claims and independently verified facts remain distinguishable, provenance is retained, and formulation-specific attributes follow meaningful `ProductVersion` boundaries. Exact schema and filter design remain open until implementation.
 
 ### Card behavior
 
@@ -368,6 +374,8 @@ The default presentation is brand + product name + size. A sole/default ProductV
 
 Destination-market offers, external signals, price history, detailed product information, and future verified attributes follow below. Continue the documented continuous-page approach rather than market tabs that force comparison from memory.
 
+A planned related-products section may show a small set of explainable alternatives based initially on product function, concern, texture, and price. Each suggestion should expose a concise reason it is relevant. Do not describe products as substitutes or equivalents without sufficient evidence, and never cross a meaningful formulation boundary accidentally.
+
 ### Images/mobile
 
 Use only images valid for the selected version; prefer exact-variant imagery, then safe version-wide imagery, never another formulation/size. Preserve alt text/provenance.
@@ -434,6 +442,8 @@ Existing Tried/rating confirmation behavior remains unchanged.
 ### Purpose
 
 Feel like a personal beauty shelf, not an administrative table.
+
+Favourites, Want to Try, and Currently Using are useful shelf concepts, but this personal surface remains secondary to storefront discovery and the smart cart. Mapping these shopper labels onto existing collection states is an implementation decision, not permission to change persistence semantics here.
 
 ### Immediately visible
 
@@ -549,7 +559,7 @@ Whether an override persists is open; the current model intentionally stores no 
 
 Long-term actual savings for an explicitly recorded personal purchase uses the real paid price where known. `PurchaseInstance.amountPaid` and `currency` provide a domain location for that personal history, but the editing flow and whether amount is per-unit or transaction-total must be settled before implementation. Shopping-list completion alone must not create that history.
 
-Until actual price is reliable, use documented estimated-savings logic. Receipt OCR remains future scope.
+Until actual price is reliable, use documented estimated-savings logic. Receipt scanning/OCR is retired from active planning; do not make this surface depend on it.
 
 ### Mobile
 
@@ -617,7 +627,7 @@ Shipping thresholds, delivered-basket optimization, saved baskets, alternatives,
 - Manual actual-price flow and per-unit versus transaction-total meaning.
 - Richer comparison attributes.
 - Community reviews, public profiles/lists, creator lists, user-curated discovery.
-- Receipt OCR and production retailer integrations.
+- Production retailer-feed integrations and offer-freshness strategy.
 
 Open items are not permission to fabricate data or silently decide product behavior.
 
