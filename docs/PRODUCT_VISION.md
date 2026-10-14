@@ -2,11 +2,11 @@
 
 **Status:** Canonical product strategy and priority source
 
-**Last updated:** 2026-10-12
+**Last updated:** 2026-10-14
 
 ## Purpose
 
-PuruPuru is a skincare shopping, discovery, and independent price-comparison platform for Canadian shoppers. Its ambition is to become a place people prefer to browse skincare—even when they are not ready to buy—because discovery is enjoyable and retailer comparison is trustworthy.
+PuruPuru is a Canada-first skincare shopping, discovery, and independent price-comparison platform. Its ambition is to become a place people prefer to browse skincare—even when they are not ready to buy—because discovery is enjoyable, retailer comparison is trustworthy, and selective recommendations are useful and understandable.
 
 PuruPuru combines two advantages:
 
@@ -29,17 +29,29 @@ The desired experience is a modern skincare storefront, not a technical product 
 - purposeful recommendations and curated collections once supported by reliable data;
 - advanced factual comparison tools where they help, without making the default browse experience dense.
 
-Skin-concern, skin-type, ingredient, popularity, and personalized discovery may follow only when reliable structured or behavioral data supports them.
+Catalogue inclusion and product-intelligence completeness are separate concerns. A product may be searchable and price-comparable without detailed skincare intelligence. Structured intelligence should be progressively enriched for selected products according to shopper interest and usefulness; missing intelligence must never be interpreted as negative evidence or block an otherwise trustworthy catalogue entry.
 
 Product pages should progressively become premium shopping pages with curated imagery, product details, ratings and reviews, exact sizes, prominent tracked pricing, retailer alternatives, price history, reference-price context, and easy cart addition. A larger gallery remains valuable but is not the immediate priority.
 
-## Guided discovery and product intelligence
+## Guided discovery, Skin Map, and product intelligence
 
 **Planned; not current functionality.**
 
-PuruPuru should offer a lightweight `Help Me Choose` flow that does not require an account or AI chatbot. A shopper may answer a few optional questions about product type, skin concerns, preferences, and budget, then receive a small set of relevant products with understandable reasons for each result.
+PuruPuru should offer a lightweight `Help Me Choose` flow hosted by Theo that does not require an account, clinical assessment, or AI chatbot. A shopper may answer optional questions about product type, self-reported skin characteristics, priorities, and preferences, then receive a small set of relevant products with understandable reasons for each result. Completing the flow may establish a reusable **Skin Map** for signed-in users; it reflects what the shopper reports and must never be presented as skin measurement, diagnosis, or medical advice.
 
-Recommendations must be deterministic and explainable from reliable structured product information. Planned metadata includes multiple applicable skin concerns and skin types, texture, key ingredients, benefits, and fragrance information. Every value retains source/provenance and distinguishes manufacturer claims from independently verified facts. Metadata and recommendations must respect meaningful `ProductVersion` formulation differences.
+Recommendations must be explainable from reliable structured evidence. Product intelligence should track product function, relevant concerns, texture, supported benefits, compatibility evidence, cautions, provenance, and completeness. It may also include multiple applicable skin types, key ingredients, and fragrance information where supported. Each value must retain its source and evidence status, distinguish manufacturer claims from independently verified facts, respect meaningful `ProductVersion` formulation differences, and keep unknown information unknown.
+
+Personalized product matches may use these shopper-facing tiers:
+
+- **S — Excellent Match**
+- **A — Great Match**
+- **B — Good Match**
+
+Every displayed tier requires a concise explanation grounded in the Skin Map and available product evidence. Show no tier when evidence is insufficient or alignment is too weak. Matching must be aware of product role: a cleanser, for example, should not be penalized for failing to address concerns that are irrelevant to cleansing. Suitability and price are separate dimensions; neither may silently substitute for the other.
+
+Personalized discovery may consider Skin Map priorities, explicit preferences, liked products, and confirmed product experiences. Clearly distinguish preferences inferred from behavior from facts or preferences the shopper explicitly confirmed. Prioritize enrichment for products where shopper interest and recommendation usefulness justify the work rather than attempting exhaustive research on every catalogue item.
+
+**Theo's Pick** is a selective platform-wide standout recommendation. It is distinct from personalized S/A/B match tiers, price drops, discounts, and other price-related badges. Its criteria must be supportable and transparent enough to avoid implying sponsorship, popularity, or universal suitability without evidence.
 
 Reuse the existing catalogue, version, provenance, ingestion, and read-model boundaries. Exact persistence and schema design are deferred until implementation; do not pre-commit to a generalized recommendation engine or infer absent attributes.
 
@@ -49,18 +61,33 @@ Dynamic shopping collections should prioritize useful discovery such as `Skincar
 
 Personal shelves such as Favourites, Want to Try, and Currently Using remain useful secondary experiences. They must not displace storefront discovery or the smart cart. Purchase verification, manual purchase-history analytics, and annual Wrapped-style summaries are not active priorities.
 
+## Homepage and visual direction
+
+The homepage should be search-first, price-forward, visually appealing, and uncluttered. It should feature prominent product imagery and readable CAD pricing, compelling verified deals, and a personalized discovery area that initially invites visitors to complete Theo's quiz. It must communicate shopping value before exposing the evidence and data-model complexity that makes the experience trustworthy.
+
+The visual identity is **Theo + Sage**: cute, friendly, and distinctive without sacrificing shopping clarity. Use clean product grids, generous product photography, clear hierarchy, and restrained characterful interactions. Avoid generic beauty-store styling, clutter, excessive badges, tiny pricing, and decorative complexity that competes with products or purchase decisions.
+
+## Catalogue acquisition and retailer coverage
+
+Catalogue acquisition should prioritize products with at least one verified retailer offer available to Canadian shoppers. Minimize products with zero active eligible offers, and prioritize candidates according to Canadian availability, shopper demand, accurate product/variant identity, and the opportunity for useful multi-retailer comparison.
+
+A product does not need comprehensive skincare intelligence to enter the catalogue, but ingestion should preferentially establish at least one genuine Canadian-eligible offer. Distinguish single-offer products from multi-offer, comparison-ready products. Products without active eligible offers may remain internally or appear selectively, but should not dominate normal catalogue browsing or shopping recommendations.
+
+Offer coverage, freshness, and exact-variant matching are core catalogue-quality metrics. Future authorized retailer APIs, product feeds, and affiliate feeds may help scale acquisition and maintenance, but an affiliate relationship must never be assumed to include catalogue or pricing API access.
+
 ## Price intelligence and trust
 
-Price comparison is independent and exact-size specific. PuruPuru should show:
+Price comparison is independent and exact-variant specific, including exact size. PuruPuru should show:
 
 - reputable Canadian-accessible retailer offers;
-- the lowest tracked available eligible price and useful alternatives;
+- prominent CAD prices, the lowest tracked available eligible price, and useful alternatives;
 - transparent availability and verification age;
 - native-currency source data with approximate CAD presentation;
-- recorded price history and honest price-change context;
+- recorded price history, verified price drops, and honest price-change context;
+- clearly defined discounts against an appropriate verified reference price;
 - authoritative international manufacturer or retail reference prices where useful.
 
-International reference prices remain valuable to Canadian shoppers even when they will not travel. They provide context about domestic-market pricing and import markups, but are informational benchmarks—not delivered Canadian offers. Preserve the distinction among verified MSRP, Retail Price, Reference Price, an actual retailer-advertised sale, an observed price decrease, and a low price relative to other tracked retailers.
+**Passport Deals** may compare Canadian offers with appropriately labelled home-country benchmarks. International reference prices remain valuable even when a shopper will not travel because they provide context about domestic-market pricing and import markups, but they are informational benchmarks—not delivered Canadian offers. Preserve the distinction among verified MSRP, Retail Price, Reference Price, an actual retailer-advertised sale, an observed price decrease, and a low price relative to other tracked retailers.
 
 Never invent an MSRP, discount, original price, availability state, or savings percentage. Keep item price separate from shipping, tax, and delivered-basket cost unless those components are supported by reliable data.
 
@@ -87,7 +114,7 @@ The currently implemented Shopping Lists remain supported. Their travel/target-m
 
 PuruPuru should instrument product impressions as well as interactions so internal analytics can measure unique visitors, sessions, page views, returning visitors, traffic sources, searches, filters, product views, cart behavior, outbound retailer clicks, popular products and brands, empty searches, and retailer-offer performance without confusing placement with preference or clicks with purchases.
 
-Analytics must use privacy-conscious collection, appropriate consent, and explicit retention. Reliable aggregate behavior may later support transparent labels such as `Most Viewed on PuruPuru`, `Trending on PuruPuru`, or `Popular This Week`, plus curated and personalized discovery. Measured popularity is not product quality or editorial endorsement; `PuruPuru Choice` remains an unresolved future concept.
+Analytics must use privacy-conscious collection, appropriate consent, and explicit retention. Reliable aggregate behavior may later support transparent labels such as `Most Viewed on PuruPuru`, `Trending on PuruPuru`, or `Popular This Week`, plus curated and personalized discovery. Measured popularity is not product quality or editorial endorsement, and it must remain distinct from the selective editorial/evidence-based meaning of `Theo's Pick`.
 
 ## Market, business, and differentiation
 
@@ -99,7 +126,7 @@ PuruPuru has competitors and useful references. These include Cosmetify for beau
 2. independent and accurate retailer price comparison;
 3. a flexible multi-retailer smart cart;
 4. Canadian-focused retailer and price intelligence;
-5. useful data-driven discovery.
+5. explainable, evidence-supported personalized discovery.
 
 Near-term monetization may include affiliate referrals, retailer or brand partnerships, better product feeds, and performance-based commercial relationships. Commercial relationships must never change which offer is presented as cheapest or how price-ranked offers are ordered.
 
@@ -118,12 +145,12 @@ A unified multi-retailer checkout—where participating retailers fulfill their 
 ### Planned priorities
 
 1. Storefront Browse and navigation redesign.
-2. Structured product intelligence with provenance-aware ingestion.
-3. Guided `Help Me Choose`, explainable similar products, and trustworthy dynamic collections.
+2. Structured product intelligence with provenance, completeness, and evidence-aware ingestion.
+3. Guided `Help Me Choose`, optional Skin Maps, explainable similar products, and trustworthy dynamic collections.
 4. Basic analytics instrumentation.
 5. Persistent smart cart with per-item retailer selection.
 6. Internal analytics dashboard.
-7. Better online retailer coverage, offer freshness, availability, and sale/price-drop presentation.
+7. Better Canadian-eligible retailer coverage, offer freshness, availability, and verified sale/price-drop presentation.
 8. Enhanced product galleries and details.
 9. Shipping-aware basket optimization and price alerts.
 10. Ongoing catalogue expansion where it materially improves coverage.
@@ -134,9 +161,9 @@ These priorities are directional rather than a promise to implement each in isol
 
 - Unified PuruPuru checkout and direct retail.
 - Shipping-aware basket optimization until data quality supports it.
-- Personalized recommendations before sufficient behavioral data exists.
+- Personalized recommendations for products without sufficient structured evidence.
 - Exact product-intelligence schema and metadata verification workflow.
-- `PuruPuru Choice` rules and meaning.
+- Skin houses, expanded quiz animations, and deeper gamification.
 - Makeup, fragrance, and other category expansion.
 
 ### Superseded strategic direction
@@ -158,6 +185,8 @@ The strategy does not replace the existing architecture. Preserve:
 - retailer identity, provenance, conservative ingestion, and idempotency;
 - native currency as source truth and CAD as presentation;
 - distinct MSRP, Retail Price, and Reference Price semantics;
+- separation between price signals and suitability signals;
+- unknown product intelligence as unknown rather than negative evidence;
 - affiliate-neutral raw-price ordering;
 - price history, ratings/reviews, profiles, authentication, privacy, and user isolation.
 
