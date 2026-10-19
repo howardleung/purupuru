@@ -44,6 +44,7 @@ export type CatalogueProduct = {
       market: string;
       nativeAmount: number;
       nativeCurrency: string;
+      amountCad: number | null;
       sourceDisplayName: string;
       sourceUrl: string | null;
       verifiedAt: string;

@@ -295,6 +295,11 @@ export async function getCatalogue(options: {
           market: benchmark.market,
           nativeAmount: Number(benchmark.amount),
           nativeCurrency: benchmark.nativeCurrency,
+          amountCad: benchmark.nativeCurrency === "CAD"
+            ? Number(benchmark.amount)
+            : benchmark.cadConvertedAmount === null
+              ? null
+              : Number(benchmark.cadConvertedAmount),
           sourceDisplayName: benchmark.sourceDisplayName,
           sourceUrl: benchmark.sourceUrl,
           verifiedAt: benchmark.verifiedAt.toISOString(),
