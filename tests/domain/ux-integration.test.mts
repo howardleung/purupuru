@@ -15,7 +15,7 @@ const collectionCard = readFileSync(new URL("../../apps/web/components/collectio
 const shoppingList = readFileSync(new URL("../../apps/web/components/shopping-list-details.tsx", import.meta.url), "utf8");
 const productSelectors = readFileSync(new URL("../../apps/web/components/product-selectors.tsx", import.meta.url), "utf8");
 const comparePage = readFileSync(new URL("../../apps/web/app/compare/page.tsx", import.meta.url), "utf8");
-const collectionPage = readFileSync(new URL("../../apps/web/app/collection/page.tsx", import.meta.url), "utf8");
+const collectionPage = readFileSync(new URL("../../apps/web/app/likes/page.tsx", import.meta.url), "utf8");
 const shoppingListsPage = readFileSync(new URL("../../apps/web/app/shopping-lists/page.tsx", import.meta.url), "utf8");
 const appIcon = readFileSync(new URL("../../apps/web/app/icon.svg", import.meta.url), "utf8");
 const primaryNav = readFileSync(new URL("../../apps/web/components/primary-nav.tsx", import.meta.url), "utf8");
@@ -65,7 +65,7 @@ test("browser titles and favicon use the compact PuruPuru identity", () => {
   assert.doesNotMatch(homePage, /title: "Compare skincare prices across markets"/);
   assert.match(cataloguePage, /title: "Skincare Catalogue"/);
   assert.match(comparePage, /title: "Compare Products"/);
-  assert.match(collectionPage, /title: "My Collection"/);
+  assert.match(collectionPage, /title: "Liked Products"/);
   assert.match(shoppingListsPage, /title: "Shopping Lists"/);
   assert.match(productPage, /const title = family\.canonicalName/);
   assert.match(appIcon, /<svg[\s\S]*<path[\s\S]*#88A2B3[\s\S]*<\/svg>/);
@@ -94,10 +94,10 @@ test("all core return paths preserve exact version and variant context", () => {
   assert.match(productLinks, /productSelectionHref\(\{/);
 });
 
-test("catalogue personalization is optional and limited to visible current versions", () => {
-  assert.match(cataloguePage, /isClerkConfigured \? getCurrentUser\(\) : Promise\.resolve\(null\)/);
-  assert.match(cataloguePage, /productVersionIds: \[\.\.\.new Set\(catalogue\.products\.flatMap/);
-  assert.match(catalogueCard, /personalState\?: MyCollectionItem \| null/);
+test("catalogue Like controls use one shared authenticated provider without legacy shelf queries", () => {
+  assert.doesNotMatch(cataloguePage, /getMyCollectionForUser/);
+  assert.match(catalogueCard, /<LikeButton/);
+  assert.match(catalogueCard, /productVersionId=\{product.currentVersion.id\}/);
   assert.doesNotMatch(catalogueCard, /prisma\./);
 });
 
@@ -118,7 +118,7 @@ test("catalogue renders one storefront card per family with exact price and size
   assert.match(catalogueBrowser, /name="minCapacity"/);
   assert.match(catalogueBrowser, /name="maxCapacity"/);
   assert.match(catalogueBrowser, /grid-cols-2[\s\S]*md:grid-cols-3[\s\S]*xl:grid-cols-4/);
-  assert.match(catalogueBrowser, /<ProductCard personalState=\{personal\} product=\{product\}/);
+  assert.match(catalogueBrowser, /<ProductCard product=\{product\}/);
   assert.match(catalogueBrowser, /Shop all/);
   assert.match(catalogueBrowser, /Shop by category/);
   assert.match(catalogueBrowser, /Shop by brand/);
@@ -141,7 +141,7 @@ test("primary navigation exposes public and private destinations with active sta
     ["/", "Home"],
     ["/catalogue", "Browse"],
     ["/brands", "Brands"],
-    ["/collection", "My Collection"],
+    ["/likes", "Liked Products"],
     ["/shopping-lists", "Shopping Lists"],
     ["/about", "About"],
   ]) {
@@ -169,7 +169,8 @@ test("product menu and product-page hierarchy follow the structural UX contract"
   assert.match(megaMenu, /\/api\/categories/);
   assert.match(megaMenu, /aria-expanded=\{isOpen\}/);
   assert.match(megaMenu, /featuredSlugs/);
-  assert.match(productPage, /<PersonalActionsModal/);
+  assert.match(productPage, /<LikeButton/);
+  assert.match(productPage, /<AddToShoppingList/);
   assert.ok(productPage.indexOf('title="Buy in Canada"') < productPage.indexOf("<PriceHistorySection"));
   assert.doesNotMatch(productPage, /title=\{`Buy in/);
   assert.doesNotMatch(productPage, /Strongest verified benchmark/);

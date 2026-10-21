@@ -109,7 +109,25 @@ function isCapacityDimension(value: string | undefined): value is CatalogueCapac
   return value === "volume" || value === "mass" || value === "count";
 }
 
+const catalogueVersionInclude = {
+  include: {
+    images: { orderBy: [{ isPrimary: "desc" }, { sortOrder: "asc" }, { id: "asc" }] },
+    variants: {
+      where: { isActive: true },
+      orderBy: [{ normalizedQuantity: "asc" }, { id: "asc" }],
+      include: {
+        offers: {
+          where: { isActive: true, availableMarkets: { has: "CA" } },
+          include: { retailer: { select: { name: true } } },
+        },
+        benchmarkPrices: { orderBy: { verifiedAt: "desc" } },
+      },
+    },
+  },
+} satisfies Prisma.ProductVersionDefaultArgs;
+
 export async function getCatalogue(options: {
+  productVersionIds?: readonly string[];
   query?: string;
   categorySlugs?: readonly string[];
   categorySlug?: string;
@@ -149,6 +167,7 @@ export async function getCatalogue(options: {
   const productRecords = await prisma.productFamily.findMany({
     where: {
       AND: [
+        options.productVersionIds ? { versions: { some: { id: { in: [...options.productVersionIds] } } } } : {},
         categoryIds.length > 0 ? { primaryCanonicalCategoryId: { in: categoryIds } } : {},
         brandSlugs.length > 0 ? { brand: { slug: { in: brandSlugs } } } : {},
         query
@@ -166,23 +185,11 @@ export async function getCatalogue(options: {
     include: {
       brand: true,
       primaryCanonicalCategory: true,
-      currentVersion: {
-        include: {
-          images: {
-            orderBy: [{ isPrimary: "desc" }, { sortOrder: "asc" }, { id: "asc" }],
-          },
-          variants: {
-            where: { isActive: true },
-            orderBy: [{ normalizedQuantity: "asc" }, { id: "asc" }],
-            include: {
-              offers: {
-                where: { isActive: true, availableMarkets: { has: "CA" } },
-                include: { retailer: { select: { name: true } } },
-              },
-              benchmarkPrices: { orderBy: { verifiedAt: "desc" } },
-            },
-          },
-        },
+      _count: { select: { versions: true } },
+      currentVersion: catalogueVersionInclude,
+      versions: {
+        where: { id: { in: [...(options.productVersionIds ?? [])] } },
+        ...catalogueVersionInclude,
       },
     },
     orderBy: [{ canonicalName: "asc" }],
@@ -214,8 +221,10 @@ export async function getCatalogue(options: {
     })) ?? [],
   ));
   const sort: CatalogueSort = isCatalogueSort(options.sort) ? options.sort : "PRICE_ASC";
-  const products = productRecords.flatMap((product): CatalogueProduct[] => {
-    const version = product.currentVersion;
+  const products = productRecords.flatMap((product) => (options.productVersionIds
+    ? product.versions
+    : product.currentVersion ? [product.currentVersion] : []
+  ).flatMap((version): CatalogueProduct[] => {
     if (!version) return [];
 
     const variantChoices = version.variants.map((variant) => {
@@ -276,6 +285,7 @@ export async function getCatalogue(options: {
         id: version.id,
         versionCode: version.versionCode,
         versionName: version.versionName,
+        showVersionName: product._count.versions > 1,
         image: selectPrimaryProductImage(version.images, version.id, variant.id),
         variant: {
           id: variant.id,
@@ -314,7 +324,7 @@ export async function getCatalogue(options: {
           : null,
       },
     }];
-  });
+  }));
 
   const visibleProducts = sortCatalogueItems(
     products.map((product) => ({

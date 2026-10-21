@@ -210,8 +210,8 @@ export function CollectionActions({
           </p>
         </div>
         {isSignedIn ? (
-          <Link className="text-xs font-medium text-slate-600 underline underline-offset-4" href="/collection">
-            Open My Collection
+          <Link className="text-xs font-medium text-slate-600 underline underline-offset-4" href="/collection/legacy">
+            Open previous collection
           </Link>
         ) : null}
       </div>

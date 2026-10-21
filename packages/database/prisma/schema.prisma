@@ -110,6 +110,7 @@ model User {
   createdAt          DateTime  @default(now())
   updatedAt          DateTime  @updatedAt
 
+  likes             ProductLike[]
   collectionEntries CollectionEntry[]
   purchases         PurchaseInstance[]
   ratings           UserRating[]
@@ -250,6 +251,7 @@ model ProductVersion {
   currentForFamily  ProductFamily?    @relation("CurrentProductFamilyVersion")
   defaultVariant    ProductVariant?   @relation("ProductVersionDefaultVariant", fields: [defaultVariantId], references: [id])
   variants          ProductVariant[]  @relation("ProductVersionVariants")
+  likes             ProductLike[]
   collectionEntries CollectionEntry[]
   externalSignals   ExternalSignal[]
   ratings           UserRating[]
@@ -582,4 +584,18 @@ model ShoppingListItem {
 
   @@unique([shoppingListId, productVariantId])
   @@index([productVariantId])
+}
+
+/// Explicit interest, shared across sizes; unrelated to purchase or experience history.
+model ProductLike {
+  userId           String
+  productVersionId String
+  createdAt        DateTime @default(now())
+
+  user           User           @relation(fields: [userId], references: [id])
+  productVersion ProductVersion @relation(fields: [productVersionId], references: [id])
+
+  @@id([userId, productVersionId])
+  @@index([userId, createdAt])
+  @@index([productVersionId])
 }

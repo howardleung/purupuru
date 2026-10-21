@@ -98,3 +98,9 @@ For strategy and priorities, see the [product vision](docs/PRODUCT_VISION.md). F
 ---
 
 Source code is publicly viewable for portfolio and evaluation purposes. All rights reserved.
+
+### Like feature rollout
+
+Authenticated hearts and `/likes` use one PostgreSQL ProductLike per meaningful version, shared across sizes. `/collection` redirects to Likes; `/collection/legacy` preserves existing history. Apply the additive `20261020120000_add_product_likes` migration through the normal reviewed deployment workflow before serving the new code. It performs no legacy backfill or destructive changes. A ten-minute HTTP-only request cookie supports Clerk authentication continuation; there is no guest Like collection or analytics integration.
+
+A local Next.js process can still point to the production database: verify `DATABASE_URL`, `DIRECT_URL`, and the linked Neon branch before applying migrations. For an approved target, the deployment migration command is `pnpm --filter @beauty-platform/database prisma:migrate:deploy` (not `migrate dev` or `db push`). A Prisma `P2021` for `public.ProductLike` indicates that the Likes migration is missing on that connection. Guest modal closure and retryable errors do not substitute for applying the required schema migration.

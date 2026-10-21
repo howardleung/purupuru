@@ -49,7 +49,7 @@ Shopper-facing identity is normally brand, product name, and exact size. Interna
 The MVP uses a platform-owned hierarchical skincare taxonomy for product type, browse, and navigation. Retailer category labels are normalized into it rather than copied as canonical data. Product type remains distinct from active ingredients, skin concerns, and a user's skin type.
 
 ### Personal beauty record
-Users can track Want, Owned, Tried, purchases, finished instances, private ratings/notes, Holy Grail, Would Repurchase, and shopping lists.
+Users save private version-scoped Likes through hearts, shared across sizes. Likes mean interest, not ownership, experience, or endorsement. Previous Collection relationships, purchases, and private ratings/notes remain preserved through secondary history access; Shopping Lists remain separate.
 
 PuruPuru owns the user's in-product display name, curated avatar, and optional private skin-profile context. Clerk owns authentication and private account identity such as email and security settings; PuruPuru does not duplicate those credentials or expose a public profile in the current MVP.
 

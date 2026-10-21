@@ -77,14 +77,9 @@ Bundles remain normal offers with factual extras like `Includes 15 g mini + pouc
 
 ## 7. Saving should feel lightweight
 
-Primary save behavior should resemble polished media-library interactions rather than inventory software.
+Use one heart to Like/unlike a meaningful product version across sizes. A Like means interest or preference only. The primary private destination is Liked Products (`/likes`); historical multi-status Collection records remain secondary at `/collection/legacy`.
 
-For an unsaved product/variant:
-
-- Primary save defaults to Want.
-- After saving, a small non-blocking action menu can expose Owned, Tried, Shopping List, etc.
-
-Adding Owned should happen immediately. Purchase details are optional follow-up information, not a blocking form.
+An anonymous heart opens a small accessible invitation with Create free account, Sign in, and Continue browsing. Dismissal saves nothing and preserves browsing. Existing Clerk authentication resumes only the explicitly requested Like after validating the version. Optimistic heart feedback rolls back on failure. No guest or local-storage Likes are supported.
 
 ## 8. Drag and drop should be meaningful
 
@@ -116,7 +111,7 @@ Both can be skipped and edited later. Skin type is not a diagnosis and should no
 
 ## 11. Preserve continuity through the core journey
 
-Primary navigation keeps Browse, My Collection, Shopping Lists, and authentication understandable at desktop and mobile widths. Private destinations may remain visible to anonymous users as long as opening them produces a clear sign-in state rather than private or misleading empty data.
+Primary navigation keeps Browse, Liked Products, Shopping Lists, and authentication understandable at desktop and mobile widths. Private destinations may remain visible to anonymous users as long as opening them produces a clear sign-in state rather than private or misleading empty data.
 
 Links between catalogue cards, product pages, My Collection, and shopping-list items should preserve the intended `ProductVersion` and exact `ProductVariant` whenever that context is known. Catalogue personalization is optional current-version enrichment and must never make anonymous discovery depend on personal data.
 
@@ -152,7 +147,7 @@ Avoid clutter, aggressive sale language, excessive gamification, decorative comp
 
 The homepage should explain the consumer value before presenting account actions: identify the exact product, compare trustworthy market context, then save or plan privately when useful. Search and canonical category browse are prominent and database-backed. Anonymous visitors can move through Home → Browse/Category → Product → Compare without Clerk becoming a dependency.
 
-Primary navigation uses consumer labels—Home, Browse, Categories, My Collection, Shopping Lists, and About—and stays understandable at narrow widths. Private destinations may remain visible when their pages provide a clear sign-in prompt.
+Primary navigation uses consumer labels—Home, Browse, Brands, Liked Products, Shopping Lists, and About—and stays understandable at narrow widths. Private destinations may remain visible when their pages provide a clear sign-in prompt.
 
 ## 15. Product imagery must preserve identity and trust
 

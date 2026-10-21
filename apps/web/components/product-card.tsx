@@ -1,12 +1,12 @@
-import type { MyCollectionItem } from "@beauty-platform/domain/my-collection";
 import Link from "next/link";
 import { ArrowRight, Star } from "lucide-react";
 
 import type { CatalogueProduct } from "../lib/catalogue-contract";
 import { catalogueProductHref } from "../lib/product-links";
 import { ProductImage } from "./product-image";
+import { LikeButton } from "./like-button";
 
-export type ProductCardProps = { product: CatalogueProduct; personalState?: MyCollectionItem | null; compact?: boolean };
+export type ProductCardProps = { product: CatalogueProduct; compact?: boolean };
 
 export function formatCataloguePrice(product: CatalogueProduct) {
   const price = product.currentVersion?.lowestCanadianPrice;
@@ -20,7 +20,7 @@ export function formatCataloguePrice(product: CatalogueProduct) {
   }).format(amount)} ${currency}`;
 }
 
-export function ProductCard({ product, personalState = null, compact = false }: ProductCardProps) {
+export function ProductCard({ product, compact = false }: ProductCardProps) {
   const href = catalogueProductHref(product);
   const price = formatCataloguePrice(product);
   const sizeCount = product.currentVersion?.variants.length ?? 0;
@@ -36,6 +36,7 @@ export function ProductCard({ product, personalState = null, compact = false }: 
         />
       </Link>
       <div className={`min-w-0 ${compact ? "flex flex-col justify-center py-2 pr-1" : "flex flex-1 flex-col p-3.5 sm:p-4"}`}>
+        {product.currentVersion ? <LikeButton productSlug={product.slug} productVersionId={product.currentVersion.id} /> : null}
         <p className="text-[0.65rem] font-bold uppercase tracking-[0.13em] text-slate-500">{product.brand.name}</p>
         <h3 className="mt-1 text-sm font-extrabold leading-snug text-brand-ink sm:text-base"><Link className="hover:underline" href={href}>{product.canonicalName}</Link></h3>
         {!compact ? (
@@ -53,9 +54,6 @@ export function ProductCard({ product, personalState = null, compact = false }: 
           <span className="mt-0.5 block font-extrabold text-slate-950">{price ?? "No Canada price tracked"}</span>
           {price && product.currentVersion?.lowestCanadianPrice ? <span className="mt-0.5 block text-[0.7rem] leading-4 text-slate-500">{product.currentVersion.variant.displaySize} · {product.currentVersion.lowestCanadianPrice.retailerName}</span> : null}
         </p>
-        {personalState?.ratingHalfSteps !== null && personalState?.ratingHalfSteps !== undefined ? (
-          <p className="mt-3 text-sm text-amber-700">Your rating · {(personalState.ratingHalfSteps / 2).toFixed(1)} / 5</p>
-        ) : null}
         {!compact ? <Link className="ui-link mt-auto pt-4 text-xs" href={href}>Compare prices <ArrowRight aria-hidden className="h-3.5 w-3.5" /></Link> : null}
       </div>
     </article>

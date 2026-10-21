@@ -174,7 +174,7 @@ The core loop is:
 1. Discover a product.
 2. Understand its reputation across relevant beauty markets.
 3. Compare tracked retailer prices and availability for the exact size; expose a version/formula distinction only when it materially affects the purchase.
-4. Save the product to a personal collection or the current Shopping Lists; a persistent smart cart is the planned successor shopping surface.
+4. Like the product or add its exact size to the current Shopping Lists; a persistent smart cart is the planned successor shopping surface.
 5. Follow the selected retailer listing and purchase outside PuruPuru when ready.
 6. Use and optionally rate, review, or organize the product on a personal shelf.
 7. Improved retailer, offer, and product intelligence helps the next user make a better purchasing decision.
@@ -295,14 +295,22 @@ Each supported product should ideally contain:
 
 ### Public Site Structure
 
-The MVP public entry point explains PuruPuru’s consumer value before authentication and provides prominent product/brand search, canonical category browse, and curated product links backed by PostgreSQL. Primary destinations are Home, Browse, Categories, My Collection, Shopping Lists, and About. Anonymous users can complete discovery and comparison flows; sign-in is introduced only for private save, rating, purchase, and list behavior.
+The MVP public entry point explains PuruPuru’s consumer value before authentication and provides prominent product/brand search, canonical category browse, and curated product links backed by PostgreSQL. Primary destinations are Home, Browse, Brands, Liked Products, Shopping Lists, and About. Anonymous users can complete discovery and comparison flows; sign-in is introduced only for private save, rating, purchase, and list behavior.
 
 Public About, Contact, Privacy, Terms, and Affiliate Disclosure pages provide early trust structure. Draft legal copy must be visibly marked for professional review, a real contact channel is required before launch, and the product must not imply partnerships that do not exist.
 
 ### Product Images
 
 Product images must come from manually curated local assets or approved brand/retailer sources with recorded provenance and descriptive alt text. Images belong to a ProductVersion and may optionally target an exact ProductVariant. Exact-variant imagery wins; a version-wide image may safely cover sizes within that version, but another version or variant’s packaging must never be borrowed. Missing or failed images use an intentional fallback. The model supports ordered future galleries without requiring gallery UI in this milestone.
-### Collection Features
+### Likes (current save feature)
+
+The current save feature is one private Like per user and meaningful ProductVersion, shared across exact sizes. PostgreSQL is authoritative. Authenticated hearts toggle interest/preference; they imply no ownership, purchase, experience, endorsement, or effectiveness. `/likes` shows Liked Products using catalogue cards. `/collection` redirects there. No guest or local-storage Likes exist.
+
+An anonymous heart opens "Save your skincare favourites" with Create free account, Sign in, and Continue browsing; X/Escape also dismiss without changing state or navigating. Existing Clerk flows handle authentication. A ten-minute HTTP-only request resumes the originally requested Like once through an idempotent, authenticated, revalidated mutation. Hearts update optimistically with rollback on failure.
+
+Existing Collection, purchase, review, private rating, notes, and Shopping List records are preserved. No automatic backfill interprets legacy relationships as Likes. `/collection/legacy` retains secondary access to previous history. The older Collection features/semantics below apply only to that preserved history; they no longer define primary catalogue/product save controls. Recommendations, Skin Map personalization, community insights, and analytics remain planned.
+
+### Collection Features (legacy)
 
 Users can classify products using states such as:
 
@@ -553,7 +561,7 @@ MVP should support:
 - canonical category
 
 Autocomplete, catalogue, and category browse results remain consolidated at the product-family level rather than repeating every size. Each image-first catalogue card lists available sizes and associates its displayed lowest tracked Canadian price with the exact active current `ProductVariant` that produced it. The card link preserves that current version and priced variant so the product page opens in the expected context; shopper-relevant size and exceptional version selection remain available there.
-For signed-in users, catalogue cards may add compact personal-state context for the family’s current `ProductVersion`, including Want, Tried, derived Owned, Holy Grail, Would Repurchase, and the private rating. This enrichment must reuse the normalized collection model, avoid per-card queries, remain absent for anonymous users, and label its current-version scope. Family-level public review aggregates may be shown separately from private ratings.
+Catalogue cards show an authenticated heart for the meaningful current version, shared across sizes. Guest hearts invite account creation/sign-in. Family-level public review aggregates remain distinct from Likes and private legacy ratings.
 
 Autocomplete may show a matching brand result followed by matching products. For product matches, simple MVP ordering may use available popularity signals where trustworthy, otherwise alphabetical order.
 

@@ -1,6 +1,5 @@
 "use client";
 
-import type { MyCollectionItem } from "@beauty-platform/domain/my-collection";
 import { ArrowDownUp, Check, ChevronDown, ChevronRight, SlidersHorizontal, X } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -30,7 +29,6 @@ type CatalogueBrowserProps = {
   categories: CategoryRecord[];
   brands: Brand[];
   filters: CatalogueFilters;
-  personalItems?: MyCollectionItem[];
   breadcrumbs?: CategoryRecord[];
 };
 
@@ -164,14 +162,12 @@ export function CatalogueBrowser({
   categories,
   brands,
   filters,
-  personalItems = [],
   breadcrumbs = [],
 }: CatalogueBrowserProps) {
   const router = useRouter();
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [selectedCategorySlugs, setSelectedCategorySlugs] = useState(filters.categorySlugs);
   const [compareMessage, setCompareMessage] = useState("");
-  const personalByVersion = new Map(personalItems.map((item) => [item.productVersionId, item]));
   const skincareRoot = categories.find((category) => category.slug === "skincare");
   const topCategories = categories.filter((category) => (
     category.isActive && (skincareRoot
@@ -327,10 +323,9 @@ export function CatalogueBrowser({
           {products.length > 0 ? (
             <div className="mt-5 grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3 xl:grid-cols-4">
               {products.map((product) => {
-                const personal = product.currentVersion ? personalByVersion.get(product.currentVersion.id) : null;
                 return (
                   <div className="relative min-w-0" key={product.productFamilyId}>
-                    <ProductCard personalState={personal} product={product} />
+                    <ProductCard product={product} />
                     <label className="absolute right-2.5 top-2.5 flex min-h-9 cursor-pointer items-center gap-1.5 rounded-full border border-white/80 bg-white/95 px-2.5 text-[0.7rem] font-bold text-slate-700 shadow-sm backdrop-blur-sm focus-within:ring-2 focus-within:ring-brand-action">
                       <input
                         aria-label={`Compare ${product.brand.name} ${product.canonicalName} ${product.currentVersion?.variant.displaySize ?? ""}`}

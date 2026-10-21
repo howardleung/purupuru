@@ -59,7 +59,7 @@ Product pages should also offer explainable similar products and alternatives ba
 
 Dynamic shopping collections should prioritize useful discovery such as `Skincare Under $20`, `Best Deals Right Now`, `Popular Products`, and country/region-based exploration. They must use actual eligible tracked prices, reliable sale/history evidence, and attributable popularity signals. Brand origin is not evidence of popularity in that country or region.
 
-Personal shelves such as Favourites, Want to Try, and Currently Using remain useful secondary experiences. They must not displace storefront discovery or the smart cart. Purchase verification, manual purchase-history analytics, and annual Wrapped-style summaries are not active priorities.
+The current personal save experience is a private heart-based Liked Products collection. Likes express interest or preference, not purchase, experience, endorsement, or effectiveness. Previous Collection history remains preserved as a secondary legacy view. They must not displace storefront discovery or the smart cart. Purchase verification, manual purchase-history analytics, and annual Wrapped-style summaries are not active priorities.
 
 ## Homepage and visual direction
 
@@ -139,7 +139,7 @@ A unified multi-retailer checkout—where participating retailers fulfill their 
 - Responsive public skincare catalogue and category/brand discovery.
 - `ProductFamily → ProductVersion → ProductVariant → Offer` identity with exact-size pricing.
 - Retailer comparison, benchmarks, native prices, CAD conversion, and tracked price history.
-- Ratings/reviews, private Collection state, profiles, authentication, and Shopping Lists.
+- Ratings/reviews, private version-scoped Likes, preserved legacy Collection history, profiles, authentication, and Shopping Lists.
 - Conservative staged `product-import-v1` ingestion with provenance and admin review.
 
 ### Planned priorities

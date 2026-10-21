@@ -7,7 +7,7 @@ export const navigationItems = [
   { href: "/", label: "Home" },
   { href: "/catalogue", label: "Browse" },
   { href: "/brands", label: "Brands" },
-  { href: "/collection", label: "My Collection" },
+  { href: "/likes", label: "Liked Products" },
   { href: "/shopping-lists", label: "Shopping Lists" },
   { href: "/about", label: "About" },
 ] as const;

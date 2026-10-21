@@ -5,6 +5,7 @@ import localFont from "next/font/local";
 import { SiteFooter } from "../components/site-footer";
 import { SiteHeader } from "../components/site-header";
 import { clerkPublishableKey, isClerkConfigured } from "../lib/clerk-config";
+import { LikeProvider } from "../components/like-provider";
 import "./globals.css";
 
 const nunito = localFont({
@@ -37,12 +38,15 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const content = <>
+    <SiteHeader />
+    <div className="flex-1">{children}</div>
+    <SiteFooter />
+  </>;
   const document = (
     <html className={nunito.variable} lang="en">
       <body className="flex min-h-screen flex-col">
-        <SiteHeader />
-        <div className="flex-1">{children}</div>
-        <SiteFooter />
+        {isClerkConfigured ? <LikeProvider>{content}</LikeProvider> : content}
       </body>
     </html>
   );

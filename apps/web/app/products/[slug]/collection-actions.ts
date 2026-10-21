@@ -217,7 +217,7 @@ export async function updateProductCollection(
 
     if (result.status === "SUCCESS") {
       revalidatePath(`/products/${input.productSlug}`);
-      revalidatePath("/collection");
+      revalidatePath("/collection/legacy");
     }
 
     return result;

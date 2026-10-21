@@ -300,6 +300,12 @@ Primary skin type is optional, private-only in MVP, and non-medical metadata. Ne
 
 Defines the small first-party avatar catalogue available to profiles. Stable string IDs are referenced by `User.selectedAvatarId`; each row stores a local asset path, display name, sort order, and active state. Profile updates must select an exact active catalogue row and cannot persist arbitrary image URLs. Deactivating an avatar prevents new selections without deleting existing user or profile history.
 
+### ProductLike (current save feature)
+
+A private preference unique on `(userId, productVersionId)`, with `createdAt`. All sizes of one meaningful version share the heart; a materially different formula does not inherit it. Family identity is derived through ProductVersion. Explicit set-to-liked/insert-if-absent and set-to-unliked/delete are idempotent and user-scoped. Likes never modify purchases, reviews, private ratings, notes, or Shopping Lists. Account deletion removes ProductLike before User.
+
+The 2026-10-20 migration is additive with no legacy backfill. The models below preserve previous user history and remain accessible through `/collection/legacy`; they no longer define the primary save experience. No existing state is silently converted into a Like.
+
 ### CollectionEntry
 Represents the user's relationship with a ProductVersion/Variant, separate from individual purchases.
 

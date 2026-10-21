@@ -2,9 +2,6 @@ import type { Metadata } from "next";
 
 import { CatalogueBrowser } from "../../components/catalogue-browser";
 import { getCatalogue } from "../../lib/catalogue";
-import { isClerkConfigured } from "../../lib/clerk-config";
-import { getCurrentUser } from "../../lib/current-user";
-import { getMyCollectionForUser } from "../../lib/my-collection";
 import { boundedParameter, boundedParameters, priceParameter } from "../../lib/input-validation";
 
 export const dynamic = "force-dynamic";
@@ -33,28 +30,18 @@ type SearchParams = Promise<{
 
 export default async function CataloguePage({ searchParams }: { searchParams: SearchParams }) {
   const params = await searchParams;
-  const [catalogue, currentUser] = await Promise.all([
-    getCatalogue({
-      query: boundedParameter(params.q, 80),
-      categorySlugs: boundedParameters(params.category, 200),
-      brandSlugs: boundedParameters(params.brand, 200),
-      minimumCad: priceParameter(params.minPrice),
-      maximumCad: priceParameter(params.maxPrice),
-      capacityDimension: boundedParameter(params.capacity, 16),
-      minimumCapacity: priceParameter(params.minCapacity),
-      maximumCapacity: priceParameter(params.maxCapacity),
-      trackedOnly: params.tracked === "1",
-      sort: boundedParameter(params.sort, 32),
-    }),
-    isClerkConfigured ? getCurrentUser() : Promise.resolve(null),
-  ]);
-  const personalItems = currentUser
-      ? await getMyCollectionForUser(currentUser.id, {
-        productVersionIds: [...new Set(catalogue.products.flatMap((product) =>
-          product.currentVersion ? [product.currentVersion.id] : [],
-        ))],
-      })
-    : [];
+  const catalogue = await getCatalogue({
+    query: boundedParameter(params.q, 80),
+    categorySlugs: boundedParameters(params.category, 200),
+    brandSlugs: boundedParameters(params.brand, 200),
+    minimumCad: priceParameter(params.minPrice),
+    maximumCad: priceParameter(params.maxPrice),
+    capacityDimension: boundedParameter(params.capacity, 16),
+    minimumCapacity: priceParameter(params.minCapacity),
+    maximumCapacity: priceParameter(params.maxCapacity),
+    trackedOnly: params.tracked === "1",
+    sort: boundedParameter(params.sort, 32),
+  });
 
   return (
     <CatalogueBrowser
@@ -63,7 +50,6 @@ export default async function CataloguePage({ searchParams }: { searchParams: Se
       brands={catalogue.brands}
       categories={catalogue.categories}
       description="Discover skincare by category or brand, see what shoppers think, and compare the best Canadian prices PuruPuru currently tracks."
-      personalItems={personalItems}
       products={catalogue.products}
       filters={catalogue.filters}
       title={catalogue.selectedCategory?.displayName ?? "Shop skincare"}

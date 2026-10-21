@@ -21,6 +21,7 @@ const transaction = {
       return { count: 1 };
     },
   },
+  productLike: { async deleteMany(args: Record<string, unknown>) { calls.push({ name: "productLike.deleteMany", args }); return { count: 1 }; } },
   collectionTag: { async deleteMany(args: Record<string, unknown>) { calls.push({ name: "collectionTag.deleteMany", args }); return { count: 1 }; } },
   collectionEntry: { async deleteMany(args: Record<string, unknown>) { calls.push({ name: "collectionEntry.deleteMany", args }); return { count: 1 }; } },
   userRating: { async deleteMany(args: Record<string, unknown>) { calls.push({ name: "userRating.deleteMany", args }); return { count: 1 }; } },
@@ -95,7 +96,7 @@ test("authenticated deletion scopes every local delete to the current user and p
   const result = await deleteCurrentAccount("DELETE");
   assert.equal(result.status, "SUCCESS");
   assert.deepEqual(calls.map((call) => call.name), [
-    "auth", "rateLimit", "transaction", "user.findUnique", "collectionTag.deleteMany",
+    "auth", "rateLimit", "transaction", "user.findUnique", "productLike.deleteMany", "collectionTag.deleteMany",
     "collectionEntry.deleteMany", "userRating.deleteMany", "review.deleteMany", "purchaseInstance.deleteMany",
     "shoppingListItem.deleteMany", "shoppingList.deleteMany", "user.deleteMany", "clerk.deleteUser",
   ]);
@@ -108,7 +109,7 @@ test("authenticated deletion scopes every local delete to the current user and p
   assert.deepEqual(calls.find((call) => call.name === "shoppingListItem.deleteMany")?.args, {
     where: { shoppingList: { userId: "local-current" } },
   });
-  for (const name of ["collectionEntry", "userRating", "review", "purchaseInstance", "shoppingList"]) {
+  for (const name of ["productLike", "collectionEntry", "userRating", "review", "purchaseInstance", "shoppingList"]) {
     assert.deepEqual(calls.find((call) => call.name === `${name}.deleteMany`)?.args, {
       where: { userId: "local-current" },
     });
@@ -117,7 +118,7 @@ test("authenticated deletion scopes every local delete to the current user and p
     where: { id: "local-current", clerkUserId: "clerk-current" },
   });
   assert.deepEqual(calls.find((call) => call.name === "clerk.deleteUser")?.args, { userId: "clerk-current" });
-  assert.equal(calls.some((call) => /profileAvatar|product|offer|retailer|importBatch/.test(call.name)), false);
+  assert.equal(calls.some((call) => /profileAvatar|productFamily|productVersion|productVariant|offer|retailer|importBatch/.test(call.name)), false);
 });
 
 test("Clerk failure is explicit after atomic local cleanup", async () => {

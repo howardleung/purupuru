@@ -34,7 +34,7 @@ test("structured offer extras exclude the primary item and retain additional pro
 test("size controls sit below the image, remain compact, and preserve exact variant URLs", () => {
   const imageIndex = productPage.indexOf("<ProductImage");
   const selectorsIndex = productPage.indexOf("<ProductSelectors");
-  const personalActionsIndex = productPage.indexOf("<PersonalActionsModal");
+  const personalActionsIndex = productPage.indexOf("<LikeButton");
   assert.ok(imageIndex >= 0 && selectorsIndex > imageIndex && personalActionsIndex > selectorsIndex);
   assert.ok(selectors.indexOf(">Size</legend>") < selectors.indexOf(">Formula</legend>"));
   assert.match(selectors, /selectedVersion\.variants\.map/);

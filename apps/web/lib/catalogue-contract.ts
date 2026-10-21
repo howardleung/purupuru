@@ -17,6 +17,7 @@ export type CatalogueProduct = {
     id: string;
     versionCode: string | null;
     versionName: string;
+    showVersionName?: boolean;
     image: {
       id: string;
       productVersionId: string;

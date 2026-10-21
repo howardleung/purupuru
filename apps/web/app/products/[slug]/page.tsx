@@ -2,7 +2,6 @@ import {
   chooseVariantForVersion,
   compareOffersByProductPrice,
 } from "@beauty-platform/domain";
-import { createEmptyCollectionState } from "@beauty-platform/domain/collection";
 import { BENCHMARK_PRECEDENCE } from "@beauty-platform/domain/shopping-list";
 import { buildPriceHistorySeries } from "@beauty-platform/domain/price-history";
 import { selectPrimaryProductImage } from "@beauty-platform/domain/product-images";
@@ -14,14 +13,14 @@ import { notFound } from "next/navigation";
 
 import { Breadcrumbs } from "../../../components/breadcrumbs";
 import { OfferSection, type OfferView } from "../../../components/offer-section";
-import { PersonalActionsModal } from "../../../components/personal-actions-modal";
 import { PriceHistorySection } from "../../../components/price-history-section";
+import { LikeButton } from "../../../components/like-button";
+import { AddToShoppingList } from "../../../components/add-to-shopping-list";
 import { ProductImage } from "../../../components/product-image";
 import { ProductSelectors } from "../../../components/product-selectors";
 import { ProductRatingSummary, ReviewsSection } from "../../../components/reviews-section";
 import { getProductFamilyDetails } from "../../../lib/catalogue";
 import { isClerkConfigured } from "../../../lib/clerk-config";
-import { getPersistedCollectionState } from "../../../lib/collection-state";
 import { getCurrentUser } from "../../../lib/current-user";
 import { getShoppingListsForUser } from "../../../lib/shopping-lists";
 import { convertToCad, resolveCadDisplayAmount } from "../../../lib/currency-conversion";
@@ -205,10 +204,7 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
         primaryBenchmarkConversion?.amountCad ?? null,
       )
     : null;
-  const [initialCollectionState, shoppingLists, reviewData] = await Promise.all([
-    currentUser
-      ? getPersistedCollectionState(currentUser.id, selectedVersionRecord.id)
-      : Promise.resolve(createEmptyCollectionState()),
+  const [shoppingLists, reviewData] = await Promise.all([
     currentUser ? getShoppingListsForUser(currentUser.id) : Promise.resolve([]),
     getProductReviewData(family.id, currentUser?.id ?? null),
   ]);
@@ -301,23 +297,12 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
             />
           </div>
 
-          <div className="mt-5 flex items-center gap-3 border-t border-slate-200 pt-5">
-            {isClerkConfigured ? (
-              <PersonalActionsModal
-                initialState={initialCollectionState}
-                lists={shoppingLists}
-                productSlug={family.slug}
-                productVariantId={selectedVariantRecord.id}
-                productVersionId={selectedVersionRecord.id}
-                variantLabel={selectedVariantRecord.displaySize}
-              />
-            ) : (
-              <span className="grid h-12 w-12 place-items-center rounded-full bg-slate-100 text-slate-400">+</span>
-            )}
-            <div>
-              <p className="text-sm font-semibold">Save or plan</p>
-              <p className="text-xs text-slate-500">Collection, rating, purchase, and shopping-list actions</p>
+          <div className="mt-5 space-y-4 border-t border-slate-200 pt-5">
+            <div className="flex items-center gap-3">
+              <LikeButton key={selectedVersionRecord.id} productSlug={family.slug} productVersionId={selectedVersionRecord.id} />
+              <p className="text-sm text-slate-600">Like this product to find it later. Likes are shared across sizes.</p>
             </div>
+            {isClerkConfigured ? <AddToShoppingList lists={shoppingLists} productSlug={family.slug} productVariantId={selectedVariantRecord.id} variantLabel={selectedVariantRecord.displaySize} /> : null}
           </div>
         </div>
 

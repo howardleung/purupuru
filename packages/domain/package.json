@@ -13,6 +13,7 @@
     ".": "./src/index.ts",
     "./catalogue": "./src/catalogue.ts",
     "./collection": "./src/collection.ts",
+    "./likes": "./src/likes.ts",
     "./ingestion": "./src/ingestion.ts",
     "./my-collection": "./src/my-collection.ts",
     "./price-history": "./src/price-history.ts",

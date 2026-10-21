@@ -3,9 +3,6 @@ import { notFound } from "next/navigation";
 
 import { CatalogueBrowser } from "../../../components/catalogue-browser";
 import { getCatalogue } from "../../../lib/catalogue";
-import { isClerkConfigured } from "../../../lib/clerk-config";
-import { getCurrentUser } from "../../../lib/current-user";
-import { getMyCollectionForUser } from "../../../lib/my-collection";
 import { boundedParameter, boundedParameters, priceParameter } from "../../../lib/input-validation";
 
 export const dynamic = "force-dynamic";
@@ -27,39 +24,28 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title,
     description,
     openGraph: {
-      title: `${title} skincare · PuruPuru`,
-      description,
+    title: `${title} skincare · PuruPuru`,
+    description,
     },
   };
 }
 
 export default async function CategoryPage({ params, searchParams }: PageProps) {
   const [{ slug }, queryParams] = await Promise.all([params, searchParams]);
-  const [catalogue, currentUser] = await Promise.all([
-    getCatalogue({
-      categorySlug: slug,
-      query: boundedParameter(queryParams.q, 80),
-      brandSlugs: boundedParameters(queryParams.brand, 200),
-      minimumCad: priceParameter(queryParams.minPrice),
-      maximumCad: priceParameter(queryParams.maxPrice),
-      capacityDimension: boundedParameter(queryParams.capacity, 16),
-      minimumCapacity: priceParameter(queryParams.minCapacity),
-      maximumCapacity: priceParameter(queryParams.maxCapacity),
-      trackedOnly: queryParams.tracked === "1",
-      sort: boundedParameter(queryParams.sort, 32),
-    }),
-    isClerkConfigured ? getCurrentUser() : Promise.resolve(null),
-  ]);
+  const catalogue = await getCatalogue({
+    categorySlug: slug,
+    query: boundedParameter(queryParams.q, 80),
+    brandSlugs: boundedParameters(queryParams.brand, 200),
+    minimumCad: priceParameter(queryParams.minPrice),
+    maximumCad: priceParameter(queryParams.maxPrice),
+    capacityDimension: boundedParameter(queryParams.capacity, 16),
+    minimumCapacity: priceParameter(queryParams.minCapacity),
+    maximumCapacity: priceParameter(queryParams.maxCapacity),
+    trackedOnly: queryParams.tracked === "1",
+    sort: boundedParameter(queryParams.sort, 32),
+  });
 
   if (!catalogue.selectedCategory) notFound();
-
-  const personalItems = currentUser
-    ? await getMyCollectionForUser(currentUser.id, {
-        productVersionIds: [...new Set(catalogue.products.flatMap((product) =>
-          product.currentVersion ? [product.currentVersion.id] : [],
-        ))],
-      })
-    : [];
 
   return (
     <CatalogueBrowser
@@ -68,7 +54,6 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
       brands={catalogue.brands}
       categories={catalogue.categories}
       description={`Explore ${catalogue.selectedCategory.displayName.toLowerCase()}, discover available sizes, and compare tracked Canadian retailer prices.`}
-      personalItems={personalItems}
       products={catalogue.products}
       filters={catalogue.filters}
       title={catalogue.selectedCategory.displayName}

@@ -16,7 +16,7 @@ These flows describe intended product behavior. Exact visual design is not fixed
 2. They can browse/search by product, brand, category, size, and tracked price. Benchmarks, history, and external signals provide supporting buying context rather than replacing the retailer comparison.
 3. Catalogue results show one image-first card per ProductFamily. Each card identifies available sizes and associates its displayed lowest tracked Canadian price with the exact current variant behind that price. Clicking it opens the ProductFamily page with that version and variant preserved.
 4. No authentication is required until the user attempts a personal action.
-5. When signed in, the same catalogue may add compact private state for the current version; anonymous cards remain catalogue-only.
+5. All catalogue cards expose a heart for the current meaningful version; only authenticated users can persist Likes.
 
 ## 2. Browse by category
 
@@ -253,9 +253,19 @@ If the user separately chooses Owned or a current/future `Add to My Collection` 
 
 Receipt scanning/import is retired from active planning. Preserve the explicit boundary between reversible list completion and personal Collection history in all future shopping flows.
 
-## 10. Collection page
+## 10. Liked Products and previous Collection
 
-`/collection` is private to the signed-in user. Anonymous visitors see a sign-in prompt rather than private data or a misleading empty collection.
+The primary save flow is a heart on catalogue cards and product pages. Signed-in users add/remove one Like per meaningful version; sizes share state. Feedback is optimistic with rollback on failure. Likes do not change ownership, experience, reviews, ratings, notes, or lists.
+
+Guests see "Save your skincare favourites" and the description "Create a free account to save products you love, find them later, and get personalized recommendations." The primary CTA is "Create free account"; the secondary link is "Already have an account? Sign in". X, Escape, and "Continue browsing" dismiss without navigation or saving. Existing Clerk flows handle authentication; an expiring request resumes one idempotent Like after revalidation. Recommendations themselves remain planned.
+
+After Clerk authentication, the guest invitation closes even if the database is unavailable. Loading failures show a retryable error and do not permanently disable hearts. A failed authentication save retains its request until success, invalidation, cancellation, or expiry. A heart retry reloads unknown state before applying the requested action. `/likes` shows a recoverable loading error rather than a false empty collection when its query fails.
+
+`/likes` is the private newest-first Liked Products collection, using existing cards. `/collection` redirects to it. A secondary link exposes previous collection and purchase history at `/collection/legacy`. There is no automatic conversion/import from legacy states. The following historical behaviours describe that preserved legacy page only.
+
+### Previous Collection page
+
+`/collection/legacy` is private to the signed-in user. Anonymous visitors see a sign-in prompt rather than private data or a misleading empty collection.
 
 The page returns one normalized card per `ProductVersion`, even when the version has multiple relationship tags or purchases. Each card may show:
 - brand, ProductFamily name, and version

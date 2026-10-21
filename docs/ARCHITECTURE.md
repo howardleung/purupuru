@@ -45,3 +45,11 @@ Planned attributes include multiple skin concerns and skin types, texture, key i
 Initial recommendations should be deterministic and explainable. `Help Me Choose` must work without authentication or a chatbot. Similar-product matching may consider function, concern, texture, and price, but cannot claim equivalence without supporting evidence. Dynamic deal and popularity collections must derive from eligible tracked prices, trustworthy price/sale history, or attributable behavior/market signals—not static labels or brand origin.
 
 Receipt scanning/OCR and purchase-verification pipelines are not active architectural priorities. Preserve current purchase-related records and behavior, but invest new data work in online retailer feeds, offer freshness, availability, and trustworthy product metadata.
+
+## Likes and preserved Collection history
+
+`ProductLike` is a small PostgreSQL preference table keyed by user and meaningful version. `apps/web/lib/likes.ts` owns user-scoped reads and idempotent persistence; `app/likes/actions.ts` owns verified authentication, validation, cookies and revalidation. One shared client LikeProvider loads the authenticated Like set and coordinates optimistic hearts across sizes and surfaces. Components do not access Prisma.
+
+The guest invitation uses existing Clerk SignIn/SignUp flows. A ten-minute HTTP-only, same-site authentication-request cookie survives redirects; it is not guest Like persistence. Dismissal cancels the request and completion revalidates its product/version. Authentication closes the guest invitation before database loading. Successful or invalid handoffs consume the request; transient failures retain its original expiry for explicit retries. Expired requests require a fresh user action. Like reads return explicit failure states rather than an empty collection; recovery reloads before choosing add/remove when saved state is unknown. Optional analytics and personalization are not part of Like persistence.
+
+`/likes` reuses catalogue product cards and exact-version price/image selection. `/collection` redirects there. Existing purchase/rating/relationship records and private history remain at `/collection/legacy`, without backfilling Likes. No legacy table is dropped by this change.
