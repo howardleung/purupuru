@@ -35,7 +35,7 @@ export function securityHeaders(production: boolean, publishableKey?: string) {
     "default-src 'self'",
     `script-src 'self' 'unsafe-inline' ${production ? "" : "'unsafe-eval'"} ${clerkOrigin} https://challenges.cloudflare.com https://*.protect.clerk.com`,
     "style-src 'self' 'unsafe-inline'",
-    `connect-src 'self' ${clerkOrigin} https://clerk-telemetry.com https://*.clerk-telemetry.com https://*.protect.clerk.com:* ${production ? "" : "ws://localhost:* ws://127.0.0.1:*"}`,
+    `connect-src 'self' https://us.i.posthog.com ${clerkOrigin} https://clerk-telemetry.com https://*.clerk-telemetry.com https://*.protect.clerk.com:* ${production ? "" : "ws://localhost:* ws://127.0.0.1:*"}`,
     `img-src 'self' data: blob: https://img.clerk.com https://images.clerk.dev ${PRODUCT_IMAGE_HOSTS.map((host) => `https://${host}`).join(" ")}`,
     "font-src 'self' data:",
     "worker-src 'self' blob:",

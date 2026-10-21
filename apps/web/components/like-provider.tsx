@@ -6,6 +6,7 @@ import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { createContext, useCallback, useContext, useEffect, useId, useRef, useState } from "react";
 
+import { analytics } from "../lib/analytics-client";
 import { cancelPendingLike, completePendingLike, prepareLikeAuthentication, readLikes, setProductLike } from "../app/likes/actions";
 
 type LikeContextValue = {
@@ -61,7 +62,11 @@ export function LikeProvider({ children }: { children: React.ReactNode }) {
     try {
       const result = await setProductLike({ ...target, liked });
       if (result.status !== "SUCCESS") throw new Error(result.message);
-      if (activeUser.current === actor) router.refresh();
+      if (activeUser.current === actor) {
+        analytics.navigate(window.location.pathname, window.location.search.slice(1));
+        analytics.like(result.analyticsTransition);
+        router.refresh();
+      }
     } catch (failure) {
       if (activeUser.current !== actor) return;
       setAccount((current) => {
@@ -97,6 +102,10 @@ export function LikeProvider({ children }: { children: React.ReactNode }) {
       initialization.current = { key, promise: (async () => {
         // Also runs after an OAuth redirect; the server consumes the expiring request.
         const completion = await completePendingLike();
+        if (activeUser.current === actor && completion?.status === "SUCCESS") {
+          analytics.navigate(window.location.pathname, window.location.search.slice(1));
+          analytics.like(completion.analyticsTransition);
+        }
         return { completion, result: await readLikes() };
       })() };
     }

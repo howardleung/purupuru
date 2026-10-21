@@ -7,6 +7,7 @@ import {
 } from "@beauty-platform/domain/price-history";
 import { useState } from "react";
 
+import type { ProductIdentity } from "../lib/analytics-contract";
 import { RetailerLink } from "./retailer-link";
 
 const verificationLabels: Record<string, string> = {
@@ -45,9 +46,11 @@ type ChartPoint = {
 };
 
 function CurrencyHistoryChart({
+  identity,
   nativeCurrency,
   series,
 }: {
+  identity: ProductIdentity;
   nativeCurrency: string;
   series: PriceHistoryChartSeries[];
 }) {
@@ -175,6 +178,7 @@ function CurrencyHistoryChart({
               style={{ backgroundColor: seriesColours[seriesIndex % seriesColours.length] }}
             />
             <RetailerLink
+              analytics={{ ...identity, offer_id: retailerSeries.offerId, retailer_id: retailerSeries.retailerId, placement: "price_history" }}
               href={retailerSeries.listingUrl}
               name={retailerSeries.retailerName}
               sourceKey={retailerSeries.retailerSourceKey}
@@ -221,6 +225,7 @@ function CurrencyHistoryChart({
                   <tr key={point.id}>
                     <td className="px-3 py-2">
                       <RetailerLink
+                        analytics={{ ...identity, offer_id: series[point.seriesIndex].offerId, retailer_id: series[point.seriesIndex].retailerId, placement: "price_history" }}
                         href={point.listingUrl}
                         name={point.retailerName}
                         sourceKey={series[point.seriesIndex]?.retailerSourceKey}
@@ -240,9 +245,11 @@ function CurrencyHistoryChart({
 }
 
 export function PriceHistorySection({
+  identity,
   productContext,
   series,
 }: {
+  identity: ProductIdentity;
   productContext: string;
   series: PriceHistorySeries[];
 }) {
@@ -265,7 +272,7 @@ export function PriceHistorySection({
         </div>
       ) : (
         <div className="mt-4 space-y-6 rounded-xl border border-slate-200 p-4 sm:p-5">
-          <CurrencyHistoryChart nativeCurrency="CAD" series={cadSeries} />
+          <CurrencyHistoryChart identity={identity} nativeCurrency="CAD" series={cadSeries} />
         </div>
       )}
 

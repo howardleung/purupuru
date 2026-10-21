@@ -1,5 +1,7 @@
 "use client";
 
+import { RetailerOutboundLink } from "./retailer-outbound-link";
+
 import {
   calculateShoppingListEstimate,
   parseRequestedQuantity,
@@ -286,7 +288,7 @@ export function ShoppingListDetails({ list }: { list: PreparedShoppingList }) {
 
                     {expanded ? <div className="mt-4 grid gap-5 border-t border-slate-100 pt-4 lg:grid-cols-3">
                       <BenchmarkDetails item={item} market={list.targetMarket} />
-                      <OfferSelector label="Canadian retailer comparison" market={list.comparisonMarket} offers={item.localOffers} selected={localOffer} onChange={(offerId) => setSelectedLocalOfferIds((current) => ({ ...current, [item.id]: offerId }))} />
+                      <OfferSelector item={item} label="Canadian retailer comparison" market={list.comparisonMarket} offers={item.localOffers} selected={localOffer} onChange={(offerId) => setSelectedLocalOfferIds((current) => ({ ...current, [item.id]: offerId }))} />
                       <DestinationOffers item={item} market={list.targetMarket} />
                       <p aria-live="polite" className="min-h-5 text-sm text-slate-600 lg:col-span-3">{messages[item.id]}</p>
                     </div> : <p aria-live="polite" className="sr-only">{messages[item.id]}</p>}
@@ -307,12 +309,17 @@ function BenchmarkDetails({ item, market }: { item: PreparedShoppingListItem; ma
   return <div className="grid content-start gap-1.5 text-sm"><h4 className="font-medium text-slate-700">{marketName(market)} planning benchmark</h4>{benchmark ? <><p>{benchmarkLabels[benchmark.type]} · {nativeMoney(benchmark.nativeAmount, benchmark.nativeCurrency)}</p><p className="text-slate-600">Source: {benchmark.sourceDisplayName}</p><p className="text-xs text-slate-500">Verified {new Date(benchmark.verifiedAt).toLocaleDateString("en-CA")}{benchmark.amountCad !== null && benchmark.nativeCurrency !== "CAD" ? ` · Approx. ${cad(benchmark.amountCad)}` : ""}</p>{benchmark.sourceUrl ? <a className="text-xs underline" href={safeExternalUrl(benchmark.sourceUrl)} rel="noreferrer" target="_blank">View benchmark source</a> : null}</> : <p className="rounded-lg bg-amber-50 p-3 text-amber-900">No verified benchmark is available for this exact size.</p>}</div>;
 }
 
-function DestinationOffers({ item, market }: { item: PreparedShoppingListItem; market: string }) {
-  return <div className="grid content-start gap-1.5 text-sm"><h4 className="font-medium text-slate-700">Current {marketName(market)} retailer offers</h4>{item.destinationOffers.length > 0 ? <ul className="space-y-2">{item.destinationOffers.map((offer) => <li key={offer.id}><a className="underline" href={safeExternalUrl(offer.listingUrl)} rel="noreferrer" target="_blank">{offer.retailerName} · {nativeMoney(offer.nativeAmount, offer.nativeCurrency)}</a></li>)}</ul> : <p className="rounded-lg bg-slate-50 p-3 text-slate-600">No eligible retailer offers are currently tracked. The benchmark can still be used for planning.</p>}</div>;
+function listOutbound(item: PreparedShoppingListItem, offer: PreparedShoppingListOffer) {
+  return { product_family_id: item.productFamilyId, product_version_id: item.productVersionId,
+    product_variant_id: item.productVariantId, offer_id: offer.id, retailer_id: offer.retailerId, placement: "shopping_list" as const };
 }
 
-function OfferSelector({ label, market, offers, selected, onChange }: { label: string; market: string; offers: PreparedShoppingListOffer[]; selected: PreparedShoppingListOffer | null; onChange: (offerId: string) => void }) {
-  return <label className="grid content-start gap-1.5 text-sm font-medium text-slate-700">{label}{offers.length > 0 ? <select className="min-w-0 ui-input font-normal" onChange={(event) => onChange(event.target.value)} value={selected?.id ?? ""}>{offers.map((candidate) => <option key={candidate.id} value={candidate.id}>{candidate.retailerName} · {nativeMoney(candidate.nativeAmount, candidate.nativeCurrency)}</option>)}</select> : <span className="rounded-lg bg-amber-50 p-3 font-normal text-amber-900">No eligible {marketName(market)} retailer offer tracked</span>}{selected ? <><span className="font-normal text-slate-600">{selected.amountCad !== null && selected.nativeCurrency !== "CAD" ? `Approx. ${cad(selected.amountCad)}` : "Native price shown above"}</span><a className="text-xs font-normal underline" href={safeExternalUrl(selected.listingUrl)} rel="noreferrer" target="_blank">View retailer offer</a></> : null}</label>;
+function DestinationOffers({ item, market }: { item: PreparedShoppingListItem; market: string }) {
+  return <div className="grid content-start gap-1.5 text-sm"><h4 className="font-medium text-slate-700">Current {marketName(market)} retailer offers</h4>{item.destinationOffers.length > 0 ? <ul className="space-y-2">{item.destinationOffers.map((offer) => <li key={offer.id}><RetailerOutboundLink analytics={listOutbound(item, offer)} className="underline" href={safeExternalUrl(offer.listingUrl)} rel="noreferrer" target="_blank">{offer.retailerName} · {nativeMoney(offer.nativeAmount, offer.nativeCurrency)}</RetailerOutboundLink></li>)}</ul> : <p className="rounded-lg bg-slate-50 p-3 text-slate-600">No eligible retailer offers are currently tracked. The benchmark can still be used for planning.</p>}</div>;
+}
+
+function OfferSelector({ item, label, market, offers, selected, onChange }: { item: PreparedShoppingListItem; label: string; market: string; offers: PreparedShoppingListOffer[]; selected: PreparedShoppingListOffer | null; onChange: (offerId: string) => void }) {
+  return <label className="grid content-start gap-1.5 text-sm font-medium text-slate-700">{label}{offers.length > 0 ? <select className="min-w-0 ui-input font-normal" onChange={(event) => onChange(event.target.value)} value={selected?.id ?? ""}>{offers.map((candidate) => <option key={candidate.id} value={candidate.id}>{candidate.retailerName} · {nativeMoney(candidate.nativeAmount, candidate.nativeCurrency)}</option>)}</select> : <span className="rounded-lg bg-amber-50 p-3 font-normal text-amber-900">No eligible {marketName(market)} retailer offer tracked</span>}{selected ? <><span className="font-normal text-slate-600">{selected.amountCad !== null && selected.nativeCurrency !== "CAD" ? `Approx. ${cad(selected.amountCad)}` : "Native price shown above"}</span><RetailerOutboundLink analytics={listOutbound(item, selected)} className="text-xs font-normal underline" href={safeExternalUrl(selected.listingUrl)} rel="noreferrer" target="_blank">View retailer offer</RetailerOutboundLink></> : null}</label>;
 }
 
 function Summary({ label, value, detail }: { label: string; value: string; detail: string }) {

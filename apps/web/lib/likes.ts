@@ -1,4 +1,5 @@
 import "server-only";
+import { randomUUID } from "node:crypto";
 
 import { prisma } from "@beauty-platform/database";
 import type { LikeInput } from "@beauty-platform/domain/likes";
@@ -39,19 +40,19 @@ export async function setLikeForUser(userId: string, input: LikeInput): Promise<
   return runSerializable(async (tx) => {
     const version = await tx.productVersion.findFirst({
       where: { id: input.productVersionId, productFamily: { slug: input.productSlug } },
-      select: { id: true, variants: { where: { isActive: true }, select: { id: true }, take: 1 } },
+      select: { id: true, productFamilyId: true, variants: { where: { isActive: true }, select: { id: true }, take: 1 } },
     });
     if (!version || (input.liked && version.variants.length === 0)) {
       return { status: "INVALID", message: "This product version is no longer available to like." };
     }
-    if (input.liked) {
-      await tx.productLike.createMany({
+    const mutation = input.liked
+      ? await tx.productLike.createMany({
         data: { userId, productVersionId: version.id }, skipDuplicates: true,
-      });
-    } else {
-      await tx.productLike.deleteMany({ where: { userId, productVersionId: version.id } });
-    }
+      })
+      : await tx.productLike.deleteMany({ where: { userId, productVersionId: version.id } });
     return { status: "SUCCESS", message: input.liked ? "Product liked." : "Like removed.",
-      productVersionId: version.id, liked: input.liked };
+      productVersionId: version.id, liked: input.liked,
+      ...(mutation.count > 0 ? { analyticsTransition: { transitionId: randomUUID(),
+        productFamilyId: version.productFamilyId, productVersionId: version.id, liked: input.liked } } : {}) };
   });
 }

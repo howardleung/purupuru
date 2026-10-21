@@ -110,7 +110,7 @@ The currently implemented Shopping Lists remain supported. Their travel/target-m
 
 ## Analytics and data-driven discovery
 
-**Planned; not current functionality.**
+**Phase 1 instrumentation implemented; production configuration and privacy review required before activation.** Consent-gated PostHog events cover sanitized page navigation, resolved product views, retailer outbound intent, and successful Like transitions. Impressions, acquisition, returning-visitor measurement, search/cart tracking, affiliate conversions, dashboards, and recommendation features remain planned. Phase 1 uses an anonymous in-memory tab identifier and does not identify accounts or measure purchases.
 
 PuruPuru should instrument product impressions as well as interactions so internal analytics can measure unique visitors, sessions, page views, returning visitors, traffic sources, searches, filters, product views, cart behavior, outbound retailer clicks, popular products and brands, empty searches, and retailer-offer performance without confusing placement with preference or clicks with purchases.
 

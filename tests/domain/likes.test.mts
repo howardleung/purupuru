@@ -19,17 +19,21 @@ const tx = {
   productVersion: {
     async findFirst({ where }: { where: { id: string; productFamily: { slug: string } } }) {
       return valid && where.productFamily.slug === "serum" && ["formula-a", "formula-b"].includes(where.id)
-        ? { id: where.id, variants: active ? [{ id: "size-50" }] : [] } : null;
+        ? { id: where.id, productFamilyId: "family-serum", variants: active ? [{ id: "size-50" }] : [] } : null;
     },
   },
   productLike: {
     async createMany({ data, skipDuplicates }: { data: { userId: string; productVersionId: string }; skipDuplicates: boolean }) {
       assert.equal(skipDuplicates, true);
       if (fail) throw new Error("Database unavailable");
+      const before = rows.size;
       rows.add(`${data.userId}:${data.productVersionId}`); writes.push("like");
+      return { count: rows.size - before };
     },
     async deleteMany({ where }: { where: { userId: string; productVersionId: string } }) {
-      rows.delete(`${where.userId}:${where.productVersionId}`); writes.push("unlike");
+      const count = rows.delete(`${where.userId}:${where.productVersionId}`) ? 1 : 0;
+      writes.push("unlike");
+      return { count };
     },
     async findMany({ where }: { where: { userId: string } }) {
       if (failRead) throw Object.assign(new Error("The table public.ProductLike does not exist"), { code: "P2021" });
@@ -133,7 +137,9 @@ test("auth continuation stores only an expiring HTTP-only request and completes 
   assert.equal(cookiesSet?.sameSite, "lax");
   assert.equal(cookiesSet?.maxAge, LIKE_INTENT_MAX_AGE_SECONDS);
   user = { id: "alice", clerkUserId: "clerk-alice" };
-  assert.equal((await completePendingLike())?.status, "SUCCESS");
+  const completion = await completePendingLike();
+  assert.equal(completion?.status, "SUCCESS");
+  assert.equal(completion?.analyticsTransition?.liked, true);
   assert.equal(await completePendingLike(), null);
   assert.deepEqual(writes, ["like"]);
 });
@@ -224,4 +230,21 @@ test("liked products retain exact saved formulas and keep unavailable versions r
   assert.deepEqual(catalogueIds, ["formula-a", "formula-b"]);
   assert.deepEqual(result.products.map((product) => product.currentVersion?.id), ["formula-b"]);
   assert.deepEqual(result.unavailable.map((like) => like.productVersionId), ["formula-a"]);
+});
+
+
+test("analytics metadata describes only successful database transitions, never idempotent retries", async () => {
+  reset();
+  const added = await setProductLike({ ...target, liked: true });
+  assert.equal(added.status, "SUCCESS");
+  assert.deepEqual(added.analyticsTransition && { ...added.analyticsTransition, transitionId: "redacted" }, {
+    transitionId: "redacted", productFamilyId: "family-serum", productVersionId: "formula-a", liked: true,
+  });
+  assert.equal((await setProductLike({ ...target, liked: true })).analyticsTransition, undefined);
+  const removed = await setProductLike({ ...target, liked: false });
+  assert.equal(removed.analyticsTransition?.liked, false);
+  assert.notEqual(removed.analyticsTransition?.transitionId, added.analyticsTransition?.transitionId);
+  assert.equal((await setProductLike({ ...target, liked: false })).analyticsTransition, undefined);
+  valid = false;
+  assert.equal((await setProductLike({ ...target, liked: true })).analyticsTransition, undefined);
 });

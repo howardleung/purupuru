@@ -1,15 +1,19 @@
 import Image from "next/image";
 
+import type { OutboundIdentity } from "../lib/analytics-contract";
+import { RetailerOutboundLink } from "./retailer-outbound-link";
 import { resolveRetailerLogo } from "../lib/retailer-logos";
 import { safeExternalUrl } from "../lib/external-url";
 
 export function RetailerLink({
+  analytics,
   href,
   name,
   sourceKey,
   showName = false,
   className = "font-medium text-slate-950 underline decoration-slate-300 underline-offset-2",
 }: {
+  analytics?: OutboundIdentity;
   href: string;
   name: string;
   sourceKey?: string | null;
@@ -19,7 +23,8 @@ export function RetailerLink({
   const logo = resolveRetailerLogo(sourceKey);
 
   return (
-    <a
+    <RetailerOutboundLink
+      analytics={analytics}
       aria-label={`Shop this listing at ${name}`}
       className={`group relative inline-flex items-center ${className}`}
       href={safeExternalUrl(href)}
@@ -50,6 +55,6 @@ export function RetailerLink({
       ) : (
         name
       )}
-    </a>
+    </RetailerOutboundLink>
   );
 }

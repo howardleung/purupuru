@@ -1,3 +1,4 @@
+import { AnalyticsPreferencesButton } from "./analytics-provider";
 import Link from "next/link";
 import { BrandLogo } from "./brand-logo";
 
@@ -20,6 +21,7 @@ export function SiteFooter() {
           </p>
         </div>
         <nav aria-label="Legal and company" className="flex flex-wrap items-start gap-x-4 gap-y-3 text-xs font-semibold text-slate-600 md:max-w-sm md:justify-end md:pt-3">
+          <AnalyticsPreferencesButton />
           {footerLinks.map((item) => (
             <Link className="hover:text-slate-950 hover:underline" href={item.href} key={item.href}>
               {item.label}

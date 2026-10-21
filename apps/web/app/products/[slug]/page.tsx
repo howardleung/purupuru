@@ -12,6 +12,8 @@ import { boundedParameter } from "../../../lib/input-validation";
 import { notFound } from "next/navigation";
 
 import { Breadcrumbs } from "../../../components/breadcrumbs";
+import { ProductViewTracker } from "../../../components/analytics-provider";
+import { Suspense } from "react";
 import { OfferSection, type OfferView } from "../../../components/offer-section";
 import { PriceHistorySection } from "../../../components/price-history-section";
 import { LikeButton } from "../../../components/like-button";
@@ -162,6 +164,9 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
   )!;
   const toOfferView = (offer: (typeof selectedVariantRecord.offers)[number]): OfferView => ({
     id: offer.id,
+    productFamilyId: family.id,
+    productVersionId: selectedVersionRecord.id,
+    retailerId: offer.retailerId,
     productVariantId: selectedVariantRecord.id,
     primaryQuantity: offer.primaryQuantity,
     listingUrl: offer.listingUrl,
@@ -373,7 +378,9 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
         </div>
       </div>
 
+      <Suspense fallback={null}><ProductViewTracker product={{ product_family_id: family.id, product_version_id: selectedVersionRecord.id, product_variant_id: selectedVariantRecord.id }} /></Suspense>
       <PriceHistorySection
+        identity={{ product_family_id: family.id, product_version_id: selectedVersionRecord.id, product_variant_id: selectedVariantRecord.id }}
         productContext={selectedVariantRecord.displaySize}
         series={priceHistorySeries}
       />

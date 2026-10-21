@@ -1,11 +1,15 @@
 import { getOfferExtraLabels, type OfferPrice } from "@beauty-platform/domain";
 
+import { RetailerOutboundLink } from "./retailer-outbound-link";
 import { safeExternalUrl } from "../lib/external-url";
 import { getLocalFirstPrice } from "../lib/price-presentation";
 import { RetailerLink } from "./retailer-link";
 
 export type OfferView = OfferPrice & {
   id: string;
+  productFamilyId: string;
+  productVersionId: string;
+  retailerId: string;
   productVariantId: string;
   primaryQuantity: number;
   listingUrl: string;
@@ -63,6 +67,11 @@ function extrasText(offer: OfferView) {
   return labels.length > 0 ? labels.join(", ") : "—";
 }
 
+function outbound(offer: OfferView, placement: "product_offer_retailer" | "product_offer_price") {
+  return { product_family_id: offer.productFamilyId, product_version_id: offer.productVersionId,
+    product_variant_id: offer.productVariantId, retailer_id: offer.retailerId, offer_id: offer.id, placement };
+}
+
 function OfferPriceLink({ offer }: { offer: OfferView }) {
   const price = getLocalFirstPrice(
     offer.productPrice,
@@ -77,7 +86,8 @@ function OfferPriceLink({ offer }: { offer: OfferView }) {
     : null;
 
   return (
-    <a
+    <RetailerOutboundLink
+      analytics={outbound(offer, "product_offer_price")}
       aria-label={`Shop this listing at ${offer.retailer.name} for ${price.primaryIsApproximate ? "approximately " : ""}${primaryPrice}${nativePrice ? `; native price ${nativePrice}` : ""}`}
       className="inline-flex flex-col items-end text-right font-bold text-brand-action underline decoration-slate-300 underline-offset-2 transition hover:decoration-brand-action"
       href={safeExternalUrl(offer.listingUrl)}
@@ -90,7 +100,7 @@ function OfferPriceLink({ offer }: { offer: OfferView }) {
       ) : price.cadConversionUnavailable ? (
         <span className="mt-0.5 max-w-32 text-xs font-medium text-slate-500 no-underline">CAD conversion unavailable</span>
       ) : null}
-    </a>
+    </RetailerOutboundLink>
   );
 }
 
@@ -125,6 +135,7 @@ export function OfferSection({
               <article className={`rounded-xl border border-slate-200 p-3 ${offer.availabilityState === "OUT_OF_STOCK" ? "bg-slate-50" : "bg-white"}`} key={offer.id}>
                 <div className="flex items-start justify-between gap-3">
                   <RetailerLink
+                    analytics={outbound(offer, "product_offer_retailer")}
                     className="min-w-0 font-semibold text-brand-action underline decoration-slate-300 underline-offset-2 hover:decoration-brand-action"
                     href={offer.listingUrl}
                     name={offer.retailer.name}
@@ -164,6 +175,7 @@ export function OfferSection({
                   <tr className={offer.availabilityState === "OUT_OF_STOCK" ? "bg-slate-50 text-slate-500" : undefined} key={offer.id}>
                     <td className="px-4 py-4 align-top">
                       <RetailerLink
+                        analytics={outbound(offer, "product_offer_retailer")}
                         className="font-semibold text-brand-action underline decoration-slate-300 underline-offset-2 hover:decoration-brand-action"
                         href={offer.listingUrl}
                         name={offer.retailer.name}

@@ -25,6 +25,7 @@ export type ShoppingListSummary = {
 };
 
 export type PreparedShoppingListOffer = ShoppingListOffer & {
+  retailerId: string;
   retailerName: string;
   listingUrl: string;
   rateDate: string | null;
@@ -191,6 +192,7 @@ export async function getShoppingListForUser(
                 amountCad: conversion.amountCad,
                 availableMarkets: offer.availableMarkets,
                 availabilityState: offer.availabilityState,
+                retailerId: offer.retailerId,
                 retailerName: offer.retailer.name,
                 listingUrl: offer.listingUrl,
                 rateDate: conversion.rateDate,

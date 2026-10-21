@@ -2,6 +2,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 
+import { AnalyticsProvider } from "../components/analytics-provider";
 import { SiteFooter } from "../components/site-footer";
 import { SiteHeader } from "../components/site-header";
 import { clerkPublishableKey, isClerkConfigured } from "../lib/clerk-config";
@@ -46,7 +47,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   const document = (
     <html className={nunito.variable} lang="en">
       <body className="flex min-h-screen flex-col">
-        {isClerkConfigured ? <LikeProvider>{content}</LikeProvider> : content}
+        <AnalyticsProvider production={process.env.NODE_ENV === "production" && (!process.env.VERCEL_ENV || process.env.VERCEL_ENV === "production")}>
+          {isClerkConfigured ? <LikeProvider>{content}</LikeProvider> : content}
+        </AnalyticsProvider>
       </body>
     </html>
   );
