@@ -1,6 +1,7 @@
-import { analyticsRoute, CONSENT_MAX_AGE, type AnalyticsEvents, type LikeTransition, type ProductIdentity } from "./analytics-contract";
+import { analyticsPageUrl, analyticsRoute, CONSENT_MAX_AGE, type AnalyticsEvents, type LikeTransition, type ProductIdentity } from "./analytics-contract";
+import { analyticsSessionId, ANALYTICS_SESSION_IDLE_MS, ANALYTICS_SESSION_MAX_MS } from "./analytics-session";
 
-type Envelope = { api_key: string; distinct_id: string; event: keyof AnalyticsEvents; properties: Record<string, string | number | boolean> };
+type Envelope = { api_key: string; distinct_id: string; event: keyof AnalyticsEvents; timestamp: string; properties: Record<string, string | number | boolean> };
 type Transport = (host: string, payload: Envelope) => void;
 
 /** Explicit Capture API only: no SDK, autocapture, automatic URLs, forms, replay or identify. */
@@ -11,6 +12,7 @@ export class AnalyticsClient {
   private key = "";
   private host = "";
   private visitor: string | null = null;
+  private session: { id: string; startedAt: number; lastActivity: number } | null = null;
   private navigation = "";
   private pathname = "";
   private pageId = "";
@@ -40,6 +42,7 @@ export class AnalyticsClient {
     if (this.consent === accepted) return;
     this.consent = accepted;
     this.visitor = null;
+    this.session = null;
     this.pageSent = false;
     this.products.clear();
     this.transitions.clear();
@@ -70,7 +73,7 @@ export class AnalyticsClient {
     const route = analyticsRoute(this.pathname);
     if (!route || !this.enabled || !this.consent || this.now() >= this.consentExpires) return;
     if (!this.pageSent) {
-      this.send("page_viewed", route);
+      this.send("$pageview", route);
       this.pageSent = true;
     }
     if (route.route_type !== "product" || !this.currentProduct) return;
@@ -99,12 +102,21 @@ export class AnalyticsClient {
   }
 
   private send<E extends keyof AnalyticsEvents>(event: E, properties: AnalyticsEvents[E]) {
-    if (!this.enabled || !this.consent || this.now() >= this.consentExpires || !analyticsRoute(this.pathname)) return;
+    const now = this.now();
+    const route = analyticsRoute(this.pathname);
+    const currentUrl = analyticsPageUrl(this.pathname);
+    if (!this.enabled || !this.consent || now >= this.consentExpires || !route || !currentUrl) return;
     try {
       this.visitor ??= this.uuid();
       this.pageId ||= this.uuid();
-      this.transport(this.host, { api_key: this.key, distinct_id: this.visitor, event, properties: {
-        ...properties, schema_version: 1, page_view_id: this.pageId, $insert_id: this.uuid(),
+      if (!this.session || now < this.session.lastActivity ||
+        now - this.session.lastActivity >= ANALYTICS_SESSION_IDLE_MS || now - this.session.startedAt >= ANALYTICS_SESSION_MAX_MS) {
+        this.session = { id: analyticsSessionId(now), startedAt: now, lastActivity: now };
+      }
+      this.session.lastActivity = now;
+      this.transport(this.host, { api_key: this.key, distinct_id: this.visitor, event, timestamp: new Date(now).toISOString(), properties: {
+        ...properties, schema_version: 2, page_view_id: this.pageId, $insert_id: this.uuid(),
+        $current_url: currentUrl, $pathname: route.page_path, $host: new URL(currentUrl).hostname, $session_id: this.session.id,
         $process_person_profile: false, $geoip_disable: true,
       } });
     } catch { /* Optional analytics must never affect navigation or account operations. */ }

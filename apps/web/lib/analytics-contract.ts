@@ -31,8 +31,14 @@ export function analyticsRoute(pathname: string) {
   return null;
 }
 
+/** Use the canonical public origin and allowlisted template, never a browser URL. */
+export function analyticsPageUrl(pathname: string) {
+  const route = analyticsRoute(pathname);
+  return route ? `https://www.purupuru.ca${route.page_path}` : null;
+}
+
 export type AnalyticsEvents = {
-  page_viewed: { page_path: string; route_type: string };
+  $pageview: { page_path: string; route_type: string };
   product_viewed: ProductIdentity;
   retailer_outbound_clicked: OutboundIdentity;
   like_added: { product_family_id: string; product_version_id: string };

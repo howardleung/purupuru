@@ -499,3 +499,13 @@ This file records settled choices and the rationale behind them. New decisions s
 **Why:** A small explicit payload surface establishes measurable shopping interest while excluding sensitive profile data and automatic URL capture. An established hosted event store avoids custom analytics infrastructure. Tab-scoped identity deliberately sacrifices cross-session attribution and returning-visitor metrics at this stage.
 
 **Implications:** Like events require a successful affected-row transition; analytics failures cannot block account operations or retailer navigation. No analytics database, SDK dependency or schema changes. Production configuration and reviewed privacy/retention/US-processing controls are required before activation. Outbound clicks are intent, never confirmed purchases. Earlier statements that all behavioural analytics are unimplemented are superseded only for these five event types; recommendations, community labels, dashboard and affiliate conversions remain deferred.
+
+### 2026-10-21 — Native PostHog pageviews with sanitized URLs and ephemeral sessions
+
+**Status:** Accepted
+
+**Decision:** Replace `page_viewed` with `$pageview` for future navigations only. Schema version 2 supplies the standard sanitized `$current_url`, `$pathname`, `$host` and UUIDv7 `$session_id` on all captured events. Use the canonical public origin and existing route templates, never browser URLs. Sessions rotate after 30 minutes of recorded inactivity or 24 hours, and reset with page reload or consent withdrawal.
+
+**Why:** Successful Capture API ingestion does not make a custom event a native Web Analytics pageview. PostHog's session aggregations require UUIDv7 IDs whose timestamps bound the session's events.
+
+**Implications:** No historical rewrites, dual pageview emission, dependencies, reverse proxy, persistent behavioral identifiers or expanded tracking. Existing consent, anonymous visitor identity, no-person-profile controls, successful-only Likes and retailer navigation remain intact. Reloads and tabs fragment visits; returning-visitor, acquisition, geolocation, device, bounce and duration reporting remain limited as documented in architecture. Earlier raw-URL exclusions still apply; the new standard URL carries only public route templates.

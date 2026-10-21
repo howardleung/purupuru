@@ -3,18 +3,19 @@ import { registerHooks } from "node:module";
 import test from "node:test";
 
 const hooks = registerHooks({ resolve(specifier, context, next) {
-  if (specifier === "./analytics-contract") return next(new URL("../../apps/web/lib/analytics-contract.ts", import.meta.url).href, context);
+  if (specifier === "./analytics-contract" || specifier === "./analytics-session") return next(new URL(`../../apps/web/lib/${specifier.slice(2)}.ts`, import.meta.url).href, context);
   return next(specifier, context);
 } });
 const { AnalyticsClient, analytics, stopAnalyticsRequests } = await import("../../apps/web/lib/analytics-client.ts");
 hooks.deregister();
-const { analyticsRoute, readAnalyticsConsent, CONSENT_MAX_AGE } = await import("../../apps/web/lib/analytics-contract.ts");
+const { analyticsPageUrl, analyticsRoute, readAnalyticsConsent, CONSENT_MAX_AGE } = await import("../../apps/web/lib/analytics-contract.ts");
+const { analyticsSessionId, ANALYTICS_SESSION_IDLE_MS, ANALYTICS_SESSION_MAX_MS } = await import("../../apps/web/lib/analytics-session.ts");
 
 const product = { product_family_id: "family-1", product_version_id: "version-1", product_variant_id: "variant-50" };
 const outbound = { ...product, offer_id: "offer-1", retailer_id: "retailer-1", placement: "product_offer_price" as const };
 const transition = { transitionId: "transition-1", productFamilyId: "family-1", productVersionId: "version-1", liked: true };
 function fixture(production = true) {
-  const captured: Array<{ event: string; distinct_id: string; properties: Record<string, unknown> }> = [];
+  const captured: Array<{ event: string; distinct_id: string; timestamp: string; properties: Record<string, unknown> }> = [];
   let sequence = 0;
   let now = 1000;
   const client = new AnalyticsClient((_host, event) => captured.push(event), () => `uuid-${++sequence}`, () => now);
@@ -60,12 +61,72 @@ test("route allowlist excludes private tooling and emits templates without URLs,
   assert.equal(captured.length, 1);
 });
 
+test("native pageviews use only canonical public URL templates, never raw browser URL values", () => {
+  for (const [path, expected] of [["/", "/"], ["/catalogue", "/catalogue"], ["/products/private-slug", "/products/[slug]"],
+    ["/categories/private-category", "/categories/[slug]"], ["/shopping-lists/private-id", "/shopping-lists/[id]"]]) {
+    assert.equal(analyticsPageUrl(path), `https://www.purupuru.ca${expected}`);
+  }
+  for (const path of ["https://attacker.example/", "//attacker.example/", "/sign-in", "/profile", "/admin/imports", "/design/test", "/catalogue?q=secret#private"]) {
+    assert.equal(analyticsPageUrl(path), null);
+  }
+  const { client, captured } = fixture(); client.setConsent(true);
+  client.product("/products/private-slug", "q=secret&token=hidden#fragment", product);
+  assert.deepEqual(captured.map((event) => event.event), ["$pageview", "product_viewed"]);
+  for (const event of captured) {
+    assert.equal(event.properties.$current_url, "https://www.purupuru.ca/products/[slug]");
+    assert.equal(event.properties.$pathname, "/products/[slug]");
+    assert.equal(event.properties.$host, "www.purupuru.ca");
+    assert.equal(event.properties.schema_version, 2);
+  }
+  assert.doesNotMatch(JSON.stringify(captured), /private-slug|secret|hidden|fragment|page_viewed/);
+});
+
+test("session IDs encode RFC 9562 UUIDv7 timestamps, version and variant", () => {
+  // RFC 9562 Appendix A.6 test vector, with its specified random fields.
+  const entropy = Uint8Array.from(Buffer.from("017f22e279b07cc398c4dc0c0c07398f", "hex"));
+  assert.equal(analyticsSessionId(1645557742000, entropy), "017f22e2-79b0-7cc3-98c4-dc0c0c07398f");
+  for (const timestamp of [0, 1000, Date.now(), 0xffffffffffff]) {
+    const id = analyticsSessionId(timestamp);
+    assert.match(id, /^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/);
+    assert.equal(parseInt(id.replaceAll("-", "").slice(0, 12), 16), timestamp);
+  }
+  assert.throws(() => analyticsSessionId(-1));
+});
+
+test("all events share a valid session which rotates at idle/max limits and clock rollback", () => {
+  const { client, captured, advance } = fixture(); client.navigate("/catalogue", ""); client.setConsent(true);
+  client.product("/products/serum", "", product); client.outbound(outbound); client.like(transition);
+  const first = captured[0].properties.$session_id;
+  assert.ok(captured.every((event) => event.properties.$session_id === first));
+  advance(1000 + ANALYTICS_SESSION_IDLE_MS - 1); client.outbound(outbound);
+  assert.equal(captured.at(-1)?.properties.$session_id, first);
+  advance(1000 + 2 * ANALYTICS_SESSION_IDLE_MS - 1); client.outbound(outbound);
+  assert.notEqual(captured.at(-1)?.properties.$session_id, first);
+  const idleSession = captured.at(-1)?.properties.$session_id;
+  // Keep activity below the idle threshold across the full 24-hour window.
+  const started = 1000 + 2 * ANALYTICS_SESSION_IDLE_MS - 1;
+  for (let elapsed = ANALYTICS_SESSION_IDLE_MS / 2; elapsed < ANALYTICS_SESSION_MAX_MS; elapsed += ANALYTICS_SESSION_IDLE_MS / 2) {
+    advance(started + elapsed); client.outbound(outbound);
+  }
+  assert.equal(captured.at(-1)?.properties.$session_id, idleSession);
+  advance(started + ANALYTICS_SESSION_MAX_MS); client.outbound(outbound);
+  assert.notEqual(captured.at(-1)?.properties.$session_id, idleSession);
+  const maximumSession = captured.at(-1)?.properties.$session_id;
+  advance(2000); client.outbound(outbound);
+  assert.notEqual(captured.at(-1)?.properties.$session_id, maximumSession);
+  for (const event of captured) {
+    const start = parseInt(String(event.properties.$session_id).replaceAll("-", "").slice(0, 12), 16);
+    const time = Date.parse(event.timestamp);
+    assert.ok(start <= time && time < start + ANALYTICS_SESSION_MAX_MS);
+  }
+});
+
 test("views deduplicate rerenders and effect replay, but track size changes and repeat navigation", () => {
   const { client, captured } = fixture();
   client.product("/products/serum", "size=50", product);
   client.setConsent(true);
   client.navigate("/products/serum", "size=50"); client.product("/products/serum", "size=50", product);
-  assert.deepEqual(captured.map((e) => e.event), ["page_viewed", "product_viewed"]);
+  assert.deepEqual(captured.map((e) => e.event), ["$pageview", "product_viewed"]);
   client.product("/products/serum", "size=100", { ...product, product_variant_id: "variant-100" });
   assert.equal(captured.length, 4);
   client.navigate("/catalogue", ""); client.product("/products/serum", "size=50", product);
@@ -77,11 +138,13 @@ test("views deduplicate rerenders and effect replay, but track size changes and 
 test("withdrawal stops events, clears tab identity and never replays actions when accepted again", () => {
   const { client, captured, advance } = fixture(); client.navigate("/", ""); client.setConsent(true, 2000);
   const old = captured[0].distinct_id;
+  const oldSession = captured[0].properties.$session_id;
   advance(2000); client.outbound(outbound); assert.equal(captured.length, 1);
   client.setConsent(false); client.outbound(outbound); client.like(transition);
   client.setConsent(true, 4000);
-  assert.deepEqual(captured.map((e) => e.event), ["page_viewed", "page_viewed"]);
+  assert.deepEqual(captured.map((e) => e.event), ["$pageview", "$pageview"]);
   assert.notEqual(captured[1].distinct_id, old);
+  assert.notEqual(captured[1].properties.$session_id, oldSession);
 });
 
 test("anonymous identity stays within one tab visit and is not reused by a fresh client", () => {
@@ -108,12 +171,12 @@ test("only explicit canonical event properties are sent, with anonymous profile 
   client.outbound({ ...outbound, raw_url: "https://retailer.example/?secret=1", search: "sensitive-search" });
   client.like({ ...transition, clerkUserId: "user-secret", auth_token: "sensitive-token" });
   client.like(transition); client.like({ ...transition, transitionId: "transition-2", liked: false });
-  assert.deepEqual(captured.map((e) => e.event), ["page_viewed", "product_viewed", "retailer_outbound_clicked", "like_added", "like_removed"]);
+  assert.deepEqual(captured.map((e) => e.event), ["$pageview", "product_viewed", "retailer_outbound_clicked", "like_added", "like_removed"]);
   const properties = captured[2].properties;
   assert.equal(properties.offer_id, "offer-1"); assert.equal(properties.retailer_id, "retailer-1");
   assert.equal(properties.product_variant_id, "variant-50");
   assert.equal(captured[3].properties.product_variant_id, undefined);
-  assert.doesNotMatch(JSON.stringify(captured), /secret|sensitive|email|raw_url|clerkUserId|auth_token|skin_map|search|current_url|referrer/);
+  assert.doesNotMatch(JSON.stringify(captured), /secret|sensitive|email|raw_url|clerkUserId|auth_token|skin_map|search|referrer/);
   for (const e of captured) { assert.equal(e.properties.$process_person_profile, false); assert.equal(e.properties.$geoip_disable, true); }
 });
 
